@@ -7,9 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Created by Stridsberg on 2016-04-27.
- */
 @RestController
 public class ChallengeController {
 
@@ -17,14 +14,16 @@ public class ChallengeController {
     private ChallengeService challengeService;
 
     @CrossOrigin
-    @RequestMapping(value ="/challenge/", method = RequestMethod.POST)
-    public void createChallenge(@RequestBody ChallengeModel challengeModel) {
+    @RequestMapping(value = "/challenge/", method = RequestMethod.POST)
+    public ResponseEntity createChallenge(@RequestBody ChallengeModel challengeModel) {
         challengeService.saveChallengeToDatabase(challengeModel);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/challenge/{id}", method = RequestMethod.GET)
-    public ResponseEntity<ChallengeModel> readChallenge(@PathVariable Long id){
+    public ResponseEntity<ChallengeModel> readChallenge(@PathVariable Long id) {
         return new ResponseEntity<ChallengeModel>(challengeService.getChallengeFromDatabase(id), HttpStatus.OK);
     }
+
 }
