@@ -39,12 +39,12 @@ public class ChallengeControllerTest {
 
     @Test
     public void testUpdateChallenge() throws Exception {
-        assertEquals("updateChallenge() did not respond with http status 200 (ok)", new ResponseEntity(HttpStatus.OK), challengeController.updateChallenge(new Random().nextLong()));
+        assertEquals("updateChallenge() did not respond with http status 200 (ok)", new ResponseEntity(HttpStatus.OK), challengeController.updateChallenge(new Long(new Random().nextLong())));
     }
 
     @Test
     public void testDeleteChallenge() throws Exception {
-        assertEquals("deleteChallenge() did not respond with http status 200 (ok)", new ResponseEntity(HttpStatus.OK), challengeController.deleteChallenge(new Random().nextLong()));
+        assertEquals("deleteChallenge() did not respond with http status 200 (ok)", new ResponseEntity(HttpStatus.OK), challengeController.deleteChallenge(new Long(new Random().nextLong())));
     }
 
 }
