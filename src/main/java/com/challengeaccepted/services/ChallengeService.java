@@ -14,7 +14,10 @@ public class ChallengeService {
     @Autowired
     private ChallengeRepository challengeRepository;
 
-    public void createChallenge(ChallengeModel challengeModel) {
+    public void saveChallengeToDatabase(ChallengeModel challengeModel) {
         challengeRepository.saveAndFlush(challengeModel);
+    }
+    public ChallengeModel getChallengeFromDatabase(Long id){
+        return (ChallengeModel) challengeRepository.getOne(id);
     }
 }
