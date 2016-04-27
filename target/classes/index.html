@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--jQuery and Angular-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://code.angularjs.org/1.5.5/angular.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>-->
+
+    <!--Module-->
+    <script src="app/app.js"></script>
+    <!--Controller-->
+    <script src="app/controllers/main-controller.js"></script>
+
+    <meta charset="UTF-8">
+    <title>Challenge Accepted</title>
+</head>
+<body>
+<div class="container-fluid">
+
+    <section>
+        <h1>Create New Challenge</h1>
+
+        <form id="form-new-challenge">
+            <p><input id="input-topic" type="text" placeholder="Topic"></p>
+
+            <p><textarea id="input-description" placeholder="Description" rows="5"></textarea></p>
+
+            <p>
+                <button id="button-add-challenge" ng-click="createNewChallenge">Add Challenge</button>
+            </p>
+        </form>
+    </section>
+    
+</div>
+</body>
+</html>
