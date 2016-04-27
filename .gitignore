@@ -79,3 +79,4 @@ tmp/
 .texlipse
 local.properties
 captures/
+node_modules/
