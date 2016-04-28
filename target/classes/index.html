@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="ChallengeAccepted">
 <head>
     <!--jQuery and Angular-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
@@ -14,19 +14,19 @@
     <meta charset="UTF-8">
     <title>Challenge Accepted</title>
 </head>
-<body>
+<body ng-controller="MainController">
 <div class="container-fluid">
 
     <section>
         <h1>Create New Challenge</h1>
 
-        <form id="form-new-challenge">
+        <form>
             <p><input id="input-topic" type="text" placeholder="Topic"></p>
 
             <p><textarea id="input-description" placeholder="Description" rows="5"></textarea></p>
 
             <p>
-                <button id="button-add-challenge" ng-click="createNewChallenge">Add Challenge</button>
+                <button ng-click="createNewChallenge()">Add Challenge</button>
             </p>
         </form>
     </section>

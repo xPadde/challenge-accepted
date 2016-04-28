@@ -1,4 +1,4 @@
-app.controller('ChallengeAccepted', ['$scope', '$http', function ($scope, $http) {
+app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
 
     $scope.getUserInputsFromCreateChallengeForm = function () {
         return JSON.stringify({
