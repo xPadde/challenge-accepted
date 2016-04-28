@@ -9,18 +9,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
 import java.util.Random;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ChallengeControllerTest {
 
     @Mock
     private ChallengeService challengeService;
-
 
     @InjectMocks
     private ChallengeController challengeController;
@@ -31,20 +28,18 @@ public class ChallengeControllerTest {
     }
 
     @Test
-    public void testCreateChallenge() throws Exception {
-        assertEquals("createChallenge() did not respond with http status 201 (created)", new ResponseEntity(HttpStatus.CREATED), challengeController.createChallenge(new ChallengeModel()));
+    public void testCreateChallenge_Should_Return_Status_Code_201() throws Exception {
+        assertEquals("createChallenge() did not respond with http status 201 (created)", HttpStatus.CREATED, challengeController.createChallenge(new ChallengeModel()).getStatusCode());
     }
 
     @Test
-    public void testReadChallenge() throws Exception {
-        assertEquals("readChallenge() did not respond with http status 200 (ok)", new ResponseEntity(HttpStatus.OK), challengeController.readChallenge(new Random().nextLong()));
+    public void testReadChallenge_Should_Return_Status_Code_200() throws Exception {
+        assertEquals("readChallenge() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.readChallenge(new Random().nextLong()).getStatusCode());
     }
 
     @Test
-    public void testReadAllChallenges() throws Exception {
-        String expectedStatusCode = "200";
-        assertEquals("readAllChallenges() did not respond with http status 200 (ok)", expectedStatusCode, challengeController.readAllChallenges().getStatusCode().toString());
-
+    public void testReadAllChallenges_Should_Return_Status_Code_200() throws Exception {
+        assertEquals("readAllChallenges() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.readAllChallenges().getStatusCode());
     }
 
 //    @Test
