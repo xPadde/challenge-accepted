@@ -4,7 +4,7 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
         return JSON.stringify({
             'topic': $('#input-topic').val(),
             'description': $('#input-description').val(),
-            'date': null
+            'creationDate': null
         });
     };
 
