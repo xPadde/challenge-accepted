@@ -5,6 +5,8 @@ import com.challengeaccepted.repositories.ChallengeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 /**
  * Created by Stridsberg on 2016-04-27.
  */
@@ -18,6 +20,10 @@ public class ChallengeService {
         challengeRepository.saveAndFlush(challengeModel);
     }
     public ChallengeModel getChallengeFromDatabase(Long id){
-        return (ChallengeModel) challengeRepository.getOne(id);
+        return challengeRepository.getOne(id);
+    }
+
+    public ArrayList<ChallengeModel> getAllChallengesFromDatabase() {
+        return (ArrayList<ChallengeModel>) challengeRepository.findAll();
     }
 }

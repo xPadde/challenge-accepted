@@ -1,7 +1,9 @@
-package com.challengeaccepted.controllers;
+package challengeaccepted.controllers;
 
+import com.challengeaccepted.controllers.ChallengeController;
 import com.challengeaccepted.models.ChallengeModel;
 import com.challengeaccepted.services.ChallengeService;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -10,14 +12,20 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
 import java.util.Random;
 
+import static javafx.scene.input.KeyCode.T;
 import static org.junit.Assert.*;
 
 public class ChallengeControllerTest {
 
     @Mock
     private ChallengeService challengeService;
+
+    @Mock
+    private ResponseEntity<ChallengeModel> challengeResponse;
+
 
     @InjectMocks
     private ChallengeController challengeController;
@@ -38,13 +46,19 @@ public class ChallengeControllerTest {
     }
 
     @Test
-    public void testUpdateChallenge() throws Exception {
-        assertEquals("updateChallenge() did not respond with http status 200 (ok)", new ResponseEntity(HttpStatus.OK), challengeController.updateChallenge(new Long(new Random().nextLong())));
+    public void testReadAllChallenges() throws Exception {
+        String statusCode = "200";
+        assertEquals("readAllChallenges() did not respond with http status 200 (ok)", statusCode, challengeController.readAllChallenges().getStatusCode().toString());
     }
 
-    @Test
-    public void testDeleteChallenge() throws Exception {
-        assertEquals("deleteChallenge() did not respond with http status 200 (ok)", new ResponseEntity(HttpStatus.OK), challengeController.deleteChallenge(new Long(new Random().nextLong())));
-    }
+//    @Test
+//    public void testUpdateChallenge() throws Exception {
+//        assertEquals("updateChallenge() did not respond with http status 200 (ok)", new ResponseEntity(HttpStatus.OK), challengeController.updateChallenge(new Long(new Random().nextLong())));
+//    }
+//
+//    @Test
+//    public void testDeleteChallenge() throws Exception {
+//        assertEquals("deleteChallenge() did not respond with http status 200 (ok)", new ResponseEntity(HttpStatus.OK), challengeController.deleteChallenge(new Long(new Random().nextLong())));
+//    }
 
 }
