@@ -51,32 +51,46 @@
 
     <section id="section-create-new-challenge" ng-show="section == 'createNewChallengeSection'">
         <h1>Create New Challenge</h1>
-        <form>
-            <p><input id="input-topic" type="text" placeholder="Topic"></p>
-            <p><textarea id="input-description" placeholder="Description" rows="5"></textarea></p>
-            <p>
-                <button ng-click="createNewChallenge()">Create Challenge</button>
-            </p>
+
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <div class="col-sm-4">
+                    <input class="form-control" id="input-topic" type="text" placeholder="Enter topic">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-4">
+                    <textarea class="form-control" id="input-description" placeholder="Description" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4">
+                    <button class="btn btn-default" ng-click="createNewChallenge()">Create Challenge</button>
+
+                </div>
+            </div>
         </form>
     </section>
 
     <section id="section-list-of-challenges" ng-show="section == 'listOfChallengesSection'">
         <h1>List of all Challenges</h1>
+
         <div>
             <table>
                 <thead>
-                    <tr>
-                        <th>Topic</th>
-                        <th>Description</th>
-                        <th>Date of Creation</th>
-                    </tr>
+                <tr>
+                    <th>Topic</th>
+                    <th>Description</th>
+                    <th>Date of Creation</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="challenge in listOfChallenges">
-                        <td>{{challenge.topic}}</td>
-                        <td>{{challenge.description}}</td>
-                        <td>{{challenge.creationDate}}</td>
-                    </tr>
+                <tr ng-repeat="challenge in listOfChallenges">
+                    <td>{{challenge.topic}}</td>
+                    <td>{{challenge.description}}</td>
+                    <td>{{challenge.creationDate}}</td>
+                </tr>
                 </tbody>
             </table>
         </div>
