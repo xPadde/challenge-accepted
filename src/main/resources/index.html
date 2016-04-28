@@ -1,36 +1,86 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="ChallengeAccepted">
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <!--jQuery and Angular-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="https://code.angularjs.org/1.5.5/angular.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>-->
-
     <!--Module-->
     <script src="app/app.js"></script>
     <!--Controller-->
-    <script src="app/controllers/main-controller.js"></script>
-
+    <script src="app/controllers/challenge-controller.js"></script>
     <meta charset="UTF-8">
     <title>Challenge Accepted</title>
 </head>
-<body ng-controller="MainController">
+<body ng-controller="ChallengeController">
+
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ca-navbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Challenge Accepted</a>
+        </div>
+        <div class="collapse navbar-collapse" id="ca-navbar">
+            <ul class="nav navbar-nav">
+                <li><a href="#">Home</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="">Challenge
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a ng-click="showCreateChallengeSection()">Create</a></li>
+                        <li><a ng-click="showListOfChallengesSection()">List</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Log In</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <div class="container-fluid">
 
-    <section>
+    <section id="section-create-new-challenge" ng-show="section == 'createNewChallengeSection'">
         <h1>Create New Challenge</h1>
-
         <form>
             <p><input id="input-topic" type="text" placeholder="Topic"></p>
-
             <p><textarea id="input-description" placeholder="Description" rows="5"></textarea></p>
-
             <p>
-                <button ng-click="createNewChallenge()">Add Challenge</button>
+                <button ng-click="createNewChallenge()">Create Challenge</button>
             </p>
         </form>
     </section>
-    
+
+    <section id="section-list-of-challenges" ng-show="section == 'listOfChallengesSection'">
+        <h1>List of all Challenges</h1>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Topic</th>
+                        <th>Description</th>
+                        <th>Date of Creation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="challenge in listOfChallenges">
+                        <td>{{challenge.topic}}</td>
+                        <td>{{challenge.description}}</td>
+                        <td>{{challenge.creationDate}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 </div>
 </body>
 </html>
