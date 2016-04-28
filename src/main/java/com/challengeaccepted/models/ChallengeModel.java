@@ -15,6 +15,8 @@ public class ChallengeModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private Long challengeCreatorId;
+    private Long challengeClaimerId;
     private String topic;
     private String description;
     private String youtubeURL;
@@ -28,7 +30,6 @@ public class ChallengeModel implements Serializable {
 
 
     public ChallengeModel() {
-
     }
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -36,6 +37,21 @@ public class ChallengeModel implements Serializable {
         return listOfComments;
     }
 
+    public Long getChallengeCreatorId() {
+        return challengeCreatorId;
+    }
+
+    public void setChallengeCreatorId(Long challengeCreatorId) {
+        this.challengeCreatorId = challengeCreatorId;
+    }
+
+    public Long getChallengeClaimerId() {
+        return challengeClaimerId;
+    }
+
+    public void setChallengeClaimerId(Long challengeClaimerId) {
+        this.challengeClaimerId = challengeClaimerId;
+    }
 
     public String getTopic() {
         return topic;
