@@ -8,15 +8,13 @@ app.controller('ChallengeController', ['$scope', '$http', function ($scope, $htt
         });
     };
 
-    $scope.showCreateChallengeSection = function() {
-        console.log("KLICKAD");
+    $scope.showCreateChallengeSection = function () {
         $scope.section = "createNewChallengeSection";
-    }
+    };
 
-    $scope.showListOfChallengesSection = function() {
-        console.log("OCKSÅ KLICKAD!");
+    $scope.showListOfChallengesSection = function () {
         $scope.section = "listOfChallengesSection";
-    }
+    };
 
     $scope.createNewChallenge = function () {
         $http({
@@ -24,27 +22,28 @@ app.controller('ChallengeController', ['$scope', '$http', function ($scope, $htt
             method: 'POST',
             data: $scope.getUserInputsFromCreateChallengeForm(),
             header: {'Content-Type': 'application/json'}
-        }).success(function() {
+        }).success(function () {
             $scope.getListOfChallenges();
             console.log("Success createNewChallenge");
-        }).error(function() {
+        }).error(function () {
             console.log("Error createNewChallenge");
         })
     };
 
     $scope.listOfChallenges = {};
-    $scope.getListOfChallenges = function() {
-    $http({
+    $scope.getListOfChallenges = function () {
+        $http({
             url: 'http://localhost:8080/api/challenges/',
             method: 'GET',
             header: {'Content-Type': 'application/json'}
-        }).success(function(response){
+        }).success(function (response) {
             $scope.listOfChallenges = response;
             console.log("Success get listOfChallenges");
-        }).error(function(){
+        }).error(function () {
             console.log("Error get listOfChallenges");
         })
-    }
+    };
 
-    
+    $scope.getListOfChallenges();
+
 }]);

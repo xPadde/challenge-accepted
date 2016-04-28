@@ -1,5 +1,8 @@
 package com.challengeaccepted.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -77,6 +80,8 @@ public class ChallengeModel implements Serializable {
         this.youtubeURL = youtubeURL;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     public LocalDateTime getCreationDate() {
         return creationDate;
     }
