@@ -1,4 +1,4 @@
-describe("MainController", function () {
+describe("ChallengeController", function () {
 
     beforeEach(module('ChallengeAccepted'));
 
@@ -11,7 +11,7 @@ describe("MainController", function () {
 
     beforeEach(function () {
         $scope = {};
-        controller = $controller('ChallengeAccepted', {$scope: $scope});
+        controller = $controller('ChallengeController', {$scope: $scope});
     });
 
     it('controller should not return null', function () {
@@ -23,7 +23,7 @@ describe("MainController", function () {
     });
 
     it('createNewChallenge() should contain a date, topic and description strings', function () {
-        expect($scope.getUserInputsFromCreateChallengeForm()).toContain('date', 'topic', 'description');
+        expect($scope.getUserInputsFromCreateChallengeForm()).toContain('creationDate', 'topic', 'description');
     })
 
 });
