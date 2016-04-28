@@ -3,6 +3,7 @@ package com.challengeaccepted.models;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 /**
  * Created by Stridsberg on 2016-04-27.
@@ -16,18 +17,25 @@ public class ChallengeModel implements Serializable {
 
     private String topic;
     private String description;
+    private String youtubeURL;
     private LocalDateTime creationDate;
+    private Long upvotes;
+    private ArrayList<CommentModel> listOfComments;
+    private Boolean isChallengeClaimed;
+    private Boolean isYoutubeVideoUploaded;
+    private Boolean isYoutubeVideoCorrect;
+    private Boolean isChallengeCompleted;
 
 
     public ChallengeModel() {
 
     }
 
-
-
-    public Long getId() {
-        return id;
+    @OneToMany(cascade = CascadeType.ALL)
+    public ArrayList<CommentModel> getListOfComments(){
+        return listOfComments;
     }
+
 
     public String getTopic() {
         return topic;
@@ -45,11 +53,59 @@ public class ChallengeModel implements Serializable {
         this.description = description;
     }
 
+    public String getYoutubeURL() {
+        return youtubeURL;
+    }
+
+    public void setYoutubeURL(String youtubeURL) {
+        this.youtubeURL = youtubeURL;
+    }
+
     public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public Long getUpvotes() {
+        return upvotes;
+    }
+
+    public void setUpvotes(Long upvotes) {
+        this.upvotes = upvotes;
+    }
+
+    public Boolean getChallengeClaimed() {
+        return isChallengeClaimed;
+    }
+
+    public void setChallengeClaimed(Boolean challengeClaimed) {
+        isChallengeClaimed = challengeClaimed;
+    }
+
+    public Boolean getYoutubeVideoUploaded() {
+        return isYoutubeVideoUploaded;
+    }
+
+    public void setYoutubeVideoUploaded(Boolean youtubeVideoUploaded) {
+        isYoutubeVideoUploaded = youtubeVideoUploaded;
+    }
+
+    public Boolean getYoutubeVideoCorrect() {
+        return isYoutubeVideoCorrect;
+    }
+
+    public void setYoutubeVideoCorrect(Boolean youtubeVideoCorrect) {
+        isYoutubeVideoCorrect = youtubeVideoCorrect;
+    }
+
+    public Boolean getChallengeCompleted() {
+        return isChallengeCompleted;
+    }
+
+    public void setChallengeCompleted(Boolean challengeCompleted) {
+        isChallengeCompleted = challengeCompleted;
     }
 }
