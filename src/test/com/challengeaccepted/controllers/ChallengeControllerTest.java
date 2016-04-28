@@ -3,7 +3,6 @@ package challengeaccepted.controllers;
 import com.challengeaccepted.controllers.ChallengeController;
 import com.challengeaccepted.models.ChallengeModel;
 import com.challengeaccepted.services.ChallengeService;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -15,16 +14,12 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static javafx.scene.input.KeyCode.T;
 import static org.junit.Assert.*;
 
 public class ChallengeControllerTest {
 
     @Mock
     private ChallengeService challengeService;
-
-    @Mock
-    private ResponseEntity<ChallengeModel> challengeResponse;
 
 
     @InjectMocks
@@ -47,8 +42,9 @@ public class ChallengeControllerTest {
 
     @Test
     public void testReadAllChallenges() throws Exception {
-        String statusCode = "200";
-        assertEquals("readAllChallenges() did not respond with http status 200 (ok)", statusCode, challengeController.readAllChallenges().getStatusCode().toString());
+        String expectedStatusCode = "200";
+        assertEquals("readAllChallenges() did not respond with http status 200 (ok)", expectedStatusCode, challengeController.readAllChallenges().getStatusCode().toString());
+
     }
 
 //    @Test
