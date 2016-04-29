@@ -15,6 +15,10 @@ public class UserService {
     private UserRepository userRepository;
 
     public void saveUserToDatabase(UserModel userModel) {
-     userRepository.saveAndFlush(userModel);
+        userRepository.saveAndFlush(userModel);
+    }
+
+    public UserModel getUserFromDatabase(Long id) {
+        return userRepository.findOne(id);
     }
 }
