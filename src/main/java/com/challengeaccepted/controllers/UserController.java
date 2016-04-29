@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
     public ResponseEntity updateUser(@RequestBody UserModel userModel) {
         userService.updateUserInDatabase(userModel);
         return new ResponseEntity(HttpStatus.OK);

@@ -35,6 +35,10 @@ public class ChallengeModel implements Serializable {
     public ChallengeModel() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
     @OneToMany(cascade = CascadeType.ALL)
     public ArrayList<CommentModel> getListOfComments(){
         return listOfComments;
