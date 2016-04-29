@@ -1,4 +1,4 @@
-app.controller('ChallengeController', ['$scope', '$http', function ($scope, $http) {
+app.controller('ChallengeController', ['$scope', '$http', 'challengeService', function ($scope, $http, challengeService) {
 
     $scope.getUserInputsFromCreateChallengeForm = function () {
         return JSON.stringify({
@@ -17,31 +17,28 @@ app.controller('ChallengeController', ['$scope', '$http', function ($scope, $htt
     };
 
     $scope.createNewChallenge = function () {
-        $http({
-            url: 'http://localhost:8080/api/challenge/',
-            method: 'POST',
-            data: $scope.getUserInputsFromCreateChallengeForm(),
-            header: {'Content-Type': 'application/json'}
-        }).success(function () {
+        //$http({
+        //    url: 'http://localhost:8080/api/challenge/',
+        //    method: 'POST',
+        //    data: $scope.getUserInputsFromCreateChallengeForm(),
+        //    header: {'Content-Type': 'application/json'}
+        //}).success(function () {
+        //    //$scope.getListOfChallenges();
+        //    console.log("Success createNewChallenge");
+        //}).error(function () {
+        //    console.log("Error createNewChallenge");
+        //})
+        challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm()).success(function () {
+            console.log('challengeService created a new challenge and saved it to database!')
             $scope.getListOfChallenges();
-            console.log("Success createNewChallenge");
-        }).error(function () {
-            console.log("Error createNewChallenge");
-        })
+        });
     };
 
-    $scope.listOfChallenges = {};
     $scope.getListOfChallenges = function () {
-        $http({
-            url: 'http://localhost:8080/api/challenges/',
-            method: 'GET',
-            header: {'Content-Type': 'application/json'}
-        }).success(function (response) {
+        challengeService.getListOfChallenges().success(function (response) {
             $scope.listOfChallenges = response;
-            console.log("Success get listOfChallenges");
-        }).error(function () {
-            console.log("Error get listOfChallenges");
-        })
+            console.log('challengeService fetched the challenge list from the database succesfully!')
+        });
     };
 
     $scope.getListOfChallenges();
