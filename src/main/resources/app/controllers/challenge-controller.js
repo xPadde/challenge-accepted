@@ -15,6 +15,17 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
                 });
             };
 
+    $scope.loginUser = function () {
+        $scope.getListOfUsers();
+
+        var username = $('#input-login-username').val();
+        var password = $('#input-login-password').val();
+
+        console.log("Testa funktion vid log in" + username + " " + password);
+
+
+    };
+
     $scope.showCreateChallengeSection = function () {
         $scope.section = "createNewChallengeSection";
     };
@@ -45,6 +56,13 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
         challengeService.getListOfChallenges().success(function (response) {
             $scope.listOfChallenges = response;
             console.log('challengeService fetched the challenge list from the database succesfully!')
+        });
+    };
+
+    $scope.getListOfUsers = function () {
+        userService.getListOfUsers().success(function (response) {
+            $scope.listOfUsers = response;
+            console.log('userService fetched the user list from the database succesfully!')
         });
     };
 

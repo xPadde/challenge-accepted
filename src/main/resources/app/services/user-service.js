@@ -7,6 +7,14 @@ app.factory('userService', function ($http) {
                 data: data,
                 header: {'Content-Type': 'application/json'}
             })
+        },
+        getListOfUsers: function () {
+            return $http({
+                url: 'http://localhost:8080/api/users/',
+                method: 'GET',
+                header: {'Content-Type': 'application/json'}
+            })
+
         }
     };
 });
