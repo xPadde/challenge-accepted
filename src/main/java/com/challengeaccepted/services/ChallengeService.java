@@ -26,4 +26,8 @@ public class ChallengeService {
     public ArrayList<ChallengeModel> getAllChallengesFromDatabase() {
         return (ArrayList<ChallengeModel>) challengeRepository.findAll();
     }
+
+    public void updateChallengeInDatabase(ChallengeModel challengeModelFromWeb) {
+        challengeRepository.save(challengeModelFromWeb);
+    }
 }

@@ -29,4 +29,11 @@ public class UserController {
     public ResponseEntity<UserModel> readUser(@PathVariable Long id) {
         return new ResponseEntity<UserModel>(userService.getUserFromDatabase(id), HttpStatus.OK);
     }
+
+    @CrossOrigin
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.PATCH)
+    public ResponseEntity updateUser(@RequestBody UserModel userModel) {
+        userService.updateUserInDatabase(userModel);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

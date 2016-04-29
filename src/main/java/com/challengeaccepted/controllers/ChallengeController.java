@@ -33,4 +33,11 @@ public class ChallengeController {
     public ResponseEntity<ArrayList<ChallengeModel>> readAllChallenges(){
         return new ResponseEntity<ArrayList<ChallengeModel>>(challengeService.getAllChallengesFromDatabase(), HttpStatus.OK);
     }
+
+    @CrossOrigin
+    @RequestMapping(value = "/challenge/{id}", method = RequestMethod.PATCH)
+    public ResponseEntity updateChallenge(@RequestBody ChallengeModel challengeModel) {
+        challengeService.updateChallengeInDatabase(challengeModel);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

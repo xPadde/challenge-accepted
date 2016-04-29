@@ -21,4 +21,8 @@ public class UserService {
     public UserModel getUserFromDatabase(Long id) {
         return userRepository.findOne(id);
     }
+
+    public void updateUserInDatabase(UserModel userModelFromWeb) {
+        userRepository.save(userModelFromWeb);
+    }
 }
