@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by joel_ on 2016-04-29.
@@ -22,8 +19,14 @@ public class UserController {
 
     @CrossOrigin
     @RequestMapping(value = "/user/", method = RequestMethod.POST)
-    public ResponseEntity createUser(@RequestBody UserModel userModel){
+    public ResponseEntity createUser(@RequestBody UserModel userModel) {
         userService.saveUserToDatabase(userModel);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    public ResponseEntity<UserModel> readUser(@PathVariable Long id) {
+        return new ResponseEntity<UserModel>(userService.getUserFromDatabase(id), HttpStatus.OK);
     }
 }
