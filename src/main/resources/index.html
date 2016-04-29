@@ -36,7 +36,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a ng-click="showCreateChallengeSection()">Create</a></li>
-                        <li><a ng-click="showListOfChallengesSection()">List</a></li>
+                        <li><a ng-click="showListOfChallengesSection()">Available</a></li>
                     </ul>
                 </li>
             </ul>
@@ -74,10 +74,10 @@
     </section>
 
     <section id="section-list-of-challenges" ng-show="section == 'listOfChallengesSection'">
-        <h1>List of all Challenges</h1>
+        <h1>All available challenges</h1>
 
         <div>
-            <table>
+            <table class="table table-hover">
                 <thead>
                 <tr>
                     <th>Topic</th>
