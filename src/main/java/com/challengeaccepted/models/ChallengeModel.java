@@ -40,6 +40,10 @@ public class ChallengeModel implements Serializable {
         return listOfComments;
     }
 
+    public void setListOfComments(ArrayList<CommentModel> listOfComments) {
+        this.listOfComments = listOfComments;
+    }
+
     public Long getChallengeCreatorId() {
         return challengeCreatorId;
     }
