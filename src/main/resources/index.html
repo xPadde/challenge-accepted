@@ -11,127 +11,130 @@
     <script src="app/app.js"></script>
     <!--Controller-->
     <script src="app/controllers/challenge-controller.js"></script>
+    <script src="app/controllers/user-controller.js"></script>
     <!--Services-->
     <script src="app/services/challenge-service.js"></script>
+    <script src="app/services/user-service.js"></script>
     <meta charset="UTF-8">
     <title>Challenge Accepted</title>
 </head>
-<body ng-controller="ChallengeController">
+<body ng-controller="UserController">
+<div ng-controller="ChallengeController">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ca-navbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Challenge Accepted</a>
+            </div>
+            <div class="collapse navbar-collapse" id="ca-navbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">Home</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="">Challenge
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a ng-click="showCreateChallengeSection()">Create</a></li>
+                            <li><a ng-click="showListOfChallengesSection()">Available</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="">User
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a ng-click="showCreateUserSection()">Create</a></li>
+                            <li><a ng-click="#">List</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Log In</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-
-<nav class="navbar navbar-default">
     <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ca-navbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Challenge Accepted</a>
-        </div>
-        <div class="collapse navbar-collapse" id="ca-navbar">
-            <ul class="nav navbar-nav">
-                <li><a href="#">Home</a></li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="">Challenge
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a ng-click="showCreateChallengeSection()">Create</a></li>
-                        <li><a ng-click="showListOfChallengesSection()">Available</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="">User
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a ng-click="#">Create</a></li>
-                        <li><a ng-click="#">List</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Log In</a></li>
-            </ul>
-        </div>
+        <section id="section-create-new-user" ng-show="section == 'createNewUserSection'">
+            <h1>Create New User</h1>
+
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <input class="form-control" id="input-username" type="text" placeholder="Choose username">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" id="input-password" placeholder="Choose password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <button class="btn btn-default" ng-click="createNewUser()">Create User</button>
+                    </div>
+                </div>
+
+            </form>
+
+        </section>
     </div>
-</nav>
 
-<div class="container-fluid">
-    <section id="section-create-new-user"> <!--ng-show="section == 'createUserSection'"-->
-        <h1>Create New User</h1>
+    <div class="container-fluid">
 
-        <form class="form-horizontal" role="form">
-            <div class="form-group">
-                <div class="col-sm-4">
-                    <input class="form-control" id="input-username" type="text" placeholder="Choose username">
+        <section id="section-create-new-challenge" ng-show="section == 'createNewChallengeSection'">
+            <h1>Create New Challenge</h1>
+
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <input class="form-control" id="input-topic" type="text" placeholder="Enter topic">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-4">
-                    <input type="password" class="form-control" id="input-password" placeholder="Choose password">
+
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <textarea class="form-control" id="input-description" placeholder="Description"
+                                  rows="5"></textarea>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-4">
-                    <button class="btn btn-default" ng-click="#">Create User</button>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <button class="btn btn-default" ng-click="createNewChallenge()">Create Challenge</button>
+
+                    </div>
                 </div>
+            </form>
+        </section>
+
+        <section id="section-list-of-challenges" ng-show="section == 'listOfChallengesSection'">
+            <h1>All available challenges</h1>
+
+            <div>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Topic</th>
+                        <th>Description</th>
+                        <th>Date of Creation</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="challenge in listOfChallenges">
+                        <td>{{challenge.topic}}</td>
+                        <td>{{challenge.description}}</td>
+                        <td>{{challenge.creationDate}}</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-
-        </form>
-
-    </section>
-</div>
-
-<div class="container-fluid">
-
-    <section id="section-create-new-challenge" ng-show="section == 'createNewChallengeSection'">
-        <h1>Create New Challenge</h1>
-
-        <form class="form-horizontal" role="form">
-            <div class="form-group">
-                <div class="col-sm-4">
-                    <input class="form-control" id="input-topic" type="text" placeholder="Enter topic">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-sm-4">
-                    <textarea class="form-control" id="input-description" placeholder="Description" rows="5"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-4">
-                    <button class="btn btn-default" ng-click="createNewChallenge()">Create Challenge</button>
-
-                </div>
-            </div>
-        </form>
-    </section>
-
-    <section id="section-list-of-challenges" ng-show="section == 'listOfChallengesSection'">
-        <h1>All available challenges</h1>
-
-        <div>
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Topic</th>
-                    <th>Description</th>
-                    <th>Date of Creation</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="challenge in listOfChallenges">
-                    <td>{{challenge.topic}}</td>
-                    <td>{{challenge.description}}</td>
-                    <td>{{challenge.creationDate}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
+        </section>
+    </div>
 </div>
 </body>
 </html>
