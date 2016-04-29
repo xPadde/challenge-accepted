@@ -67,6 +67,7 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
             for(var i = 0; i<$scope.listOfUsers.length; i++){
                 if(username == $scope.listOfUsers[i].userName && password == $scope.listOfUsers[i].password){
                     console.log("nu stämde login");
+                    
                 }else{
                     console.log("den stämde inte");
                 }
