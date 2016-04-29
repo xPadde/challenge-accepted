@@ -8,10 +8,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-/**
- * Created by Stridsberg on 2016-04-27.
- */
 @Entity
+@NamedQuery(
+        name = "ChallengeModel.findAllCompletedChallenges",
+        query = "select c from ChallengeModel c where c.isChallengeCompleted = true")
 public class ChallengeModel implements Serializable {
 
     @Id
@@ -40,7 +40,7 @@ public class ChallengeModel implements Serializable {
     }
 
     @OneToMany(cascade = CascadeType.ALL)
-    public ArrayList<CommentModel> getListOfComments(){
+    public ArrayList<CommentModel> getListOfComments() {
         return listOfComments;
     }
 
@@ -88,7 +88,7 @@ public class ChallengeModel implements Serializable {
         this.youtubeURL = youtubeURL;
     }
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     public LocalDateTime getCreationDate() {
         return creationDate;
