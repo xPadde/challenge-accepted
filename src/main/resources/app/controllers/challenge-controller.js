@@ -17,17 +17,6 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', fu
     };
 
     $scope.createNewChallenge = function () {
-        //$http({
-        //    url: 'http://localhost:8080/api/challenge/',
-        //    method: 'POST',
-        //    data: $scope.getUserInputsFromCreateChallengeForm(),
-        //    header: {'Content-Type': 'application/json'}
-        //}).success(function () {
-        //    //$scope.getListOfChallenges();
-        //    console.log("Success createNewChallenge");
-        //}).error(function () {
-        //    console.log("Error createNewChallenge");
-        //})
         challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm()).success(function () {
             console.log('challengeService created a new challenge and saved it to database!')
             $scope.getListOfChallenges();
