@@ -1,5 +1,7 @@
 app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'userService', function ($scope, $http, challengeService, userService) {
 
+    var list = [];
+    
     $scope.getUserInputsFromCreateChallengeForm = function () {
         return JSON.stringify({
             'topic': $('#input-topic').val(),
@@ -16,14 +18,12 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
             };
 
     $scope.loginUser = function () {
-        $scope.getListOfUsers();
 
         var username = $('#input-login-username').val();
         var password = $('#input-login-password').val();
 
-        console.log("Testa funktion vid log in" + username + " " + password);
-
-
+        $scope.validateLogin(username, password);
+        
     };
 
     $scope.showCreateChallengeSection = function () {
@@ -59,9 +59,19 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
         });
     };
 
-    $scope.getListOfUsers = function () {
-        userService.getListOfUsers().success(function (response) {
+    $scope.listOfUsers = [];
+    $scope.validateLogin = function (username, password) {
+        userService.validateLogin().success(function (response) {
             $scope.listOfUsers = response;
+
+            for(var i = 0; i<$scope.listOfUsers.length; i++){
+                if(username == $scope.listOfUsers[i].userName && password == $scope.listOfUsers[i].password){
+                    console.log("nu stämde login");
+                }else{
+                    console.log("den stämde inte");
+                }
+            }
+
             console.log('userService fetched the user list from the database succesfully!')
         });
     };

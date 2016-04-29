@@ -8,7 +8,7 @@ app.factory('userService', function ($http) {
                 header: {'Content-Type': 'application/json'}
             })
         },
-        getListOfUsers: function () {
+        validateLogin: function () {
             return $http({
                 url: 'http://localhost:8080/api/users/',
                 method: 'GET',
