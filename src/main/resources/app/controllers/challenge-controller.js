@@ -26,6 +26,10 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
         
     };
 
+    $scope.showLoginWindowSection = function() {
+        $scope.section = "loginWindowSection";
+    }
+
     $scope.showCreateChallengeSection = function () {
         $scope.section = "createNewChallengeSection";
     };
@@ -33,6 +37,7 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
     $scope.showListOfChallengesSection = function () {
         $scope.section = "listOfChallengesSection";
     };
+
     $scope.showSecretListOfChallengesSection = function () {
         $scope.section = "secretListOfChallengesSection";
     };

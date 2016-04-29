@@ -51,7 +51,7 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Log In</a></li>
+                <li><a href="#" ng-click="showLoginWindowSection()">Log In</a></li>
             </ul>
         </div>
     </div>
@@ -156,7 +156,7 @@
     </section>
 
     <section>
-        <form class="form-horizontal" role="form">
+        <form class="form-horizontal" role="form" ng-show="section == 'loginWindowSection'">
             <div class="form-group">
                 <div class="col-sm-4">
                     <input type="text" class="form-control" placeholder="User Name" id="input-login-username">
