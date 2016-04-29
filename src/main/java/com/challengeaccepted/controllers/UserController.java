@@ -21,7 +21,7 @@ public class UserController {
     @RequestMapping(value = "/user/", method = RequestMethod.POST)
     public ResponseEntity createUser(@RequestBody UserModel userModel) {
         userService.saveUserToDatabase(userModel);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @CrossOrigin
