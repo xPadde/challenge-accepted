@@ -5,9 +5,8 @@ import com.challengeaccepted.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * Created by joel_ on 2016-04-29.
- */
+import java.util.ArrayList;
+
 @Service
 public class UserService {
 
@@ -25,4 +24,9 @@ public class UserService {
     public void updateUserInDatabase(UserModel userModelFromWeb) {
         userRepository.save(userModelFromWeb);
     }
+
+    public ArrayList<UserModel> getAllUsersFromDatabase() {
+        return (ArrayList<UserModel>) userRepository.findAll();
+    }
+
 }

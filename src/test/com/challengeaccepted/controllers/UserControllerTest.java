@@ -37,6 +37,11 @@ public class UserControllerTest {
         assertEquals("readUser() did not respond with http status 200 (ok)", HttpStatus.OK, userController.readUser(new Random().nextLong()).getStatusCode());
     }
 
+    @Test
+    public void testReadAllUsers_Should_Return_Status_Code_200() throws Exception {
+        assertEquals("getAllUsersFromDatabase() did not respond with http status 200 (ok)", HttpStatus.OK, userController.readAllUsers().getStatusCode());
+    }
+
 /*    @Test
     public void testDeleteUser_Should_Return_Status_Code_200() throws Exception {
         assertEquals("deleteUser() did not respond with http status 200 (delete)", HttpStatus.OK, userController.deleteUser(new UserModel()).getStatusCode());

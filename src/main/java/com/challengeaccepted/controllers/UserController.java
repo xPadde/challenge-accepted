@@ -8,9 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Created by joel_ on 2016-04-29.
- */
+import java.util.ArrayList;
+
 @Controller
 public class UserController {
 
@@ -31,9 +30,16 @@ public class UserController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.PATCH)
     public ResponseEntity updateUser(@RequestBody UserModel userModel) {
         userService.updateUserInDatabase(userModel);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @CrossOrigin
+    @RequestMapping(value = "/users/", method = RequestMethod.GET)
+    public ResponseEntity<ArrayList<UserModel>> readAllUsers() {
+        return new ResponseEntity<ArrayList<UserModel>>(userService.getAllUsersFromDatabase(), HttpStatus.OK);
+    }
+
 }
