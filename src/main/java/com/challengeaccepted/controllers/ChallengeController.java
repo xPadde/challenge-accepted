@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class ChallengeController {
@@ -30,8 +30,14 @@ public class ChallengeController {
 
     @CrossOrigin
     @RequestMapping(value = "/challenges/", method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<ChallengeModel>> readAllChallenges(){
-        return new ResponseEntity<ArrayList<ChallengeModel>>(challengeService.getAllChallengesFromDatabase(), HttpStatus.OK);
+    public ResponseEntity<List<ChallengeModel>> readAllChallenges() {
+        return new ResponseEntity<List<ChallengeModel>>(challengeService.getAllChallengesFromDatabase(), HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/challenges/completed/", method = RequestMethod.GET)
+    public ResponseEntity<List<ChallengeModel>> readAllCompletedChallenges() {
+        return new ResponseEntity<List<ChallengeModel>>(challengeService.getAllCompletedChallengesFromDatabase(), HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -40,4 +46,5 @@ public class ChallengeController {
         challengeService.updateChallengeInDatabase(challengeModel);
         return new ResponseEntity(HttpStatus.OK);
     }
+
 }

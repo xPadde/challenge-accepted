@@ -9,9 +9,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Entity
-@NamedQuery(
-        name = "ChallengeModel.findAllCompletedChallenges",
-        query = "select c from ChallengeModel c where c.isChallengeCompleted = true")
 public class ChallengeModel implements Serializable {
 
     @Id
@@ -30,7 +27,6 @@ public class ChallengeModel implements Serializable {
     private Boolean isYoutubeVideoUploaded;
     private Boolean isYoutubeVideoCorrect;
     private Boolean isChallengeCompleted;
-
 
     public ChallengeModel() {
     }
@@ -137,4 +133,5 @@ public class ChallengeModel implements Serializable {
     public void setChallengeCompleted(Boolean challengeCompleted) {
         isChallengeCompleted = challengeCompleted;
     }
+
 }

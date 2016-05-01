@@ -5,7 +5,6 @@ import com.challengeaccepted.repositories.ChallengeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,16 +21,16 @@ public class ChallengeService {
         return challengeRepository.getOne(id);
     }
 
-    public ArrayList<ChallengeModel> getAllChallengesFromDatabase() {
-        return (ArrayList<ChallengeModel>) challengeRepository.findAll();
+    public List<ChallengeModel> getAllChallengesFromDatabase() {
+        return challengeRepository.findAll();
     }
 
     public void updateChallengeInDatabase(ChallengeModel challengeModelFromWeb) {
         challengeRepository.save(challengeModelFromWeb);
     }
 
-    public List<ChallengeModel> findAllCompletedChallenges() {
-        return challengeRepository.findAllCompletedChallenges();
+    public List<ChallengeModel> getAllCompletedChallengesFromDatabase() {
+        return challengeRepository.getByIsChallengeCompleted(true);
     }
 
 }

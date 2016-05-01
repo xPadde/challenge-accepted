@@ -42,6 +42,11 @@ public class ChallengeControllerTest {
         assertEquals("readAllChallenges() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.readAllChallenges().getStatusCode());
     }
 
+    @Test
+    public void readAllCompletedChallenges_Should_Return_Status_Code_200() throws Exception {
+        assertEquals("readAllCompletedChallenges() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.readAllCompletedChallenges().getStatusCode());
+    }
+
 //    @Test
 //    public void testUpdateChallenge() throws Exception {
 //        assertEquals("updateChallenge() did not respond with http status 200 (ok)", new ResponseEntity(HttpStatus.OK), challengeController.updateChallenge(new Long(new Random().nextLong())));

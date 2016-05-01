@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ChallengeRepository extends JpaRepository<ChallengeModel, Long> {
 
-    List<ChallengeModel> findAllCompletedChallenges();
+    List<ChallengeModel> getByIsChallengeCompleted(boolean isChallengeCompleted);
 
 }
