@@ -3,10 +3,8 @@ package com.challengeaccepted.models;
 import javax.persistence.*;
 import java.util.ArrayList;
 
-/**
- * Created by joel_ on 2016-04-29.
- */
 @Entity
+@Table(name = "users")
 public class UserModel {
 
     @Id
@@ -69,4 +67,5 @@ public class UserModel {
     public ArrayList<ChallengeModel> getRequestedChallenges() {
         return requestedChallenges;
     }
+
 }

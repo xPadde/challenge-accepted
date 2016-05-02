@@ -7,8 +7,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name = "challenges")
 public class ChallengeModel implements Serializable {
 
     @Id
@@ -22,7 +24,7 @@ public class ChallengeModel implements Serializable {
     private String youtubeURL;
     private LocalDateTime creationDate;
     private Long upvotes;
-    private ArrayList<CommentModel> listOfComments;
+    private List<CommentModel> listOfComments;
     private Boolean isChallengeClaimed;
     private Boolean isYoutubeVideoUploaded;
     private Boolean isYoutubeVideoCorrect;
@@ -36,7 +38,7 @@ public class ChallengeModel implements Serializable {
     }
 
     @OneToMany(cascade = CascadeType.ALL)
-    public ArrayList<CommentModel> getListOfComments() {
+    public List<CommentModel> getListOfComments() {
         return listOfComments;
     }
 

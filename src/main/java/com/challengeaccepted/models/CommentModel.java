@@ -1,16 +1,11 @@
 package com.challengeaccepted.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-/**
- * Created by joel_ on 2016-04-28.
- */
 @Entity
+@Table(name = "comments")
 public class CommentModel implements Serializable {
 
     @Id
@@ -56,4 +51,5 @@ public class CommentModel implements Serializable {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
 }
