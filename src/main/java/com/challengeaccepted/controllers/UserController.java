@@ -2,6 +2,7 @@ package com.challengeaccepted.controllers;
 
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.UserService;
+import org.hibernate.annotations.SourceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,18 @@ public class UserController {
     @CrossOrigin
     @RequestMapping(value = "/user/", method = RequestMethod.POST)
     public ResponseEntity createUser(@RequestBody UserModel userModel) {
-        userService.saveUserToDatabase(userModel);
+
+        UserModel tempUserModel = readUserByEmail(userModel.getEmail());
+
+        if(tempUserModel == null || tempUserModel.getEmail().equals("")){
+            userService.saveUserToDatabase(userModel);
+            System.out.println("nu fanns den inte");
+        }else{
+            tempUserModel.setFirstName(userModel.getFirstName());
+            tempUserModel.setLastName(userModel.getLastName());
+            updateUser(tempUserModel);
+            System.out.println("nu fanns den");
+        }
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
@@ -46,6 +58,12 @@ public class UserController {
     @RequestMapping(value = "/user/googletokenid/{googleTokenId}", method = RequestMethod.GET)
     public ResponseEntity<UserModel> readUserByGoogleTokenId(@PathVariable String googleTokenId) {
         return new ResponseEntity<UserModel>(userService.getUserByGoogleTokenIdFromDatabase(googleTokenId), HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/user/email/{email}", method = RequestMethod.GET)
+    public UserModel readUserByEmail(@PathVariable String email){
+        return userService.getUserEmailFromDatabase(email);
     }
 
 }
