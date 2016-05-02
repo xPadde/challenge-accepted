@@ -15,7 +15,7 @@ public class CommentModel implements Serializable {
     private Long userModelId;
     private Long challengeModelId;
     private LocalDateTime commentDate;
-    private String comment;
+    private String content;
 
     public CommentModel() {
     }
@@ -44,12 +44,12 @@ public class CommentModel implements Serializable {
         this.commentDate = commentDate;
     }
 
-    public String getComment() {
-        return comment;
+    public String getContent() {
+        return content;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setContent(String content) {
+        this.content = content;
     }
 
 }
