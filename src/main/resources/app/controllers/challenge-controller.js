@@ -59,9 +59,10 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
         userService.createNewUser($scope.getUserInputsFromCreateUserForm())
             .success(function () {
                 console.log('userService.createNewUser() called and it created a new user and saved it to the database!');
-            }).error(function () {
-            console.log('userService.createNewUser() called and it ***FAILED*** to create a new user!');
-        })
+            })
+            .error(function () {
+                console.log('userService.createNewUser() called and it ***FAILED*** to create a new user!');
+            })
     };
 
     $scope.getListOfChallenges = function () {
@@ -69,9 +70,10 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
             .success(function (response) {
                 $scope.listOfChallenges = response;
                 console.log('challengeService.getListOfChallenges() fetched all the challenges from the database successfully!')
-            }).error(function () {
+            })
+            .error(function () {
                 console.log('challengeService.getListOfChallenges() ***FAILED*** to fetch all the challenges from the database!')
-        })
+            })
     };
 
     $scope.listOfUsers = [];
