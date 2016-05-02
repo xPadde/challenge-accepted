@@ -19,7 +19,8 @@ app.controller('GoogleUserController', ['$scope','userService', function($scope,
         return JSON.stringify({
             'firstName': profile.getGivenName(),
             'lastName': profile.getFamilyName(),
-            'googleTokenId': "Padde"
+            'googleTokenId': "Padde",
+            'email': profile.getEmail()
         });
     }
 

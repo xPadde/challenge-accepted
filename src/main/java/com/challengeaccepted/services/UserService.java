@@ -32,4 +32,8 @@ public class UserService {
     public UserModel getUserByGoogleTokenIdFromDatabase(String googleTokenId) {
         return userRepository.getByGoogleTokenId(googleTokenId);
     }
+
+    public UserModel getUserEmailFromDatabase(String email) {
+        return userRepository.getByEmail(email);
+    }
 }
