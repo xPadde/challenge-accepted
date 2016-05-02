@@ -100,6 +100,8 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
         );
     };
 
+
+    
     $scope.getListOfChallenges();
 
 }]);

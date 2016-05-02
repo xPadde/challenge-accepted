@@ -11,9 +11,11 @@
     <script src="app/app.js"></script>
     <!--Controller-->
     <script src="app/controllers/challenge-controller.js"></script>
+    <script src="app/controllers/google-user-controller.js"></script>
     <!--Services-->
     <script src="app/services/challenge-service.js"></script>
     <script src="app/services/user-service.js"></script>
+    <meta name="google-signin-client_id" content="483335808440-pn6cvg2jf3iseqmna3rj4883bhkg5lvo.apps.googleusercontent.com">
     <meta charset="UTF-8">
     <title>Challenge Accepted</title>
 </head>
@@ -51,7 +53,11 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" ng-click="showLoginWindowSection()">Log In</a></li>
+                <div ng-controller="GoogleUserController">
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    <a href="#" ng-click="signOut()">Sign out</a>
+                </div>
+                <!--<li><a href="#" ng-click="showLoginWindowSection()">Log In</a></li>-->
             </ul>
         </div>
     </div>
@@ -158,22 +164,22 @@
         </div>
     </section>
 
-    <section>
-        <form class="form-horizontal" role="form" ng-show="section == 'loginWindowSection'">
-            <div class="form-group">
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" placeholder="User Name" id="input-login-username">
-                </div>
-                <div class="col-sm-4">
-                    <input type="password" class="form-control" placeholder="Password" id="input-login-password">
-                </div>
-                <div class="col-sm-4">
-                    <button class="btn btn-default" ng-click="loginUser()">Log in</button>
-                </div>
-            </div>
-        </form>
-    </section>
+    <!--<section>-->
+        <!--<form class="form-horizontal" role="form" ng-show="section == 'loginWindowSection'">-->
+            <!--<div class="form-group">-->
+                <!--<div class="col-sm-4">-->
+                    <!--<input type="text" class="form-control" placeholder="User Name" id="input-login-username">-->
+                <!--</div>-->
+                <!--<div class="col-sm-4">-->
+                    <!--<input type="password" class="form-control" placeholder="Password" id="input-login-password">-->
+                <!--</div>-->
+                <!--<div class="col-sm-4">-->
+                    <!--<button class="btn btn-default" ng-click="loginUser()">Log in</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</form>-->
+    <!--</section>-->
 </div>
-
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>
 </html>
