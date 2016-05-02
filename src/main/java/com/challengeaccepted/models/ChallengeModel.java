@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class ChallengeModel implements Serializable {
     private String youtubeURL;
     private LocalDateTime creationDate;
     private Long upvotes;
-    private List<CommentModel> listOfComments;
+    private ArrayList<CommentModel> listOfComments;
     private Boolean isChallengeClaimed;
     private Boolean isYoutubeVideoUploaded;
     private Boolean isYoutubeVideoCorrect;
@@ -38,7 +39,7 @@ public class ChallengeModel implements Serializable {
     }
 
     @OneToMany(cascade = CascadeType.ALL)
-    public List<CommentModel> getListOfComments() {
+    public ArrayList<CommentModel> getListOfComments() {
         return listOfComments;
     }
 
