@@ -1,12 +1,29 @@
-app.controller('GoogleUserController', ['$scope', function($scope){
+app.controller('GoogleUserController', ['$scope','userService', function($scope, userService){
     
     function onSignIn(googleUser) {
         var profile = googleUser.getBasicProfile();
+        var idToken = googleUser.getAuthResponse().id_token;
+        console.log("id token här " + idToken);
         console.log('ID: ' + profile.getId());
         console.log('Name: ' + profile.getName());
         console.log('Image URL: ' + profile.getImageUrl());
         console.log('Email: ' + profile.getEmail());
+
+        userService.createNewUser($scope.getUserInfo(profile, idToken)).success(function () {
+            console.log('userService created a new user and saved it to database!')
+        });
+
     }
+
+    $scope.getUserInfo = function(profile, idToken){
+        return JSON.stringify({
+            'firstName': profile.getGivenName(),
+            'lastName': profile.getFamilyName(),
+            'googleTokenId': "Padde"
+        });
+    }
+
+    
 
     window.onSignIn = onSignIn;
 
@@ -17,4 +34,6 @@ app.controller('GoogleUserController', ['$scope', function($scope){
             console.log(auth2.isSignedIn.get());
         });
     }
+
+
 }]);
