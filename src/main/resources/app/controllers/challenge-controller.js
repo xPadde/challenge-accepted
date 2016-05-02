@@ -18,17 +18,14 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
     };
 
     $scope.loginUser = function () {
-
         var username = $('#input-login-username').val();
         var password = $('#input-login-password').val();
-
         $scope.validateLogin(username, password);
-
     };
 
     $scope.showLoginWindowSection = function () {
         $scope.section = "loginWindowSection";
-    }
+    };
 
     $scope.showCreateChallengeSection = function () {
         $scope.section = "createNewChallengeSection";
@@ -44,28 +41,37 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
 
     $scope.showCreateUserSection = function () {
         $scope.section = "createNewUserSection";
-        console.log("KLICKED");
     };
 
     $scope.createNewChallenge = function () {
-        challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm()).success(function () {
-            console.log('challengeService created a new challenge and saved it to database!')
-            $scope.getListOfChallenges();
-        });
+        challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm())
+            .success(function () {
+                console.log('challengeService.createNewChallenge() called and it created a new challenge and saved it to the database!');
+                $scope.getListOfChallenges();
+            })
+            .error(function () {
+                console.log('challengeService.createNewChallenge() called and it ***FAILED*** to create new challenge');
+            })
     };
 
 
     $scope.createNewUser = function () {
-        userService.createNewUser($scope.getUserInputsFromCreateUserForm()).success(function () {
-            console.log('userService created a new user and saved it to database!')
-        });
+        userService.createNewUser($scope.getUserInputsFromCreateUserForm())
+            .success(function () {
+                console.log('userService.createNewUser() called and it created a new user and saved it to the database!');
+            }).error(function () {
+            console.log('userService.createNewUser() called and it ***FAILED*** to create a new user!');
+        })
     };
 
     $scope.getListOfChallenges = function () {
-        challengeService.getListOfChallenges().success(function (response) {
-            $scope.listOfChallenges = response;
-            console.log('challengeService fetched the challenge list from the database succesfully!')
-        });
+        challengeService.getListOfChallenges()
+            .success(function (response) {
+                $scope.listOfChallenges = response;
+                console.log('challengeService.getListOfChallenges() fetched all the challenges from the database successfully!')
+            }).error(function () {
+                console.log('challengeService.getListOfChallenges() ***FAILED*** to fetch all the challenges from the database!')
+        })
     };
 
     $scope.listOfUsers = [];
@@ -75,33 +81,22 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
 
             for (var i = 0; i < $scope.listOfUsers.length; i++) {
                 if (username == $scope.listOfUsers[i].userName && password == $scope.listOfUsers[i].password) {
-                    console.log("nu stämde login");
+                    console.log("Login correct and showSecretListOfChallengesSection() will be called!");
                     $scope.showSecretListOfChallengesSection();
                 } else {
-                    console.log("den stämde inte");
+                    console.log("Login ***FAILED*** and showSecretListOfChallengesSection() will ***NOT*** be called!");
                 }
             }
-
-            console.log('userService fetched the user list from the database succesfully!')
+            console.log('userService.validateLogin() fetched the user list from the database successfully!')
         });
     };
 
     $scope.acceptChallenge = function (challenge) {
-        var challengeFromDatabase;
-        challengeService.getChallengeById(challenge.id).success(function (response) {
-            challengeFromDatabase = response;
-            challengeFromDatabase.challengeClaimed = true;
-        }).then(function(){
-            challengeService.updateChallenge(challengeFromDatabase).success(function () {
-                // TODO add success handling
-            }).error(function (data) {
-                // TODO add error handing
-            })}
-        );
+        challenge.challengeClaimed = true;
+        challengeService.updateChallenge(challenge);
     };
 
-
-    
+    // Update the list of challenges on page load.
     $scope.getListOfChallenges();
 
 }]);
