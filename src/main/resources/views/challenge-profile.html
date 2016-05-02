@@ -6,9 +6,10 @@
         {{challenge.description}}
         {{challenge.creationDate}}
         {{challenge.upvotes}}
-        <div ng-repeat="content in challenge.listOfComments">
-            <p>{{content.commentDate}}</p>
-            <p>{{content.content}}</p>
+        <div ng-repeat="comment in challenge.listOfComments">
+            <p>{{comment.commentDate}}</p>
+            <p>{{comment.content}}</p>
         </div>
+        {{challenge.isChallengeClaimed}}
     </div>
 </div>
