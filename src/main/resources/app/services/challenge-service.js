@@ -1,5 +1,12 @@
 app.factory('challengeService', function ($http) {
     return {
+        getChallengeById: function(id) {
+            return $http({
+                url: 'http://localhost:8080/api/challenge/' + id,
+                method: 'GET',
+                header: {'Content-Type': 'application/json'}
+            })
+        },
         getListOfChallenges: function () {
             return $http({
                 url: 'http://localhost:8080/api/challenges/',
@@ -17,7 +24,7 @@ app.factory('challengeService', function ($http) {
         },
         updateChallenge: function (data) {
             return $http({
-                url: 'http://localhost:8080/api/challenge/' + data.id,
+                url: 'http://localhost:8080/api/challenge/',
                 method: 'PUT',
                 data: data,
                 header: {'Content-Type': 'application/json'}
