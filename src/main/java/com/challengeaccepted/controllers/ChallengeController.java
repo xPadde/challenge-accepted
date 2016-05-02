@@ -42,7 +42,7 @@ public class ChallengeController {
 
     @CrossOrigin
     @RequestMapping(value = "/challenge/{id}", method = RequestMethod.PUT)
-    public ResponseEntity updateChallenge(@RequestBody ChallengeModel challengeModel) {
+    public ResponseEntity updateChallenge(@RequestBody ChallengeModel challengeModel, @PathVariable Long id) {
         challengeService.updateChallengeInDatabase(challengeModel);
         return new ResponseEntity(HttpStatus.OK);
     }

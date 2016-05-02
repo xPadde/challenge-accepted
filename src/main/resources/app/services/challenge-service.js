@@ -14,6 +14,14 @@ app.factory('challengeService', function ($http) {
                 data: data,
                 header: {'Content-Type': 'application/json'}
             })
+        },
+        updateChallenge: function (data) {
+            return $http({
+                url: 'http://localhost:8080/api/challenge/' + data.id,
+                method: 'PUT',
+                data: data,
+                header: {'Content-Type': 'application/json'}
+            })
         }
     };
 

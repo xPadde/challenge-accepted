@@ -54,6 +54,8 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
         });
     };
 
+
+
     $scope.createNewUser = function () {
                     userService.createNewUser($scope.getUserInputsFromCreateUserForm()).success(function () {
                         console.log('userService created a new user and saved it to database!')
@@ -86,7 +88,14 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
     };
 
     $scope.acceptChallenge = function (challenge) {
-        console.log(challenge);
+        var setIsChallengeClaimedToTrue = {'isChallengeClaimed': 'true', 'id': challenge.id};
+
+        challengeService.updateChallenge(setIsChallengeClaimedToTrue).success(function () {
+            console.log("SUCCESS");
+        }).error( function(data) {
+            console.log(data);
+        });
+
     }
 
     $scope.getListOfChallenges();
