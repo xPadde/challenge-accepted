@@ -87,7 +87,7 @@ public class ChallengeModel implements Serializable {
         this.youtubeURL = youtubeURL;
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     public LocalDateTime getCreationDate() {
         return creationDate;
