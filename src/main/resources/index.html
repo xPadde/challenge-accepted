@@ -120,6 +120,7 @@
                     <th>Topic</th>
                     <th>Description</th>
                     <th>Date of Creation</th>
+                    <th>Här ska det stå nåt</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -127,11 +128,13 @@
                     <td>{{challenge.topic}}</td>
                     <td>{{challenge.description}}</td>
                     <td>{{challenge.creationDate}}</td>
+                    <td><a href="" ng-click="acceptChallenge(challenge)"><span class="glyphicon glyphicon-ok"></span></a></td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </section>
+
     <section id="section-list-of-logged-in-challenges" ng-show="section =='secretListOfChallengesSection'">
         <h1>THE SECRET DIV FOR LOGGED IN USER</h1>
 

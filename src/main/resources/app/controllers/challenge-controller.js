@@ -85,6 +85,10 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
         });
     };
 
+    $scope.acceptChallenge = function (challenge) {
+        console.log(challenge);
+    }
+
     $scope.getListOfChallenges();
 
 }]);
