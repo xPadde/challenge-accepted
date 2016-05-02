@@ -1,3 +1,14 @@
 <div class="panel panel-default">
-
+    <div class="panel-heading">
+        {{challenge.topic}}
+    </div>
+    <div class="panel-body">
+        {{challenge.description}}
+        {{challenge.creationDate}}
+        {{challenge.upvotes}}
+        <div ng-repeat="content in challenge.listOfComments">
+            <p>{{content.commentDate}}</p>
+            <p>{{content.content}}</p>
+        </div>
+    </div>
 </div>
