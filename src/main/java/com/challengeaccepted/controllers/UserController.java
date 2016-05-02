@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
     public ResponseEntity updateUser(@RequestBody UserModel userModel) {
         userService.updateUserInDatabase(userModel);
         return new ResponseEntity(HttpStatus.OK);
@@ -40,6 +40,12 @@ public class UserController {
     @RequestMapping(value = "/users/", method = RequestMethod.GET)
     public ResponseEntity<ArrayList<UserModel>> readAllUsers() {
         return new ResponseEntity<ArrayList<UserModel>>(userService.getAllUsersFromDatabase(), HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/user/googletokenid/{googleTokenId}", method = RequestMethod.GET)
+    public ResponseEntity<UserModel> readUserByGoogleTokenId(@PathVariable String googleTokenId) {
+        return new ResponseEntity<UserModel>(userService.getUserByGoogleTokenIdFromDatabase(googleTokenId), HttpStatus.OK);
     }
 
 }

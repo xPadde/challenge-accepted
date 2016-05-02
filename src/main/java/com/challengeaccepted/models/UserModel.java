@@ -13,8 +13,10 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String userName;
-    private String password;
+    private String googleTokenId;
+    private String firstName;
+    private String lastName;
+    private String email;
     private ArrayList<ChallengeModel> requestedChallenges;
     private ArrayList<ChallengeModel> claimedChallenges;
 
@@ -26,22 +28,36 @@ public class UserModel {
         return id;
     }
 
-
-
-    public String getUserName() {
-        return userName;
+    public String getGoogleTokenId() {
+        return googleTokenId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setGoogleTokenId(String googleTokenId) {
+        this.googleTokenId = googleTokenId;
     }
 
-    public String getPassword() {
-        return password;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @OneToMany(cascade = CascadeType.ALL)
