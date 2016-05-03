@@ -19,18 +19,19 @@ public class UserController {
 
     @CrossOrigin
     @RequestMapping(value = "/user/", method = RequestMethod.POST)
-    public ResponseEntity createUser(@RequestBody UserModel userModel) {
+    public ResponseEntity<UserModel> createUser(@RequestBody UserModel userModel) {
 
         UserModel userToSaveInDatabase = readUserByEmail(userModel.getEmail());
 
         if(userToSaveInDatabase == null || userToSaveInDatabase.getEmail().equals("")){
             userService.saveUserToDatabase(userModel);
+            return new ResponseEntity<UserModel>(userModel, HttpStatus.CREATED);
         }else{
             userToSaveInDatabase.setFirstName(userModel.getFirstName());
             userToSaveInDatabase.setLastName(userModel.getLastName());
             updateUser(userToSaveInDatabase);
+            return new ResponseEntity<UserModel>(userToSaveInDatabase, HttpStatus.CREATED);
         }
-        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @CrossOrigin

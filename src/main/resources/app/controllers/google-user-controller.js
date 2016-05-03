@@ -9,8 +9,12 @@ app.controller('GoogleUserController', ['$scope','userService', function($scope,
         console.log('Image URL: ' + profile.getImageUrl());
         console.log('Email: ' + profile.getEmail());
 
-        userService.createNewUser($scope.getUserInfo(profile)).success(function () {
-            console.log('userService created a new user and saved it to database!')
+        userService.createNewUser($scope.getUserInfo(profile)).success(function (response) {
+            console.log('userService created a new user and saved it to database!');
+            var stringifiedLoggedInUser = JSON.stringify(response);
+            sessionStorage.setItem("loggedInUser", stringifiedLoggedInUser);
+            console.log(stringifiedLoggedInUser);
+            console.log(response.firstName);
         });
 
         $scope.showSecretListOfChallengesSection();
