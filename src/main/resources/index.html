@@ -16,7 +16,7 @@
     <script src="app/services/challenge-service.js"></script>
     <script src="app/services/user-service.js"></script>
     <!--Directives-->
-    <script src="app/directives/challenge-profile-directive.js"></script>
+    <script src="app/directives/challenge-directive.js"></script>
     <script src="app/directives/menu-directive.js"></script>
     <meta name="google-signin-client_id" content="483335808440-pn6cvg2jf3iseqmna3rj4883bhkg5lvo.apps.googleusercontent.com">
     <meta charset="UTF-8">
@@ -24,7 +24,7 @@
 </head>
 <body ng-controller="ChallengeController">
 
-<section class="menu"></section>
+<section class="directive-menu"></section>
 
 <div class="container-fluid">
     <section id="section-create-new-user" ng-show="section == 'createNewUserSection'">
@@ -143,7 +143,7 @@
     <!--</form>-->
     <!--</section>-->
 
-    <section class="challenge-profile"></section>
+    <section class="directive-challenge-profile"></section>
 
 </div>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
