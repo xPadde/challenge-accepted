@@ -6,7 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,15 +16,17 @@ public class ChallengeModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    private Long challengeCreatorId;
-    private Long challengeClaimerId;
+    @OneToOne
+    private UserModel challengeCreator;
+    @OneToOne
+    private UserModel challengeClaimer;
     private String topic;
     private String description;
     private String youtubeURL;
     private LocalDateTime creationDate;
     private Long upvotes;
-    private ArrayList<CommentModel> listOfComments;
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = CommentModel.class)
+    private List listOfComments;
     private Boolean isChallengeClaimed;
     private Boolean isYoutubeVideoUploaded;
     private Boolean isYoutubeVideoCorrect;
@@ -38,29 +39,38 @@ public class ChallengeModel implements Serializable {
         return id;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    public ArrayList<CommentModel> getListOfComments() {
+    public UserModel getChallengeCreator() {
+        return challengeCreator;
+    }
+
+    public void setChallengeCreator(UserModel challengeCreator) {
+        this.challengeCreator = challengeCreator;
+    }
+
+    public UserModel getChallengeClaimer() {
+        return challengeClaimer;
+    }
+
+    public void setChallengeClaimer(UserModel challengeClaimer) {
+        this.challengeClaimer = challengeClaimer;
+    }
+
+    public List getListOfComments() {
+        if (this.listOfComments == null) {
+            this.listOfComments = new ArrayList();
+        }
         return listOfComments;
     }
 
-    public void setListOfComments(ArrayList<CommentModel> listOfComments) {
+    public void setListOfComments(List listOfComments) {
         this.listOfComments = listOfComments;
     }
 
-    public Long getChallengeCreatorId() {
-        return challengeCreatorId;
-    }
-
-    public void setChallengeCreatorId(Long challengeCreatorId) {
-        this.challengeCreatorId = challengeCreatorId;
-    }
-
-    public Long getChallengeClaimerId() {
-        return challengeClaimerId;
-    }
-
-    public void setChallengeClaimerId(Long challengeClaimerId) {
-        this.challengeClaimerId = challengeClaimerId;
+    public void addCommentToListOfComments(CommentModel commentModel) {
+        if (this.listOfComments == null) {
+            this.listOfComments = new ArrayList();
+        }
+        this.listOfComments.add(commentModel);
     }
 
     public String getTopic() {

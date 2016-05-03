@@ -2,6 +2,7 @@ package com.challengeaccepted.models;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -15,19 +16,14 @@ public class UserModel {
     private String firstName;
     private String lastName;
     private String email;
-    private ArrayList<ChallengeModel> requestedChallenges;
-    private ArrayList<ChallengeModel> claimedChallenges;
-    private ArrayList<Long> upvotedChallengesId;
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = ChallengeModel.class)
+    private List requestedChallenges;
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = ChallengeModel.class)
+    private List claimedChallenges;
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = ChallengeModel.class)
+    private List upvotedChallenges;
 
     public UserModel() {
-    }
-
-    public ArrayList<Long> getUpvotedChallengesId() {
-        return upvotedChallengesId;
-    }
-
-    public void setUpvotedChallengesId(ArrayList<Long> upvotedChallengesId) {
-        this.upvotedChallengesId = upvotedChallengesId;
     }
 
     public Long getId() {
@@ -66,14 +62,58 @@ public class UserModel {
         this.email = email;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    public ArrayList<ChallengeModel> getClaimedChallenges() {
+    public List getRequestedChallenges() {
+        if (requestedChallenges == null) {
+            this.requestedChallenges = new ArrayList();
+        }
+        return requestedChallenges;
+    }
+
+    public void setRequestedChallenges(List requestedChallenges) {
+        this.requestedChallenges = requestedChallenges;
+    }
+
+    public void addRequestedChallenge(ChallengeModel challengeModel) {
+        if (requestedChallenges == null) {
+            this.requestedChallenges = new ArrayList();
+        }
+        this.requestedChallenges.add(challengeModel);
+    }
+
+    public List getClaimedChallenges() {
+        if (this.claimedChallenges == null) {
+            this.claimedChallenges = new ArrayList();
+        }
         return claimedChallenges;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    public ArrayList<ChallengeModel> getRequestedChallenges() {
-        return requestedChallenges;
+    public void setClaimedChallenges(List claimedChallenges) {
+        this.claimedChallenges = claimedChallenges;
+    }
+
+    public void addClaimedChallenge(ChallengeModel challengeModel) {
+        if (this.claimedChallenges == null) {
+            this.claimedChallenges = new ArrayList();
+        }
+        this.claimedChallenges.add(challengeModel);
+    }
+
+    public List getUpvotedChallenges() {
+        if (this.upvotedChallenges == null) {
+            this.upvotedChallenges = new ArrayList();
+        }
+        return upvotedChallenges;
+    }
+
+    public void setUpvotedChallenges(List upvotedChallenges) {
+        this.upvotedChallenges = upvotedChallenges;
+    }
+
+    public void addUpvotedChallenge(ChallengeModel challengeModel) {
+        if (this.upvotedChallenges == null) {
+            this.upvotedChallenges = new ArrayList();
+        }
+        this.upvotedChallenges.add(challengeModel);
     }
 
 }
