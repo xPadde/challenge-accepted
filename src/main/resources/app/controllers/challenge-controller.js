@@ -1,6 +1,8 @@
 app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'userService', function ($scope, $http, challengeService, userService) {
 
     var list = [];
+    $scope.orderByField = 'creationDate';
+    $scope.reverseSort = true;
 
     $scope.getUserInputsFromCreateChallengeForm = function () {
         return JSON.stringify({
@@ -43,7 +45,11 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
                 console.log('challengeService.getListOfChallenges() ***FAILED*** to fetch all the challenges from the database!')
             })
     };
-    
+
+    $scope.upvoteChallenge = function (challenge) {
+        challenge.upvotes += 1;
+        challengeService.updateChallenge(challenge);
+    }
 
     $scope.acceptChallenge = function (challenge) {
         challenge.challengeClaimed = true;
