@@ -1,3 +1,17 @@
 .borderless td, .borderless th {
     border: none !important;
 }
+
+.btn-success {
+    border-radius: 2px;
+}
+
+.glyphicon-thumbs-up {
+    font-size: 1.7em;
+}
+
+.btn-primary {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+

@@ -26,7 +26,8 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
         challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm())
             .success(function () {
                 console.log('challengeService.createNewChallenge() called and it created a new challenge and saved it to the database!');
-                $scope.getListOfChallenges();
+                $scope.getListOfChallenges()
+                
             })
             .error(function () {
                 console.log('challengeService.createNewChallenge() called and it ***FAILED*** to create new challenge');
@@ -45,7 +46,7 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
     };
     
 
-    $scope.acceptChallenge = function (challenge) {
+    $scope.claimCurrentChallenge = function (challenge) {
         challenge.challengeClaimed = true;
         challengeService.updateChallenge(challenge);
     };
