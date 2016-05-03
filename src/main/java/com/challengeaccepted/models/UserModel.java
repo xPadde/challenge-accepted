@@ -15,10 +15,9 @@ public class UserModel {
     private String firstName;
     private String lastName;
     private String email;
-    @OneToMany(cascade = CascadeType.ALL)
     private ArrayList<ChallengeModel> requestedChallenges;
-    @OneToMany
     private ArrayList<ChallengeModel> claimedChallenges;
+
 
     public UserModel() {
     }
@@ -59,10 +58,12 @@ public class UserModel {
         this.email = email;
     }
 
+    @OneToMany(cascade = CascadeType.ALL)
     public ArrayList<ChallengeModel> getClaimedChallenges() {
         return claimedChallenges;
     }
 
+    @OneToMany(cascade = CascadeType.ALL)
     public ArrayList<ChallengeModel> getRequestedChallenges() {
         return requestedChallenges;
     }

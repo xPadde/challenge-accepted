@@ -12,28 +12,28 @@ public class CommentModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private UserModel userModel;
-    private UserModel challengeModel;
+    private Long userModelId;
+    private Long challengeModelId;
     private LocalDateTime commentDate;
     private String content;
 
     public CommentModel() {
     }
 
-    public UserModel getUserModel() {
-        return userModel;
+    public Long getUserModelId() {
+        return userModelId;
     }
 
-    public void setUserModel(UserModel userModel) {
-        this.userModel = userModel;
+    public void setUserModelId(Long userModelId) {
+        this.userModelId = userModelId;
     }
 
-    public UserModel getChallengeModel() {
-        return challengeModel;
+    public Long getChallengeModelId() {
+        return challengeModelId;
     }
 
-    public void setChallengeModel(UserModel challengeModel) {
-        this.challengeModel = challengeModel;
+    public void setChallengeModelId(Long challengeModelId) {
+        this.challengeModelId = challengeModelId;
     }
 
     public LocalDateTime getCommentDate() {
