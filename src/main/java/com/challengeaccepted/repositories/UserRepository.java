@@ -8,7 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface UserRepository extends JpaRepository<UserModel, Long> {
 
-    UserModel getByGoogleTokenId(String googleTokenId);
-
     UserModel getByEmail(String email);
 }

@@ -144,22 +144,22 @@
     </section>
 
     <section id="section-list-of-logged-in-challenges" ng-show="section =='secretListOfChallengesSection'">
-        <h1>THE SECRET DIV FOR LOGGED IN USER</h1>
+        <h1>Your current challenges</h1>
 
         <div>
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>SECRET TOPIC</th>
-                    <th>SECRET DESCRIPTION</th>
-                    <th>SECRET DATE OF CREATION</th>
+                    <th>TOPIC</th>
+                    <th>DESCRIPTION</th>
+                    <th>DATE OF CREATION</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="challenge in listOfChallenges">
-                    <td><!--{{challenge.topic}}-->SECRET</td>
-                    <td><!--{{challenge.description}}-->SECRET</td>
-                    <td><!--{{challenge.creationDate}}-->SECRET</td>
+                    <td>{{challenge.topic}}</td>
+                    <td>{{challenge.description}}</td>
+                    <td>{{challenge.creationDate}}</td>
                 </tr>
                 </tbody>
             </table>

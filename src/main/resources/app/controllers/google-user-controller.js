@@ -13,6 +13,8 @@ app.controller('GoogleUserController', ['$scope','userService', function($scope,
             console.log('userService created a new user and saved it to database!')
         });
 
+        $scope.showSecretListOfChallengesSection();
+
     }
 
     $scope.getUserInfo = function(profile, idToken){
@@ -32,6 +34,7 @@ app.controller('GoogleUserController', ['$scope','userService', function($scope,
         var auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut().then(function () {
             console.log('User signed out.');
+            $scope.listOfChallengesSection();
             console.log(auth2.isSignedIn.get());
         });
     }

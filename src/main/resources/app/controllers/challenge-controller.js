@@ -75,23 +75,7 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
                 console.log('challengeService.getListOfChallenges() ***FAILED*** to fetch all the challenges from the database!')
             })
     };
-
-    $scope.listOfUsers = [];
-    $scope.validateLogin = function (username, password) {
-        userService.validateLogin().success(function (response) {
-            $scope.listOfUsers = response;
-
-            for (var i = 0; i < $scope.listOfUsers.length; i++) {
-                if (username == $scope.listOfUsers[i].userName && password == $scope.listOfUsers[i].password) {
-                    console.log("Login correct and showSecretListOfChallengesSection() will be called!");
-                    $scope.showSecretListOfChallengesSection();
-                } else {
-                    console.log("Login ***FAILED*** and showSecretListOfChallengesSection() will ***NOT*** be called!");
-                }
-            }
-            console.log('userService.validateLogin() fetched the user list from the database successfully!')
-        });
-    };
+    
 
     $scope.acceptChallenge = function (challenge) {
         challenge.challengeClaimed = true;

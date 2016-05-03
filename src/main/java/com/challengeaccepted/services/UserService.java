@@ -29,9 +29,7 @@ public class UserService {
         return (ArrayList<UserModel>) userRepository.findAll();
     }
 
-    public UserModel getUserByGoogleTokenIdFromDatabase(String googleTokenId) {
-        return userRepository.getByGoogleTokenId(googleTokenId);
-    }
+
 
     public UserModel getUserEmailFromDatabase(String email) {
         return userRepository.getByEmail(email);

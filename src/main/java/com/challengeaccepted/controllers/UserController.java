@@ -21,16 +21,14 @@ public class UserController {
     @RequestMapping(value = "/user/", method = RequestMethod.POST)
     public ResponseEntity createUser(@RequestBody UserModel userModel) {
 
-        UserModel tempUserModel = readUserByEmail(userModel.getEmail());
+        UserModel userToSaveInDatabase = readUserByEmail(userModel.getEmail());
 
-        if(tempUserModel == null || tempUserModel.getEmail().equals("")){
+        if(userToSaveInDatabase == null || userToSaveInDatabase.getEmail().equals("")){
             userService.saveUserToDatabase(userModel);
-            System.out.println("nu fanns den inte");
         }else{
-            tempUserModel.setFirstName(userModel.getFirstName());
-            tempUserModel.setLastName(userModel.getLastName());
-            updateUser(tempUserModel);
-            System.out.println("nu fanns den");
+            userToSaveInDatabase.setFirstName(userModel.getFirstName());
+            userToSaveInDatabase.setLastName(userModel.getLastName());
+            updateUser(userToSaveInDatabase);
         }
         return new ResponseEntity(HttpStatus.CREATED);
     }
@@ -54,11 +52,6 @@ public class UserController {
         return new ResponseEntity<ArrayList<UserModel>>(userService.getAllUsersFromDatabase(), HttpStatus.OK);
     }
 
-    @CrossOrigin
-    @RequestMapping(value = "/user/googletokenid/{googleTokenId}", method = RequestMethod.GET)
-    public ResponseEntity<UserModel> readUserByGoogleTokenId(@PathVariable String googleTokenId) {
-        return new ResponseEntity<UserModel>(userService.getUserByGoogleTokenIdFromDatabase(googleTokenId), HttpStatus.OK);
-    }
 
     @CrossOrigin
     @RequestMapping(value = "/user/email/{email}", method = RequestMethod.GET)
