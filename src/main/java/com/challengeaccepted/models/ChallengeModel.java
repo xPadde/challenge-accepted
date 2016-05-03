@@ -6,9 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "challenges")
@@ -18,13 +16,16 @@ public class ChallengeModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long challengeCreatorId;
-    private Long challengeClaimerId;
+    @OneToOne
+    private UserModel challengeCreator;
+    @OneToOne
+    private UserModel challengeClaimer;
     private String topic;
     private String description;
     private String youtubeURL;
     private LocalDateTime creationDate;
     private Long upvotes;
+    @OneToMany(cascade = CascadeType.ALL)
     private ArrayList<CommentModel> listOfComments;
     private Boolean isChallengeClaimed;
     private Boolean isYoutubeVideoUploaded;
@@ -38,7 +39,6 @@ public class ChallengeModel implements Serializable {
         return id;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
     public ArrayList<CommentModel> getListOfComments() {
         return listOfComments;
     }
@@ -47,20 +47,20 @@ public class ChallengeModel implements Serializable {
         this.listOfComments = listOfComments;
     }
 
-    public Long getChallengeCreatorId() {
-        return challengeCreatorId;
+    public UserModel getChallengeCreator() {
+        return challengeCreator;
     }
 
-    public void setChallengeCreatorId(Long challengeCreatorId) {
-        this.challengeCreatorId = challengeCreatorId;
+    public void setChallengeCreator(UserModel challengeCreator) {
+        this.challengeCreator = challengeCreator;
     }
 
-    public Long getChallengeClaimerId() {
-        return challengeClaimerId;
+    public UserModel getChallengeClaimer() {
+        return challengeClaimer;
     }
 
-    public void setChallengeClaimerId(Long challengeClaimerId) {
-        this.challengeClaimerId = challengeClaimerId;
+    public void setChallengeClaimer(UserModel challengeClaimer) {
+        this.challengeClaimer = challengeClaimer;
     }
 
     public String getTopic() {
