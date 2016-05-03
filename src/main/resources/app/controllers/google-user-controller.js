@@ -9,7 +9,7 @@ app.controller('GoogleUserController', ['$scope','userService', function($scope,
         console.log('Image URL: ' + profile.getImageUrl());
         console.log('Email: ' + profile.getEmail());
 
-        userService.createNewUser($scope.getUserInfo(profile, idToken)).success(function () {
+        userService.createNewUser($scope.getUserInfo(profile)).success(function () {
             console.log('userService created a new user and saved it to database!')
         });
 
@@ -21,12 +21,9 @@ app.controller('GoogleUserController', ['$scope','userService', function($scope,
         return JSON.stringify({
             'firstName': profile.getGivenName(),
             'lastName': profile.getFamilyName(),
-            'googleTokenId': "Padde",
             'email': profile.getEmail()
         });
     }
-
-    
 
     window.onSignIn = onSignIn;
 
