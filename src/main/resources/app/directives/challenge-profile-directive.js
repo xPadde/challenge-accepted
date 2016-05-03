@@ -1,6 +1,6 @@
-app.directive("challengeProfile", function() {
+app.directive("challengeProfile", function () {
     return {
-        restict: 'E',
-        templateUrl: 'challenge-profile.html'
+        restrict: 'C',
+        templateUrl: 'views/challenge-profile.html'
     }
-})
+});
