@@ -4,31 +4,34 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th>Upvote</th>
-            <th><a href="" ng-click="orderByField = 'upvotes'; reverseSort = !reverseSort">Nr of Upvotes
-                <span ng-show="orderByField == 'upvotes'"><span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up"></span><span
-                    ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span></span></a></th>
+
             <th><a href="" ng-click="orderByField = 'topic'; reverseSort = !reverseSort">Topic
-                <span ng-show="orderByField == 'topic'"><span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up"></span><span
+                <span ng-show="orderByField == 'topic'"><span ng-show="!reverseSort"
+                                                              class="glyphicon glyphicon-chevron-up"></span><span
                         ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span></span></a></th>
             <th><a href="" ng-click="orderByField = 'description'; reverseSort = !reverseSort">Description
-                <span ng-show="orderByField == 'description'"><span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up"></span><span
+                <span ng-show="orderByField == 'description'"><span ng-show="!reverseSort"
+                                                                    class="glyphicon glyphicon-chevron-up"></span><span
                         ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span></span></a></th>
             <th><a href="" ng-click="orderByField = 'creationDate'; reverseSort = !reverseSort">Date of creation
-                <span ng-show="orderByField == 'creationDate'"><span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up"></span><span
+                <span ng-show="orderByField == 'creationDate'"><span ng-show="!reverseSort"
+                                                                     class="glyphicon glyphicon-chevron-up"></span><span
                         ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span></span></a></th>
-            <th>Här ska det stå nåt</th>
+            <th>Upvote</th>
+            <th><a href="" ng-click="orderByField = 'upvotes'; reverseSort = !reverseSort">Nr of Upvotes
+                <span ng-show="orderByField == 'upvotes'"><span ng-show="!reverseSort"
+                                                                class="glyphicon glyphicon-chevron-up"></span><span
+                        ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span></span></a></th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="challenge in listOfChallenges | orderBy:orderByField:reverseSort">
-            <td><a href="#" ng-click="upvoteChallenge(challenge)"><span
-                    class="glyphicon glyphicon-thumbs-up"></span></a></td>
-            <td>{{challenge.upvotes}}</td>
             <td>{{challenge.topic}}</td>
             <td>{{challenge.description}}</td>
             <td>{{challenge.creationDate}}</td>
-            <td><a href="" ng-click="acceptChallenge(challenge)"><span class="glyphicon glyphicon-ok"></span></a></td>
+            <td><a href="#" ng-click="upvoteChallenge(challenge)"><span
+                    class="glyphicon glyphicon-thumbs-up"></span></a></td>
+            <td>{{challenge.upvotes}}</td>
         </tr>
         </tbody>
     </table>

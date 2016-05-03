@@ -17,9 +17,17 @@ public class UserModel {
     private String email;
     private ArrayList<ChallengeModel> requestedChallenges;
     private ArrayList<ChallengeModel> claimedChallenges;
-
+    private ArrayList<Long> upvotedChallengesId;
 
     public UserModel() {
+    }
+
+    public ArrayList<Long> getUpvotedChallengesId() {
+        return upvotedChallengesId;
+    }
+
+    public void setUpvotedChallengesId(ArrayList<Long> upvotedChallengesId) {
+        this.upvotedChallengesId = upvotedChallengesId;
     }
 
     public Long getId() {
