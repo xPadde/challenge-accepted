@@ -4,3 +4,24 @@ app.directive("directiveChallenge", function () {
         templateUrl: 'views/challenge-profile.html'
     }
 });
+
+app.directive("directiveCreateChallenge", function () {
+    return {
+        restrict: 'C',
+        templateUrl: 'views/create-challenge.html'
+    }
+});
+
+app.directive("directiveListChallenges", function () {
+    return {
+        restrict: 'C',
+        templateUrl: 'views/list-challenges.html'
+    }
+});
+
+app.directive("directiveListYourChallenges", function () {
+    return {
+        restrict: 'C',
+        templateUrl: 'views/list-your-challenges.html'
+    }
+});

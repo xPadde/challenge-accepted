@@ -10,23 +10,6 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
         });
     };
 
-    $scope.getUserInputsFromCreateUserForm = function () {
-        return JSON.stringify({
-            'userName': $('#input-username').val(),
-            'password': $('#input-password').val()
-        });
-    };
-
-    $scope.loginUser = function () {
-        var username = $('#input-login-username').val();
-        var password = $('#input-login-password').val();
-        $scope.validateLogin(username, password);
-    };
-
-    $scope.showLoginWindowSection = function () {
-        $scope.section = "loginWindowSection";
-    };
-
     $scope.showCreateChallengeSection = function () {
         $scope.section = "createNewChallengeSection";
     };
@@ -39,10 +22,6 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
         $scope.section = "secretListOfChallengesSection";
     };
 
-    $scope.showCreateUserSection = function () {
-        $scope.section = "createNewUserSection";
-    };
-
     $scope.createNewChallenge = function () {
         challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm())
             .success(function () {
@@ -51,17 +30,6 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
             })
             .error(function () {
                 console.log('challengeService.createNewChallenge() called and it ***FAILED*** to create new challenge');
-            })
-    };
-
-
-    $scope.createNewUser = function () {
-        userService.createNewUser($scope.getUserInputsFromCreateUserForm())
-            .success(function () {
-                console.log('userService.createNewUser() called and it created a new user and saved it to the database!');
-            })
-            .error(function () {
-                console.log('userService.createNewUser() called and it ***FAILED*** to create a new user!');
             })
     };
 

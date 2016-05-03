@@ -2,23 +2,32 @@
 <html lang="en" ng-app="ChallengeAccepted">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
     <!--jQuery and Angular-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="https://code.angularjs.org/1.5.5/angular.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>-->
+
     <!--Module-->
     <script src="app/app.js"></script>
+
     <!--Controller-->
     <script src="app/controllers/challenge-controller.js"></script>
     <script src="app/controllers/google-user-controller.js"></script>
+
     <!--Services-->
     <script src="app/services/challenge-service.js"></script>
     <script src="app/services/user-service.js"></script>
+
     <!--Directives-->
     <script src="app/directives/challenge-directive.js"></script>
     <script src="app/directives/menu-directive.js"></script>
-    <meta name="google-signin-client_id" content="483335808440-pn6cvg2jf3iseqmna3rj4883bhkg5lvo.apps.googleusercontent.com">
+
+    <!--Google CLIENT ID -->
+    <meta name="google-signin-client_id"
+          content="483335808440-pn6cvg2jf3iseqmna3rj4883bhkg5lvo.apps.googleusercontent.com">
+
     <meta charset="UTF-8">
     <title>Challenge Accepted</title>
 </head>
@@ -27,121 +36,12 @@
 <section class="directive-menu"></section>
 
 <div class="container-fluid">
-    <section id="section-create-new-user" ng-show="section == 'createNewUserSection'">
-        <h1>Create New User</h1>
 
-        <form class="form-horizontal" role="form">
-            <div class="form-group">
-                <div class="col-sm-4">
-                    <input class="form-control" id="input-username" type="text" placeholder="Choose username">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-4">
-                    <input type="password" class="form-control" id="input-password" placeholder="Choose password">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-4">
-                    <button class="btn btn-default" ng-click="createNewUser()">Create User</button>
-                </div>
-            </div>
+    <section class="directive-create-challenge" ng-show="section == 'createNewChallengeSection'"></section>
 
-        </form>
+    <section class="directive-list-challenges" ng-show="section == 'listOfChallengesSection'"></section>
 
-    </section>
-</div>
-
-<div class="container-fluid">
-
-    <section id="section-create-new-challenge" ng-show="section == 'createNewChallengeSection'">
-        <h1>Create New Challenge</h1>
-
-        <form class="form-horizontal" role="form">
-            <div class="form-group">
-                <div class="col-sm-4">
-                    <input class="form-control" id="input-topic" type="text" placeholder="Enter topic">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-sm-4">
-                        <textarea class="form-control" id="input-description" placeholder="Description"
-                                  rows="5"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-4">
-                    <button class="btn btn-default" ng-click="createNewChallenge()">Create Challenge</button>
-
-                </div>
-            </div>
-        </form>
-    </section>
-
-    <section id="section-list-of-challenges" ng-show="section == 'listOfChallengesSection'">
-        <h1>All available challenges</h1>
-
-        <div>
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Topic</th>
-                    <th>Description</th>
-                    <th>Date of Creation</th>
-                    <th>Här ska det stå nåt</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="challenge in listOfChallenges">
-                    <td>{{challenge.topic}}</td>
-                    <td>{{challenge.description}}</td>
-                    <td>{{challenge.creationDate}}</td>
-                    <td><a href="" ng-click="acceptChallenge(challenge)"><span class="glyphicon glyphicon-ok"></span></a></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <section id="section-list-of-logged-in-challenges" ng-show="section =='secretListOfChallengesSection'">
-        <h1>Your current challenges</h1>
-
-        <div>
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>TOPIC</th>
-                    <th>DESCRIPTION</th>
-                    <th>DATE OF CREATION</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="challenge in listOfChallenges">
-                    <td>{{challenge.topic}}</td>
-                    <td>{{challenge.description}}</td>
-                    <td>{{challenge.creationDate}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <!--<section>-->
-    <!--<form class="form-horizontal" role="form" ng-show="section == 'loginWindowSection'">-->
-    <!--<div class="form-group">-->
-    <!--<div class="col-sm-4">-->
-    <!--<input type="text" class="form-control" placeholder="User Name" id="input-login-username">-->
-    <!--</div>-->
-    <!--<div class="col-sm-4">-->
-    <!--<input type="password" class="form-control" placeholder="Password" id="input-login-password">-->
-    <!--</div>-->
-    <!--<div class="col-sm-4">-->
-    <!--<button class="btn btn-default" ng-click="loginUser()">Log in</button>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</form>-->
-    <!--</section>-->
+    <section class="directive-list-your-challenges" ng-show="section =='secretListOfChallengesSection'"></section>
 
     <section class="directive-challenge-profile"></section>
 
