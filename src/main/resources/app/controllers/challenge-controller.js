@@ -1,21 +1,8 @@
 app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'userService', function ($scope, $http, challengeService, userService) {
 
-    var list = [];
     $scope.orderByField = 'creationDate';
     $scope.reverseSort = true;
-
-    $scope.isChallengeUpvotedByUser = function (challenge) {
-
-        var userToCheck = angular.fromJson(sessionStorage.getItem("loggedInUser"));
-        console.log(challenge);
-
-        for(var i = 0; i < challenge.challengeUpvoters.length; i++) {
-            if(challenge.challengeUpvoters[i] === userToCheck.id) {
-                return true;
-            }
-        }
-        return false;
-    };
+    var loggedInUser;
 
     $scope.getUserInputsFromCreateChallengeForm = function () {
         return JSON.stringify({
@@ -41,7 +28,7 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
         challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm())
             .success(function () {
                 console.log('challengeService.createNewChallenge() called and it created a new challenge and saved it to the database!');
-                $scope.getListOfChallenges()
+                $scope.getListOfChallenges();
                 
             })
             .error(function () {
@@ -53,36 +40,50 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
         challengeService.getListOfChallenges()
             .success(function (response) {
                 $scope.listOfChallenges = response;
-                console.log('challengeService.getListOfChallenges() fetched all the challenges from the database successfully!')
+                console.log('challengeService.getListOfChallenges() fetched all the challenges from the database successfully!');
             })
             .error(function () {
-                console.log('challengeService.getListOfChallenges() ***FAILED*** to fetch all the challenges from the database!')
+                console.log('challengeService.getListOfChallenges() ***FAILED*** to fetch all the challenges from the database!');
             })
     };
 
+    // Update the list of challenges on page load.
+    $scope.getListOfChallenges();
+
     $scope.upvoteChallenge = function (challenge) {
-        challenge.upvotes += 1;
         var loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
+        console.log("LOGGED IN USER IN upvoteChallenge()" + loggedInUser);
         challenge.challengeUpvoters.push(loggedInUser);
         challengeService.updateChallenge(angular.toJson(challenge)).success(function(){
-          console.log("add upvote: nu gick det bra");
+          console.log("Challenge updated with challengeUpvoter");
         }).error(function(){
-            console.log("add upvote: nu gick det INTE bra");
+            console.log("ERROR in method upvoteChallenge; Could not update challenge with challengeUpvoters");
         });
-        
-        /*challengeService.addChallengeToUpvotedChallenges(angular.toJson(challenge)).success(function(){
-           console.log("add upvote: nu gick det bra");
-        }).error(function(){
-            console.log("add upvote: nu gick det INTE bra");
-        });*/
     }
+
+    $scope.isChallengeUpvotedByUser = function (challenge) {
+        console.log("-----------isChallengeUpvotedByUser runs---------------");
+
+        var loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
+        console.log("Logged in user: " + loggedInUser.firstName + ", ID: " + loggedInUser.id);
+        console.log("Challenge topic: " + challenge.topic + ", Size in challengeUpvoters: " + challenge.challengeUpvoters.length);
+
+        if (challenge.challengeUpvoters !== null) {
+            for(var i = 0; i < challenge.challengeUpvoters.length; i++) {
+                if (challenge.challengeUpvoters[i] === loggedInUser.id) {
+                    console.log("-------------------------------------------------------");
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+        console.log("-------------------------------------------------------");
+    };
 
     $scope.claimCurrentChallenge = function (challenge) {
         challenge.challengeClaimed = true;
         challengeService.updateChallenge(challenge);
     };
-
-    // Update the list of challenges on page load.
-    $scope.getListOfChallenges();
 
 }]);

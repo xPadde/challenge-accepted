@@ -31,7 +31,7 @@
             <td>{{challenge.creationDate}}</td>
             <td><a href="#" ng-click="upvoteChallenge(challenge)"><span
                     class="glyphicon glyphicon-thumbs-up" ng-show="!isChallengeUpvotedByUser(challenge)"></span></a></td>
-            <td>{{challenge.upvotes}}</td>
+            <td>{{challenge.challengeUpvoters.length}}</td>
         </tr>
         </tbody>
     </table>
