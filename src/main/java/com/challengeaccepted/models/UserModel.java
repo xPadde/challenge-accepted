@@ -1,41 +1,40 @@
 package com.challengeaccepted.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class UserModel {
+public class UserModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String googleTokenId;
     private String firstName;
     private String lastName;
     private String email;
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = ChallengeModel.class)
-    private List requestedChallenges;
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = ChallengeModel.class)
-    private List claimedChallenges;
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = ChallengeModel.class)
-    private List upvotedChallenges;
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "challengeUpvoters")
+    private List<ChallengeModel> upvotedChallenges;
+
 
     public UserModel() {
     }
+
+
 
     public Long getId() {
         return id;
     }
 
-    public String getGoogleTokenId() {
-        return googleTokenId;
+    public List<ChallengeModel> getUpvotedChallenges() {
+        return upvotedChallenges;
     }
 
-    public void setGoogleTokenId(String googleTokenId) {
-        this.googleTokenId = googleTokenId;
+    public void setUpvotedChallenges(List<ChallengeModel> upvotedChallenges) {
+        this.upvotedChallenges = upvotedChallenges;
     }
 
     public String getFirstName() {
@@ -62,58 +61,6 @@ public class UserModel {
         this.email = email;
     }
 
-    public List getRequestedChallenges() {
-        if (requestedChallenges == null) {
-            this.requestedChallenges = new ArrayList();
-        }
-        return requestedChallenges;
-    }
 
-    public void setRequestedChallenges(List requestedChallenges) {
-        this.requestedChallenges = requestedChallenges;
-    }
-
-    public void addRequestedChallenge(ChallengeModel challengeModel) {
-        if (requestedChallenges == null) {
-            this.requestedChallenges = new ArrayList();
-        }
-        this.requestedChallenges.add(challengeModel);
-    }
-
-    public List getClaimedChallenges() {
-        if (this.claimedChallenges == null) {
-            this.claimedChallenges = new ArrayList();
-        }
-        return claimedChallenges;
-    }
-
-    public void setClaimedChallenges(List claimedChallenges) {
-        this.claimedChallenges = claimedChallenges;
-    }
-
-    public void addClaimedChallenge(ChallengeModel challengeModel) {
-        if (this.claimedChallenges == null) {
-            this.claimedChallenges = new ArrayList();
-        }
-        this.claimedChallenges.add(challengeModel);
-    }
-
-    public List getUpvotedChallenges() {
-        if (this.upvotedChallenges == null) {
-            this.upvotedChallenges = new ArrayList();
-        }
-        return upvotedChallenges;
-    }
-
-    public void setUpvotedChallenges(List upvotedChallenges) {
-        this.upvotedChallenges = upvotedChallenges;
-    }
-
-    public void addUpvotedChallenge(ChallengeModel challengeModel) {
-        if (this.upvotedChallenges == null) {
-            this.upvotedChallenges = new ArrayList();
-        }
-        this.upvotedChallenges.add(challengeModel);
-    }
 
 }

@@ -16,36 +16,35 @@ public class ChallengeModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToOne
-    private UserModel challengeCreator;
-    @OneToOne
     private UserModel challengeClaimer;
     private String topic;
     private String description;
     private String youtubeURL;
     private LocalDateTime creationDate;
     private Long upvotes;
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = CommentModel.class)
-    private List listOfComments;
     private Boolean isChallengeClaimed;
     private Boolean isYoutubeVideoUploaded;
     private Boolean isYoutubeVideoCorrect;
     private Boolean isChallengeCompleted;
+    @ManyToMany
+    @JoinColumn(name = "challenge_upvoters_id")
+    private List<UserModel> challengeUpvoters;
 
     public ChallengeModel() {
+    }
+
+    public List<UserModel> getChallengeUpvoters() {
+        return challengeUpvoters;
+    }
+
+    public void setChallengeUpvoters(List<UserModel> challengeUpvoters) {
+        this.challengeUpvoters = challengeUpvoters;
     }
 
     public Long getId() {
         return id;
     }
 
-    public UserModel getChallengeCreator() {
-        return challengeCreator;
-    }
-
-    public void setChallengeCreator(UserModel challengeCreator) {
-        this.challengeCreator = challengeCreator;
-    }
 
     public UserModel getChallengeClaimer() {
         return challengeClaimer;
@@ -55,23 +54,6 @@ public class ChallengeModel implements Serializable {
         this.challengeClaimer = challengeClaimer;
     }
 
-    public List getListOfComments() {
-        if (this.listOfComments == null) {
-            this.listOfComments = new ArrayList();
-        }
-        return listOfComments;
-    }
-
-    public void setListOfComments(List listOfComments) {
-        this.listOfComments = listOfComments;
-    }
-
-    public void addCommentToListOfComments(CommentModel commentModel) {
-        if (this.listOfComments == null) {
-            this.listOfComments = new ArrayList();
-        }
-        this.listOfComments.add(commentModel);
-    }
 
     public String getTopic() {
         return topic;

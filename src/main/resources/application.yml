@@ -5,10 +5,10 @@ spring:
     hibernate:
       dialect: org.hibernate.dialect.MySQLInnoDBDialect
       naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
-      ddl-auto: update
+      ddl-auto: create-drop
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost/challengeaccepted
+    url: jdbc:mysql://localhost/challengeaccepted?useSSL=false
     username: root
     password: root
   jackson:
@@ -22,4 +22,4 @@ logging:
   level:
     org.springframework.web: DEBUG
     org.hibernate: ERROR
-    com.example.carlcarworkshop: INFO
+    com.challengeaccepted: INFO

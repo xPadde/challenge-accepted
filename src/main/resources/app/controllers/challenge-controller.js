@@ -49,7 +49,20 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
 
     $scope.upvoteChallenge = function (challenge) {
         challenge.upvotes += 1;
-        challengeService.updateChallenge(challenge);
+/*        challengeService.updateChallenge(challenge);*/
+        var loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
+        challenge.challengeUpvoters.push(loggedInUser);
+        challengeService.updateChallenge(angular.toJson(challenge)).success(function(){
+          console.log("add upvote: nu gick det bra");
+        }).error(function(){
+            console.log("add upvote: nu gick det INTE bra");
+        });
+        
+        /*challengeService.addChallengeToUpvotedChallenges(angular.toJson(challenge)).success(function(){
+           console.log("add upvote: nu gick det bra");
+        }).error(function(){
+            console.log("add upvote: nu gick det INTE bra");
+        });*/
     }
 
     $scope.claimCurrentChallenge = function (challenge) {

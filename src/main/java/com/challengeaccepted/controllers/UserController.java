@@ -1,5 +1,6 @@
 package com.challengeaccepted.controllers;
 
+import com.challengeaccepted.models.ChallengeModel;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.UserService;
 import org.hibernate.annotations.SourceType;
@@ -59,5 +60,4 @@ public class UserController {
     public UserModel readUserByEmail(@PathVariable String email){
         return userService.getUserEmailFromDatabase(email);
     }
-
 }
