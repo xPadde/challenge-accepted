@@ -1,33 +1,25 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<link rel="stylesheet" href="../css/style.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<meta charset="UTF-8">
 <div class="container-fluid">
-    <div class="panel panel-default" ng-hide="challenge == null">
+    <div class="panel panel-default">
         <div class="panel-heading">
-            <h2><!--        {{challenge.topic}}-->Kasta katter i Kreml
-                <small><!--        {{challenge.creationDate}}-->2016:01:16 By <a href="#">Current User</a></small>
-
+            <h2>{{challengeProfileToView.topic}}
+                <small>{{challengeProfileToView.creationDate}} <a href="#">Current User</a></small>
             </h2>
         </div>
         <div class="panel-body">
-            <h4><!--{{challenge.description}}-->Jag vill se någon kasta katter i Kreml</h4>
-            <!--        {{challenge.upvotes}}
-                    3-->
-            <!--{{challenge.isChallengeClaimed}}-->
-            <button type="button" class="btn btn-primary" ng-click="claimCurrentChallenge()">Claim This Challenge</button>
+            <h4>{{challengeProfileToView.description}}</h4>
+            <p>{{challengeProfileToView.upvotes}}</p>
+            <button type="button" class="btn btn-primary" ng-hide="challengeProfileToView.challengeClaimed" ng-click="claimCurrentChallenge(challengeProfileToView)">Claim This Challenge</button>
             <a href="#" ng-click="addLikeToCurrentChallenge()" id="thumbs"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-            <form class="form-horizontal" class="form">
-            <div class="form-group">
-                <div class="col-sm-3">
-                    <input type="text" placeholder="Youtube URL here" class="form-control">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <input type="text" placeholder="Youtube URL here" class="form-control">
+                    </div>
                 </div>
-            </div>
-
-            <p>
-                <iframe width="510" height="350" src="https://www.youtube.com/embed/rbyVJlSu1XI"></iframe>
-            <p>
+                <p>
+                    <!--This src is for testing purposes.-->
+                    <iframe width="510" height="350" src="https://www.youtube.com/embed/rbyVJlSu1XI"></iframe>
+                <p>
                 <div class="form-group">
                     <div class="col-sm-2">
                         <button class="btn btn-default" ng-click="addYoutubeUrlToCurrentChallenge()">Add URL</button>
@@ -38,15 +30,12 @@
                 </div>
             </form>
         </div>
-
-
         <div class="panel-footer">
-
             <form class="form-horizontal" role="form">
                 <h4>Comments</h4>
                 <div class="form-group">
                     <div class="col-sm-8">
-                        <textarea class="form-control" placeholder="Make a comment!" rows="4"></textarea>
+                        <textarea class="form-control" placeholder="Write a comment!" rows="4"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -58,11 +47,11 @@
             <!--Make a imageframe -->
         </div>
         <div>
-            <table class="table borderless" ng-repeat="comment in challenge.listOfComments">
+            <table class="table borderless" ng-repeat="comment in challengeProfileToView.listOfComments">
                 <thead>
                 <tr>
                     <th>User</th>
-                    <th><!--{{comment.commentDate}}--> 2016:12:24</th>
+                    <th>{{comment.commentDate}}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -72,7 +61,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><!--{{comment.content}}-->Det är ett välkänt faktum att läsare distraheras av läsbar text på en
+                    <td><!--{{comment.content}}-->
+                        Det är ett välkänt faktum att läsare distraheras av läsbar text på en
                         sida när man skall studera layouten. Poängen med Lorem Ipsum är att det ger ett normalt
                         ordflöde,
                         till skillnad från "Text här, Text här", och ger intryck av att vara läsbar text. Många

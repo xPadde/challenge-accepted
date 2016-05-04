@@ -4,6 +4,8 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
     $scope.orderByField = 'creationDate';
     $scope.reverseSort = true;
 
+    var loggedInUser;
+
     $scope.getUserInputsFromCreateChallengeForm = function () {
         return JSON.stringify({
             'topic': $('#input-topic').val(),
@@ -50,7 +52,7 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
     $scope.upvoteChallenge = function (challenge) {
         challenge.upvotes += 1;
 /*        challengeService.updateChallenge(challenge);*/
-        var loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
+        loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
         challenge.challengeUpvoters.push(loggedInUser);
         challengeService.updateChallenge(angular.toJson(challenge)).success(function(){
           console.log("add upvote: nu gick det bra");
@@ -66,11 +68,29 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
     }
 
     $scope.claimCurrentChallenge = function (challenge) {
+        
+        loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
+        
+        challenge.challengeClaimer = loggedInUser;
         challenge.challengeClaimed = true;
-        challengeService.updateChallenge(challenge);
+        
+        challengeService.updateChallenge(angular.toJson(challenge)).success(function(){
+            console.log("claim challenge: Gick bra");
+        }).error(function(data){
+            console.log("claim challenge: gick INTE bra");
+            console.log(data);
+        });
+        
     };
 
     // Update the list of challenges on page load.
     $scope.getListOfChallenges();
 
+    $scope.viewChallengeProfilePage = function (challenge) {
+        $scope.section = "challengeProfilePageSection";
+        $scope.challengeProfileToView = challenge;
+        console.log("challengeProfileToView object: ");
+        console.log($scope.challengeProfileToView);
+    };
+    
 }]);

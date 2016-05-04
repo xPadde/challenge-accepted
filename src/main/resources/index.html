@@ -24,6 +24,7 @@
     <script src="app/directives/challenge-directive.js"></script>
     <script src="app/directives/menu-directive.js"></script>
 
+
     <!--Google CLIENT ID -->
     <meta name="google-signin-client_id"
           content="483335808440-pn6cvg2jf3iseqmna3rj4883bhkg5lvo.apps.googleusercontent.com">
@@ -35,6 +36,7 @@
 
 <section class="directive-menu"></section>
 
+
 <div class="container-fluid">
 
     <section class="directive-create-challenge" ng-show="section == 'createNewChallengeSection'"></section>
@@ -43,7 +45,9 @@
 
     <section class="directive-list-your-challenges" ng-show="section =='secretListOfChallengesSection'"></section>
 
-    <section class="directive-challenge-profile"></section>
+    <section class="directive-challenge-profile" ng-show="section =='challengeProfilePageSection'"></section>
+
+    <button type="button" class="btn btn-default" ng-click="viewChallengeProfilePage()">profile</button>
 
 </div>
 <script src="https://apis.google.com/js/platform.js" async defer></script>

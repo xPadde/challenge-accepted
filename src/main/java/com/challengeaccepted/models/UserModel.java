@@ -18,6 +18,8 @@ public class UserModel implements Serializable {
     private String email;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "challengeUpvoters")
     private List<ChallengeModel> upvotedChallenges;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "challengeClaimer")
+    private List<ChallengeModel> claimedChallenges;
 
 
     public UserModel() {

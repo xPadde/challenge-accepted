@@ -25,3 +25,9 @@ app.directive("directiveListYourChallenges", function () {
         templateUrl: 'views/list-your-challenges.html'
     }
 });
+app.directive("directiveChallengeProfile", function () {
+    return {
+       restrict: 'C',
+        templateUrl: 'views/challenge-profile.html'
+    } 
+});    

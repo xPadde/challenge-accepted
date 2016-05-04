@@ -16,7 +16,6 @@ public class ChallengeModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private UserModel challengeClaimer;
     private String topic;
     private String description;
     private String youtubeURL;
@@ -29,9 +28,14 @@ public class ChallengeModel implements Serializable {
     @ManyToMany
     @JoinColumn(name = "challenge_upvoters_id")
     private List<UserModel> challengeUpvoters;
+    @OneToOne
+    @JoinColumn(name = "challenge_claimer_id")
+    private UserModel challengeClaimer;
 
     public ChallengeModel() {
     }
+
+
 
     public List<UserModel> getChallengeUpvoters() {
         return challengeUpvoters;
