@@ -5,21 +5,16 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
     $scope.reverseSort = true;
 
     $scope.isChallengeUpvotedByUser = function (challenge) {
-        console.log(challenge);
+
         var userToCheck = angular.fromJson(sessionStorage.getItem("loggedInUser"));
-        console.log("challengeUpvotersLength: " + challenge.challengeUpvoters.length);
-        console.log("userToCheck.id: " + userToCheck.id);
-        console.log("challengeUpvoters: " + challenge.challengeUpvoters);
+        console.log(challenge);
+
         for(var i = 0; i < challenge.challengeUpvoters.length; i++) {
-        console.log(challenge.challengeUpvoters[i].id);
-            if(challenge.challengeUpvoters[i].id === userToCheck.id) {
-            console.log("Redan gillat denna");
+            if(challenge.challengeUpvoters[i] === userToCheck.id) {
                 return true;
-            } else {
-                console.log("Id'na var inte lika varandra");
             }
-            return false;
         }
+        return false;
     };
 
     $scope.getUserInputsFromCreateChallengeForm = function () {

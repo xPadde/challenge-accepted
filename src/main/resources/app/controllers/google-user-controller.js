@@ -2,8 +2,8 @@ app.controller('GoogleUserController', ['$scope','userService', function($scope,
     
     function onSignIn(googleUser) {
         var profile = googleUser.getBasicProfile();
-        var idToken = googleUser.getAuthResponse().id_token;
-        console.log("id token här " + idToken);
+        //var idToken = googleUser.getAuthResponse().id_token;
+        //console.log("id token här " + idToken);
         console.log('ID: ' + profile.getId());
         console.log('Name: ' + profile.getName());
         console.log('Image URL: ' + profile.getImageUrl());
@@ -14,10 +14,10 @@ app.controller('GoogleUserController', ['$scope','userService', function($scope,
             var stringifiedLoggedInUser = JSON.stringify(response);
             sessionStorage.setItem("loggedInUser", stringifiedLoggedInUser);
             console.log(stringifiedLoggedInUser);
-            console.log(response.firstName);
+            console.log(response);
         });
 
-        $scope.showSecretListOfChallengesSection();
+        //$scope.showSecretListOfChallengesSection();
 
     }
 
