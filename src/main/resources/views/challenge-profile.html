@@ -13,16 +13,15 @@
             <form class="form-horizontal" role="form">
                 <div class="form-group">
                     <div class="col-sm-3">
-                        <input type="text" placeholder="Youtube URL here" class="form-control">
+                        <input id="input-youtube-url" type="text" placeholder="Youtube URL here" class="form-control">
                     </div>
                 </div>
                 <p>
-                    <!--This src is for testing purposes.-->
-                    <iframe width="510" height="350" src="https://www.youtube.com/embed/rbyVJlSu1XI"></iframe>
+                    <iframe width="510" height="350" ng-src="{{ markUrlAsTrusted(challengeProfileToView.youtubeURL) }}"></iframe>
                 <p>
                 <div class="form-group">
                     <div class="col-sm-2">
-                        <button class="btn btn-default" ng-click="addYoutubeUrlToCurrentChallenge()">Add URL</button>
+                        <button class="btn btn-default" ng-click="addYoutubeUrlToCurrentChallenge(challengeProfileToView)">Add URL</button>
                     </div>
                     <div class="col-sm-1">
                         <button class="btn btn-default" ng-click="confirmYoutubeVideoToCurrentChallenge()">Confirm This Video</button>
