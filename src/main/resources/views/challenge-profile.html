@@ -1,27 +1,27 @@
 <div class="container-fluid">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h2>{{challengeProfileToView.topic}}
-                <small>{{challengeProfileToView.creationDate}} <a href="#">Current User</a></small>
+            <h2>{{activeChallenge.topic}}
+                <small>{{activeChallenge.creationDate}} <a href="#">Current User</a></small>
             </h2>
         </div>
         <div class="panel-body">
-            <h4>{{challengeProfileToView.description}}</h4>
-            <p>{{challengeProfileToView.upvotes}}</p>
-            <button type="button" class="btn btn-primary" ng-hide="challengeProfileToView.challengeClaimed" ng-click="claimCurrentChallenge(challengeProfileToView)">Claim This Challenge</button>
+            <h4>{{activeChallenge.description}}</h4>
+            <p>{{activeChallenge.upvotes}}</p>
+            <button type="button" class="btn btn-primary" ng-hide="activeChallenge.challengeClaimed" ng-click="claimCurrentChallenge(activeChallenge)">Claim This Challenge</button>
             <a href="#" ng-click="addLikeToCurrentChallenge()" id="thumbs"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form" ng-show="activeChallenge.challengeClaimed">
                 <div class="form-group">
-                    <div class="col-sm-3">
+                    <div class="col-sm-3" >
                         <input id="input-youtube-url" type="text" placeholder="Youtube URL here" class="form-control">
                     </div>
                 </div>
                 <p>
-                    <iframe width="510" height="350" ng-src="{{ markUrlAsTrusted(challengeProfileToView.youtubeURL) }}"></iframe>
+                    <iframe width="510" height="350" ng-src="{{ markUrlAsTrusted(activeChallenge.youtubeURL) }}" ng-show="activeChallenge.youtubeVideoUploaded"></iframe>
                 <p>
                 <div class="form-group">
                     <div class="col-sm-2">
-                        <button class="btn btn-default" ng-click="addYoutubeUrlToCurrentChallenge(challengeProfileToView)">Add URL</button>
+                        <button class="btn btn-default" ng-click="addYoutubeUrlToCurrentChallenge(activeChallenge)">Add URL</button>
                     </div>
                     <div class="col-sm-1">
                         <button class="btn btn-default" ng-click="confirmYoutubeVideoToCurrentChallenge()">Confirm This Video</button>
@@ -34,19 +34,19 @@
                 <h4>Comments</h4>
                 <div class="form-group">
                     <div class="col-sm-8">
-                        <textarea class="form-control" placeholder="Write a comment!" rows="4"></textarea>
+                        <textarea class="form-control" placeholder="Write a comment!" rows="4" id="textarea-comment-field"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-4">
-                        <button class="btn btn-default" ng-click="addCommentToChallenge()">Add Comment</button>
+                        <button class="btn btn-default" ng-click="addCommentToChallenge(activeChallenge)">Add Comment</button>
                     </div>
                 </div>
             </form>
             <!--Make a imageframe -->
         </div>
         <div>
-            <table class="table borderless" ng-repeat="comment in challengeProfileToView.listOfComments">
+            <table class="table borderless" ng-repeat="comment in activeChallenge.listOfComments">
                 <thead>
                 <tr>
                     <th>User</th>

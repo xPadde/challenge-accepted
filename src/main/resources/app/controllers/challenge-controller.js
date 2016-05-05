@@ -10,7 +10,8 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         return JSON.stringify({
             'topic': $('#input-topic').val(),
             'description': $('#input-description').val(),
-            'creationDate': null
+            'creationDate': null,
+            'challengeClaimed': false
         });
     };
 
@@ -59,12 +60,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         }).error(function () {
             console.log("add upvote: nu gick det INTE bra");
         });
-
-        /*challengeService.addChallengeToUpvotedChallenges(angular.toJson(challenge)).success(function(){
-         console.log("add upvote: nu gick det bra");
-         }).error(function(){
-         console.log("add upvote: nu gick det INTE bra");
-         });*/
+        
     };
 
     $scope.claimCurrentChallenge = function (challenge) {
@@ -73,6 +69,8 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
         challenge.challengeClaimer = loggedInUser;
         challenge.challengeClaimed = true;
+        
+        
 
         challengeService.updateChallenge(angular.toJson(challenge)).success(function () {
             console.log("claim challenge: Gick bra");
@@ -88,14 +86,23 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     $scope.viewChallengeProfilePage = function (challenge) {
         $scope.section = "challengeProfilePageSection";
-        $scope.challengeProfileToView = challenge;
+        $scope.activeChallenge = challenge;
         console.log("challengeProfileToView object: ");
         console.log($scope.challengeProfileToView);
+        console.log(challenge.challengeClaimed);
     };
 
     $scope.addYoutubeUrlToCurrentChallenge = function (challenge) {
         var userProvidedUrl = $('#input-youtube-url').val();
         challenge.youtubeURL = convertToYouTubeEmbedUrl(userProvidedUrl);
+        challenge.youtubeVideoUploaded = true;
+
+        challengeService.updateChallenge(angular.toJson(challenge))
+            .success(function(){
+                console.log("nu är youtube url sparat.");
+            }).error(function(){
+                console.log("nu är youtube url INTE sparat");
+        });
     };
 
 
@@ -104,10 +111,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     var convertToYouTubeEmbedUrl = function (url) {
-        var isYouTubeUrlCorrect = url.indexOf("watch?v=") > 1;
+        var isYoutubeUrlCorrect = url.indexOf("watch?v=") > 1;
         var baseUrl = "https://www.youtube.com/embed/";
 
-        if (isYouTubeUrlCorrect) {
+        if (isYoutubeUrlCorrect) {
             var youTubeVideoId = url.substr(32);
             var finalUrl = baseUrl + youTubeVideoId;
         } else {
@@ -115,6 +122,12 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             return "";
         }
         return finalUrl;
+    }
+    
+    $scope.addCommentToChallenge = function (challenge) {
+        var commentFromUser = $('#textarea-comment-field').val();
+        
+        challenge.
     }
 
 
