@@ -2,26 +2,29 @@ app.controller('GoogleUserController', ['$scope','userService', function($scope,
     
     function onSignIn(googleUser) {
         var profile = googleUser.getBasicProfile();
-        var idToken = googleUser.getAuthResponse().id_token;
-        console.log("id token här " + idToken);
+        //var idToken = googleUser.getAuthResponse().id_token;
+        //console.log("id token här " + idToken);
+        console.log("-----------GOOGLE INFO------------------");
         console.log('ID: ' + profile.getId());
         console.log('Name: ' + profile.getName());
         console.log('Image URL: ' + profile.getImageUrl());
         console.log('Email: ' + profile.getEmail());
+        console.log("-----------END GOOGLE INFO--------------");
 
         userService.createNewUser($scope.getUserInfo(profile)).success(function (response) {
             console.log('userService created a new user and saved it to database!');
-            var stringifiedLoggedInUser = JSON.stringify(response);
+            var stringifiedLoggedInUser = angular.toJson(response);
             sessionStorage.setItem("loggedInUser", stringifiedLoggedInUser);
-            console.log(stringifiedLoggedInUser);
-            console.log(response.firstName);
+            console.log("Logged in user Stringified: " + stringifiedLoggedInUser);
+            console.log("Response from createNewUser: " + response);
+        }).error(function (response) {
+            console.log("ERROR on createNewUser!");
+            console.log(response);
         });
-
-        $scope.showSecretListOfChallengesSection();
 
     }
 
-    $scope.getUserInfo = function(profile, idToken){
+    $scope.getUserInfo = function(profile){
         return JSON.stringify({
             'firstName': profile.getGivenName(),
             'lastName': profile.getFamilyName(),
@@ -34,6 +37,7 @@ app.controller('GoogleUserController', ['$scope','userService', function($scope,
     $scope.signOut = function () {
         var auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut().then(function () {
+            sessionStorage.setItem("loggedInUser", null);
             console.log('User signed out.');
             console.log(auth2.isSignedIn.get());
         });

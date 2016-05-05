@@ -35,10 +35,19 @@ public class ChallengeModel implements Serializable {
     public ChallengeModel() {
     }
 
+    public void addUserModelToChallengeUpvoters(UserModel userModel) {
+        if (challengeUpvoters == null) {
+            challengeUpvoters = new ArrayList<UserModel>();
+        }
+        challengeUpvoters.add(userModel);
+    }
 
-
-    public List<UserModel> getChallengeUpvoters() {
-        return challengeUpvoters;
+    public List<Long> getChallengeUpvoters() {
+        List<Long> templist = new ArrayList<Long>();
+        for (UserModel user : challengeUpvoters) {
+            templist.add(user.getId());
+        }
+        return templist;
     }
 
     public void setChallengeUpvoters(List<UserModel> challengeUpvoters) {

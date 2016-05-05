@@ -1,6 +1,5 @@
 app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeService', 'userService', function ($scope, $http, $sce, challengeService, userService) {
 
-    var list = [];
     $scope.orderByField = 'creationDate';
     $scope.reverseSort = true;
 
@@ -43,24 +42,39 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         challengeService.getListOfChallenges()
             .success(function (response) {
                 $scope.listOfChallenges = response;
-                console.log('challengeService.getListOfChallenges() fetched all the challenges from the database successfully!')
+                console.log('challengeService.getListOfChallenges() fetched all the challenges from the database successfully!');
             })
             .error(function () {
-                console.log('challengeService.getListOfChallenges() ***FAILED*** to fetch all the challenges from the database!')
+                console.log('challengeService.getListOfChallenges() ***FAILED*** to fetch all the challenges from the database!');
             })
     };
 
     $scope.upvoteChallenge = function (challenge) {
-        challenge.upvotes += 1;
-        /*        challengeService.updateChallenge(challenge);*/
-        loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
-        challenge.challengeUpvoters.push(loggedInUser);
-        challengeService.updateChallenge(angular.toJson(challenge)).success(function () {
-            console.log("add upvote: nu gick det bra");
-        }).error(function () {
-            console.log("add upvote: nu gick det INTE bra");
-        });
-        
+        challengeService.addUserToChallengeUpvoters(challenge).success(function () {
+            console.log("Add user to upvoted challenges success");
+            $scope.getListOfChallenges();
+        })
+    };
+
+    $scope.isChallengeUpvotedByUser = function (challenge) {
+        console.log("-----------isChallengeUpvotedByUser runs---------------");
+
+        var loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
+        console.log("Logged in user: " + loggedInUser.firstName + ", ID: " + loggedInUser.id);
+        console.log("Challenge topic: " + challenge.topic + ", Size in challengeUpvoters: " + challenge.challengeUpvoters.length);
+
+        if (challenge.challengeUpvoters !== null) {
+            for(var i = 0; i < challenge.challengeUpvoters.length; i++) {
+                console.log("Challenge upvoters ID: " + challenge.challengeUpvoters[i]);
+                if (challenge.challengeUpvoters[i] === loggedInUser.id) {
+                    console.log("-------------------------------------------------------");
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+        console.log("-------------------------------------------------------");
     };
 
     $scope.claimCurrentChallenge = function (challenge) {
