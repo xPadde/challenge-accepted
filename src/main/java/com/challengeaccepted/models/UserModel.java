@@ -2,7 +2,6 @@ package com.challengeaccepted.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,12 +19,11 @@ public class UserModel implements Serializable {
     private List<ChallengeModel> upvotedChallenges;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "challengeClaimer")
     private List<ChallengeModel> claimedChallenges;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "challengeCreator")
+    private List<ChallengeModel> createdChallenge;
 
     public UserModel() {
     }
-
-
 
     public Long getId() {
         return id;
@@ -62,7 +60,5 @@ public class UserModel implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
-
 
 }

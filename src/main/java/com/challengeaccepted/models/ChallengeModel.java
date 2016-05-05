@@ -31,6 +31,9 @@ public class ChallengeModel implements Serializable {
     @OneToOne
     @JoinColumn(name = "challenge_claimer_id")
     private UserModel challengeClaimer;
+    @OneToOne
+    @JoinColumn(name = "challenge_creator_id")
+    private UserModel challengeCreator;
 
     public ChallengeModel() {
     }
@@ -58,7 +61,6 @@ public class ChallengeModel implements Serializable {
         return id;
     }
 
-
     public UserModel getChallengeClaimer() {
         return challengeClaimer;
     }
@@ -66,7 +68,6 @@ public class ChallengeModel implements Serializable {
     public void setChallengeClaimer(UserModel challengeClaimer) {
         this.challengeClaimer = challengeClaimer;
     }
-
 
     public String getTopic() {
         return topic;
@@ -140,6 +141,14 @@ public class ChallengeModel implements Serializable {
 
     public void setChallengeCompleted(Boolean challengeCompleted) {
         isChallengeCompleted = challengeCompleted;
+    }
+
+    public UserModel getChallengeCreator() {
+        return challengeCreator;
+    }
+
+    public void setChallengeCreator(UserModel challengeCreator) {
+        this.challengeCreator = challengeCreator;
     }
 
 }

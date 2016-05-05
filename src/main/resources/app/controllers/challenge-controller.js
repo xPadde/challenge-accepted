@@ -3,14 +3,13 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     $scope.orderByField = 'creationDate';
     $scope.reverseSort = true;
 
-    var loggedInUser;
-
     $scope.getUserInputsFromCreateChallengeForm = function () {
         return JSON.stringify({
             'topic': $('#input-topic').val(),
             'description': $('#input-description').val(),
             'creationDate': null,
-            'challengeClaimed': false
+            'challengeClaimed': false,
+            'challengeCreator': $scope.loggedInUser
         });
     };
 
@@ -59,14 +58,14 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     $scope.isChallengeUpvotedByUser = function (challenge) {
         console.log("-----------isChallengeUpvotedByUser runs---------------");
 
-        var loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
-        console.log("Logged in user: " + loggedInUser.firstName + ", ID: " + loggedInUser.id);
+        $scope.loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
+        console.log("Logged in user: " + $scope.loggedInUser.firstName + ", ID: " + $scope.loggedInUser.id);
         console.log("Challenge topic: " + challenge.topic + ", Size in challengeUpvoters: " + challenge.challengeUpvoters.length);
 
         if (challenge.challengeUpvoters !== null) {
             for(var i = 0; i < challenge.challengeUpvoters.length; i++) {
                 console.log("Challenge upvoters ID: " + challenge.challengeUpvoters[i]);
-                if (challenge.challengeUpvoters[i] === loggedInUser.id) {
+                if (challenge.challengeUpvoters[i] === $scope.loggedInUser.id) {
                     console.log("-------------------------------------------------------");
                     return true;
                 }
@@ -79,12 +78,12 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     $scope.claimCurrentChallenge = function (challenge) {
 
-        loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
+        $scope.loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
 
-        challenge.challengeClaimer = loggedInUser;
+        challenge.challengeClaimer = $scope.loggedInUser;
         challenge.challengeClaimed = true;
-        
-        
+
+
 
         challengeService.updateChallenge(angular.toJson(challenge)).success(function () {
             console.log("claim challenge: Gick bra");
@@ -137,10 +136,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         }
         return finalUrl;
     }
-    
+
     $scope.addCommentToChallenge = function (challenge) {
         var commentFromUser = $('#textarea-comment-field').val();
-        
+
         //challenge.
     }
 
