@@ -29,6 +29,16 @@ app.factory('challengeService', function ($http) {
                 data: data,
                 header: {'Content-Type': 'application/json'}
             })
+        },
+
+        addUserToChallengeUpvoters: function (data) {
+            var loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
+            return $http({
+                url: 'http://localhost:8080/api/challenge/' + loggedInUser.id + '/',
+                method: 'PUT',
+                data: data,
+                header: {'Content-Type': 'application/json'}
+            })
         }
     };
 

@@ -51,15 +51,11 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
     $scope.getListOfChallenges();
 
     $scope.upvoteChallenge = function (challenge) {
-        var loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
-        console.log("LOGGED IN USER IN upvoteChallenge()" + loggedInUser);
-        challenge.challengeUpvoters.push(loggedInUser);
-        challengeService.updateChallenge(angular.toJson(challenge)).success(function(){
-          console.log("Challenge updated with challengeUpvoter");
-        }).error(function(){
-            console.log("ERROR in method upvoteChallenge; Could not update challenge with challengeUpvoters");
-        });
-    }
+        challengeService.addUserToChallengeUpvoters(challenge).success(function () {
+            console.log("Add user to upvoted challenges success");
+            $scope.getListOfChallenges();
+        })
+    };
 
     $scope.isChallengeUpvotedByUser = function (challenge) {
         console.log("-----------isChallengeUpvotedByUser runs---------------");
@@ -70,6 +66,7 @@ app.controller('ChallengeController', ['$scope', '$http', 'challengeService', 'u
 
         if (challenge.challengeUpvoters !== null) {
             for(var i = 0; i < challenge.challengeUpvoters.length; i++) {
+                console.log("Challenge upvoters ID: " + challenge.challengeUpvoters[i]);
                 if (challenge.challengeUpvoters[i] === loggedInUser.id) {
                     console.log("-------------------------------------------------------");
                     return true;

@@ -1,12 +1,15 @@
 package com.challengeaccepted.controllers;
 
 import com.challengeaccepted.models.ChallengeModel;
+import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.ChallengeService;
+import com.challengeaccepted.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -14,6 +17,8 @@ public class ChallengeController {
 
     @Autowired
     private ChallengeService challengeService;
+    @Autowired
+    private UserService userService;
 
     @CrossOrigin
     @RequestMapping(value = "/challenge/", method = RequestMethod.POST)
@@ -44,6 +49,16 @@ public class ChallengeController {
     @RequestMapping(value = "/challenge/", method = RequestMethod.PUT)
     public ResponseEntity updateChallenge(@RequestBody ChallengeModel challengeModel) {
         challengeService.updateChallengeInDatabase(challengeModel);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/challenge/{id}/", method = RequestMethod.PUT)
+    public ResponseEntity addUserToChallengeUpvoters(@PathVariable Long id, @RequestBody ChallengeModel challenge) {
+        UserModel loggedInUser = userService.getUserFromDatabase(id);
+
+        challenge.addUserModelToChallengeUpvoters(loggedInUser);
+        challengeService.updateChallengeInDatabase(challenge);
         return new ResponseEntity(HttpStatus.OK);
     }
 
