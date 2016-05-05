@@ -15,6 +15,7 @@ app.controller('GoogleUserController', ['$scope','userService', function($scope,
             console.log('userService created a new user and saved it to database!');
             var stringifiedLoggedInUser = angular.toJson(response);
             sessionStorage.setItem("loggedInUser", stringifiedLoggedInUser);
+            sessionStorage.setItem("isLoggedIn", true);
             console.log("Logged in user Stringified: " + stringifiedLoggedInUser);
             console.log("Response from createNewUser: " + response);
         }).error(function (response) {
@@ -38,6 +39,7 @@ app.controller('GoogleUserController', ['$scope','userService', function($scope,
         var auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut().then(function () {
             sessionStorage.setItem("loggedInUser", null);
+            sessionStorage.setItem("isLoggedIn", false);
             console.log('User signed out.');
             console.log(auth2.isSignedIn.get());
         });

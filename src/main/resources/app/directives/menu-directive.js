@@ -4,3 +4,10 @@ app.directive("directiveMenu", function () {
         templateUrl: 'views/menu.html'
     }
 });
+
+app.directive("directiveLoginPage", function() {
+    return {
+        restrict: 'C',
+        templateUrl: 'views/login-page.html'
+    }
+});
