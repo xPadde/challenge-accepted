@@ -2,6 +2,8 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     $scope.orderByField = 'creationDate';
     $scope.reverseSort = true;
+/*    $scope.activeChallenge = {};*/
+    
 
     $scope.getUserInputsFromCreateChallengeForm = function () {
         return JSON.stringify({
@@ -18,6 +20,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.showListOfChallengesSection = function () {
+        $scope.getListOfChallenges();
         $scope.section = "listOfChallengesSection";
     };
 
@@ -57,12 +60,13 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     $scope.isChallengeUpvotedByUser = function (challenge) {
         console.log("-----------isChallengeUpvotedByUser runs---------------");
-
         $scope.loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
         console.log("Logged in user: " + $scope.loggedInUser.firstName + ", ID: " + $scope.loggedInUser.id);
         console.log("Challenge topic: " + challenge.topic + ", Size in challengeUpvoters: " + challenge.challengeUpvoters.length);
 
-        if (challenge.challengeUpvoters !== null) {
+        
+        
+        if (challenge.challengeUpvoters !== null && challenge !== null) {
             for(var i = 0; i < challenge.challengeUpvoters.length; i++) {
                 console.log("Challenge upvoters ID: " + challenge.challengeUpvoters[i]);
                 if (challenge.challengeUpvoters[i] === $scope.loggedInUser.id) {
@@ -94,15 +98,16 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     };
 
-    // Update the list of challenges on page load.
-    $scope.getListOfChallenges();
-
     $scope.viewChallengeProfilePage = function (challenge) {
         $scope.section = "challengeProfilePageSection";
         $scope.activeChallenge = challenge;
         console.log("challengeProfileToView object: ");
         console.log($scope.challengeProfileToView);
         console.log(challenge.challengeClaimed);
+        
+        console.log("BOOLEANENNNNNNN " + $scope.isChallengeUpvotedByUser(challenge));
+        
+        $scope.disableLikeButton = $scope.isChallengeUpvotedByUser(challenge);
     };
 
     $scope.addYoutubeUrlToCurrentChallenge = function (challenge) {
