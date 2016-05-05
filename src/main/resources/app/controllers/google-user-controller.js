@@ -1,4 +1,4 @@
-app.controller('GoogleUserController', ['$scope','userService', function($scope, userService){
+app.controller('GoogleUserController', ['$scope','userService', '$window', function($scope, userService, $window){
     
     function onSignIn(googleUser) {
         var profile = googleUser.getBasicProfile();
@@ -16,6 +16,7 @@ app.controller('GoogleUserController', ['$scope','userService', function($scope,
             var stringifiedLoggedInUser = angular.toJson(response);
             sessionStorage.setItem("loggedInUser", stringifiedLoggedInUser);
             sessionStorage.setItem("isLoggedIn", true);
+            console.log("NU ÄR BOOLEANEN I LOGIN: " + sessionStorage.getItem("isLoggedIn"));
             console.log("Logged in user Stringified: " + stringifiedLoggedInUser);
             console.log("Response from createNewUser: " + response);
         }).error(function (response) {
@@ -40,8 +41,10 @@ app.controller('GoogleUserController', ['$scope','userService', function($scope,
         auth2.signOut().then(function () {
             sessionStorage.setItem("loggedInUser", null);
             sessionStorage.setItem("isLoggedIn", false);
+            console.log("NU ÄR BOOLEANEN I LOGOUT: " + sessionStorage.getItem("isLoggedIn"));
             console.log('User signed out.');
             console.log(auth2.isSignedIn.get());
+            $window.location.reload();
         });
     }
 

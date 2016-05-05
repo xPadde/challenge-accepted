@@ -15,7 +15,13 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.showCreateChallengeSection = function () {
-        $scope.section = "createNewChallengeSection";
+        console.log("Vad är booleanen: " + sessionStorage.getItem("isLoggedIn"));
+        if(sessionStorage.getItem("isLoggedIn") == 'true') {
+            $scope.section = "createNewChallengeSection";
+        } else {
+            $scope.section = "loginPageSection";
+        }
+
     };
 
     $scope.showListOfChallengesSection = function () {
@@ -50,10 +56,13 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.upvoteChallenge = function (challenge) {
-        challengeService.addUserToChallengeUpvoters(challenge).success(function () {
+        if(sessionStorage.getItem("isLoggedIn") == 'true') {
+            challengeService.addUserToChallengeUpvoters(challenge).success(function () {
             console.log("Add user to upvoted challenges success");
             $scope.getListOfChallenges();
-        })
+        })} else {
+            $scope.section = "loginPageSection";
+        }
     };
 
     $scope.isChallengeUpvotedByUser = function (challenge) {
