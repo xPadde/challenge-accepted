@@ -37,6 +37,7 @@ app.controller('GoogleUserController', ['$scope','userService', function($scope,
     $scope.signOut = function () {
         var auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut().then(function () {
+            sessionStorage.setItem("loggedInUser", null);
             console.log('User signed out.');
             console.log(auth2.isSignedIn.get());
         });
