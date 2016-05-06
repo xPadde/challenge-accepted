@@ -62,8 +62,8 @@ public class ChallengeControllerTest {
     }
 
     @Test
-    public void testAddCommentToChallenge() throws Exception {
-        assertEquals("addCommentToChallenge() did not respond with http statis 201 (created)", HttpStatus.CREATED, challengeController.addCommentToChallenge(new CommentModel(), new Random().nextLong()));
+    public void testAddCommentToChallenge_Should_Return_Status_Code_201() throws Exception {
+        assertEquals("addCommentToChallenge() did not respond with http status 201 (created)", HttpStatus.CREATED, challengeController.addCommentToChallenge(new CommentModel(), new Random().nextLong()));
     }
 
 }
