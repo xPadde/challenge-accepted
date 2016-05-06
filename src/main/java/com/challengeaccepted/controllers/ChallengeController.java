@@ -54,12 +54,37 @@ public class ChallengeController {
 
     @CrossOrigin
     @RequestMapping(value = "/challenge/{id}/", method = RequestMethod.PUT)
-    public ResponseEntity addUserToChallengeUpvoters(@PathVariable Long id, @RequestBody ChallengeModel challenge) {
-        UserModel loggedInUser = userService.getUserFromDatabase(id);
+    public ResponseEntity addUserToChallengeUpvoters(@PathVariable Long id, @RequestBody UserModel loggedInUser) {
+        ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
 
         challenge.addUserModelToChallengeUpvoters(loggedInUser);
         challengeService.updateChallengeInDatabase(challenge);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/challenge/{challengeId}/checkifchallengeisupvotedbyuser/{loggedInUserId}/", method = RequestMethod.GET)
+    public String checkIfChallengeIsUpvotedByUser(@PathVariable Long challengeId, @PathVariable Long loggedInUserId) {
+        System.out.println("VI KOMMER IN I METODEN!!!");
+        ChallengeModel challenge = challengeService.getChallengeFromDatabase(challengeId);
+        System.out.println("CHALLENGE TOPIC: " + challenge.getTopic());
+        if (challenge != null) {
+            List<Long> challengeUpvotersList = challenge.getChallengeUpvoters();
+            System.out.println("LISTANS STORLEK: " + challengeUpvotersList.size());
+
+            if ((challengeUpvotersList != null) && (challengeUpvotersList.size() != 0)) {
+                System.out.println("KOMMER IN I UPVOTERSLIST IF-SATS!");
+                for (Long userId : challengeUpvotersList) {
+                    if (userId == loggedInUserId) {
+                        return "true";
+                    }
+                }
+            } else {
+                System.out.println("KOMMER INTE IN I UPVOTERSLIST IF-SATS!!!!!");
+                return "false";
+            }
+        }
+        return "false";
     }
 
 }

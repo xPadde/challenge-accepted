@@ -31,14 +31,23 @@ app.factory('challengeService', function ($http) {
             })
         },
 
-        addUserToChallengeUpvoters: function (data) {
+        addUserToChallengeUpvoters: function (data, id) {
             var loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
             return $http({
-                url: 'http://localhost:8080/api/challenge/' + loggedInUser.id + '/',
+                url: 'http://localhost:8080/api/challenge/' + id + '/',
                 method: 'PUT',
                 data: data,
                 header: {'Content-Type': 'application/json'}
             })
+        },
+
+        checkIfChallengeIsUpvotedByUser: function (loggedInUserId, challengeId) {
+            return $http({
+                url: 'http://localhost:8080/api/challenge/' + challengeId + '/checkifchallengeisupvotedbyuser/' + loggedInUserId + '/',
+                method: 'GET',
+                header: {'Content-Type': 'application/json'}
+            })
+            
         }
     };
 
