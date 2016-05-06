@@ -10,8 +10,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             'topic': $('#input-topic').val(),
             'description': $('#input-description').val(),
             'creationDate': null,
-            'challengeClaimed': false,
-            'challengeCreator': $scope.loggedInUser
+            'challengeClaimed': false
         });
     };
 
@@ -29,7 +28,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.createNewChallenge = function () {
-        challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm())
+        var loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
+        var userId = loggedInUser.id;
+        console.log(userId)
+        challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), userId)
             .success(function () {
                 console.log('challengeService.createNewChallenge() called and it created a new challenge and saved it to the database!');
                 $scope.getListOfChallenges()
@@ -127,6 +129,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     $scope.markUrlAsTrusted = function (src) {
         return $sce.trustAsResourceUrl(src);
     };
+    
 
     var convertToYouTubeEmbedUrl = function (url) {
         var isYoutubeUrlCorrect = url.indexOf("watch?v=") > 1;

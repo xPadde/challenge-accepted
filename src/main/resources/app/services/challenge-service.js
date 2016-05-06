@@ -14,9 +14,9 @@ app.factory('challengeService', function ($http) {
                 header: {'Content-Type': 'application/json'}
             })
         },
-        createNewChallenge: function (data) {
+        createNewChallenge: function (data, loggedInUserId) {
             return $http({
-                url: 'http://localhost:8080/api/challenge/',
+                url: 'http://localhost:8080/api/challenge/create/challengecreator/' + loggedInUserId,
                 method: 'POST',
                 data: data,
                 header: {'Content-Type': 'application/json'}

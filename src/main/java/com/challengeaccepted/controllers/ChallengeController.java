@@ -21,8 +21,11 @@ public class ChallengeController {
     private UserService userService;
 
     @CrossOrigin
-    @RequestMapping(value = "/challenge/", method = RequestMethod.POST)
-    public ResponseEntity createChallenge(@RequestBody ChallengeModel challengeModel) {
+    @RequestMapping(value = "/challenge/create/challengecreator/{challengeCreatorId}", method = RequestMethod.POST)
+    public ResponseEntity createChallenge(@RequestBody ChallengeModel challengeModel, @PathVariable Long challengeCreatorId) {
+        UserModel challengeCreator = userService.getUserFromDatabase(challengeCreatorId);
+        challengeModel.setChallengeCreator(challengeCreator);
+
         challengeService.saveChallengeToDatabase(challengeModel);
         return new ResponseEntity(HttpStatus.CREATED);
     }
@@ -44,6 +47,8 @@ public class ChallengeController {
     public ResponseEntity<List<ChallengeModel>> readAllCompletedChallenges() {
         return new ResponseEntity<List<ChallengeModel>>(challengeService.getAllCompletedChallengesFromDatabase(), HttpStatus.OK);
     }
+
+
 
     @CrossOrigin
     @RequestMapping(value = "/challenge/", method = RequestMethod.PUT)
