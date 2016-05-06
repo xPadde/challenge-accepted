@@ -20,6 +20,8 @@ public class ChallengeController {
     private ChallengeService challengeService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CommentController commentController;
 
     @CrossOrigin
     @RequestMapping(value = "/challenge/create/challengecreator/{challengeCreatorId}", method = RequestMethod.POST)
@@ -71,12 +73,15 @@ public class ChallengeController {
     @CrossOrigin
     @RequestMapping(value = "/challenge/{challengeId}/addcomment/", method = RequestMethod.PUT)
     public ResponseEntity addCommentToChallenge(@RequestBody CommentModel commentModel, @PathVariable Long challengeId){
-        ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(challengeId);
+        /*ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(challengeId);
         challengeModel.addCommentToChallenge(commentModel);
+        */
+
+        commentController.addChallengeToComment(commentModel, challengeId);
 
         //todo HIT FÖRST och fixa controller för comments så vi kan göra som tidigare logik i andra controllers
 
-        challengeService.updateChallengeInDatabase(challengeModel);
+/*        challengeService.updateChallengeInDatabase(challengeModel);*/
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
