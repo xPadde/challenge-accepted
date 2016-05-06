@@ -2,8 +2,6 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     $scope.orderByField = 'creationDate';
     $scope.reverseSort = true;
-    
-    $scope.isthismadderfakkertrue;
 
     $scope.getUserInputsFromCreateChallengeForm = function () {
         return JSON.stringify({
@@ -58,7 +56,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     $scope.upvoteChallenge = function (challenge) {
         if (sessionStorage.getItem("isLoggedIn") == 'true') {
             $scope.loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
-            challengeService.addUserToChallengeUpvoters(loggedInUser, challenge.id).success(function () {
+            challengeService.addUserToChallengeUpvoters($scope.loggedInUser, challenge.id).success(function () {
                 console.log("Add user to upvoted challenges success");
                 $scope.getListOfChallenges();
             })
@@ -70,7 +68,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     $scope.isChallengeUpvotedByUser = function (challenge) {
         if (sessionStorage.getItem("isLoggedIn") == 'true') {
             $scope.loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
-            challengeService.checkIfChallengeIsUpvotedByUser(loggedInUser.id, challenge.id).success(function (response) {
+            challengeService.checkIfChallengeIsUpvotedByUser($scope.loggedInUser.id, challenge.id).success(function (response) {
                 console.log("BAJSKORVAR!!!")
                 console.log(response);
                 return response;
