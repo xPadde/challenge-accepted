@@ -1,6 +1,7 @@
 package challengeaccepted.controllers;
 
 import com.challengeaccepted.controllers.ChallengeController;
+import com.challengeaccepted.controllers.CommentController;
 import com.challengeaccepted.models.ChallengeModel;
 import com.challengeaccepted.models.CommentModel;
 import com.challengeaccepted.models.UserModel;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 public class ChallengeControllerTest {
 
@@ -23,6 +25,9 @@ public class ChallengeControllerTest {
     private ChallengeService mockedChallengeService;
     @Mock
     private UserService mockedUserService;
+    @Mock
+    private CommentController mockedCommentController;
+
     @InjectMocks
     private ChallengeController challengeController;
 
@@ -58,12 +63,12 @@ public class ChallengeControllerTest {
 
     @Test
     public void testAddUserToChallengeUpvoters_Should_Return_Status_Code_200() throws Exception {
-        assertEquals("addUserToChallengeUpvoters() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.addUserToChallengeUpvoters(new Random().nextLong(), new UserModel()).getStatusCode());
+        assertEquals("addUserToChallengeUpvoters() did not throw NullPointerException", HttpStatus.OK, challengeController.addUserToChallengeUpvoters(new Random().nextLong(), new UserModel()).getStatusCode());
     }
 
     @Test
     public void testAddCommentToChallenge_Should_Return_Status_Code_201() throws Exception {
-        assertEquals("addCommentToChallenge() did not respond with http status 201 (created)", HttpStatus.CREATED, challengeController.addCommentToChallenge(new CommentModel(), new Random().nextLong()));
+        assertEquals("addCommentToChallenge() did not respond with http status 201 (created)", HttpStatus.CREATED, challengeController.addCommentToChallenge(new CommentModel(), new Random().nextLong()).getStatusCode());
     }
 
 }
