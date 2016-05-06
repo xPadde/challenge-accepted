@@ -66,34 +66,12 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.isChallengeUpvotedByUser = function (challenge) {
-        if (sessionStorage.getItem("isLoggedIn") == 'true') {
-            $scope.loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
-            challengeService.checkIfChallengeIsUpvotedByUser($scope.loggedInUser.id, challenge.id).success(function (response) {
-                console.log("BAJSKORVAR!!!")
-                console.log(response);
-                return response;
-            });
-        } else {
-            $scope.section = "loginPageSection";
-            return false;
-        }
-        
-        
-        /*console.log("-----------isChallengeUpvotedByUser runs---------------");
-
-        loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
-        console.log("Logged in user: " + loggedInUser.firstName + ", ID: " + loggedInUser.id);
-        console.log("Challenge topic: " + challenge.topic + ", Size in challengeUpvoters: " + challenge.challengeUpvoters.length);
-
         for (var i = 0; i < challenge.challengeUpvoters.length; i++) {
-            console.log("Challenge upvoters ID: " + challenge.challengeUpvoters[i]);
-            if (challenge.challengeUpvoters[i] === loggedInUser.id) {
-                console.log("-------------------------------------------------------");
+            if (challenge.challengeUpvoters[i] === $scope.loggedInUser.id) {
                 return true;
             }
         }
         return false;
-        console.log("-------------------------------------------------------");*/
     };
 
     $scope.claimCurrentChallenge = function (challenge) {
