@@ -1,6 +1,6 @@
 app.factory('challengeService', function ($http) {
     return {
-        getChallengeById: function(id) {
+        getChallengeById: function (id) {
             return $http({
                 url: 'http://localhost:8080/api/challenge/' + id,
                 method: 'GET',
@@ -47,8 +47,18 @@ app.factory('challengeService', function ($http) {
                 method: 'GET',
                 header: {'Content-Type': 'application/json'}
             })
-            
-        }
-    };
 
+        },
+
+        addCommentToChallenge: function (data, challengeId) {
+            return $http({
+                url: 'http://localhost:8080/api/challenge/' + challengeId + '/comment/',
+                method: 'POST',
+                data: data,
+                header: {'Content-Type': 'application/json'}
+                // TODO move this to comment-service!
+            })
+
+        }
+    }
 });

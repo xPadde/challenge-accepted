@@ -6,6 +6,7 @@
         </div>
         <div class="panel-body">
             <h4>{{activeChallenge.description}}</h4>
+
             <div class="row">
                 <div class="col-sm-10">
                     <button type="button" class="btn btn-primary" ng-hide="activeChallenge.challengeClaimed" ng-click="claimCurrentChallenge(activeChallenge)">Claim This Challenge</button>
@@ -57,7 +58,7 @@
                 <thead>
                 <tr>
                     <th>User</th>
-                    <th>{{comment.commentDate}}</th>
+                    <th>{{comment.content}}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -67,7 +68,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><!--{{comment.content}}-->
+                    <!--<td>&lt;!&ndash;{{comment.content}}&ndash;&gt;-->
                         Det är ett välkänt faktum att läsare distraheras av läsbar text på en
                         sida när man skall studera layouten. Poängen med Lorem Ipsum är att det ger ett normalt
                         ordflöde,

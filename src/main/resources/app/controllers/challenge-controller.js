@@ -84,8 +84,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
         challenge.challengeClaimer = $scope.loggedInUser;
         challenge.challengeClaimed = true;
-        
-        
+
 
         challengeService.updateChallenge(angular.toJson(challenge)).success(function () {
             console.log("claim challenge: Gick bra");
@@ -138,16 +137,28 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             return "";
         }
         return finalUrl;
-    }
-    
+    };
+
     $scope.addCommentToChallenge = function (challenge) {
-        var commentFromUser = $('#textarea-comment-field').val();
-        
-        //todo Här efter backend är klart
+        challengeService.addCommentToChallenge($scope.getUserInputsFromCommentField(), challenge.id)
+            .success(function (response) {
+                console.log('addCommentToChallenge() was successful!');
+                console.log(response);
+            })
+            .error(function (error) {
+                console.log('addCommentToChallenge() failed!');
+                console.log(error);
+            }).then(function(){
+            $scope.activeChallenge = challengeService.getChallengeById(challenge.id);
+        });
+    };
 
-        console.log(commentFromUser);
-
+    $scope.getUserInputsFromCommentField = function () {
+        return JSON.stringify({
+            'content': $('#textarea-comment-field').val(),
+            'commentDate': null
+            // TODO add field commentingUser
+        })
     }
-
 
 }]);
