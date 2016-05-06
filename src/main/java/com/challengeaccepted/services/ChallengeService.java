@@ -25,8 +25,8 @@ public class ChallengeService {
         return challengeRepository.findAll();
     }
 
-    public void updateChallengeInDatabase(ChallengeModel challengeModelFromWeb) {
-        challengeRepository.save(challengeModelFromWeb);
+    public void updateChallengeInDatabase(ChallengeModel challengeModelToUpdate) {
+        challengeRepository.save(challengeModelToUpdate);
     }
 
     public List<ChallengeModel> getAllCompletedChallengesFromDatabase() {

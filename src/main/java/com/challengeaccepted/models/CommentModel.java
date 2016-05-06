@@ -15,9 +15,20 @@ public class CommentModel implements Serializable {
     private LocalDateTime commentDate;
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name = "challenge_id")
+    private ChallengeModel commentedChallenge;
+
     public CommentModel() {
     }
 
+    public ChallengeModel getCommentedChallenge() {
+        return commentedChallenge;
+    }
+
+    public void setCommentedChallenge(ChallengeModel commentedChallenge) {
+        this.commentedChallenge = commentedChallenge;
+    }
 
     public LocalDateTime getCommentDate() {
         return commentDate;

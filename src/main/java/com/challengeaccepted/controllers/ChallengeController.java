@@ -1,6 +1,7 @@
 package com.challengeaccepted.controllers;
 
 import com.challengeaccepted.models.ChallengeModel;
+import com.challengeaccepted.models.CommentModel;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.ChallengeService;
 import com.challengeaccepted.services.UserService;
@@ -65,6 +66,16 @@ public class ChallengeController {
         challenge.addUserModelToChallengeUpvoters(loggedInUser);
         challengeService.updateChallengeInDatabase(challenge);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/challenge/{challengeId}/addcomment/", method = RequestMethod.PUT)
+    public ResponseEntity addCommentToChallenge(@RequestBody CommentModel commentModel, @PathVariable Long challengeId){
+        ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(challengeId);
+        challengeModel.addCommentToChallenge(commentModel);
+
+        challengeService.updateChallengeInDatabase(challengeModel);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
 }

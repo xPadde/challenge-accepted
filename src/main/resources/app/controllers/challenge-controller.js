@@ -147,8 +147,11 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     $scope.addCommentToChallenge = function (challenge) {
         var commentFromUser = $('#textarea-comment-field').val();
-
-        //challenge.
+        
+        //todo Här efter backend är klart
+        
+        console.log(commentFromUser);
+        
     }
 
 

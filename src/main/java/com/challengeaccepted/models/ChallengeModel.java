@@ -34,6 +34,8 @@ public class ChallengeModel implements Serializable {
     @OneToOne
     @JoinColumn(name = "challenge_creator_id")
     private UserModel challengeCreator;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "commentedChallenge")
+    private List<CommentModel> challengeComments;
 
     public ChallengeModel() {
     }
@@ -46,15 +48,27 @@ public class ChallengeModel implements Serializable {
     }
 
     public List<Long> getChallengeUpvoters() {
-        List<Long> templist = new ArrayList<Long>();
+        List<Long> listOfChallengeUpvotersId = new ArrayList<Long>();
         for (UserModel user : challengeUpvoters) {
-            templist.add(user.getId());
+            listOfChallengeUpvotersId.add(user.getId());
         }
-        return templist;
+        return listOfChallengeUpvotersId;
     }
 
     public void setChallengeUpvoters(List<UserModel> challengeUpvoters) {
         this.challengeUpvoters = challengeUpvoters;
+    }
+
+    public List<Long> getChallengeComments() {
+        List<Long> listOfChallengeCommentsId = new ArrayList<Long>();
+        for (UserModel user : challengeUpvoters) {
+            listOfChallengeCommentsId.add(user.getId());
+        }
+        return listOfChallengeCommentsId;
+    }
+
+    public void setChallengeComments(List<CommentModel> challengeComments) {
+        this.challengeComments = challengeComments;
     }
 
     public Long getId() {
@@ -151,4 +165,11 @@ public class ChallengeModel implements Serializable {
         this.challengeCreator = challengeCreator;
     }
 
+    public void addCommentToChallenge(CommentModel commentModel) {
+        if (challengeComments == null) {
+            challengeComments = new ArrayList<CommentModel>();
+        }
+
+        challengeComments.add(commentModel);
+    }
 }
