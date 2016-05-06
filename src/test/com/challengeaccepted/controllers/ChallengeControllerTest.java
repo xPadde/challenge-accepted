@@ -2,7 +2,10 @@ package challengeaccepted.controllers;
 
 import com.challengeaccepted.controllers.ChallengeController;
 import com.challengeaccepted.models.ChallengeModel;
+import com.challengeaccepted.models.CommentModel;
+import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.ChallengeService;
+import com.challengeaccepted.services.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -17,8 +20,9 @@ import static org.junit.Assert.assertEquals;
 public class ChallengeControllerTest {
 
     @Mock
-    private ChallengeService challengeService;
-
+    private ChallengeService mockedChallengeService;
+    @Mock
+    private UserService mockedUserService;
     @InjectMocks
     private ChallengeController challengeController;
 
@@ -43,18 +47,23 @@ public class ChallengeControllerTest {
     }
 
     @Test
-    public void readAllCompletedChallenges_Should_Return_Status_Code_200() throws Exception {
+    public void testReadAllCompletedChallenges_Should_Return_Status_Code_200() throws Exception {
         assertEquals("readAllCompletedChallenges() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.readAllCompletedChallenges().getStatusCode());
     }
 
-//    @Test
-//    public void testUpdateChallenge() throws Exception {
-//        assertEquals("updateChallenge() did not respond with http status 200 (ok)", new ResponseEntity(HttpStatus.OK), challengeController.updateChallenge(new Long(new Random().nextLong())));
-//    }
-//
-//    @Test
-//    public void testDeleteChallenge() throws Exception {
-//        assertEquals("deleteChallenge() did not respond with http status 200 (ok)", new ResponseEntity(HttpStatus.OK), challengeController.deleteChallenge(new Long(new Random().nextLong())));
-//    }
+    @Test
+    public void testUpdateChallenge_Should_Return_Status_Code_200() throws Exception {
+        assertEquals("updateChallenge() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.updateChallenge(new ChallengeModel()).getStatusCode());
+    }
+
+    @Test
+    public void testAddUserToChallengeUpvoters_Should_Return_Status_Code_200() throws Exception {
+        assertEquals("addUserToChallengeUpvoters() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.addUserToChallengeUpvoters(new Random().nextLong(), new UserModel()).getStatusCode());
+    }
+
+    @Test
+    public void testAddCommentToChallenge() throws Exception {
+        assertEquals("addCommentToChallenge() did not respond with http statis 201 (created)", HttpStatus.CREATED, challengeController.addCommentToChallenge(new CommentModel(), new Random().nextLong()));
+    }
 
 }
