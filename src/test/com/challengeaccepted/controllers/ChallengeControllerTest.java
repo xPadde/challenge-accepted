@@ -29,7 +29,7 @@ public class ChallengeControllerTest {
 
     @Test
     public void testCreateChallenge_Should_Return_Status_Code_201() throws Exception {
-        assertEquals("createChallenge() did not respond with http status 201 (created)", HttpStatus.CREATED, challengeController.createChallenge(new ChallengeModel()).getStatusCode());
+        assertEquals("createChallenge() did not respond with http status 201 (created)", HttpStatus.CREATED, challengeController.createChallenge(new ChallengeModel(), new Random().nextLong()).getStatusCode());
     }
 
     @Test

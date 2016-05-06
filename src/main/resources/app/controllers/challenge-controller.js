@@ -23,6 +23,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.showListOfChallengesSection = function () {
+        $scope.getListOfChallenges();
         $scope.section = "listOfChallengesSection";
     };
 
@@ -31,7 +32,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.createNewChallenge = function () {
-        challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm())
+        var loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
+        var userId = loggedInUser.id;
+        console.log(userId)
+        challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), userId)
             .success(function () {
                 console.log('challengeService.createNewChallenge() called and it created a new challenge and saved it to the database!');
                 $scope.getListOfChallenges()
@@ -80,7 +84,8 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
         challenge.challengeClaimer = $scope.loggedInUser;
         challenge.challengeClaimed = true;
-
+        
+        
 
         challengeService.updateChallenge(angular.toJson(challenge)).success(function () {
             console.log("claim challenge: Gick bra");
@@ -91,15 +96,16 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     };
 
-    // Update the list of challenges on page load.
-    $scope.getListOfChallenges();
-
     $scope.viewChallengeProfilePage = function (challenge) {
         $scope.section = "challengeProfilePageSection";
         $scope.activeChallenge = challenge;
         console.log("challengeProfileToView object: ");
         console.log($scope.challengeProfileToView);
         console.log(challenge.challengeClaimed);
+
+        console.log("BOOLEANENNNNNNN " + $scope.isChallengeUpvotedByUser(challenge));
+
+        $scope.disableLikeButton = $scope.isChallengeUpvotedByUser(challenge);
     };
 
     $scope.addYoutubeUrlToCurrentChallenge = function (challenge) {
@@ -133,11 +139,14 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         }
         return finalUrl;
     }
-
+    
     $scope.addCommentToChallenge = function (challenge) {
         var commentFromUser = $('#textarea-comment-field').val();
+        
+        //todo Här efter backend är klart
 
-        //challenge.
+        console.log(commentFromUser);
+
     }
 
 
