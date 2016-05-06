@@ -47,6 +47,8 @@ public class ChallengeModel implements Serializable {
         challengeUpvoters.add(userModel);
     }
 
+
+
     public List<Long> getChallengeUpvoters() {
         List<Long> listOfChallengeUpvotersId = new ArrayList<Long>();
         for (UserModel user : challengeUpvoters) {

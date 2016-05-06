@@ -74,6 +74,8 @@ public class ChallengeController {
         ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(challengeId);
         challengeModel.addCommentToChallenge(commentModel);
 
+        //todo HIT FÖRST och fixa controller för comments så vi kan göra som tidigare logik i andra controllers
+
         challengeService.updateChallengeInDatabase(challengeModel);
         return new ResponseEntity(HttpStatus.CREATED);
     }

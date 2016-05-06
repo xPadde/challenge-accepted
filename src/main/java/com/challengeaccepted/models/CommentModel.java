@@ -22,6 +22,8 @@ public class CommentModel implements Serializable {
     public CommentModel() {
     }
 
+
+
     public ChallengeModel getCommentedChallenge() {
         return commentedChallenge;
     }
