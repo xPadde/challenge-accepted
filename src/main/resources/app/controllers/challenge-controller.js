@@ -135,8 +135,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     $scope.addYoutubeUrlToCurrentChallenge = function (challenge) {
         var userProvidedUrl = $('#input-youtube-url').val();
         challenge.youtubeURL = convertToYouTubeEmbedUrl(userProvidedUrl);
-        challenge.youtubeVideoUploaded = true;
-
+        challenge.youtubeVideoCorrect = true;
         challengeService.updateChallenge(angular.toJson(challenge))
             .success(function () {
                 console.log("nu är youtube url sparat.");
@@ -145,6 +144,18 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         });
     };
 
+    $scope.confirmYoutubeVideoToCurrentChallenge = function (challenge) {
+        $( '#uploadYoutubeVideoForm' ).each(function(){
+            this.reset();
+        });
+        challenge.youtubeVideoUploaded = true;
+        challengeService.updateChallenge(angular.toJson(challenge))
+            .success(function () {
+                console.log("Nu är challenge uppdaterad med booleanen  sparad");
+            }).error(function() {
+                console.log("Nu är challenge INTE uppdaterad med booleanen");
+        });
+    };
 
     $scope.markUrlAsTrusted = function (src) {
         return $sce.trustAsResourceUrl(src);
@@ -167,8 +178,8 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     $scope.addCommentToChallenge = function (challenge) {
         var commentFromUser = $('#textarea-comment-field').val();
         $( '#commentChallengeForm' ).each(function(){
-                    this.reset();
-                });
+            this.reset();
+        });
         challengeService.addCommentToChallenge($scope.getUserInputsFromCommentField(), challenge.id)
             .success(function (response) {
                 console.log('addCommentToChallenge() was successful!');
@@ -188,6 +199,6 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             'commentDate': null
             // TODO add field commentingUser
         })
-    }
+    };
 
 }]);
