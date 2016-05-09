@@ -38,17 +38,16 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.createNewChallenge = function () {
-        var loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
-        var userId = loggedInUser.id;
-        console.log(userId)
-        challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), userId)
+        $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+        challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), $scope.loggedInUser.id)
             .success(function () {
                 console.log('challengeService.createNewChallenge() called and it created a new challenge and saved it to the database!');
                 $scope.getListOfChallenges()
                 $scope.section = "listOfChallengesSection";
             })
-            .error(function () {
+            .error(function (response) {
                 console.log('challengeService.createNewChallenge() called and it ***FAILED*** to create new challenge');
+                console.log(response);
             })
 
         $('#createNewChallengeForm').each(function () {
@@ -201,12 +200,12 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             console.log('response var undefined, hittade ingen user med email!');
             userService.createNewUser($scope.loggedInUser)
                 .success(function (response) {
-                    sessionStorage.setItem('loggedInUser', response);
+                    sessionStorage.setItem('loggedInUser', JSON.stringify(response));
                     sessionStorage.setItem('isLoggedIn', true);
                 });
         } else {
             console.log("response var INTE undefined. User hittades!");
-            sessionStorage.setItem('loggedInUser', response);
+            sessionStorage.setItem('loggedInUser', JSON.stringify(response));
             console.log(sessionStorage.getItem('loggedInUser'));
             sessionStorage.setItem('isLoggedIn', true);
         }
@@ -221,7 +220,6 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             $scope.loggedInUser = JSON.parse($scope.getUserInfo2());
         }
 
-        debugger;
         userService.getUserByEmail($scope.loggedInUser.email)
             .success(function (response) {
                 userFoundByEmail = response;
