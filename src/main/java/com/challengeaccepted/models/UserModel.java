@@ -29,14 +29,6 @@ public class UserModel implements Serializable {
         return id;
     }
 
-    public List<ChallengeModel> getUpvotedChallenges() {
-        return upvotedChallenges;
-    }
-
-    public void setUpvotedChallenges(List<ChallengeModel> upvotedChallenges) {
-        this.upvotedChallenges = upvotedChallenges;
-    }
-
     public String getFirstName() {
         return firstName;
     }

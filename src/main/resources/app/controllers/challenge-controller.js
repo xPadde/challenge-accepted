@@ -42,7 +42,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), $scope.loggedInUser.id)
             .success(function () {
                 console.log('challengeService.createNewChallenge() called and it created a new challenge and saved it to the database!');
-                $scope.getListOfChallenges()
+                $scope.getListOfChallenges();
                 $scope.section = "listOfChallengesSection";
             })
             .error(function (response) {
@@ -56,26 +56,30 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.getListOfChallenges = function () {
-        challengeService.getListOfChallenges()
+        challengeService.getListOfAllChallenges()
             .success(function (response) {
                 $scope.listOfChallenges = response;
                 console.log('challengeService.getListOfChallenges() fetched all the challenges from the database successfully!');
             })
-            .error(function () {
+            .error(function (response) {
+                console.log(response);
                 console.log('challengeService.getListOfChallenges() ***FAILED*** to fetch all the challenges from the database!');
-            })
+            });
     };
 
     $scope.upvoteChallenge = function (challenge) {
         if (sessionStorage.getItem("isLoggedIn") == 'true') {
-            $scope.loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
-            challengeService.addUserToChallengeUpvoters($scope.loggedInUser, challenge.id).success(function () {
-                console.log("Add user to upvoted challenges success");
-                $scope.getListOfChallenges();
-            })
+            challengeService.addUserToChallengeUpvoters(sessionStorage.getItem('loggedInUser'), challenge.id)
+                .success(function () {
+                    console.log("Add user to upvoted challenges success");
+                })
+                .error(function (response) {
+                    console.log(response);
+                });
         } else {
             $scope.section = "loginPageSection";
         }
+        ;
     };
 
     $scope.isChallengeUpvotedByUser = function (challenge) {
@@ -228,7 +232,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                 console.log("userService.getUserByEmail ERROR!");
                 console.log(error);
             }).then(function () {
-                $scope.setLoggedInUser(userFoundByEmail);
+            $scope.setLoggedInUser(userFoundByEmail);
         });
     };
 
