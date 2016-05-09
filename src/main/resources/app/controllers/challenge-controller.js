@@ -122,19 +122,20 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.claimCurrentChallenge = function (challenge) {
-
-        $scope.loggedInUser = angular.fromJson(sessionStorage.getItem("loggedInUser"));
+        $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
 
         challenge.challengeClaimer = $scope.loggedInUser;
         challenge.challengeClaimed = true;
 
-
-        challengeService.updateChallenge(angular.toJson(challenge)).success(function () {
-            console.log("claim challenge: Gick bra");
-        }).error(function (data) {
-            console.log("claim challenge: gick INTE bra");
-            console.log(data);
-        });
+        challengeService.updateChallenge(JSON.stringify(challenge))
+            .success(function (response) {
+                console.log("challengeService.updateChallenge() SUCCESS");
+                console.log(response);
+            })
+            .error(function (error) {
+                console.log("challengeService.updateChallenge() ERROR");
+                console.log(error);
+            });
 
     };
 
