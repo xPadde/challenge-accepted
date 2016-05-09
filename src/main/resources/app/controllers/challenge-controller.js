@@ -39,11 +39,15 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             .success(function () {
                 console.log('challengeService.createNewChallenge() called and it created a new challenge and saved it to the database!');
                 $scope.getListOfChallenges()
-
+                $scope.section = "listOfChallengesSection";
             })
             .error(function () {
                 console.log('challengeService.createNewChallenge() called and it ***FAILED*** to create new challenge');
             })
+
+        $( '#createNewChallengeForm' ).each(function(){
+            this.reset();
+        });
     };
 
     $scope.getListOfChallenges = function () {
@@ -140,6 +144,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.addCommentToChallenge = function (challenge) {
+        var commentFromUser = $('#textarea-comment-field').val();
+        $( '#commentChallengeForm' ).each(function(){
+                    this.reset();
+                });
         challengeService.addCommentToChallenge($scope.getUserInputsFromCommentField(), challenge.id)
             .success(function (response) {
                 console.log('addCommentToChallenge() was successful!');
