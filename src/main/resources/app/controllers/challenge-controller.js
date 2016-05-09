@@ -27,9 +27,11 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         $scope.section = "listOfChallengesSection";
     };
 
+    $scope.showApproveVideosSection = function () {
+            $scope.section = "listApproveVideosSection";
+        };
+
     $scope.showListOfCompletedChallengesSection = function () {
-            // $scope.getListOfChallenges();
-            // TODO view for completed challenges
             $scope.section = "listOfCompletedChallengesSection";
         };
 
