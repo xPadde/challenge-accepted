@@ -232,7 +232,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             // TODO add field commentingUser
         })
     };
-    };
+    
 
     // Hardcoded User Login Functions
 
