@@ -36,6 +36,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         };
 
     $scope.showListOfCompletedChallengesSection = function () {
+            $scope.getListOfCompletedChallenges();
             $scope.section = "listOfCompletedChallengesSection";
         };
 
@@ -82,8 +83,18 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         .error(function(error) {
             console.log(error);
             console.log("challengeService.getListOfUnapprovedChallenges ***FAILED*** to fetch all the challenges from the database!");
-        })
+        });
     };
+
+    $scope.getListOfCompletedChallenges = function () {
+        challengeService.getListOfCompletedChallenges()
+            .success(function (response) {
+                $scope.listOfCompletedChallenges = response;
+                console.log("Hämtade listan med alla färdiga challenges");
+            }).error(function(error) {
+                console.log("Hämtade inte listan med färdiga challenges");
+        });
+    }
 
     $scope.upvoteChallenge = function (challenge) {
         if (sessionStorage.getItem("isLoggedIn") == 'true') {
@@ -160,6 +171,20 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                 console.log("Nu är challenge uppdaterad med booleanen  sparad");
             }).error(function() {
                 console.log("Nu är challenge INTE uppdaterad med booleanen");
+        });
+
+        alert("VIDEO SENT TO CHALLENGE-REQUESTER");
+    };
+
+    $scope.completeChallenge = function(challenge) {
+        challenge.challengeCompleted = true;
+
+        challenge.youtubeVideoUploaded = false;
+        challengeService.updateChallenge(angular.toJson(challenge))
+            .success(function() {
+                console.log("Uppdaterat challenge med booleanen completed");
+            }).error(function() {
+                console.log("Uppdaterade inte challenge med booleanen completed");
         });
     };
 

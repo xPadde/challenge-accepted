@@ -67,6 +67,14 @@ app.factory('challengeService', function ($http) {
                 method: 'GET',
                 header: {'Content-Type': 'application/json'}
             })
+        },
+
+        getListOfCompletedChallenges: function() {
+            return $http({
+                url: 'http://localhost:8080/api/challenges/completed/',
+                method: 'GET',
+                header: {'Content-Type': 'application/json'}
+            })
         }
     }
 });
