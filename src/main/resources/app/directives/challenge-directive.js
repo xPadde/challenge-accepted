@@ -19,6 +19,20 @@ app.directive("directiveListChallenges", function () {
     }
 });
 
+app.directive("directiveListCompletedChallenges", function () {
+    return {
+        restrict: 'C',
+        templateUrl: 'views/list-completed-challenges.html'
+    }
+});
+
+app.directive("directiveListApproveVideos", function () {
+    return {
+        restrict: 'C',
+        templateUrl: 'views/list-approve-videos.html'
+    }
+});
+
 app.directive("directiveListYourChallenges", function () {
     return {
         restrict: 'C',

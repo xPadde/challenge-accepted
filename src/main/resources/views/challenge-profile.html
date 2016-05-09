@@ -16,14 +16,14 @@
                 </div>
             </div>
 
-            <form class="form-horizontal" role="form" ng-show="activeChallenge.challengeClaimed">
+            <form class="form-horizontal" role="form" ng-show="activeChallenge.challengeClaimed" id="uploadYoutubeVideoForm">
                 <div class="form-group">
                     <div class="col-sm-3">
                         <input id="input-youtube-url" type="text" placeholder="Youtube URL here" class="form-control">
                     </div>
                 </div>
                 <p>
-                    <iframe width="510" height="350" ng-src="{{ markUrlAsTrusted(activeChallenge.youtubeURL) }}" ng-show="activeChallenge.youtubeVideoUploaded"></iframe>
+                    <iframe id="youtubeFrame" width="510" height="350" ng-src="{{ markUrlAsTrusted(activeChallenge.youtubeURL) }}" ng-show="activeChallenge.youtubeVideoCorrect"></iframe>
                 <p>
 
                 <div class="form-group">
@@ -31,7 +31,7 @@
                         <button class="btn btn-default" ng-click="addYoutubeUrlToCurrentChallenge(activeChallenge)">Add URL</button>
                     </div>
                     <div class="col-sm-1">
-                        <button class="btn btn-default" ng-click="confirmYoutubeVideoToCurrentChallenge()">Confirm This Video</button>
+                        <button class="btn btn-default" ng-click="confirmYoutubeVideoToCurrentChallenge(activeChallenge)">Confirm This Video</button>
                     </div>
                 </div>
             </form>

@@ -58,6 +58,22 @@ app.factory('challengeService', function ($http) {
                 // TODO move this to comment-service!
             })
 
+        },
+
+        getListOfUnapprovedChallenges: function () {
+            return $http({
+                url: 'http://localhost:8080/api/challenges/unapproved/',
+                method: 'GET',
+                header: {'Content-Type': 'application/json'}
+            })
+        },
+
+        getListOfCompletedChallenges: function() {
+            return $http({
+                url: 'http://localhost:8080/api/challenges/completed/',
+                method: 'GET',
+                header: {'Content-Type': 'application/json'}
+            })
         }
     }
 });

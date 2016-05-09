@@ -8,7 +8,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             'topic': $('#input-topic').val(),
             'description': $('#input-description').val(),
             'creationDate': null,
-            'challengeClaimed': false
+            'challengeClaimed': false,
+            'youtubeVideoUploaded': false,
+            'youtubeVideoCorrect': false,
+            'challengeCompleted': false
         });
     };
 
@@ -27,11 +30,15 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         $scope.section = "listOfChallengesSection";
     };
 
+    $scope.showApproveVideosSection = function () {
+            $scope.section = "listApproveVideosSection";
+            $scope.getListOfUnapprovedChallenges();
+        };
+
     $scope.showListOfCompletedChallengesSection = function () {
-        // $scope.getListOfChallenges();
-        // TODO view for completed challenges
-        $scope.section = "listOfCompletedChallengesSection";
-    };
+            $scope.getListOfCompletedChallenges();
+            $scope.section = "listOfCompletedChallengesSection";
+        };
 
     $scope.showSecretListOfChallengesSection = function () {
         $scope.section = "secretListOfChallengesSection";
@@ -67,6 +74,28 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             });
     };
 
+    $scope.getListOfUnapprovedChallenges = function () {
+        challengeService.getListOfUnapprovedChallenges()
+            .success(function (response) {
+                $scope.listOfUnapprovedChallenges = response;
+                console.log("challengeService.getListOfUnapprovedChallenges fetched all the unapproved challenges successfully");
+        })
+        .error(function(error) {
+            console.log(error);
+            console.log("challengeService.getListOfUnapprovedChallenges ***FAILED*** to fetch all the challenges from the database!");
+        });
+    };
+
+    $scope.getListOfCompletedChallenges = function () {
+        challengeService.getListOfCompletedChallenges()
+            .success(function (response) {
+                $scope.listOfCompletedChallenges = response;
+                console.log("Hämtade listan med alla färdiga challenges");
+            }).error(function(error) {
+                console.log("Hämtade inte listan med färdiga challenges");
+        });
+    }
+
     $scope.upvoteChallenge = function (challenge) {
         if (sessionStorage.getItem("isLoggedIn") == 'true') {
             challengeService.addUserToChallengeUpvoters(sessionStorage.getItem('loggedInUser'), challenge.id)
@@ -78,8 +107,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                 });
         } else {
             $scope.section = "loginPageSection";
-        }
-        ;
+        };
     };
 
     $scope.isChallengeUpvotedByUser = function (challenge) {
@@ -123,8 +151,8 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     $scope.addYoutubeUrlToCurrentChallenge = function (challenge) {
         var userProvidedUrl = $('#input-youtube-url').val();
         challenge.youtubeURL = convertToYouTubeEmbedUrl(userProvidedUrl);
-        challenge.youtubeVideoUploaded = true;
-
+        challenge.youtubeVideoCorrect = true;
+        
         challengeService.updateChallenge(angular.toJson(challenge))
             .success(function () {
                 console.log("nu är youtube url sparat.");
@@ -133,6 +161,33 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         });
     };
 
+    $scope.confirmYoutubeVideoToCurrentChallenge = function (challenge) {
+        $( '#uploadYoutubeVideoForm' ).each(function(){
+            this.reset();
+        });
+        challenge.youtubeVideoUploaded = true;
+        challenge.youtubeVideoCorrect = false;
+        challengeService.updateChallenge(angular.toJson(challenge))
+            .success(function () {
+                console.log("Nu är challenge uppdaterad med booleanen  sparad");
+            }).error(function() {
+                console.log("Nu är challenge INTE uppdaterad med booleanen");
+        });
+
+        alert("VIDEO SENT TO CHALLENGE-REQUESTER");
+    };
+
+    $scope.completeChallenge = function(challenge) {
+        challenge.challengeCompleted = true;
+
+        challenge.youtubeVideoUploaded = false;
+        challengeService.updateChallenge(angular.toJson(challenge))
+            .success(function() {
+                console.log("Uppdaterat challenge med booleanen completed");
+            }).error(function() {
+                console.log("Uppdaterade inte challenge med booleanen completed");
+        });
+    };
 
     $scope.markUrlAsTrusted = function (src) {
         return $sce.trustAsResourceUrl(src);
@@ -154,7 +209,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     $scope.addCommentToChallenge = function (challenge) {
         var commentFromUser = $('#textarea-comment-field').val();
-        $('#commentChallengeForm').each(function () {
+        $( '#commentChallengeForm' ).each(function(){
             this.reset();
         });
         challengeService.addCommentToChallenge($scope.getUserInputsFromCommentField(), challenge.id)
@@ -176,6 +231,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             'commentDate': null
             // TODO add field commentingUser
         })
+    };
     };
 
     // Hardcoded User Login Functions

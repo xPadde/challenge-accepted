@@ -6,8 +6,9 @@
     border-radius: 2px;
 }
 
-.glyphicon-thumbs-up {
-    font-size: 1.7em;
+a span .glyphicon {
+    font-size: 3.7em;
+    color: pink;
 }
 
 .btn-primary {
