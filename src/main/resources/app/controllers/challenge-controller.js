@@ -239,19 +239,11 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     // TODO två användare skapas, checked för om en användare redan finns fungerar inte
     // TODO Fixa så man kan skapa challenge
 
-    $scope.getUserInfo1 = function () {
+    $scope.getUserInfo = function (profile) {
         return JSON.stringify({
-            'firstName': 'Kalle',
-            'lastName': 'Brallsson',
-            'email': 'kalle@brallsson.se'
-        });
-    };
-
-    $scope.getUserInfo2 = function () {
-        return JSON.stringify({
-            'firstName': 'Even',
-            'lastName': 'Steven',
-            'email': 'not@even.se'
+            'firstName': profile.getGivenName(),
+            'lastName': profile.getFamilyName(),
+            'email': profile.getEmail()
         });
     };
 
@@ -271,14 +263,12 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         }
     };
 
-    $scope.login = function (user) {
+    onSignIn = function (googleUser) {
+        var profile = googleUser.getBasicProfile();
+
         var userFoundByEmail = "";
 
-        if (user === 'user1') {
-            $scope.loggedInUser = JSON.parse($scope.getUserInfo1());
-        } else {
-            $scope.loggedInUser = JSON.parse($scope.getUserInfo2());
-        }
+        $scope.loggedInUser = JSON.parse($scope.getUserInfo(profile));
 
         userService.getUserByEmail($scope.loggedInUser.email)
             .success(function (response) {
@@ -292,9 +282,14 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         });
     };
 
-    $scope.logout = function () {
-        sessionStorage.setItem('loggedInUser', null);
-        sessionStorage.setItem('isLoggedIn', false);
-    }
+    $scope.signOut = function () {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            sessionStorage.setItem("loggedInUser", null);
+            sessionStorage.setItem("isLoggedIn", false);
+            console.log("Auth2 isSignedIn?: " + auth2.isSignedIn.get());
+            window.location.reload();
+        });
+    };
 
 }]);
