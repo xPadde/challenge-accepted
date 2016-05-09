@@ -122,6 +122,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.claimCurrentChallenge = function (challenge) {
+        debugger;
+
+        //TODO Har man upvotat en challenge så blir det krasch eftersom vi skickar in en challengeUpvoter i form av en Long
+
         $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
 
         challenge.challengeClaimer = $scope.loggedInUser;
@@ -145,6 +149,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         console.log("challengeProfileToView object: ");
         console.log($scope.challengeProfileToView);
         console.log(challenge.challengeClaimed);
+        console.log(challenge);
 
         console.log("BOOLEANENNNNNNN " + $scope.isChallengeUpvotedByUser(challenge));
 
