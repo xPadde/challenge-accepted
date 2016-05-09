@@ -33,4 +33,7 @@ public class ChallengeService {
         return challengeRepository.getByIsChallengeCompleted(true);
     }
 
+    public List<ChallengeModel> getAllUnapprovedChallengesFromDatabase() {
+        return challengeRepository.getByIsYoutubeVideoUploaded(true);
+    }
 }

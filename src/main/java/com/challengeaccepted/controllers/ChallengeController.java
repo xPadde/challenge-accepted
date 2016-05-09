@@ -52,6 +52,14 @@ public class ChallengeController {
     }
 
     @CrossOrigin
+    @RequestMapping(value = "/challenges/unapproved/", method = RequestMethod.GET)
+    public ResponseEntity<List<ChallengeModel>> readAllUnapprovedChallenges() {
+        return new ResponseEntity<List<ChallengeModel>>(challengeService.getAllUnapprovedChallengesFromDatabase(), HttpStatus.OK);
+    }
+
+
+
+    @CrossOrigin
     @RequestMapping(value = "/challenge/", method = RequestMethod.PUT)
     public ResponseEntity updateChallenge(@RequestBody ChallengeModel challengeModel) {
         challengeService.updateChallengeInDatabase(challengeModel);
