@@ -31,14 +31,14 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.showApproveVideosSection = function () {
-            $scope.section = "listApproveVideosSection";
-            $scope.getListOfUnapprovedChallenges();
-        };
+        $scope.section = "listApproveVideosSection";
+        $scope.getListOfUnapprovedChallenges();
+    };
 
     $scope.showListOfCompletedChallengesSection = function () {
-            $scope.getListOfCompletedChallenges();
-            $scope.section = "listOfCompletedChallengesSection";
-        };
+        $scope.getListOfCompletedChallenges();
+        $scope.section = "listOfCompletedChallengesSection";
+    };
 
     $scope.showSecretListOfChallengesSection = function () {
         $scope.section = "secretListOfChallengesSection";
@@ -79,11 +79,11 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             .success(function (response) {
                 $scope.listOfUnapprovedChallenges = response;
                 console.log("challengeService.getListOfUnapprovedChallenges fetched all the unapproved challenges successfully");
-        })
-        .error(function(error) {
-            console.log(error);
-            console.log("challengeService.getListOfUnapprovedChallenges ***FAILED*** to fetch all the challenges from the database!");
-        });
+            })
+            .error(function (error) {
+                console.log(error);
+                console.log("challengeService.getListOfUnapprovedChallenges ***FAILED*** to fetch all the challenges from the database!");
+            });
     };
 
     $scope.getListOfCompletedChallenges = function () {
@@ -91,8 +91,8 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             .success(function (response) {
                 $scope.listOfCompletedChallenges = response;
                 console.log("Hämtade listan med alla färdiga challenges");
-            }).error(function(error) {
-                console.log("Hämtade inte listan med färdiga challenges");
+            }).error(function (error) {
+            console.log("Hämtade inte listan med färdiga challenges");
         });
     }
 
@@ -101,16 +101,18 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             challengeService.addUserToChallengeUpvoters(sessionStorage.getItem('loggedInUser'), challenge.id)
                 .success(function () {
                     console.log("Add user to upvoted challenges success");
+                    $scope.getListOfChallenges();
                 })
                 .error(function (response) {
                     console.log(response);
                 });
         } else {
             $scope.section = "loginPageSection";
-        };
+        }
     };
 
     $scope.isChallengeUpvotedByUser = function (challenge) {
+        $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
         for (var i = 0; i < challenge.challengeUpvoters.length; i++) {
             if (challenge.challengeUpvoters[i] === $scope.loggedInUser.id) {
                 return true;
@@ -152,7 +154,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         var userProvidedUrl = $('#input-youtube-url').val();
         challenge.youtubeURL = convertToYouTubeEmbedUrl(userProvidedUrl);
         challenge.youtubeVideoCorrect = true;
-        
+
         challengeService.updateChallenge(angular.toJson(challenge))
             .success(function () {
                 console.log("nu är youtube url sparat.");
@@ -162,7 +164,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.confirmYoutubeVideoToCurrentChallenge = function (challenge) {
-        $( '#uploadYoutubeVideoForm' ).each(function(){
+        $('#uploadYoutubeVideoForm').each(function () {
             this.reset();
         });
         challenge.youtubeVideoUploaded = true;
@@ -170,22 +172,22 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         challengeService.updateChallenge(angular.toJson(challenge))
             .success(function () {
                 console.log("Nu är challenge uppdaterad med booleanen  sparad");
-            }).error(function() {
-                console.log("Nu är challenge INTE uppdaterad med booleanen");
+            }).error(function () {
+            console.log("Nu är challenge INTE uppdaterad med booleanen");
         });
 
         alert("VIDEO SENT TO CHALLENGE-REQUESTER");
     };
 
-    $scope.completeChallenge = function(challenge) {
+    $scope.completeChallenge = function (challenge) {
         challenge.challengeCompleted = true;
 
         challenge.youtubeVideoUploaded = false;
         challengeService.updateChallenge(angular.toJson(challenge))
-            .success(function() {
+            .success(function () {
                 console.log("Uppdaterat challenge med booleanen completed");
-            }).error(function() {
-                console.log("Uppdaterade inte challenge med booleanen completed");
+            }).error(function () {
+            console.log("Uppdaterade inte challenge med booleanen completed");
         });
     };
 
@@ -209,7 +211,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     $scope.addCommentToChallenge = function (challenge) {
         var commentFromUser = $('#textarea-comment-field').val();
-        $( '#commentChallengeForm' ).each(function(){
+        $('#commentChallengeForm').each(function () {
             this.reset();
         });
         challengeService.addCommentToChallenge($scope.getUserInputsFromCommentField(), challenge.id)
@@ -232,7 +234,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             // TODO add field commentingUser
         })
     };
-    
+
 
     // Hardcoded User Login Functions
 
@@ -249,16 +251,15 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     $scope.setLoggedInUser = function (response) {
         if (response == "") {
-            console.log('response var undefined, hittade ingen user med email!');
+            console.log('New user detected - saving to database!');
             userService.createNewUser($scope.loggedInUser)
                 .success(function (response) {
                     sessionStorage.setItem('loggedInUser', JSON.stringify(response));
                     sessionStorage.setItem('isLoggedIn', true);
                 });
         } else {
-            console.log("response var INTE undefined. User hittades!");
+            console.log("User found in database!");
             sessionStorage.setItem('loggedInUser', JSON.stringify(response));
-            console.log(sessionStorage.getItem('loggedInUser'));
             sessionStorage.setItem('isLoggedIn', true);
         }
     };
