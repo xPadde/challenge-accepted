@@ -177,6 +177,9 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     // Hardcoded User Login Functions
 
+    // TODO två användare skapas, checked för om en användare redan finns fungerar inte
+    // TODO Fixa så man kan skapa challenge
+
     $scope.getUserInfo1 = function () {
         return JSON.stringify({
             'firstName': 'Kalle',
@@ -193,36 +196,49 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         });
     };
 
+    $scope.setLoggedInUser = function (response) {
+        debugger;
+        if (response == "") {
+            console.log('response var undefined, hittade ingen user med email!');
+            console.log($scope.loggedInUser);
+            userService.createNewUser($scope.loggedInUser)
+                .success(function (response) {
+                    debugger;
+                    sessionStorage.setItem('loggedInUser', response);
+                    sessionStorage.setItem('isLoggedIn', true);
+                });
+        } else {
+            console.log("response var INTE undefined. User hittades!");
+            sessionStorage.setItem('loggedInUser', response);
+            console.log(sessionStorage.getItem('loggedInUser'));
+            sessionStorage.setItem('isLoggedIn', true);
+        }
+    };
+
     $scope.login = function (user) {
+        var userFoundByEmail = "";
+
         if (user === 'user1') {
             $scope.loggedInUser = $scope.getUserInfo1();
-            console.log('$scope.loggedInUser: ');
-            console.log($scope.loggedInUser);
         } else {
             $scope.loggedInUser = $scope.getUserInfo2();
-            console.log('$scope.loggedInUser: ');
-            console.log($scope.loggedInUser);
         }
 
+        debugger;
+        console.log(angular.fromJson($scope.loggedInUser).email);
         userService.getUserByEmail(angular.fromJson($scope.loggedInUser).email)
             .success(function (response) {
+                debugger;
                 console.log('userService.getUserByEmail SUCCESS!');
                 console.log(response);
-                if (response == "") {
-                    console.log('response var undefined, hittade ingen user med email!');
-                    userService.createNewUser(angular.fromJson($scope.loggedInUser));
-                } else {
-                    console.log("response var INTE undefined. User hittades!");
-                    $scope.loggedInUser = response;
-                }
+                userFoundByEmail = response;
             })
             .error(function (error) {
                 console.log("userService.getUserByEmail ERROR!");
                 console.log(error);
             });
 
-        sessionStorage.setItem('loggedInUser', angular.toJson($scope.loggedInUser));
-        sessionStorage.setItem('isLoggedIn', true);
+        $scope.setLoggedInUser(userFoundByEmail)
     };
 
     $scope.logout = function () {
