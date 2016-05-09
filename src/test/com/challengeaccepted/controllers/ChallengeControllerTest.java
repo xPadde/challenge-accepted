@@ -57,13 +57,19 @@ public class ChallengeControllerTest {
     }
 
     @Test
+    public void testReadAllUnapprovedChallenges_Should_Return_Status_Code_200() throws Exception {
+        assertEquals("readAllUnapprovedChallenges() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.readAllUnapprovedChallenges().getStatusCode());
+    }
+
+    @Test
     public void testUpdateChallenge_Should_Return_Status_Code_200() throws Exception {
         assertEquals("updateChallenge() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.updateChallenge(new ChallengeModel()).getStatusCode());
     }
 
     @Test
     public void testAddUserToChallengeUpvoters_Should_Return_Status_Code_200() throws Exception {
-        assertEquals("addUserToChallengeUpvoters() did not throw NullPointerException", HttpStatus.OK, challengeController.addUserToChallengeUpvoters(new Random().nextLong(), new UserModel()).getStatusCode());
+        when(mockedChallengeService.getChallengeFromDatabase(1L)).thenReturn(new ChallengeModel());
+        assertEquals("addUserToChallengeUpvoters() did not throw NullPointerException", HttpStatus.OK, challengeController.addUserToChallengeUpvoters(1L, new UserModel()).getStatusCode());
     }
 
     @Test
