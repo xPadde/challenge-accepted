@@ -1,0 +1,968 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for app\controllers\challenge-controller.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">app/controllers/</a> challenge-controller.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">18.42% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>28/152</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">1.82% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/55</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">18.42% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>28/152</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeService', 'userService', function ($scope, $http, $sce, challengeService, userService) {
+&nbsp;
+    $scope.orderByField = 'creationDate';
+    $scope.reverseSort = true;
+&nbsp;
+    $scope.getUserInputsFromCreateChallengeForm = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >        return JSON.stringify({</span>
+            'topic': $('#input-topic').val(),
+            'description': $('#input-description').val(),
+            'creationDate': null,
+            'challengeClaimed': false,
+            'youtubeVideoUploaded': false,
+            'youtubeVideoCorrect': false,
+            'challengeCompleted': false
+        });
+    };
+&nbsp;
+    $scope.showCreateChallengeSection = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >        console.log("Vad är booleanen: " + sessionStorage.getItem("isLoggedIn"));</span>
+<span class="cstat-no" title="statement not covered" >        if (sessionStorage.getItem("isLoggedIn") == 'true') {</span>
+<span class="cstat-no" title="statement not covered" >            $scope.section = "createNewChallengeSection";</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            $scope.section = "loginPageSection";</span>
+        }
+&nbsp;
+    };
+&nbsp;
+    $scope.showListOfChallengesSection = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >        $scope.getListOfChallenges();</span>
+<span class="cstat-no" title="statement not covered" >        $scope.section = "listOfChallengesSection";</span>
+    };
+&nbsp;
+    $scope.showApproveVideosSection = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >        $scope.section = "listApproveVideosSection";</span>
+<span class="cstat-no" title="statement not covered" >        $scope.getListOfUnapprovedChallenges();</span>
+    };
+&nbsp;
+    $scope.showListOfCompletedChallengesSection = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >        $scope.getListOfCompletedChallenges();</span>
+<span class="cstat-no" title="statement not covered" >        $scope.section = "listOfCompletedChallengesSection";</span>
+    };
+&nbsp;
+    $scope.showSecretListOfChallengesSection = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >        $scope.section = "secretListOfChallengesSection";</span>
+    };
+&nbsp;
+    $scope.createNewChallenge = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >        $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));</span>
+<span class="cstat-no" title="statement not covered" >        challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), $scope.loggedInUser.id)</span>
+            .success(<span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                console.log('challengeService.createNewChallenge() called and it created a new challenge and saved it to the database!');</span>
+<span class="cstat-no" title="statement not covered" >                $scope.getListOfChallenges();</span>
+<span class="cstat-no" title="statement not covered" >                $scope.section = "listOfChallengesSection";</span>
+            })
+            .error(<span class="fstat-no" title="function not covered" >function (response) {</span>
+<span class="cstat-no" title="statement not covered" >                console.log('challengeService.createNewChallenge() called and it ***FAILED*** to create new challenge');</span>
+<span class="cstat-no" title="statement not covered" >                console.log(response);</span>
+            })
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $('#createNewChallengeForm').each(<span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >            this.reset();</span>
+        });
+    };
+&nbsp;
+    $scope.getListOfChallenges = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >        challengeService.getListOfAllChallenges()</span>
+            .success(<span class="fstat-no" title="function not covered" >function (response) {</span>
+<span class="cstat-no" title="statement not covered" >                $scope.listOfChallenges = response;</span>
+<span class="cstat-no" title="statement not covered" >                console.log('challengeService.getListOfChallenges() fetched all the challenges from the database successfully!');</span>
+            })
+            .error(<span class="fstat-no" title="function not covered" >function (response) {</span>
+<span class="cstat-no" title="statement not covered" >                console.log(response);</span>
+<span class="cstat-no" title="statement not covered" >                console.log('challengeService.getListOfChallenges() ***FAILED*** to fetch all the challenges from the database!');</span>
+            });
+    };
+&nbsp;
+    $scope.getListOfUnapprovedChallenges = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >        challengeService.getListOfUnapprovedChallenges()</span>
+            .success(<span class="fstat-no" title="function not covered" >function (response) {</span>
+<span class="cstat-no" title="statement not covered" >                $scope.listOfUnapprovedChallenges = response;</span>
+<span class="cstat-no" title="statement not covered" >                console.log("challengeService.getListOfUnapprovedChallenges fetched all the unapproved challenges successfully");</span>
+            })
+            .error(<span class="fstat-no" title="function not covered" >function (error) {</span>
+<span class="cstat-no" title="statement not covered" >                console.log(error);</span>
+<span class="cstat-no" title="statement not covered" >                console.log("challengeService.getListOfUnapprovedChallenges ***FAILED*** to fetch all the challenges from the database!");</span>
+            });
+    };
+&nbsp;
+    $scope.getListOfCompletedChallenges = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >        challengeService.getListOfCompletedChallenges()</span>
+            .success(<span class="fstat-no" title="function not covered" >function (response) {</span>
+<span class="cstat-no" title="statement not covered" >                $scope.listOfCompletedChallenges = response;</span>
+<span class="cstat-no" title="statement not covered" >                console.log("Hämtade listan med alla färdiga challenges");</span>
+            }).error(<span class="fstat-no" title="function not covered" >function (error) {</span>
+<span class="cstat-no" title="statement not covered" >            console.log("Hämtade inte listan med färdiga challenges");</span>
+        });
+    }
+&nbsp;
+    $scope.upvoteChallenge = <span class="fstat-no" title="function not covered" >function (challenge) {</span>
+<span class="cstat-no" title="statement not covered" >        if (sessionStorage.getItem("isLoggedIn") == 'true') {</span>
+<span class="cstat-no" title="statement not covered" >            challengeService.addUserToChallengeUpvoters(sessionStorage.getItem('loggedInUser'), challenge.id)</span>
+                .success(<span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                    console.log("Add user to upvoted challenges success");</span>
+<span class="cstat-no" title="statement not covered" >                    $scope.getListOfChallenges();</span>
+                })
+                .error(<span class="fstat-no" title="function not covered" >function (response) {</span>
+<span class="cstat-no" title="statement not covered" >                    console.log(response);</span>
+                });
+        } else {
+<span class="cstat-no" title="statement not covered" >            $scope.section = "loginPageSection";</span>
+        }
+    };
+&nbsp;
+    $scope.isChallengeUpvotedByUser = <span class="fstat-no" title="function not covered" >function (challenge) {</span>
+<span class="cstat-no" title="statement not covered" >        $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));</span>
+<span class="cstat-no" title="statement not covered" >        for (var i = 0; i &lt; challenge.challengeUpvoters.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >            if (challenge.challengeUpvoters[i] === $scope.loggedInUser.id) {</span>
+<span class="cstat-no" title="statement not covered" >                return true;</span>
+            }
+        }
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    };
+&nbsp;
+    $scope.claimCurrentChallenge = <span class="fstat-no" title="function not covered" >function (challenge) {</span>
+<span class="cstat-no" title="statement not covered" >        debugger;</span>
+&nbsp;
+        //TODO Har man upvotat en challenge så blir det krasch eftersom vi skickar in en challengeUpvoter i form av en Long
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        challenge.challengeClaimer = $scope.loggedInUser;</span>
+<span class="cstat-no" title="statement not covered" >        challenge.challengeClaimed = true;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        challengeService.updateChallenge(JSON.stringify(challenge))</span>
+            .success(<span class="fstat-no" title="function not covered" >function (response) {</span>
+<span class="cstat-no" title="statement not covered" >                console.log("challengeService.updateChallenge() SUCCESS");</span>
+<span class="cstat-no" title="statement not covered" >                console.log(response);</span>
+            })
+            .error(<span class="fstat-no" title="function not covered" >function (error) {</span>
+<span class="cstat-no" title="statement not covered" >                console.log("challengeService.updateChallenge() ERROR");</span>
+<span class="cstat-no" title="statement not covered" >                console.log(error);</span>
+            });
+&nbsp;
+    };
+&nbsp;
+    $scope.viewChallengeProfilePage = <span class="fstat-no" title="function not covered" >function (challenge) {</span>
+<span class="cstat-no" title="statement not covered" >        $scope.section = "challengeProfilePageSection";</span>
+<span class="cstat-no" title="statement not covered" >        $scope.activeChallenge = challenge;</span>
+<span class="cstat-no" title="statement not covered" >        console.log("challengeProfileToView object: ");</span>
+<span class="cstat-no" title="statement not covered" >        console.log($scope.challengeProfileToView);</span>
+<span class="cstat-no" title="statement not covered" >        console.log(challenge.challengeClaimed);</span>
+<span class="cstat-no" title="statement not covered" >        console.log(challenge);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        console.log("BOOLEANENNNNNNN " + $scope.isChallengeUpvotedByUser(challenge));</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $scope.disableLikeButton = $scope.isChallengeUpvotedByUser(challenge);</span>
+    };
+&nbsp;
+    $scope.addYoutubeUrlToCurrentChallenge = <span class="fstat-no" title="function not covered" >function (challenge) {</span>
+<span class="cstat-no" title="statement not covered" >        var userProvidedUrl = $('#input-youtube-url').val();</span>
+<span class="cstat-no" title="statement not covered" >        challenge.youtubeURL = convertToYouTubeEmbedUrl(userProvidedUrl);</span>
+<span class="cstat-no" title="statement not covered" >        challenge.youtubeVideoCorrect = true;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        challengeService.updateChallenge(angular.toJson(challenge))</span>
+            .success(<span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                console.log("nu är youtube url sparat.");</span>
+            }).error(<span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >            console.log("nu är youtube url INTE sparat");</span>
+        });
+    };
+&nbsp;
+    $scope.confirmYoutubeVideoToCurrentChallenge = <span class="fstat-no" title="function not covered" >function (challenge) {</span>
+<span class="cstat-no" title="statement not covered" >        $('#uploadYoutubeVideoForm').each(<span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >            this.reset();</span>
+        });
+<span class="cstat-no" title="statement not covered" >        challenge.youtubeVideoUploaded = true;</span>
+<span class="cstat-no" title="statement not covered" >        challenge.youtubeVideoCorrect = false;</span>
+<span class="cstat-no" title="statement not covered" >        challengeService.updateChallenge(angular.toJson(challenge))</span>
+            .success(<span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                console.log("Nu är challenge uppdaterad med booleanen  sparad");</span>
+            }).error(<span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >            console.log("Nu är challenge INTE uppdaterad med booleanen");</span>
+        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        alert("VIDEO SENT TO CHALLENGE-REQUESTER");</span>
+    };
+&nbsp;
+    $scope.completeChallenge = <span class="fstat-no" title="function not covered" >function (challenge) {</span>
+<span class="cstat-no" title="statement not covered" >        challenge.challengeCompleted = true;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        challenge.youtubeVideoUploaded = false;</span>
+<span class="cstat-no" title="statement not covered" >        challengeService.updateChallenge(angular.toJson(challenge))</span>
+            .success(<span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >                console.log("Uppdaterat challenge med booleanen completed");</span>
+            }).error(<span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >            console.log("Uppdaterade inte challenge med booleanen completed");</span>
+        });
+    };
+&nbsp;
+    $scope.markUrlAsTrusted = <span class="fstat-no" title="function not covered" >function (src) {</span>
+<span class="cstat-no" title="statement not covered" >        return $sce.trustAsResourceUrl(src);</span>
+    };
+&nbsp;
+    var convertToYouTubeEmbedUrl = <span class="fstat-no" title="function not covered" >function (url) {</span>
+<span class="cstat-no" title="statement not covered" >        var isYoutubeUrlCorrect = url.indexOf("watch?v=") &gt; 1;</span>
+<span class="cstat-no" title="statement not covered" >        var baseUrl = "https://www.youtube.com/embed/";</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (isYoutubeUrlCorrect) {</span>
+<span class="cstat-no" title="statement not covered" >            var youTubeVideoId = url.substr(32);</span>
+<span class="cstat-no" title="statement not covered" >            var finalUrl = baseUrl + youTubeVideoId;</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            alert("Please provide a valid YouTube URL");</span>
+<span class="cstat-no" title="statement not covered" >            return "";</span>
+        }
+<span class="cstat-no" title="statement not covered" >        return finalUrl;</span>
+    };
+&nbsp;
+    $scope.addCommentToChallenge = <span class="fstat-no" title="function not covered" >function (challenge) {</span>
+<span class="cstat-no" title="statement not covered" >        var commentFromUser = $('#textarea-comment-field').val();</span>
+<span class="cstat-no" title="statement not covered" >        $('#commentChallengeForm').each(<span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >            this.reset();</span>
+        });
+<span class="cstat-no" title="statement not covered" >        challengeService.addCommentToChallenge($scope.getUserInputsFromCommentField(), challenge.id)</span>
+            .success(<span class="fstat-no" title="function not covered" >function (response) {</span>
+<span class="cstat-no" title="statement not covered" >                console.log('addCommentToChallenge() was successful!');</span>
+<span class="cstat-no" title="statement not covered" >                console.log(response);</span>
+            })
+            .error(<span class="fstat-no" title="function not covered" >function (error) {</span>
+<span class="cstat-no" title="statement not covered" >                console.log('addCommentToChallenge() failed!');</span>
+<span class="cstat-no" title="statement not covered" >                console.log(error);</span>
+            }).then(<span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >            $scope.activeChallenge = challengeService.getChallengeById(challenge.id);</span>
+        });
+    };
+&nbsp;
+    $scope.getUserInputsFromCommentField = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >        return JSON.stringify({</span>
+            'content': $('#textarea-comment-field').val(),
+            'commentDate': null
+            // TODO add field commentingUser
+        })
+    };
+&nbsp;
+&nbsp;
+    // Hardcoded User Login Functions
+&nbsp;
+    // TODO två användare skapas, checked för om en användare redan finns fungerar inte
+    // TODO Fixa så man kan skapa challenge
+&nbsp;
+    $scope.getUserInfo = <span class="fstat-no" title="function not covered" >function (profile) {</span>
+<span class="cstat-no" title="statement not covered" >        return JSON.stringify({</span>
+            'firstName': profile.getGivenName(),
+            'lastName': profile.getFamilyName(),
+            'email': profile.getEmail()
+        });
+    };
+&nbsp;
+    $scope.setLoggedInUser = <span class="fstat-no" title="function not covered" >function (response) {</span>
+<span class="cstat-no" title="statement not covered" >        if (response == "") {</span>
+<span class="cstat-no" title="statement not covered" >            console.log('New user detected - saving to database!');</span>
+<span class="cstat-no" title="statement not covered" >            userService.createNewUser($scope.loggedInUser)</span>
+                .success(<span class="fstat-no" title="function not covered" >function (response) {</span>
+<span class="cstat-no" title="statement not covered" >                    sessionStorage.setItem('loggedInUser', JSON.stringify(response));</span>
+<span class="cstat-no" title="statement not covered" >                    sessionStorage.setItem('isLoggedIn', true);</span>
+                });
+        } else {
+<span class="cstat-no" title="statement not covered" >            console.log("User found in database!");</span>
+<span class="cstat-no" title="statement not covered" >            sessionStorage.setItem('loggedInUser', JSON.stringify(response));</span>
+<span class="cstat-no" title="statement not covered" >            sessionStorage.setItem('isLoggedIn', true);</span>
+        }
+    };
+&nbsp;
+    onSignIn = <span class="fstat-no" title="function not covered" >function (googleUser) {</span>
+<span class="cstat-no" title="statement not covered" >        var profile = googleUser.getBasicProfile();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var userFoundByEmail = "";</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $scope.loggedInUser = JSON.parse($scope.getUserInfo(profile));</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        userService.getUserByEmail($scope.loggedInUser.email)</span>
+            .success(<span class="fstat-no" title="function not covered" >function (response) {</span>
+<span class="cstat-no" title="statement not covered" >                userFoundByEmail = response;</span>
+            })
+            .error(<span class="fstat-no" title="function not covered" >function (error) {</span>
+<span class="cstat-no" title="statement not covered" >                console.log("userService.getUserByEmail ERROR!");</span>
+<span class="cstat-no" title="statement not covered" >                console.log(error);</span>
+            }).then(<span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >            $scope.setLoggedInUser(userFoundByEmail);</span>
+        });
+    };
+&nbsp;
+    $scope.signOut = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >        var auth2 = gapi.auth2.getAuthInstance();</span>
+<span class="cstat-no" title="statement not covered" >        auth2.signOut().then(<span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >            sessionStorage.setItem("loggedInUser", null);</span>
+<span class="cstat-no" title="statement not covered" >            sessionStorage.setItem("isLoggedIn", false);</span>
+<span class="cstat-no" title="statement not covered" >            console.log("Auth2 isSignedIn?: " + auth2.isSignedIn.get());</span>
+<span class="cstat-no" title="statement not covered" >            window.location.reload();</span>
+        });
+    };
+&nbsp;
+}]);</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon May 09 2016 21:19:02 GMT+0200 (W. Europe Daylight Time)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
