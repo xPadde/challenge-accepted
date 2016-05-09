@@ -1,6 +1,5 @@
-package challengeaccepted.controllers;
+package com.challengeaccepted.controllers;
 
-import com.challengeaccepted.controllers.UserController;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.UserService;
 import org.junit.Before;

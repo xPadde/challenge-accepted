@@ -1,7 +1,5 @@
-package challengeaccepted.controllers;
+package com.challengeaccepted.controllers;
 
-import com.challengeaccepted.controllers.ChallengeController;
-import com.challengeaccepted.controllers.CommentController;
 import com.challengeaccepted.models.ChallengeModel;
 import com.challengeaccepted.models.CommentModel;
 import com.challengeaccepted.models.UserModel;
