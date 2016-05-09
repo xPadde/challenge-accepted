@@ -29,7 +29,7 @@ public class UserService {
         return (ArrayList<UserModel>) userRepository.findAll();
     }
 
-    public UserModel getUserEmailFromDatabase(String email) {
+    public UserModel getUserByEmailFromDatabase(String email) {
         return userRepository.findByEmail(email);
     }
 

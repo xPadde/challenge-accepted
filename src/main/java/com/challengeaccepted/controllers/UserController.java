@@ -41,11 +41,10 @@ public class UserController {
         return new ResponseEntity<ArrayList<UserModel>>(userService.getAllUsersFromDatabase(), HttpStatus.OK);
     }
 
-
     @CrossOrigin
     @RequestMapping(value = "/user/find-by-email", method = RequestMethod.GET)
-    public UserModel readUserByEmail(String email) {
-        return userService.getUserEmailFromDatabase(email);
+    public ResponseEntity<UserModel> readUserByEmail(String email) {
+        return new ResponseEntity<UserModel>(userService.getUserByEmailFromDatabase(email), HttpStatus.OK);
     }
 
 }
