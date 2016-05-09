@@ -197,13 +197,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.setLoggedInUser = function (response) {
-        debugger;
         if (response == "") {
             console.log('response var undefined, hittade ingen user med email!');
-            console.log($scope.loggedInUser);
             userService.createNewUser($scope.loggedInUser)
                 .success(function (response) {
-                    debugger;
                     sessionStorage.setItem('loggedInUser', response);
                     sessionStorage.setItem('isLoggedIn', true);
                 });
@@ -219,26 +216,22 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         var userFoundByEmail = "";
 
         if (user === 'user1') {
-            $scope.loggedInUser = $scope.getUserInfo1();
+            $scope.loggedInUser = JSON.parse($scope.getUserInfo1());
         } else {
-            $scope.loggedInUser = $scope.getUserInfo2();
+            $scope.loggedInUser = JSON.parse($scope.getUserInfo2());
         }
 
         debugger;
-        console.log(angular.fromJson($scope.loggedInUser).email);
-        userService.getUserByEmail(angular.fromJson($scope.loggedInUser).email)
+        userService.getUserByEmail($scope.loggedInUser.email)
             .success(function (response) {
-                debugger;
-                console.log('userService.getUserByEmail SUCCESS!');
-                console.log(response);
                 userFoundByEmail = response;
             })
             .error(function (error) {
                 console.log("userService.getUserByEmail ERROR!");
                 console.log(error);
-            });
-
-        $scope.setLoggedInUser(userFoundByEmail)
+            }).then(function () {
+                $scope.setLoggedInUser(userFoundByEmail);
+        });
     };
 
     $scope.logout = function () {
