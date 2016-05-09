@@ -39,7 +39,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="challenge in listOfChallenges | orderBy:orderByField:reverseSort">
+        <tr ng-repeat="challenge in listOfChallenges | orderBy:orderByField:reverseSort" ng-hide="challenge.challengeClaimed">
             <td><a href="#" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
             <td>{{challenge.description}}</td>
             <td>{{challenge.creationDate}}</td>

@@ -8,7 +8,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             'topic': $('#input-topic').val(),
             'description': $('#input-description').val(),
             'creationDate': null,
-            'challengeClaimed': false
+            'challengeClaimed': false,
+            'youtubeVideoUploaded': false,
+            'youtubeVideoCorrect': false,
+            'challengeCompleted': false
         });
     };
 
@@ -123,6 +126,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     $scope.viewChallengeProfilePage = function (challenge) {
         $scope.section = "challengeProfilePageSection";
         $scope.activeChallenge = challenge;
+        console.log(challenge);
         console.log("challengeProfileToView object: ");
         console.log($scope.challengeProfileToView);
         console.log(challenge.challengeClaimed);
@@ -136,6 +140,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         var userProvidedUrl = $('#input-youtube-url').val();
         challenge.youtubeURL = convertToYouTubeEmbedUrl(userProvidedUrl);
         challenge.youtubeVideoCorrect = true;
+        
         challengeService.updateChallenge(angular.toJson(challenge))
             .success(function () {
                 console.log("nu är youtube url sparat.");
@@ -149,6 +154,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             this.reset();
         });
         challenge.youtubeVideoUploaded = true;
+        challenge.youtubeVideoCorrect = false;
         challengeService.updateChallenge(angular.toJson(challenge))
             .success(function () {
                 console.log("Nu är challenge uppdaterad med booleanen  sparad");
