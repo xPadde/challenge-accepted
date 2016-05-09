@@ -28,10 +28,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.showListOfCompletedChallengesSection = function () {
-            // $scope.getListOfChallenges();
-            // TODO view for completed challenges
-            $scope.section = "listOfCompletedChallengesSection";
-        };
+        // $scope.getListOfChallenges();
+        // TODO view for completed challenges
+        $scope.section = "listOfCompletedChallengesSection";
+    };
 
     $scope.showSecretListOfChallengesSection = function () {
         $scope.section = "secretListOfChallengesSection";
@@ -51,7 +51,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                 console.log('challengeService.createNewChallenge() called and it ***FAILED*** to create new challenge');
             })
 
-        $( '#createNewChallengeForm' ).each(function(){
+        $('#createNewChallengeForm').each(function () {
             this.reset();
         });
     };
@@ -151,9 +151,9 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     $scope.addCommentToChallenge = function (challenge) {
         var commentFromUser = $('#textarea-comment-field').val();
-        $( '#commentChallengeForm' ).each(function(){
-                    this.reset();
-                });
+        $('#commentChallengeForm').each(function () {
+            this.reset();
+        });
         challengeService.addCommentToChallenge($scope.getUserInputsFromCommentField(), challenge.id)
             .success(function (response) {
                 console.log('addCommentToChallenge() was successful!');
@@ -162,7 +162,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             .error(function (error) {
                 console.log('addCommentToChallenge() failed!');
                 console.log(error);
-            }).then(function(){
+            }).then(function () {
             $scope.activeChallenge = challengeService.getChallengeById(challenge.id);
         });
     };
@@ -173,6 +173,61 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             'commentDate': null
             // TODO add field commentingUser
         })
+    };
+
+    // Hardcoded User Login Functions
+
+    $scope.getUserInfo1 = function () {
+        return JSON.stringify({
+            'firstName': 'Kalle',
+            'lastName': 'Brallsson',
+            'email': 'kalle@brallsson.se'
+        });
+    };
+
+    $scope.getUserInfo2 = function () {
+        return JSON.stringify({
+            'firstName': 'Even',
+            'lastName': 'Steven',
+            'email': 'not@even.se'
+        });
+    };
+
+    $scope.login = function (user) {
+        if (user === 'user1') {
+            $scope.loggedInUser = $scope.getUserInfo1();
+            console.log('$scope.loggedInUser: ');
+            console.log($scope.loggedInUser);
+        } else {
+            $scope.loggedInUser = $scope.getUserInfo2();
+            console.log('$scope.loggedInUser: ');
+            console.log($scope.loggedInUser);
+        }
+
+        userService.getUserByEmail(angular.fromJson($scope.loggedInUser).email)
+            .success(function (response) {
+                console.log('userService.getUserByEmail SUCCESS!');
+                console.log(response);
+                if (response == "") {
+                    console.log('response var undefined, hittade ingen user med email!');
+                    userService.createNewUser(angular.fromJson($scope.loggedInUser));
+                } else {
+                    console.log("response var INTE undefined. User hittades!");
+                    $scope.loggedInUser = response;
+                }
+            })
+            .error(function (error) {
+                console.log("userService.getUserByEmail ERROR!");
+                console.log(error);
+            });
+
+        sessionStorage.setItem('loggedInUser', angular.toJson($scope.loggedInUser));
+        sessionStorage.setItem('isLoggedIn', true);
+    };
+
+    $scope.logout = function () {
+        sessionStorage.setItem('loggedInUser', null);
+        sessionStorage.setItem('isLoggedIn', false);
     }
 
 }]);

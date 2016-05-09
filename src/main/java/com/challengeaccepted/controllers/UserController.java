@@ -1,18 +1,15 @@
 package com.challengeaccepted.controllers;
 
-import com.challengeaccepted.models.ChallengeModel;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.UserService;
-import org.hibernate.annotations.SourceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
-@Controller
+@RestController
 public class UserController {
 
     @Autowired
@@ -21,18 +18,8 @@ public class UserController {
     @CrossOrigin
     @RequestMapping(value = "/user/", method = RequestMethod.POST)
     public ResponseEntity<UserModel> createUser(@RequestBody UserModel userModel) {
-
-        UserModel userToSaveInDatabase = readUserByEmail(userModel.getEmail());
-
-        if(userToSaveInDatabase == null || userToSaveInDatabase.getEmail().equals("")){
-            userService.saveUserToDatabase(userModel);
-            return new ResponseEntity<UserModel>(userModel, HttpStatus.CREATED);
-        }else{
-            userToSaveInDatabase.setFirstName(userModel.getFirstName());
-            userToSaveInDatabase.setLastName(userModel.getLastName());
-            updateUser(userToSaveInDatabase);
-            return new ResponseEntity<UserModel>(userToSaveInDatabase, HttpStatus.CREATED);
-        }
+        userService.saveUserToDatabase(userModel);
+        return new ResponseEntity<UserModel>(userModel, HttpStatus.CREATED);
     }
 
     @CrossOrigin
@@ -56,8 +43,9 @@ public class UserController {
 
 
     @CrossOrigin
-    @RequestMapping(value = "/user/email/{email}", method = RequestMethod.GET)
-    public UserModel readUserByEmail(@PathVariable String email){
+    @RequestMapping(value = "/user/find-by-email", method = RequestMethod.GET)
+    public UserModel readUserByEmail(String email) {
         return userService.getUserEmailFromDatabase(email);
     }
+
 }

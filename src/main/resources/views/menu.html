@@ -23,12 +23,10 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <div ng-controller="GoogleUserController">
-                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                    <a href="#" ng-click="signOut()">Sign out</a>
-                </div>
+                <button type="button" class="btn btn-success" ng-click="login('user1')">Login User 1</button>
+                <button type="button" class="btn btn-success" ng-click="login('user2')">Login User 2</button>
+                <button type="button" class="btn btn-danger" ng-click="logout()">Logout</button>
             </ul>
         </div>
     </div>
 </nav>
-<script src="https://apis.google.com/js/platform.js" async defer></script>

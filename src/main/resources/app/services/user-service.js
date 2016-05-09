@@ -7,7 +7,15 @@ app.factory('userService', function ($http) {
                 data: data,
                 header: {'Content-Type': 'application/json'}
             })
+        },
+
+        getUserByEmail: function (email) {
+            return $http({
+                url: 'http://localhost:8080/api/user/find-by-email?email=' + email + '',
+                method: 'GET',
+                header: {'Content-Type': 'application/json'}
+            })
         }
-        
     };
+
 });

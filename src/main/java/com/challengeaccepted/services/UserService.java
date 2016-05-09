@@ -29,9 +29,8 @@ public class UserService {
         return (ArrayList<UserModel>) userRepository.findAll();
     }
 
-
-
     public UserModel getUserEmailFromDatabase(String email) {
-        return userRepository.getByEmail(email);
+        return userRepository.findByEmail(email);
     }
+
 }
