@@ -181,11 +181,14 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     $scope.assignPointsToUser = function(challenge) {
         $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
-        loggedInUser.points += challenge.upVotes;
-        userService.updateUser(JSON.stringify(loggedInUser))
+        $scope.loggedInUser.points += challenge.upVotes;
+        
+        console.log($scope.loggedInUser);
+        userService.updateUser(JSON.stringify($scope.loggedInUser), $scope.loggedInUser.id)
             .success(function() {
                 console.log("Points updated and saved");
-            }).error(function() {
+            }).error(function(error) {
+                console.log(error);
                 console.log("Points NOT updated and saved");
         });
     };
