@@ -58,7 +58,6 @@ public class ChallengeController {
     }
 
 
-
     @CrossOrigin
     @RequestMapping(value = "/challenge/", method = RequestMethod.PUT)
     public ResponseEntity updateChallenge(@RequestBody ChallengeModel challengeModel) {
@@ -120,8 +119,14 @@ public class ChallengeController {
     @CrossOrigin
     @RequestMapping(value = "/challenge/{id}/", method = RequestMethod.PUT)
     public ResponseEntity addUserToChallengeUpvoters(@PathVariable Long id, @RequestBody UserModel loggedInUser) {
-        ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
 
+        ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
+        Long numberOfUpvotes = challenge.getUpvotes();
+        if (numberOfUpvotes != null) {
+            challenge.setUpvotes(numberOfUpvotes += 1l);
+        } else {
+            challenge.setUpvotes(1l);
+        }
         challenge.addUserModelToChallengeUpvoters(loggedInUser);
         challengeService.updateChallengeInDatabase(challenge);
         return new ResponseEntity(HttpStatus.OK);
@@ -129,7 +134,7 @@ public class ChallengeController {
 
     @CrossOrigin
     @RequestMapping(value = "/challenge/{challengeId}/addcomment/", method = RequestMethod.PUT)
-    public ResponseEntity addCommentToChallenge(@RequestBody CommentModel commentModel, @PathVariable Long challengeId){
+    public ResponseEntity addCommentToChallenge(@RequestBody CommentModel commentModel, @PathVariable Long challengeId) {
         /*ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(challengeId);
         challengeModel.addCommentToChallenge(commentModel);
         */
