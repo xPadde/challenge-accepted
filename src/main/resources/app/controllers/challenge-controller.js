@@ -2,7 +2,8 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     $scope.orderByField = 'creationDate';
     $scope.reverseSort = true;
-    var alertLoginPrompt = "Log in to use this feature."
+    $scope.section = "listOfClaimedChallengesSection";
+    var alertLoginPrompt = "Log in to use this feature.";
 
     $scope.getUserInputsFromCreateChallengeForm = function () {
         return JSON.stringify({
@@ -34,7 +35,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     $scope.showListOfUsersSection = function () {
         $scope.getListOfUsers();
         $scope.section = "listOfUsersSection";
-    }
+    };
 
     $scope.showApproveVideosSection = function () {
         $scope.getListOfUnapprovedChallenges();
@@ -47,7 +48,12 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.showSecretListOfChallengesSection = function () {
+        $scope.getListOfClaimedChallenges();
         $scope.section = "secretListOfChallengesSection";
+    };
+
+    $scope.showListOfClaimedChallenges = function() {
+        $scope.section = "listOfClaimedChallengesSection";
     };
 
     $scope.createNewChallenge = function () {
@@ -61,7 +67,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             .error(function (response) {
                 console.log('challengeService.createNewChallenge() called and it ***FAILED*** to create new challenge');
                 console.log(response);
-            })
+            });
 
         $('#createNewChallengeForm').each(function () {
             this.reset();
@@ -87,7 +93,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             }).error(function() {
 
             })
-    }
+    };
 
     $scope.getListOfUnapprovedChallenges = function () {
         challengeService.getListOfUnapprovedChallenges()
@@ -364,5 +370,9 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             window.location.reload();
         });
     };
+
+    $scope.getListOfChallenges();
+
+    // TODO låt en användare se sina egna challenges även efter de är claimade!!!!!!!
 
 }]);

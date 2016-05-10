@@ -41,9 +41,9 @@ app.directive("directiveListYourChallenges", function () {
 });
 app.directive("directiveChallengeProfile", function () {
     return {
-       restrict: 'C',
-       templateUrl: 'views/challenge-profile.html'
-    } 
+        restrict: 'C',
+        templateUrl: 'views/challenge-profile.html'
+    }
 });
 
 app.directive("directiveListUsers", function () {
@@ -51,4 +51,11 @@ app.directive("directiveListUsers", function () {
         restrict: 'C',
         templateUrl: 'views/list-users.html'
     }
-})
+});
+
+app.directive("directiveListClaimedChallenges", function () {
+    return {
+        restrict: 'C',
+        templateUrl: 'views/list-claimed-challenges.html'
+    }
+});
