@@ -156,15 +156,17 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.addYoutubeUrlToCurrentChallenge = function (challenge) {
+        // TODO Se över Youtube namngivning (  åxå URL eller Url?)
         var userProvidedUrl = $('#input-youtube-url').val();
-        challenge.youtubeURL = convertToYouTubeEmbedUrl(userProvidedUrl);
-        challenge.youtubeVideoCorrect = true;
+        var convertedYoutubeUrl = convertToYouTubeEmbedUrl(userProvidedUrl);
 
-        challengeService.updateChallenge(angular.toJson(challenge))
-            .success(function () {
+        challengeService.addYoutubeUrlToChallenge(challenge.id, convertedYoutubeUrl)
+            .success(function (response) {
                 console.log("nu är youtube url sparat.");
-            }).error(function () {
+                $scope.activeChallenge = response;
+            }).error(function (error) {
             console.log("nu är youtube url INTE sparat");
+            console.log(error);
         });
     };
 

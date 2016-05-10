@@ -23,7 +23,7 @@ public class ChallengeModel implements Serializable {
     private Long upvotes;
     private Boolean isChallengeClaimed;
     private Boolean isYoutubeVideoUploaded;
-    private Boolean isYoutubeVideoCorrect;
+    private Boolean isYoutubeUrlProvided;
     private Boolean isChallengeCompleted;
     @ManyToMany
     @JoinColumn(name = "challenge_upvoters_id")
@@ -145,12 +145,12 @@ public class ChallengeModel implements Serializable {
         isYoutubeVideoUploaded = youtubeVideoUploaded;
     }
 
-    public Boolean getYoutubeVideoCorrect() {
-        return isYoutubeVideoCorrect;
+    public Boolean isYoutubeUrlProvided() {
+        return isYoutubeUrlProvided;
     }
 
-    public void setYoutubeVideoCorrect(Boolean youtubeVideoCorrect) {
-        isYoutubeVideoCorrect = youtubeVideoCorrect;
+    public void setYoutubeUrlProvided(Boolean youtubeUrlProvided) {
+        isYoutubeUrlProvided = youtubeUrlProvided;
     }
 
     public Boolean getChallengeCompleted() {

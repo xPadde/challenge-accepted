@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -72,6 +71,16 @@ public class ChallengeController {
         ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(id);
         challengeModel.setChallengeClaimer(userModel);
         challengeModel.setChallengeClaimed(true);
+        challengeService.updateChallengeInDatabase(challengeModel);
+        return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/challenge/{id}/addyoutubeurl/", method = RequestMethod.PUT)
+    public ResponseEntity<ChallengeModel> addYoutubeUrlToChallenge(@PathVariable Long id, @RequestBody String youtubeUrl) {
+        ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(id);
+        challengeModel.setYoutubeURL(youtubeUrl);
+        challengeModel.setYoutubeUrlProvided(true);
         challengeService.updateChallengeInDatabase(challengeModel);
         return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
     }
