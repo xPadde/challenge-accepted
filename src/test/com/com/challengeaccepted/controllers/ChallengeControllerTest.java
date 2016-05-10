@@ -32,6 +32,7 @@ public class ChallengeControllerTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+        when(mockedChallengeService.getChallengeFromDatabase(1L)).thenReturn(new ChallengeModel());
     }
 
     @Test
@@ -65,8 +66,17 @@ public class ChallengeControllerTest {
     }
 
     @Test
+    public void testUpdateChallengeClaimer_Should_Return_Status_Code_200() throws Exception {
+        assertEquals("updateChallengeClaimer() did not respons with http status 200 (ok)", HttpStatus.OK, challengeController.updateChallengeClaimer(1L, new UserModel()).getStatusCode());
+    }
+
+    @Test
+    public void testAddYoutubeUrlToChallenge_Should_Return_Status_Code_200() throws Exception {
+        assertEquals("addYoutubeUrlToChallenge() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.addYoutubeUrlToChallenge(1L, "YouTubeURL").getStatusCode());
+    }
+
+    @Test
     public void testAddUserToChallengeUpvoters_Should_Return_Status_Code_200() throws Exception {
-        when(mockedChallengeService.getChallengeFromDatabase(1L)).thenReturn(new ChallengeModel());
         assertEquals("addUserToChallengeUpvoters() did not throw NullPointerException", HttpStatus.OK, challengeController.addUserToChallengeUpvoters(1L, new UserModel()).getStatusCode());
     }
 
@@ -74,5 +84,4 @@ public class ChallengeControllerTest {
     public void testAddCommentToChallenge_Should_Return_Status_Code_201() throws Exception {
         assertEquals("addCommentToChallenge() did not respond with http status 201 (created)", HttpStatus.CREATED, challengeController.addCommentToChallenge(new CommentModel(), new Random().nextLong()).getStatusCode());
     }
-
 }
