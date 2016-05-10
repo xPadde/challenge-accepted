@@ -15,7 +15,7 @@
                             ng-disabled="isLoggedInUserTheChallengeCreator(activeChallenge)">Claim This Challenge
                     </button>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2" ng-show="!isChallengeUpvotedByUser(activeChallenge)">
                     <a href="#" ng-click="upvoteChallenge(activeChallenge)" id="thumbs"><span
                             class="glyphicon glyphicon-thumbs-up"></span></a>
                 </div>
@@ -67,7 +67,7 @@
             </form>
             <!--Make a imageframe -->
         </div>
-        <div>
+        <!--<div>
             <table class="table borderless" ng-repeat="comment in activeChallenge.challengeComments">
                 <thead>
                 <tr>
@@ -82,7 +82,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <!--<td>&lt;!&ndash;{{comment.content}}&ndash;&gt;-->
+                    &lt;!&ndash;<td>&lt;!&ndash;{{comment.content}}&ndash;&gt;&ndash;&gt;
                     Det är ett välkänt faktum att läsare distraheras av läsbar text på en
                     sida när man skall studera layouten. Poängen med Lorem Ipsum är att det ger ett normalt
                     ordflöde,
@@ -96,6 +96,6 @@
                 </tr>
                 </tbody>
             </table>
-        </div>
+        </div>-->
     </div>
 </div>

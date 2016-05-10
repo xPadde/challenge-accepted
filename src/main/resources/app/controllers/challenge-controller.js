@@ -100,9 +100,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     $scope.upvoteChallenge = function (challenge) {
         if (sessionStorage.getItem("isLoggedIn") == 'true') {
             challengeService.addUserToChallengeUpvoters(sessionStorage.getItem('loggedInUser'), challenge.id)
-                .success(function () {
+                .success(function (response) {
                     console.log("Add user to upvoted challenges success");
                     $scope.getListOfChallenges();
+                    $scope.activeChallenge = response;
                 })
                 .error(function (response) {
                     console.log(response);
@@ -113,15 +114,13 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.isChallengeUpvotedByUser = function (challenge) {
-        if (sessionStorage.getItem('isLoggedIn') == 'true') {
-
+        if ((sessionStorage.getItem('isLoggedIn') == 'true') && (challenge != null)) {
             $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
             for (var i = 0; i < challenge.challengeUpvoters.length; i++) {
                 if (challenge.challengeUpvoters[i] === $scope.loggedInUser.id) {
                     return true;
                 }
             }
-            return false;
         }
         return false;
     };
