@@ -31,6 +31,15 @@ app.factory('challengeService', function ($http) {
             })
         },
 
+        updateChallengeClaimer: function (loggedInUser, challengeId) {
+            return $http({
+                url: 'http://localhost:8080/api/challenge/' + challengeId + '/updatechallengeclaimer/',
+                method: 'PUT',
+                data: loggedInUser,
+                header: {'Content-Type': 'application/json'}
+            })
+        },
+
         addUserToChallengeUpvoters: function (data, id) {
             return $http({
                 url: 'http://localhost:8080/api/challenge/' + id + '/',

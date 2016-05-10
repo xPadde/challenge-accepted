@@ -67,6 +67,16 @@ public class ChallengeController {
     }
 
     @CrossOrigin
+    @RequestMapping(value = "/challenge/{id}/updatechallengeclaimer/", method = RequestMethod.PUT)
+    public ResponseEntity<ChallengeModel> updateChallengeClaimer(@PathVariable Long id, @RequestBody UserModel userModel) {
+        ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(id);
+        challengeModel.setChallengeClaimer(userModel);
+        challengeModel.setChallengeClaimed(true);
+        challengeService.updateChallengeInDatabase(challengeModel);
+        return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
+    }
+
+    @CrossOrigin
     @RequestMapping(value = "/challenge/{id}/", method = RequestMethod.PUT)
     public ResponseEntity addUserToChallengeUpvoters(@PathVariable Long id, @RequestBody UserModel loggedInUser) {
         ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);

@@ -128,13 +128,11 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
         $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
 
-        challenge.challengeClaimer = $scope.loggedInUser;
-        challenge.challengeClaimed = true;
-
-        challengeService.updateChallenge(JSON.stringify(challenge))
+        challengeService.updateChallengeClaimer($scope.loggedInUser, challenge.id)
             .success(function (response) {
                 console.log("challengeService.updateChallenge() SUCCESS");
                 console.log(response);
+                $scope.activeChallenge = response;
             })
             .error(function (error) {
                 console.log("challengeService.updateChallenge() ERROR");
