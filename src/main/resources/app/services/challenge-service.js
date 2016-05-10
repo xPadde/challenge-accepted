@@ -49,6 +49,14 @@ app.factory('challengeService', function ($http) {
             })
         },
 
+        confirmUploadedYoutubeUrl: function (challengeId) {
+            return $http({
+                url: 'http://localhost:8080/api/challenge/' + challengeId + '/confirmuploadedyoutubeurl/',
+                method: 'PUT',
+                header: {'Content-Type': 'application/json'}
+            })
+        },
+
         addUserToChallengeUpvoters: function (data, id) {
             return $http({
                 url: 'http://localhost:8080/api/challenge/' + id + '/',

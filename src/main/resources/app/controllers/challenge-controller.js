@@ -122,7 +122,6 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.claimCurrentChallenge = function (challenge) {
-        debugger;
 
         $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
         //TODO Har man upvotat en challenge så blir det krasch eftersom vi skickar in en challengeUpvoter i form av en Long
@@ -174,13 +173,13 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         $('#uploadYoutubeVideoForm').each(function () {
             this.reset();
         });
-        challenge.youtubeVideoUploaded = true;
-        challenge.youtubeVideoCorrect = false;
-        challengeService.updateChallenge(JSON.stringify(challenge))
-            .success(function () {
+        challengeService.confirmUploadedYoutubeUrl(challenge.id)
+            .success(function (response) {
                 console.log("Nu är challenge uppdaterad med booleanen  sparad");
-            }).error(function () {
+                $scope.activeChallenge = response;
+            }).error(function (error) {
             console.log("Nu är challenge INTE uppdaterad med booleanen");
+            console.log(error);
         });
 
         alert("VIDEO SENT TO CHALLENGE-REQUESTER");
