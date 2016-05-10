@@ -1,0 +1,17 @@
+<h1>Top Challengers</h1>
+<div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Points</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in listOfUsers">
+            <td>{{user.firstName}} {{user.lastName}}</td>
+            <td>{{user.points}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

@@ -31,9 +31,14 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         $scope.section = "listOfChallengesSection";
     };
 
+    $scope.showListOfUsersSection = function () {
+        $scope.getListOfUsers();
+        $scope.section = "listOfUsersSection";
+    }
+
     $scope.showApproveVideosSection = function () {
-        $scope.section = "listApproveVideosSection";
         $scope.getListOfUnapprovedChallenges();
+        $scope.section = "listApproveVideosSection";
     };
 
     $scope.showListOfCompletedChallengesSection = function () {
@@ -74,6 +79,15 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                 console.log('challengeService.getListOfChallenges() ***FAILED*** to fetch all the challenges from the database!');
             });
     };
+
+    $scope.getListOfUsers = function () {
+        userService.getListOfAllUsers()
+            .success(function(response) {
+                $scope.listOfUsers = response;
+            }).error(function() {
+
+            })
+    }
 
     $scope.getListOfUnapprovedChallenges = function () {
         challengeService.getListOfUnapprovedChallenges()

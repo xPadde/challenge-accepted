@@ -42,6 +42,13 @@ app.directive("directiveListYourChallenges", function () {
 app.directive("directiveChallengeProfile", function () {
     return {
        restrict: 'C',
-        templateUrl: 'views/challenge-profile.html'
+       templateUrl: 'views/challenge-profile.html'
     } 
-});    
+});
+
+app.directive("directiveListUsers", function () {
+    return {
+        restrict: 'C',
+        templateUrl: 'views/list-users.html'
+    }
+})

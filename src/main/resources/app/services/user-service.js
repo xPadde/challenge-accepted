@@ -23,6 +23,14 @@ app.factory('userService', function ($http) {
                 method: 'PUT',
                 header: {'Content-Type': 'application/json'}
             })
+        },
+
+        getListOfAllUsers: function () {
+            return $http({
+                url: 'http://localhost:8080/api/users/',
+                method: 'GET',
+                header: {'Content-Type': 'application/json'}
+            })
         }
     };
 
