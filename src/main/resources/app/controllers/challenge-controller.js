@@ -2,6 +2,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     $scope.orderByField = 'creationDate';
     $scope.reverseSort = true;
+    var alertLoginPrompt = "Log in to use this feature."
 
     $scope.getUserInputsFromCreateChallengeForm = function () {
         return JSON.stringify({
@@ -20,7 +21,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         if (sessionStorage.getItem("isLoggedIn") == 'true') {
             $scope.section = "createNewChallengeSection";
         } else {
-            $scope.section = "loginPageSection";
+            alert(alertLoginPrompt);
         }
 
     };
@@ -107,37 +108,56 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                     console.log(response);
                 });
         } else {
-            $scope.section = "loginPageSection";
+            alert(alertLoginPrompt);
         }
     };
 
     $scope.isChallengeUpvotedByUser = function (challenge) {
-        $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-        for (var i = 0; i < challenge.challengeUpvoters.length; i++) {
-            if (challenge.challengeUpvoters[i] === $scope.loggedInUser.id) {
-                return true;
+        if (sessionStorage.getItem('isLoggedIn') == 'true') {
+
+            $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+            for (var i = 0; i < challenge.challengeUpvoters.length; i++) {
+                if (challenge.challengeUpvoters[i] === $scope.loggedInUser.id) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return false;
+    };
+
+    $scope.isLoggedInUserTheChallengeCreator = function (challenge) {
+        if (challenge != null || challenge != undefined) {
+            if (sessionStorage.getItem('isLoggedIn') == 'true') {
+                $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+                if (challenge.challengeCreator.id == $scope.loggedInUser.id) {
+                    return true;
+                }
             }
         }
         return false;
     };
 
     $scope.claimCurrentChallenge = function (challenge) {
+        if (sessionStorage.getItem("isLoggedIn") == 'true') {
+            $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
+            //TODO Har man upvotat en challenge så blir det krasch eftersom vi skickar in en challengeUpvoter i form av en Long
 
-        $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
-        //TODO Har man upvotat en challenge så blir det krasch eftersom vi skickar in en challengeUpvoter i form av en Long
+            $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
 
-        $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
-
-        challengeService.updateChallengeClaimer($scope.loggedInUser, challenge.id)
-            .success(function (response) {
-                console.log("challengeService.updateChallenge() SUCCESS");
-                console.log(response);
-                $scope.activeChallenge = response;
-            })
-            .error(function (error) {
-                console.log("challengeService.updateChallenge() ERROR");
-                console.log(error);
-            });
+            challengeService.updateChallengeClaimer($scope.loggedInUser, challenge.id)
+                .success(function (response) {
+                    console.log("challengeService.updateChallenge() SUCCESS");
+                    console.log(response);
+                    $scope.activeChallenge = response;
+                })
+                .error(function (error) {
+                    console.log("challengeService.updateChallenge() ERROR");
+                    console.log(error);
+                });
+        } else {
+            alert(alertLoginPrompt);
+        }
 
     };
 
@@ -185,26 +205,26 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         alert("VIDEO SENT TO CHALLENGE-REQUESTER");
     };
 
-/*
-    $scope.assignPointsToUser = function(challenge) {
-        $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
-        $scope.loggedInUser.points += challenge.upvotes;
-        console.log("Upvotes " + challenge.upvotes);
-        console.log($scope.loggedInUser);
-        userService.updateUser(JSON.stringify($scope.loggedInUser), $scope.loggedInUser.id)
-            .success(function() {
-                console.log("Points updated and saved");
-            }).error(function(error) {
-                console.log(error);
-                console.log("Points NOT updated and saved");
-        });
-    };
-*/
+    /*
+     $scope.assignPointsToUser = function(challenge) {
+     $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
+     $scope.loggedInUser.points += challenge.upvotes;
+     console.log("Upvotes " + challenge.upvotes);
+     console.log($scope.loggedInUser);
+     userService.updateUser(JSON.stringify($scope.loggedInUser), $scope.loggedInUser.id)
+     .success(function() {
+     console.log("Points updated and saved");
+     }).error(function(error) {
+     console.log(error);
+     console.log("Points NOT updated and saved");
+     });
+     };
+     */
 
     $scope.completeChallenge = function (challenge) {
         challenge.challengeCompleted = true;
-/*        $scope.assignPointsToUser(challenge);*/
-/*        challenge.upvotes = 0;*/
+        /*        $scope.assignPointsToUser(challenge);*/
+        /*        challenge.upvotes = 0;*/
         challenge.youtubeVideoUploaded = false;
         challengeService.updateChallenge(JSON.stringify(challenge))
             .success(function () {

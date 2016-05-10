@@ -2,36 +2,48 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h2>{{activeChallenge.topic}}</h2>
-            <small>Created {{activeChallenge.creationDate | date }} by<a href="#"> {{ activeChallenge.challengeCreator.firstName }} </a></small>
+            <small>Created {{activeChallenge.creationDate | date }} by<a href="#"> {{
+                activeChallenge.challengeCreator.firstName }} </a></small>
         </div>
         <div class="panel-body">
             <h4>{{activeChallenge.description}}</h4>
 
             <div class="row">
                 <div class="col-sm-10">
-                    <button type="button" class="btn btn-primary" ng-hide="activeChallenge.challengeClaimed" ng-click="claimCurrentChallenge(activeChallenge)">Claim This Challenge</button>
+                    <button type="button" class="btn btn-primary" ng-hide="activeChallenge.challengeClaimed"
+                            ng-click="claimCurrentChallenge(activeChallenge)"
+                            ng-disabled="isLoggedInUserTheChallengeCreator(activeChallenge)">Claim This Challenge
+                    </button>
                 </div>
                 <div class="col-sm-2">
-                    <a href="#" ng-click="upvoteChallenge(activeChallenge)" id="thumbs"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+                    <a href="#" ng-click="upvoteChallenge(activeChallenge)" id="thumbs"><span
+                            class="glyphicon glyphicon-thumbs-up"></span></a>
                 </div>
             </div>
 
-            <form class="form-horizontal" role="form" ng-show="activeChallenge.challengeClaimed" id="uploadYoutubeVideoForm">
+            <form class="form-horizontal" role="form" ng-show="activeChallenge.challengeClaimed"
+                  id="uploadYoutubeVideoForm">
                 <div class="form-group">
                     <div class="col-sm-3">
                         <input id="input-youtube-url" type="text" placeholder="Youtube URL here" class="form-control">
                     </div>
                 </div>
                 <p>
-                    <iframe id="youtubeFrame" width="510" height="350" ng-src="{{ markUrlAsTrusted(activeChallenge.youtubeURL) }}" ng-show="activeChallenge.youtubeUrlProvided"></iframe>
+                    <iframe id="youtubeFrame" width="510" height="350"
+                            ng-src="{{ markUrlAsTrusted(activeChallenge.youtubeURL) }}"
+                            ng-show="activeChallenge.youtubeUrlProvided"></iframe>
                 <p>
 
                 <div class="form-group">
                     <div class="col-sm-2">
-                        <button class="btn btn-default" ng-click="addYoutubeUrlToCurrentChallenge(activeChallenge)">Add URL</button>
+                        <button class="btn btn-default" ng-click="addYoutubeUrlToCurrentChallenge(activeChallenge)">Add
+                            URL
+                        </button>
                     </div>
                     <div class="col-sm-1">
-                        <button class="btn btn-default" ng-click="confirmYoutubeVideoToCurrentChallenge(activeChallenge)">Confirm This Video</button>
+                        <button class="btn btn-default"
+                                ng-click="confirmYoutubeVideoToCurrentChallenge(activeChallenge)">Confirm This Video
+                        </button>
                     </div>
                 </div>
             </form>
@@ -42,12 +54,14 @@
 
                 <div class="form-group">
                     <div class="col-sm-8">
-                        <textarea class="form-control" placeholder="Write a comment!" rows="4" id="textarea-comment-field"></textarea>
+                        <textarea class="form-control" placeholder="Write a comment!" rows="4"
+                                  id="textarea-comment-field"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-4">
-                        <button class="btn btn-default" ng-click="addCommentToChallenge(activeChallenge)">Add Comment</button>
+                        <button class="btn btn-default" ng-click="addCommentToChallenge(activeChallenge)">Add Comment
+                        </button>
                     </div>
                 </div>
             </form>
@@ -69,15 +83,15 @@
                 </tr>
                 <tr>
                     <!--<td>&lt;!&ndash;{{comment.content}}&ndash;&gt;-->
-                        Det är ett välkänt faktum att läsare distraheras av läsbar text på en
-                        sida när man skall studera layouten. Poängen med Lorem Ipsum är att det ger ett normalt
-                        ordflöde,
-                        till skillnad från "Text här, Text här", och ger intryck av att vara läsbar text. Många
-                        publiseringprogram och
-                        webbutvecklare använder Lorem Ipsum som test-text, och en sökning efter "Lorem Ipsum" avslöjar
-                        många webbsidor under uteckling.
-                        Olika versioner har dykt upp under åren, ibland av olyckshändelse, ibland med flit (mer eller
-                        mindre humoristiska).
+                    Det är ett välkänt faktum att läsare distraheras av läsbar text på en
+                    sida när man skall studera layouten. Poängen med Lorem Ipsum är att det ger ett normalt
+                    ordflöde,
+                    till skillnad från "Text här, Text här", och ger intryck av att vara läsbar text. Många
+                    publiseringprogram och
+                    webbutvecklare använder Lorem Ipsum som test-text, och en sökning efter "Lorem Ipsum" avslöjar
+                    många webbsidor under uteckling.
+                    Olika versioner har dykt upp under åren, ibland av olyckshändelse, ibland med flit (mer eller
+                    mindre humoristiska).
                     </td>
                 </tr>
                 </tbody>
