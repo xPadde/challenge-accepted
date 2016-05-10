@@ -103,7 +103,6 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                 .success(function (response) {
                     console.log("Add user to upvoted challenges success");
                     $scope.getListOfChallenges();
-                    $scope.activeChallenge = response;
                 })
                 .error(function (response) {
                     console.log(response);
