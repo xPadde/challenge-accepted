@@ -15,6 +15,14 @@ app.factory('userService', function ($http) {
                 method: 'GET',
                 header: {'Content-Type': 'application/json'}
             })
+        },
+
+        updateUser: function (data, id) {
+            return $http({
+                url: 'http://localhost:8080/api/user/' + id,
+                method: 'PUT',
+                header: {'Content-Type': 'application/json'}
+            })
         }
     };
 

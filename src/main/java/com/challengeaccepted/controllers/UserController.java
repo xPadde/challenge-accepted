@@ -30,7 +30,7 @@ public class UserController {
 
     @CrossOrigin
     @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-    public ResponseEntity updateUser(@RequestBody UserModel userModel) {
+    public ResponseEntity updateUser(@RequestBody UserModel userModel, @PathVariable Long id) {
         userService.updateUserInDatabase(userModel);
         return new ResponseEntity(HttpStatus.OK);
     }

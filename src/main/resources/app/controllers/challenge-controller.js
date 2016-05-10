@@ -124,6 +124,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     $scope.claimCurrentChallenge = function (challenge) {
         debugger;
 
+        $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
         //TODO Har man upvotat en challenge så blir det krasch eftersom vi skickar in en challengeUpvoter i form av en Long
 
         $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
@@ -175,7 +176,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         });
         challenge.youtubeVideoUploaded = true;
         challenge.youtubeVideoCorrect = false;
-        challengeService.updateChallenge(angular.toJson(challenge))
+        challengeService.updateChallenge(JSON.stringify(challenge))
             .success(function () {
                 console.log("Nu är challenge uppdaterad med booleanen  sparad");
             }).error(function () {
@@ -185,15 +186,32 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         alert("VIDEO SENT TO CHALLENGE-REQUESTER");
     };
 
+/*
+    $scope.assignPointsToUser = function(challenge) {
+        $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
+        $scope.loggedInUser.points += challenge.upvotes;
+        console.log("Upvotes " + challenge.upvotes);
+        console.log($scope.loggedInUser);
+        userService.updateUser(JSON.stringify($scope.loggedInUser), $scope.loggedInUser.id)
+            .success(function() {
+                console.log("Points updated and saved");
+            }).error(function(error) {
+                console.log(error);
+                console.log("Points NOT updated and saved");
+        });
+    };
+*/
+
     $scope.completeChallenge = function (challenge) {
         challenge.challengeCompleted = true;
-
+/*        $scope.assignPointsToUser(challenge);*/
+/*        challenge.upvotes = 0;*/
         challenge.youtubeVideoUploaded = false;
-        challengeService.updateChallenge(angular.toJson(challenge))
+        challengeService.updateChallenge(JSON.stringify(challenge))
             .success(function () {
-                console.log("Uppdaterat challenge med booleanen completed");
+                console.log("Uppdaterat challenge med booleanen completed, upVotes är 0");
             }).error(function () {
-            console.log("Uppdaterade inte challenge med booleanen completed");
+            console.log("Uppdaterade inte challenge med booleanen completed, upVotes är inte 0");
         });
     };
 

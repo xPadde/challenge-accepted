@@ -69,6 +69,8 @@ public class ChallengeModel implements Serializable {
         return listOfChallengeCommentsId;
     }
 
+
+
     public void setChallengeComments(List<CommentModel> challengeComments) {
         this.challengeComments = challengeComments;
     }
