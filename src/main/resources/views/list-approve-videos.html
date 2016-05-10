@@ -24,14 +24,17 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="challenge in listOfUnapprovedChallenges | orderBy:orderByField:reverseSort" ng-hide="challenge.challengeCompleted">
+        <tr ng-repeat="challenge in listOfUnapprovedChallenges | orderBy:orderByField:reverseSort" ng-if="isChallengeCreatedByLoggedInUser(challenge)" ng-hide="challenge.challengeCompleted">
             <td><a href="#" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
             <td>{{challenge.description}}</td>
-            <td><iframe width="200" height="200" ng-src="{{ markUrlAsTrusted(challenge.youtubeURL) }}"></iframe></td>
-            <td><a href="#">
-                <button ng-click="completeChallenge(challenge)" class="btn btn-success">APPROVE</button>
-                <button class="btn btn-danger">DISAPPROVE</button>
-            </a>
+            <td>
+                <iframe width="200" height="200" ng-src="{{ markUrlAsTrusted(challenge.youtubeURL) }}"></iframe>
+            </td>
+            <td>
+                <a href="#">
+                    <button ng-click="completeChallenge(challenge)" class="btn btn-success">APPROVE</button>
+                    <button class="btn btn-danger">DISAPPROVE</button>
+                </a>
             </td>
         </tr>
         </tbody>
