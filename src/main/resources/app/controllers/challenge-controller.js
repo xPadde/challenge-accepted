@@ -185,8 +185,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         alert("VIDEO SENT TO CHALLENGE-REQUESTER");
     };
 
-/*
-    $scope.assignPointsToUser = function(challenge) {
+/*    $scope.assignPointsToUser = function(challenge) {
         $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
         $scope.loggedInUser.points += challenge.upvotes;
         console.log("Upvotes " + challenge.upvotes);
@@ -198,13 +197,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                 console.log(error);
                 console.log("Points NOT updated and saved");
         });
-    };
-*/
+    };*/
 
-    $scope.completeChallenge = function (challenge) {
-        challenge.challengeCompleted = true;
-/*        $scope.assignPointsToUser(challenge);*/
-/*        challenge.upvotes = 0;*/
+ /*   $scope.completeChallenge = function (challenge) {
+        $scope.assignPointsToUser(challenge);
         challenge.youtubeVideoUploaded = false;
         challengeService.updateChallenge(JSON.stringify(challenge))
             .success(function () {
@@ -213,6 +209,18 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             console.log("Uppdaterade inte challenge med booleanen completed, upVotes är inte 0");
         });
     };
+*/
+    $scope.completeChallenge = function (challenge) {
+
+        challengeService.assignPointsToUser(challenge.id)
+            .success(function(response){
+                console.log("Points were assigned correctly");
+                $scope.activeChallenge = response;
+            }).error(function(error){
+                console.log(error);
+                console.log("Points were ***NOT*** assigned correctly");
+        });
+    }
 
     $scope.markUrlAsTrusted = function (src) {
         return $sce.trustAsResourceUrl(src);

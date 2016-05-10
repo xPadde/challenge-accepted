@@ -66,6 +66,14 @@ app.factory('challengeService', function ($http) {
             })
         },
 
+        assignPointsToUser: function (id) {
+            return $http({
+                url: 'http://localhost:8080/api/challenge/' + id + '/assignpointstouser/',
+                method: 'PUT',
+                header: {'Content-Type': 'application/json'}
+            })
+        },
+
         checkIfChallengeIsUpvotedByUser: function (loggedInUserId, challengeId) {
             return $http({
                 url: 'http://localhost:8080/api/challenge/' + challengeId + '/checkifchallengeisupvotedbyuser/' + loggedInUserId + '/',

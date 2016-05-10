@@ -15,7 +15,7 @@ public class UserModel implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
-    private Integer points;
+    private Long points;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "challengeUpvoters")
     private List<ChallengeModel> upvotedChallenges;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "challengeClaimer")
@@ -26,11 +26,11 @@ public class UserModel implements Serializable {
     public UserModel() {
     }
 
-    public Integer getPoints() {
+    public Long getPoints() {
         return points;
     }
 
-    public void setPoints(Integer points) {
+    public void setPoints(Long points) {
         this.points = points;
     }
 

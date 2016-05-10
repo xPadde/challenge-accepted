@@ -21,6 +21,7 @@ public class ChallengeController {
     private UserService userService;
     @Autowired
     private CommentController commentController;
+    private Long resetUpvotes = 0l;
 
     @CrossOrigin
     @RequestMapping(value = "/challenge/create/challengecreator/{challengeCreatorId}", method = RequestMethod.POST)
@@ -83,6 +84,27 @@ public class ChallengeController {
         challengeModel.setYoutubeUrlProvided(true);
         challengeService.updateChallengeInDatabase(challengeModel);
         return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/challenge/{id}/assignpointstouser/", method = RequestMethod.PUT)
+    public ResponseEntity<ChallengeModel> assignPointsToUser(@PathVariable Long id) {
+        ChallengeModel challengeToUpdateToDatabase = challengeService.getChallengeFromDatabase(id);
+        UserModel userToUpdateToDatabase = userService.getUserFromDatabase(challengeToUpdateToDatabase.getChallengeClaimer().getId());
+
+        userToUpdateToDatabase.setPoints((Long.valueOf(challengeToUpdateToDatabase.getChallengeUpvoters().size())));
+
+        System.out.println(userToUpdateToDatabase.getPoints());
+        System.out.println(challengeToUpdateToDatabase.getUpvotes());
+
+        challengeToUpdateToDatabase.setUpvotes(resetUpvotes);
+        challengeToUpdateToDatabase.setChallengeCompleted(true);
+        challengeToUpdateToDatabase.setYoutubeUrlProvided(false);
+        challengeToUpdateToDatabase.setYoutubeVideoUploaded(false);
+
+        userService.updateUserInDatabase(userToUpdateToDatabase);
+        challengeService.updateChallengeInDatabase(challengeToUpdateToDatabase);
+        return new ResponseEntity<ChallengeModel>(challengeToUpdateToDatabase, HttpStatus.OK);
     }
 
     @CrossOrigin
