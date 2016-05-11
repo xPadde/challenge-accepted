@@ -1,318 +1,16 @@
 app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeService', 'userService', function ($scope, $http, $sce, challengeService, userService) {
 
+    // The variables for sorting the challenge list.
     $scope.orderByField = 'creationDate';
     $scope.reverseSort = true;
-    var alertLoginPrompt = "Log in to use this feature."
 
-    $scope.getUserInputsFromCreateChallengeForm = function () {
-        return JSON.stringify({
-            'topic': $('#input-topic').val(),
-            'description': $('#input-description').val(),
-            'creationDate': null,
-            'challengeClaimed': false,
-            'youtubeVideoUploaded': false,
-            'youtubeVideoCorrect': false,
-            'challengeCompleted': false
-        });
-    };
+    // Message for prompting the user to login if trying to access features when logged out.
+    var alertLoginPrompt = "Log in to use this feature.";
 
-    $scope.showCreateChallengeSection = function () {
-        console.log("Vad är booleanen: " + sessionStorage.getItem("isLoggedIn"));
-        if (sessionStorage.getItem("isLoggedIn") == 'true') {
-            $scope.section = "createNewChallengeSection";
-        } else {
-            alert(alertLoginPrompt);
-        }
 
-    };
-
-    $scope.showListOfChallengesSection = function () {
-        $scope.getListOfChallenges();
-        $scope.section = "listOfChallengesSection";
-    };
-
-    $scope.showListOfUsersSection = function () {
-        $scope.getListOfUsers();
-        $scope.section = "listOfUsersSection";
-    }
-
-    $scope.showApproveVideosSection = function () {
-        $scope.getListOfUnapprovedChallenges();
-        $scope.section = "listApproveVideosSection";
-    };
-
-    $scope.showListOfCompletedChallengesSection = function () {
-        $scope.getListOfCompletedChallenges();
-        $scope.section = "listOfCompletedChallengesSection";
-    };
-
-    $scope.showSecretListOfChallengesSection = function () {
-        $scope.section = "secretListOfChallengesSection";
-    };
-
-    $scope.createNewChallenge = function () {
-        $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-        challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), $scope.loggedInUser.id)
-            .success(function () {
-                console.log('challengeService.createNewChallenge() called and it created a new challenge and saved it to the database!');
-                $scope.getListOfChallenges();
-                $scope.section = "listOfChallengesSection";
-            })
-            .error(function (response) {
-                console.log('challengeService.createNewChallenge() called and it ***FAILED*** to create new challenge');
-                console.log(response);
-            })
-
-        $('#createNewChallengeForm').each(function () {
-            this.reset();
-        });
-    };
-
-    $scope.getListOfChallenges = function () {
-        challengeService.getListOfAllChallenges()
-            .success(function (response) {
-                $scope.listOfChallenges = response;
-                console.log('challengeService.getListOfChallenges() fetched all the challenges from the database successfully!');
-            })
-            .error(function (response) {
-                console.log(response);
-                console.log('challengeService.getListOfChallenges() ***FAILED*** to fetch all the challenges from the database!');
-            });
-    };
-
-    $scope.getListOfUsers = function () {
-        userService.getListOfAllUsers()
-            .success(function(response) {
-                $scope.listOfUsers = response;
-            }).error(function() {
-
-            })
-    }
-
-    $scope.getListOfUnapprovedChallenges = function () {
-        challengeService.getListOfUnapprovedChallenges()
-            .success(function (response) {
-                $scope.listOfUnapprovedChallenges = response;
-                console.log("challengeService.getListOfUnapprovedChallenges fetched all the unapproved challenges successfully");
-            })
-            .error(function (error) {
-                console.log(error);
-                console.log("challengeService.getListOfUnapprovedChallenges ***FAILED*** to fetch all the challenges from the database!");
-            });
-    };
-
-    $scope.getListOfCompletedChallenges = function () {
-        challengeService.getListOfCompletedChallenges()
-            .success(function (response) {
-                $scope.listOfCompletedChallenges = response;
-                console.log("Hämtade listan med alla färdiga challenges");
-            }).error(function (error) {
-            console.log("Hämtade inte listan med färdiga challenges");
-        });
-    }
-
-    $scope.upvoteChallenge = function (challenge) {
-        if (sessionStorage.getItem("isLoggedIn") == 'true') {
-            challengeService.addUserToChallengeUpvoters(sessionStorage.getItem('loggedInUser'), challenge.id)
-                .success(function (response) {
-                    console.log("Add user to upvoted challenges success");
-                    $scope.getListOfChallenges();
-                })
-                .error(function (response) {
-                    console.log(response);
-                });
-        } else {
-            alert(alertLoginPrompt);
-        }
-    };
-
-    $scope.isChallengeUpvotedByUser = function (challenge) {
-        if ((sessionStorage.getItem('isLoggedIn') == 'true') && (challenge != null)) {
-            $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-            for (var i = 0; i < challenge.challengeUpvoters.length; i++) {
-                if (challenge.challengeUpvoters[i] === $scope.loggedInUser.id) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    };
-
-    $scope.isLoggedInUserTheChallengeCreator = function (challenge) {
-        if (challenge != null || challenge != undefined) {
-            if (sessionStorage.getItem('isLoggedIn') == 'true') {
-                $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-                if (challenge.challengeCreator.id == $scope.loggedInUser.id) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    };
-
-    $scope.claimCurrentChallenge = function (challenge) {
-        if (sessionStorage.getItem("isLoggedIn") == 'true') {
-            $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
-            //TODO Har man upvotat en challenge så blir det krasch eftersom vi skickar in en challengeUpvoter i form av en Long
-
-            $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
-
-            challengeService.updateChallengeClaimer($scope.loggedInUser, challenge.id)
-                .success(function (response) {
-                    console.log("challengeService.updateChallenge() SUCCESS");
-                    console.log(response);
-                    $scope.activeChallenge = response;
-                })
-                .error(function (error) {
-                    console.log("challengeService.updateChallenge() ERROR");
-                    console.log(error);
-                });
-        } else {
-            alert(alertLoginPrompt);
-        }
-
-    };
-
-    $scope.viewChallengeProfilePage = function (challenge) {
-        $scope.section = "challengeProfilePageSection";
-        $scope.activeChallenge = challenge;
-        console.log("challengeProfileToView object: ");
-        console.log($scope.challengeProfileToView);
-        console.log(challenge.challengeClaimed);
-        console.log(challenge);
-
-        console.log("BOOLEANENNNNNNN " + $scope.isChallengeUpvotedByUser(challenge));
-
-        $scope.disableLikeButton = $scope.isChallengeUpvotedByUser(challenge);
-    };
-
-    $scope.addYoutubeUrlToCurrentChallenge = function (challenge) {
-        // TODO Se över Youtube namngivning (  åxå URL eller Url?)
-        var userProvidedUrl = $('#input-youtube-url').val();
-        var convertedYoutubeUrl = convertToYouTubeEmbedUrl(userProvidedUrl);
-
-        challengeService.addYoutubeUrlToChallenge(challenge.id, convertedYoutubeUrl)
-            .success(function (response) {
-                console.log("nu är youtube url sparat.");
-                $scope.activeChallenge = response;
-            }).error(function (error) {
-            console.log("nu är youtube url INTE sparat");
-            console.log(error);
-        });
-    };
-
-    $scope.confirmYoutubeVideoToCurrentChallenge = function (challenge) {
-        $('#uploadYoutubeVideoForm').each(function () {
-            this.reset();
-        });
-        challengeService.confirmUploadedYoutubeUrl(challenge.id)
-            .success(function (response) {
-                console.log("Nu är challenge uppdaterad med booleanen  sparad");
-                $scope.activeChallenge = response;
-            }).error(function (error) {
-            console.log("Nu är challenge INTE uppdaterad med booleanen");
-            console.log(error);
-        });
-
-        alert("VIDEO SENT TO CHALLENGE-REQUESTER");
-    };
-
-    /*    $scope.assignPointsToUser = function(challenge) {
-     $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
-     $scope.loggedInUser.points += challenge.upvotes;
-     console.log("Upvotes " + challenge.upvotes);
-     console.log($scope.loggedInUser);
-     userService.updateUser(JSON.stringify($scope.loggedInUser), $scope.loggedInUser.id)
-     .success(function() {
-     console.log("Points updated and saved");
-     }).error(function(error) {
-     console.log(error);
-     console.log("Points NOT updated and saved");
-     });
-     };*/
-
-    /*   $scope.completeChallenge = function (challenge) {
-     $scope.assignPointsToUser(challenge);
-     challenge.youtubeVideoUploaded = false;
-     challengeService.updateChallenge(JSON.stringify(challenge))
-     .success(function () {
-     console.log("Uppdaterat challenge med booleanen completed, upVotes är 0");
-     }).error(function () {
-     console.log("Uppdaterade inte challenge med booleanen completed, upVotes är inte 0");
-     });
-     };
+    /*
+     Handles the user login.
      */
-    $scope.completeChallenge = function (challenge) {
-
-        challengeService.assignPointsToUser(challenge.id)
-            .success(function (response) {
-                console.log("Points were assigned correctly");
-                $scope.activeChallenge = response;
-            }).error(function (error) {
-            console.log(error);
-            console.log("Points were ***NOT*** assigned correctly");
-        });
-    }
-
-    $scope.markUrlAsTrusted = function (src) {
-        return $sce.trustAsResourceUrl(src);
-    };
-
-    var convertToYouTubeEmbedUrl = function (url) {
-        var isYoutubeUrlCorrect = url.indexOf("watch?v=") > 1;
-        var baseUrl = "https://www.youtube.com/embed/";
-
-        if (isYoutubeUrlCorrect) {
-            var youTubeVideoId = url.substr(32);
-            var finalUrl = baseUrl + youTubeVideoId;
-        } else {
-            alert("Please provide a valid YouTube URL");
-            return "";
-        }
-        return finalUrl;
-    };
-
-    $scope.addCommentToChallenge = function (challenge) {
-        var commentFromUser = $('#textarea-comment-field').val();
-        $('#commentChallengeForm').each(function () {
-            this.reset();
-        });
-        challengeService.addCommentToChallenge($scope.getUserInputsFromCommentField(), challenge.id)
-            .success(function (response) {
-                console.log('addCommentToChallenge() was successful!');
-                console.log(response);
-            })
-            .error(function (error) {
-                console.log('addCommentToChallenge() failed!');
-                console.log(error);
-            }).then(function () {
-            $scope.activeChallenge = challengeService.getChallengeById(challenge.id);
-        });
-    };
-
-    $scope.getUserInputsFromCommentField = function () {
-        return JSON.stringify({
-            'content': $('#textarea-comment-field').val(),
-            'commentDate': null
-            // TODO add field commentingUser
-        })
-    };
-
-    $scope.isChallengeCreatedByLoggedInUser = function (challenge) {
-        if (sessionStorage.getItem("isLoggedIn") == 'true') {
-            $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-            if (challenge.challengeCreator.id == $scope.loggedInUser.id) {
-                return true;
-            }
-        }
-        return false;
-    };
-
-    // Hardcoded User Login Functions
-
-    // TODO två användare skapas, checked för om en användare redan finns fungerar inte
-    // TODO Fixa så man kan skapa challenge
-
     $scope.getUserInfo = function (profile) {
         return JSON.stringify({
             'firstName': profile.getGivenName(),
@@ -323,14 +21,18 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     $scope.setLoggedInUser = function (response) {
         if (response == "") {
-            console.log('New user detected - saving to database!');
             userService.createNewUser($scope.loggedInUser)
                 .success(function (response) {
+                    console.log('Login success! The user NOT found in database and successfully saved to the database!');
                     sessionStorage.setItem('loggedInUser', JSON.stringify(response));
                     sessionStorage.setItem('isLoggedIn', true);
+                })
+                .error(function (error) {
+                    console.log('The user NOT found in database but ***FAILED*** to save to the database!');
+                    console.log(error);
                 });
         } else {
-            console.log("User found in database!");
+            console.log("Login success! The user already found in database! Proceeding...");
             sessionStorage.setItem('loggedInUser', JSON.stringify(response));
             sessionStorage.setItem('isLoggedIn', true);
         }
@@ -338,9 +40,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     onSignIn = function (googleUser) {
         var profile = googleUser.getBasicProfile();
-
         var userFoundByEmail = "";
-
         $scope.loggedInUser = JSON.parse($scope.getUserInfo(profile));
 
         userService.getUserByEmail($scope.loggedInUser.email)
@@ -364,5 +64,329 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             window.location.reload();
         });
     };
+
+
+    /*
+     Below code handles the toggling of the different sections in index.html.
+     The methods is assigned to the ng-clicks.
+     */
+    $scope.section = "listOfClaimedChallengesSection";
+
+    $scope.showListOfChallengesSection = function () {
+        $scope.getListOfChallenges();
+        $scope.section = "listOfChallengesSection";
+    };
+
+    $scope.showListOfUsersSection = function () {
+        $scope.getListOfUsers();
+        $scope.section = "listOfUsersSection";
+    };
+
+    $scope.showApproveVideosSection = function () {
+        $scope.getListOfUnapprovedChallenges();
+        $scope.section = "listApproveVideosSection";
+    };
+
+    $scope.showListOfCompletedChallengesSection = function () {
+        $scope.getListOfCompletedChallenges();
+        $scope.section = "listOfCompletedChallengesSection";
+    };
+
+    $scope.showSecretListOfChallengesSection = function () {
+        $scope.getListOfClaimedChallenges();
+        $scope.section = "secretListOfChallengesSection";
+    };
+
+    $scope.showListOfClaimedChallenges = function () {
+        $scope.section = "listOfClaimedChallengesSection";
+    };
+
+    $scope.showCreateChallengeSection = function () {
+        if (sessionStorage.getItem("isLoggedIn") == 'true') {
+            $scope.section = "createNewChallengeSection";
+        } else {
+            alert(alertLoginPrompt);
+        }
+    };
+
+    $scope.viewChallengeProfilePage = function (challenge) {
+        $scope.section = "challengeProfilePageSection";
+        $scope.activeChallenge = challenge;
+        $scope.disableLikeButton = $scope.isChallengeUpvotedByUser(challenge); // scope variable for using with ng-show.
+    };
+
+
+    /*
+     Below code handles the creation of the new challenges.
+     The code does not execute if no user is logged in.
+     */
+    $scope.getUserInputsFromCreateChallengeForm = function () {
+        return JSON.stringify({
+            'topic': $('#input-topic').val(),
+            'description': $('#input-description').val(),
+            'creationDate': null,
+            'challengeClaimed': false,
+            'youtubeVideoUploaded': false,
+            'youtubeVideoCorrect': false,
+            'challengeCompleted': false
+        });
+    };
+
+    $scope.createNewChallenge = function () {
+        $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+        challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), $scope.loggedInUser.id)
+            .success(function () {
+                console.log('challengeService.createNewChallenge() called. New challenge created and saved to the database!');
+                // Update the list of challenges after creation of the new challenge,
+                $scope.getListOfChallenges();
+                // then show the list.
+                $scope.section = "listOfChallengesSection";
+            })
+            .error(function (response) {
+                console.log('challengeService.createNewChallenge() called. ***FAILED*** to create new challenge!');
+                console.log(response);
+            });
+
+        $('#createNewChallengeForm').each(function () {
+            this.reset();
+        });
+    };
+
+
+    /*
+     Below code handles the fetching of the challenge and the user lists.
+     The response in the success callbacks is assigned to the scope.
+     */
+    $scope.getListOfChallenges = function () {
+        challengeService.getListOfAllChallenges()
+            .success(function (response) {
+                console.log('challengeService.getListOfChallenges() fetched the challenges from the database successfully!');
+                $scope.listOfChallenges = response;
+            })
+            .error(function (error) {
+                console.log('challengeService.getListOfChallenges() ***FAILED*** to fetch the challenges from the database!');
+                console.log(error);
+            });
+    };
+
+    $scope.getListOfUsers = function () {
+        userService.getListOfAllUsers()
+            .success(function (response) {
+                console.log('challengeService.getListOfUsers() fetched the users from the database!');
+                $scope.listOfUsers = response;
+            })
+            .error(function (error) {
+                console.log('challengeService.getListOfUsers() ***FAILED*** to fetch the users from the database!');
+                console.log(error);
+            })
+    };
+
+    $scope.getListOfUnapprovedChallenges = function () {
+        challengeService.getListOfUnapprovedChallenges()
+            .success(function (response) {
+                $scope.listOfUnapprovedChallenges = response;
+                console.log("challengeService.getListOfUnapprovedChallenges fetched all the unapproved challenges successfully!");
+            })
+            .error(function (error) {
+                console.log(error);
+                console.log("challengeService.getListOfUnapprovedChallenges() ***FAILED*** to fetch all the challenges from the database!");
+            });
+    };
+
+    $scope.getListOfCompletedChallenges = function () {
+        challengeService.getListOfCompletedChallenges()
+            .success(function (response) {
+                console.log("challengeService.getListOfCompletedChallenges() fetched all the completed challenges from the database successfully!");
+                $scope.listOfCompletedChallenges = response;
+            })
+            .error(function (error) {
+                console.log("challengeService.getListOfCompletedChallenges() ***FAILED*** to fetch the completed challenges from the database!");
+                console.log(error);
+            });
+    };
+
+
+    /*
+     Below code handles the upvoting and the managing of the already upvoted challenges.
+     The code does not execute if no user is logged in.
+     */
+    $scope.upvoteChallenge = function (challenge) {
+        if (sessionStorage.getItem("isLoggedIn") == 'true') {
+            challengeService.addUserToChallengeUpvoters(sessionStorage.getItem('loggedInUser'), challenge.id)
+                .success(function () {
+                    console.log("challengeService.addUserToChallengeUpvoters() was successfully executed!");
+                    // Update the list of challenges after creation of the new challenge,
+                    $scope.getListOfChallenges();
+                })
+                .error(function (error) {
+                    console.log("challengeService.addUserToChallengeUpvoters() ***FAILED*** to execute!");
+                    console.log(error);
+                });
+        } else {
+            alert(alertLoginPrompt);
+        }
+    };
+
+    // Return true if the challenge is already upvoted by the logged in user, else false.
+    $scope.isChallengeUpvotedByUser = function (challenge) {
+        if ((sessionStorage.getItem('isLoggedIn') == 'true') && (challenge != null)) {
+            $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+            for (var i = 0; i < challenge.challengeUpvoters.length; i++) {
+                if (challenge.challengeUpvoters[i] === $scope.loggedInUser.id) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+
+
+    /*
+     Below code manage different scenarios for when a user tries to update and manage the challenge.
+     The response is updating the challenge the user is currently viewing.
+     Usually all the code requires the user to be logged in before execution.
+     */
+
+    // Return true if the logged in user is the creator of the challenge, else false.
+    $scope.isLoggedInUserTheChallengeCreator = function (challenge) {
+        if (challenge != null || challenge != undefined) {
+            if (sessionStorage.getItem('isLoggedIn') == 'true') {
+                $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+                if (challenge.challengeCreator.id == $scope.loggedInUser.id) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+
+    // The user claims the challenge and "promise" to perform it.
+    $scope.claimCurrentChallenge = function (challenge) {
+        if (sessionStorage.getItem("isLoggedIn") == 'true') {
+            $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
+            challengeService.updateChallengeClaimer($scope.loggedInUser, challenge.id)
+                .success(function (response) {
+                    console.log("challengeService.updateChallenge() was successfully executed!");
+                    $scope.activeChallenge = response;
+                })
+                .error(function (error) {
+                    console.log("challengeService.updateChallenge() ***FAILED*** to execute!");
+                    console.log(error);
+                });
+        } else {
+            alert(alertLoginPrompt);
+        }
+    };
+
+    // The user adds a YouTube url after performing the challenge.
+    $scope.addYoutubeUrlToCurrentChallenge = function (challenge) {
+        // TODO review naming conventions for 'YouTube' and 'Url'.
+
+        var userProvidedUrl = $('#input-youtube-url').val();
+        var convertedYoutubeUrl = convertToYouTubeEmbedUrl(userProvidedUrl);
+
+        challengeService.addYoutubeUrlToChallenge(challenge.id, convertedYoutubeUrl)
+            .success(function (response) {
+                console.log("challengeService.addYoutubeUrlToChallenge() was successfully executed and YouTube url was saved to the challenge!");
+                $scope.activeChallenge = response;
+            })
+            .error(function (error) {
+                console.log("challengeService.addYoutubeUrlToChallenge() ***FAILED*** to execute!");
+                console.log(error);
+            });
+    };
+
+    // The user confirm the YouTube url of the performance is correct.
+    $scope.confirmYoutubeVideoToCurrentChallenge = function (challenge) {
+        // Reset form after confirmation of YouTube URL.
+        $('#uploadYoutubeVideoForm').each(function () {
+            this.reset();
+        });
+
+        challengeService.confirmUploadedYoutubeUrl(challenge.id)
+            .success(function (response) {
+                console.log("challengeService.confirmUploadedYoutubeUrl() was successfully executed!");
+                $scope.activeChallenge = response;
+            })
+            .error(function (error) {
+                console.log("challengeService.confirmUploadedYoutubeUrl() ***FAILED*** to execute!");
+                console.log(error);
+            });
+        alert("Thank you. The video was sent to the challenge requester and is now pending, waiting for confirmation.");
+    };
+
+    // The challenge requester confirm the challenge is performed satisfactory.
+    $scope.completeChallenge = function (challenge) {
+        challengeService.assignPointsToUser(challenge.id)
+            .success(function (response) {
+                console.log("challengeService.assignPointsToUser() was successfully executed!");
+                $scope.activeChallenge = response;
+            })
+            .error(function (error) {
+                console.log("challengeService.assignPointsToUser() ***FAILED*** to execute!");
+                console.log(error);
+            });
+    };
+
+
+    /*
+     Handles the YouTube URL.
+     */
+
+    // Function for marking a YouTube URL as trusted.
+    $scope.markUrlAsTrusted = function (src) {
+        return $sce.trustAsResourceUrl(src);
+    };
+
+    // Convert the user provided YouTube URL to a embedded URL for use in an iframe.
+    var convertToYouTubeEmbedUrl = function (url) {
+        var isYoutubeUrlCorrect = url.indexOf("watch?v=") > 1; // Is true if the string contains "watch?v="
+        var baseUrl = "https://www.youtube.com/embed/";
+
+        if (isYoutubeUrlCorrect) {
+            var youTubeVideoId = url.substr(32);
+            var finalUrl = baseUrl + youTubeVideoId;
+        } else {
+            alert("Please provide a valid YouTube URL");
+            return "";
+        }
+        return finalUrl;
+    };
+
+
+    /*
+     Handles the comment sections.
+     TODO this section is under development.
+     */
+    $scope.addCommentToChallenge = function (challenge) {
+        var commentFromUser = $('#textarea-comment-field').val();
+        $('#commentChallengeForm').each(function () {
+            this.reset();
+        });
+
+        challengeService.addCommentToChallenge($scope.getUserInputsFromCommentField(), challenge.id)
+            .success(function (response) {
+                console.log('challengeService.addCommentToChallenge was successfully executed!');
+                console.log(response);
+            })
+            .error(function (error) {
+                console.log('challengeService.addCommentToChallenge ***FAILED*** to execute!');
+                console.log(error);
+            })
+            .then(function () {
+                $scope.activeChallenge = challengeService.getChallengeById(challenge.id);
+            });
+    };
+
+    $scope.getUserInputsFromCommentField = function () {
+        return JSON.stringify({
+            'content': $('#textarea-comment-field').val(),
+            'commentDate': null
+            // TODO add field: commentingUser
+        })
+    };
+
+    // Fetch the list of challenges on application start.
+    $scope.getListOfChallenges();
 
 }]);

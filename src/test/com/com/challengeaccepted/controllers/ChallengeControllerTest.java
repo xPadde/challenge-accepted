@@ -25,6 +25,10 @@ public class ChallengeControllerTest {
     private UserService mockedUserService;
     @Mock
     private CommentController mockedCommentController;
+    @Mock
+    private ChallengeModel mockedChallenge;
+    @Mock
+    private UserModel mockedUserModel;
 
     @InjectMocks
     private ChallengeController challengeController;
@@ -33,6 +37,8 @@ public class ChallengeControllerTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         when(mockedChallengeService.getChallengeFromDatabase(1L)).thenReturn(new ChallengeModel());
+        when(mockedUserService.getUserFromDatabase(1L)).thenReturn(new UserModel());
+        when(mockedChallenge.getChallengeClaimer()).thenReturn(new UserModel());
     }
 
     @Test
@@ -73,6 +79,16 @@ public class ChallengeControllerTest {
     @Test
     public void testAddYoutubeUrlToChallenge_Should_Return_Status_Code_200() throws Exception {
         assertEquals("addYoutubeUrlToChallenge() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.addYoutubeUrlToChallenge(1L, "YouTubeURL").getStatusCode());
+    }
+
+    @Test
+    public void testAssignPointsToUser_Should_Return_Status_Code_200() throws Exception {
+        assertEquals("assignPoinstToUser() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.assignPointsToUser(1L).getStatusCode());
+    }
+
+    @Test
+    public void testConfirmUploadedYoutubeUrl_Should_Return_Status_Code_200() throws Exception {
+        assertEquals("confirmUploadedYoutubeUrl() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.confirmUploadedYoutubeUrl(1L).getStatusCode());
     }
 
     @Test
