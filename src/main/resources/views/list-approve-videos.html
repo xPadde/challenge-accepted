@@ -28,7 +28,7 @@
             <td><a href="#" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
             <td>{{challenge.description}}</td>
             <td>
-                <iframe width="200" height="200" ng-src="{{ markUrlAsTrusted(challenge.youtubeURL) }}"></iframe>
+                <iframe width="200" height="200" allowfullscreen="true" ng-src="{{ markUrlAsTrusted(challenge.youtubeURL) }}"></iframe>
             </td>
             <td>
                 <a href="#">
