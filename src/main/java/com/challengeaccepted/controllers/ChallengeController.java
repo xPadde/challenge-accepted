@@ -91,7 +91,7 @@ public class ChallengeController {
         ChallengeModel challengeToUpdateToDatabase = challengeService.getChallengeFromDatabase(id);
         UserModel userToUpdateToDatabase = userService.getUserFromDatabase(challengeToUpdateToDatabase.getChallengeClaimer().getId());
 
-        userToUpdateToDatabase.setPoints((Long.valueOf(challengeToUpdateToDatabase.getChallengeUpvoters().size())));
+        userToUpdateToDatabase.addPoints((long) challengeToUpdateToDatabase.getChallengeUpvoters().size());
 
         System.out.println(userToUpdateToDatabase.getPoints());
         System.out.println(challengeToUpdateToDatabase.getUpvotes());

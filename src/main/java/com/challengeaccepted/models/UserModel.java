@@ -34,6 +34,10 @@ public class UserModel implements Serializable {
         this.points = points;
     }
 
+    public void addPoints(Long points) {
+        this.points += points;
+    }
+
     public Long getId() {
         return id;
     }
