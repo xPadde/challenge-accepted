@@ -33,8 +33,11 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                <a href="#" ng-click="signOut()">Sign out</a>
+                <div ng-show="loggedInUser == null" class="g-signin2" data-onsuccess="onSignIn"></div>
+                <div ng-hide="loggedInUser == null">
+                    {{loggedInUser.firstName}}:
+                    <a href="#" ng-click="signOut()">Sign out</a>
+                </div>
             </ul>
         </div>
     </div>
