@@ -10,39 +10,43 @@
 
             <div class="row">
                 <div class="col-sm-10">
-                    <button type="button" class="btn btn-primary" ng-hide="activeChallenge.challengeClaimed"
+                    <button type="button"
+                            class="btn btn-primary"
+                            ng-hide="activeChallenge.challengeClaimed || activeChallenge.challengeCompleted"
                             ng-click="claimCurrentChallenge(activeChallenge)"
-                            ng-disabled="isLoggedInUserTheChallengeCreator(activeChallenge)">Claim This Challenge
+                            ng-disabled="isLoggedInUserTheChallengeCreator(activeChallenge)">
+                        Claim This Challenge
                     </button>
                 </div>
             </div>
 
-            <form class="form-horizontal" role="form" ng-show="activeChallenge.challengeClaimed"
-                  id="uploadYoutubeVideoForm">
-                <div class="form-group">
-                    <div class="col-sm-3">
-                        <input id="input-youtube-url" type="text" placeholder="Youtube URL here" class="form-control">
+            <div ng-hide="activeChallenge.challengeCompleted">
+                <form class="form-horizontal" role="form" ng-show="activeChallenge.challengeClaimed" id="uploadYoutubeVideoForm">
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <input id="input-youtube-url" type="text" placeholder="Youtube URL here" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <p>
-                    <iframe id="youtubeFrame" width="510" height="350"
-                            ng-src="{{ markUrlAsTrusted(activeChallenge.youtubeURL) }}"
-                            ng-show="activeChallenge.youtubeUrlProvided"></iframe>
-                <p>
 
-                <div class="form-group">
-                    <div class="col-sm-2">
-                        <button class="btn btn-default" ng-click="addYoutubeUrlToCurrentChallenge(activeChallenge)">Add
-                            URL
-                        </button>
+                    <div class="form-group">
+                        <div class="col-sm-2">
+                            <button class="btn btn-default" ng-click="addYoutubeUrlToCurrentChallenge(activeChallenge)">Add URL</button>
+                        </div>
+                        <div class="col-sm-1">
+                            <button class="btn btn-default"
+                                    ng-click="confirmYoutubeVideoToCurrentChallenge(activeChallenge)">Confirm This Video
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-sm-1">
-                        <button class="btn btn-default"
-                                ng-click="confirmYoutubeVideoToCurrentChallenge(activeChallenge)">Confirm This Video
-                        </button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
+            <p>
+                <iframe id="youtubeFrame" width="510" height="350"
+                        allowfullscreen="true"
+                        ng-src="{{ markUrlAsTrusted(activeChallenge.youtubeURL) }}"
+                        ng-show="activeChallenge.youtubeUrlProvided || activeChallenge.challengeCompleted">
+                </iframe>
+            <p>
         </div>
         <div class="panel-footer">
             <form class="form-horizontal" role="form" id="commentChallengeForm">
@@ -57,7 +61,6 @@
                     </button>
                 </div>
             </form>
-            <!--Make a imageframe -->
         </div>
         <!--<div>
             <table class="table borderless" ng-repeat="comment in activeChallenge.challengeComments">

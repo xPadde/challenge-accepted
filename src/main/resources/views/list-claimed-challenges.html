@@ -42,7 +42,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="challenge in listOfChallenges | orderBy:orderByField:reverseSort" ng-if="challenge.challengeClaimer.id == loggedInUser.id">
+            <tr ng-repeat="challenge in listOfChallenges | orderBy:orderByField:reverseSort" ng-if="challenge.challengeClaimer.id == loggedInUser.id && !challenge.challengeCompleted">
                 <td><a href="#" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
                 <td>{{challenge.description}}</td>
                 <td>{{challenge.creationDate}}</td>
