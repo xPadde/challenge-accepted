@@ -132,7 +132,8 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             'challengeClaimed': false,
             'youtubeVideoUploaded': false,
             'youtubeVideoCorrect': false,
-            'challengeCompleted': false
+            'challengeCompleted': false,
+            'upvotes': 0
         });
     };
 

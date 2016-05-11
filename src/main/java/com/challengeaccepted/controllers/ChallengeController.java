@@ -136,12 +136,8 @@ public class ChallengeController {
     public ResponseEntity addUserToChallengeUpvoters(@PathVariable Long id, @RequestBody UserModel loggedInUser) {
 
         ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
-        Long numberOfUpvotes = challenge.getUpvotes();
-        if (numberOfUpvotes != null) {
-            challenge.setUpvotes(numberOfUpvotes += 1l);
-        } else {
-            challenge.setUpvotes(1l);
-        }
+        challenge.addUpvote(1l);
+
         challenge.addUserModelToChallengeUpvoters(loggedInUser);
         challengeService.updateChallengeInDatabase(challenge);
         return new ResponseEntity(HttpStatus.OK);
