@@ -1,9 +1,9 @@
 <div class="container">
-    <div class="panel panel-default">
+    <div class="panel panel-default list">
         <div class="panel-heading">
             <h2>{{activeChallenge.topic}}</h2>
-            <small>Created {{activeChallenge.creationDate | date }} by<a href="#"> {{
-                activeChallenge.challengeCreator.firstName }} </a></small>
+            <small>Created {{activeChallenge.creationDate | date }} by<!--<a href="#">--> {{
+                activeChallenge.challengeCreator.firstName }} <!--</a>--></small>
         </div>
         <div class="panel-body">
             <h4>{{activeChallenge.description}}</h4>
@@ -21,16 +21,20 @@
             </div>
 
             <div ng-hide="activeChallenge.challengeCompleted">
-                <form class="form-horizontal" role="form" ng-show="activeChallenge.challengeClaimed" id="uploadYoutubeVideoForm">
+                <form class="form-horizontal" role="form" ng-show="activeChallenge.challengeClaimed"
+                      id="uploadYoutubeVideoForm">
                     <div class="form-group">
                         <div class="col-sm-3">
-                            <input id="input-youtube-url" type="text" placeholder="Youtube URL here" class="form-control">
+                            <input id="input-youtube-url" type="text" placeholder="Youtube URL here"
+                                   class="form-control">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-sm-2">
-                            <button class="btn btn-default" ng-click="addYoutubeUrlToCurrentChallenge(activeChallenge)">Add URL</button>
+                            <button class="btn btn-default" ng-click="addYoutubeUrlToCurrentChallenge(activeChallenge)">
+                                Add URL
+                            </button>
                         </div>
                         <div class="col-sm-1">
                             <button class="btn btn-default"
@@ -48,7 +52,7 @@
                 </iframe>
             <p>
         </div>
-        <div class="panel-footer">
+        <!--<div class="panel-footer">
             <form class="form-horizontal" role="form" id="commentChallengeForm">
                 <h4>Comments</h4>
 
@@ -61,7 +65,7 @@
                     </button>
                 </div>
             </form>
-        </div>
+        </div>-->
         <!--<div>
             <table class="table borderless" ng-repeat="comment in activeChallenge.challengeComments">
                 <thead>
