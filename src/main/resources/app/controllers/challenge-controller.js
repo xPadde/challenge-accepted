@@ -408,5 +408,6 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     // Fetch the list of challenges on application start.
     $scope.getListOfChallenges();
+    $scope.getListOfCompletedChallenges();
 
 }]);
