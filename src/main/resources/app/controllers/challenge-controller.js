@@ -70,7 +70,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
      Below code handles the toggling of the different sections in index.html.
      The methods is assigned to the ng-clicks.
      */
-    $scope.section = "listOfClaimedChallengesSection";
+    $scope.section = "listOfChallengesNotLoggedInSection";
 
     $scope.showListOfChallengesSection = function () {
         $scope.getListOfChallenges();

@@ -59,3 +59,10 @@ app.directive("directiveListClaimedChallenges", function () {
         templateUrl: 'views/list-claimed-challenges.html'
     }
 });
+
+app.directive("directiveListChallengesNotLoggedIn", function() {
+    return {
+        restrict: 'C',
+        templateUrl: 'views/list-challenges-not-logged-in.html'
+    }
+});
