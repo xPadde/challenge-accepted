@@ -2,6 +2,10 @@ body {
     background-color: #F0F0F0;
 }
 
+a {
+    cursor: pointer;
+}
+
 .btn-default {
     color: #003366;
     padding: 1em;
