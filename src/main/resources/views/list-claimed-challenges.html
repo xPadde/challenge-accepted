@@ -1,8 +1,6 @@
 <div>
-
-    <h1>Your claimed challenges</h1>
-
-    <div>
+    <div class="table-responsive list">
+        <h1>Your claimed challenges</h1>
         <table class="table table-hover">
             <thead>
             <tr>
@@ -42,12 +40,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="challenge in listOfChallenges | orderBy:orderByField:reverseSort" ng-if="challenge.challengeClaimer.id == loggedInUser.id && !challenge.challengeCompleted">
+            <tr ng-repeat="challenge in listOfChallenges | orderBy:orderByField:reverseSort"
+                ng-if="challenge.challengeClaimer.id == loggedInUser.id && !challenge.challengeCompleted">
                 <td><a href="#" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
                 <td>{{challenge.description}}</td>
                 <td>{{challenge.creationDate}}</td>
                 <td><a href="#" ng-click="upvoteChallenge(challenge)">
-                    <span class="glyphicon glyphicon-thumbs-up" ng-show="!isChallengeUpvotedByUser(challenge)"></span></a></td>
+                    <span class="glyphicon glyphicon-thumbs-up"
+                          ng-show="!isChallengeUpvotedByUser(challenge)"></span></a></td>
                 <td>{{challenge.challengeUpvoters.length}}</td>
             </tr>
             </tbody>
