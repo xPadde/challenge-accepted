@@ -307,6 +307,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             .success(function (response) {
                 console.log("challengeService.confirmUploadedYoutubeUrl() was successfully executed!");
                 $scope.activeChallenge = response;
+                $scope.showListOfChallengesSection();
             })
             .error(function (error) {
                 console.log("challengeService.confirmUploadedYoutubeUrl() ***FAILED*** to execute!");
