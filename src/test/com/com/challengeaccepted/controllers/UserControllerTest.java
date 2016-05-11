@@ -33,7 +33,7 @@ public class UserControllerTest {
 
     @Test
     public void testUpdateUser_Should_Return_Status_Code_200() throws Exception {
-        assertEquals("updateUser() did not respond with http status 200 (ok)", HttpStatus.OK, userController.updateUser(new UserModel()));
+        assertEquals("updateUser() did not respond with http status 200 (ok)", HttpStatus.OK, userController.updateUser(new UserModel()).getStatusCode());
     }
 
     @Test
