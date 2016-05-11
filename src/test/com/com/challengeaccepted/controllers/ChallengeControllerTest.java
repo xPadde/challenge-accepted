@@ -38,6 +38,7 @@ public class ChallengeControllerTest {
         MockitoAnnotations.initMocks(this);
         when(mockedChallengeService.getChallengeFromDatabase(1L)).thenReturn(new ChallengeModel());
         when(mockedUserService.getUserFromDatabase(1L)).thenReturn(new UserModel());
+        when(mockedChallenge.getChallengeClaimer()).thenReturn(new UserModel());
     }
 
     @Test
@@ -80,10 +81,14 @@ public class ChallengeControllerTest {
         assertEquals("addYoutubeUrlToChallenge() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.addYoutubeUrlToChallenge(1L, "YouTubeURL").getStatusCode());
     }
 
-    // TODO Få detta test att gå igenom ( Nullpointer på challengeClaimer.getId() )
     @Test
     public void testAssignPointsToUser_Should_Return_Status_Code_200() throws Exception {
         assertEquals("assignPoinstToUser() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.assignPointsToUser(1L).getStatusCode());
+    }
+
+    @Test
+    public void testDisapproveChallenge_Should_Return_Status_Code_200() throws Exception {
+        assertEquals("disapproveChallenge() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.disapproveChallenge(1L).getStatusCode());
     }
 
     @Test
