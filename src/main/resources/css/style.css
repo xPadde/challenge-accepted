@@ -1,18 +1,51 @@
-.borderless td, .borderless th {
-    border: none !important;
+body {
+    background-color: #F0F0F0;
 }
 
-.btn-success {
-    border-radius: 2px;
+.btn-default {
+    color: #003366;
+    padding: 1em;
+    display: inline-block;
 }
 
-a span .glyphicon {
-    font-size: 3.7em;
-    color: pink;
+.navbar {
+    background-color: #F8F8F8;
+	padding: 0.6em;
 }
 
-.btn-primary {
-    margin-top: 10px;
-    margin-bottom: 10px;
+.navbar-default .navbar-nav .menu-item {
+    font-size: 1.2em;
+    color: #003366;
+    font-weight: bold;
 }
+.navbar-default .navbar-brand {
+    font-size: 1.5em;
+    color: #003366;
+    font-family: Verdana;
+    border: 2px solid #003366;
+    border-radius: 4em;
+    margin-right: 4em;
+}
+
+.navbar-default .navbar-nav .menu-item:hover {
+    font-size: 1.2em;
+	color: #003366;
+	border-bottom: 2px solid #003366;
+	font-weight: bold;
+}
+
+h1 {
+    color: #003366;
+    text-align : center;
+}
+
+form {
+    width: 300px;
+    margin: 0 auto;
+}
+
+#challengeDescriptionTD {
+    word-wrap: break-word!important;
+}
+
 
