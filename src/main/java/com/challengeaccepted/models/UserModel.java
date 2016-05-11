@@ -35,6 +35,9 @@ public class UserModel implements Serializable {
     }
 
     public void addPoints(Long points) {
+        if (this.points == null) {
+            this.points = 0L;
+        }
         this.points += points;
     }
 

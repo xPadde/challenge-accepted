@@ -326,6 +326,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             .success(function (response) {
                 console.log("challengeService.assignPointsToUser() was successfully executed!");
                 $scope.activeChallenge = response;
+                $scope.getListOfUnapprovedChallenges();
             })
             .error(function (error) {
                 console.log("challengeService.assignPointsToUser() ***FAILED*** to execute!");
