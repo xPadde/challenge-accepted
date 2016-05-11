@@ -24,7 +24,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="challenge in listOfUnapprovedChallenges | orderBy:orderByField:reverseSort" ng-if="isChallengeCreatedByLoggedInUser(challenge)" ng-hide="challenge.challengeCompleted">
+        <tr ng-repeat="challenge in listOfUnapprovedChallenges | orderBy:orderByField:reverseSort" ng-if="isLoggedInUserTheChallengeCreator(challenge)" ng-hide="challenge.challengeCompleted">
             <td><a href="#" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
             <td>{{challenge.description}}</td>
             <td>
