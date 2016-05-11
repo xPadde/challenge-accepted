@@ -72,6 +72,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
      */
     $scope.section = "listOfChallengesNotLoggedInSection";
 
+    $scope.showStartPageLists = function () {
+        $scope.section = "listOfChallengesNotLoggedInSection";
+    }
+
     $scope.showListOfChallengesSection = function () {
         $scope.getListOfChallenges();
         $scope.section = "listOfChallengesSection";
