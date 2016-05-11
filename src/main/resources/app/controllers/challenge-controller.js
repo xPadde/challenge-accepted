@@ -328,6 +328,19 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             });
     };
 
+    $scope.disapproveChallenge = function (challenge) {
+
+        challengeService.disapproveCurrentChallenge(challenge.id)
+            .success(function (response) {
+                console.log("Challenge was disapproved! Returned to available challenges");
+                challenge = response;
+                alert("Challenge was disapproved!");
+                $scope.getListOfUnapprovedChallenges();
+            }).error(function (error) {
+                console.log(error);
+        })
+    };
+
 
     /*
      Handles the YouTube URL.
