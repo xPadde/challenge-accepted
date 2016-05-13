@@ -74,7 +74,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     $scope.showStartPageLists = function () {
         $scope.section = "listOfChallengesNotLoggedInSection";
-    }
+    };
 
     $scope.showListOfChallengesSection = function () {
         $scope.getListOfChallenges();
@@ -138,23 +138,31 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.createNewChallenge = function () {
-        $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-        challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), $scope.loggedInUser.id)
-            .success(function () {
-                console.log('challengeService.createNewChallenge() called. New challenge created and saved to the database!');
-                // Update the list of challenges after creation of the new challenge,
-                $scope.getListOfChallenges();
-                // then show the list.
-                $scope.section = "listOfChallengesSection";
-            })
-            .error(function (response) {
-                console.log('challengeService.createNewChallenge() called. ***FAILED*** to create new challenge!');
-                console.log(response);
+        if (!isInputAndTextareaEmpty()) {
+            $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+            challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), $scope.loggedInUser.id)
+                .success(function (response, status) {
+                    if (status == 201) {
+                        console.log('challengeService.createNewChallenge() called. New challenge created and saved to the database!');
+                        // Update the list of challenges after creation of the new challenge,
+                        $scope.getListOfChallenges();
+                        // then show the list.
+                        $scope.section = "listOfChallengesSection";
+                    }
+                })
+                .error(function (response) {
+                    console.log('challengeService.createNewChallenge() called. ***FAILED*** to create new challenge!');
+                    console.log(response);
+                });
+
+            $('#createNewChallengeForm').each(function () {
+                this.reset();
             });
 
-        $('#createNewChallengeForm').each(function () {
-            this.reset();
-        });
+        } else {
+            console.log('challengeService.createNewChallenge() did ***NOT*** create a new challenge. Fields was empty!');
+            alert('challengeService.createNewChallenge() did ***NOT*** create a new challenge. Fields was empty!');
+        }
     };
 
 
@@ -344,7 +352,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                 alert("Challenge was disapproved!");
                 $scope.getListOfUnapprovedChallenges();
             }).error(function (error) {
-                console.log(error);
+            console.log(error);
         })
     };
 
@@ -405,6 +413,15 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             // TODO add field: commentingUser
         })
     };
+
+
+    // Form validation.
+    function isInputAndTextareaEmpty() {
+        return $('input, textarea').filter(function () {
+                return $.trim(this.value).length === 0;
+            }).length > 0;
+    }
+
 
     // Fetch the list of challenges on application start.
     $scope.getListOfChallenges();

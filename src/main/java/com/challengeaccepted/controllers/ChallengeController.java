@@ -26,6 +26,11 @@ public class ChallengeController {
     @CrossOrigin
     @RequestMapping(value = "/challenge/create/challengecreator/{challengeCreatorId}", method = RequestMethod.POST)
     public ResponseEntity createChallenge(@RequestBody ChallengeModel challengeModel, @PathVariable Long challengeCreatorId) {
+
+        if (challengeModel.getTopic().equals("") || challengeModel.getDescription().equals("")) {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+
         UserModel challengeCreator = userService.getUserFromDatabase(challengeCreatorId);
         challengeModel.setChallengeCreator(challengeCreator);
 
