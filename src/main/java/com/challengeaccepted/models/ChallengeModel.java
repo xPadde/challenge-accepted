@@ -25,6 +25,8 @@ public class ChallengeModel implements Serializable {
     private Boolean isYoutubeVideoUploaded;
     private Boolean isYoutubeUrlProvided;
     private Boolean isChallengeCompleted;
+    private Boolean isChallengeDisapproved;
+
     @ManyToMany
     @JoinColumn(name = "challenge_upvoters_id")
     private List<UserModel> challengeUpvoters;
@@ -166,6 +168,14 @@ public class ChallengeModel implements Serializable {
 
     public void setChallengeCompleted(Boolean challengeCompleted) {
         isChallengeCompleted = challengeCompleted;
+    }
+
+    public Boolean getChallengeDisapproved() {
+        return isChallengeDisapproved;
+    }
+
+    public void setChallengeDisapproved(Boolean challengeDisapproved) {
+        isChallengeDisapproved = challengeDisapproved;
     }
 
     public UserModel getChallengeCreator() {
