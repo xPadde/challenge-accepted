@@ -37,6 +37,12 @@
                     <button ng-click="disapproveChallenge(challenge)" class="btn btn-danger">DISAPPROVE</button>
                 </a>
             </td>
+            <td ng-show="challenge.challengeDisapproved">
+                <form class="form-horizontal" role="form">
+                      <textarea rows="2" cols="30" id="disapprove-commentfield" placeholder="Please submit a reason for your disapproval"></textarea>
+                </form>
+                       <button ng-click="submitCommentForDisapproveChallenge(challenge)" class="btn btn-primary">Submit Reason</button>
+            </td>
         </tr>
         </tbody>
     </table>
