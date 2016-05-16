@@ -2,21 +2,23 @@
     <div class="panel panel-default list">
         <div class="panel-heading">
             <h2>{{activeUser.firstName}} {{activeUser.lastName}}
-                <small>{{activeUser.totalChallengePoints}} totalChallengePoints</small>
+                <small>{{activeUser.totalChallengePoints}} points in total</small>
 
             </h2>
 
 
         </div>
         <div class="panel-body">
-            <h4>Challenges created by {{activeUser.firstName}}</h4>
+            <h4>Challenges created by {{activeUser.firstName}} <small> {{activeUser.createdChallengePoints}} points as
+                creator</small></h4>
 
             <div ng-repeat="challenge in listOfChallenges">
                 <p ng-if="challenge.challengeCreator.id == activeUser.id"><a
                         ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></p>
             </div>
             <hr>
-            <h4>Challenges completed by {{activeUser.firstName}}</h4>
+            <h4>Challenges completed by {{activeUser.firstName}} <small>{{activeUser.completedChallengePoints}} points as
+                completer</small></h4>
 
             <div ng-repeat="challenge in listOfCompletedChallenges">
                 <p ng-if="challenge.challengeClaimer.id == activeUser.id"><a
