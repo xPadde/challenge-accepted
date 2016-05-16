@@ -423,9 +423,15 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     // Form validation.
     function isInputAndTextareaEmpty() {
-        return $('input, textarea').filter(function () {
-                return $.trim(this.value).length === 0;
-            }).length > 0;
+        debugger;
+        var isInputAndTextareaEmpty = false;
+        $('input, textarea').each(function (index) {
+            if ($(this).val() === '' || $(this).val() === null) {
+                isInputAndTextareaEmpty = true;
+            }
+        });
+        console.log(isInputAndTextareaEmpty)
+        return isInputAndTextareaEmpty;
     }
 
 
