@@ -9,9 +9,9 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="user in listOfUsers | orderBy:'-points'" ng-if="user.points != null">
+        <tr ng-repeat="user in listOfUsers | orderBy:'-totalChallengePoints'" ng-if="user.totalChallengePoints != null">
             <td><a ng-click="viewUserProfilePage(user)">{{user.firstName}} {{user.lastName}}</a></td>
-            <td>{{user.points}}</td>
+            <td>{{user.totalChallengePoints}}</td>
         </tr>
         </tbody>
     </table>
