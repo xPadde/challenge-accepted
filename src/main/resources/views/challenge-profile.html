@@ -2,9 +2,18 @@
     <div class="panel panel-default list">
         <div class="panel-heading">
             <h2>{{activeChallenge.topic}}</h2>
-            <small>Created {{activeChallenge.creationDate | date }} by<a
-                    ng-click="viewUserProfilePage(activeChallenge.challengeCreator)"> {{
-                activeChallenge.challengeCreator.firstName }}</a></small>
+
+            <p>
+                <small>Created {{activeChallenge.creationDate | date }} by <a
+                        ng-click="viewUserProfilePage(activeChallenge.challengeCreator)">{{
+                    activeChallenge.challengeCreator.firstName }}</a></small>
+            </p>
+
+            <p ng-if="activeChallenge.challengeCompleted == true">
+                <small>Completed by <a ng-click="viewUserProfilePage(activeChallenge.challengeClaimer)">
+                    {{activeChallenge.challengeClaimer.firstName}}</a></small>
+            </p>
+
         </div>
         <div class="panel-body">
             <h4>{{activeChallenge.description}}</h4>

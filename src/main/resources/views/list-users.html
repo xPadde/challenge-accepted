@@ -10,7 +10,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="user in listOfUsers | orderBy:'-points'" ng-if="user.points != null">
-            <td>{{user.firstName}} {{user.lastName}}</td>
+            <td><a ng-click="viewUserProfilePage(user)">{{user.firstName}} {{user.lastName}}</a></td>
             <td>{{user.points}}</td>
         </tr>
         </tbody>

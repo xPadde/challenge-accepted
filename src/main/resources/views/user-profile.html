@@ -1,21 +1,26 @@
 <div class="container">
     <div class="panel panel-default list">
         <div class="panel-heading">
-            <h2>{{activeUser.firstName}} {{activeUser.lastName}}</h2>
+            <h2>{{activeUser.firstName}} {{activeUser.lastName}}
+                <small>{{activeUser.points}} points</small>
+
+            </h2>
+
+
         </div>
         <div class="panel-body">
-            <div>
-                <h3>Points: {{activeUser.points}}</h3>
+            <h4>Challenges created by {{activeUser.firstName}}</h4>
+
+            <div ng-repeat="challenge in listOfChallenges">
+                <p ng-if="challenge.challengeCreator.id == activeUser.id"><a
+                        ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></p>
             </div>
             <hr>
-            <h3>Challenges created by {{activeUser.firstName}}</h3>
-            <div ng-repeat="challenge in listOfChallenges">
-                <p ng-if="challenge.challengeCreator.id == activeUser.id">{{challenge.topic}}</p>
-            </div>
-            <hr>
-            <h3>Challenges completed by {{activeUser.firstName}}</h3>
-            <div ng-repeat="challenge in listOfChallenges">
-                <p ng-if="challenge.challengeClaimer.id == activeUser.id">{{challenge.topic}}</p>
+            <h4>Challenges completed by {{activeUser.firstName}}</h4>
+
+            <div ng-repeat="challenge in listOfCompletedChallenges">
+                <p ng-if="challenge.challengeClaimer.id == activeUser.id"><a
+                        ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></p>
             </div>
             <!--<h2>Number of created challenges</h2>
             <h2>Number of done challenges</h2>
