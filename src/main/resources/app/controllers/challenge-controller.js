@@ -3,6 +3,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     // The variables for sorting the challenge list.
     $scope.orderByField = 'creationDate';
     $scope.reverseSort = true;
+    $scope.dynamicUrl = "www.gp.se";
 
     // Message for prompting the user to login if trying to access features when logged out.
     var alertLoginPrompt = "Log in to use this feature.";
@@ -65,6 +66,8 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         });
     };
 
+    
+    
 
     /*
      Below code handles the toggling of the different sections in index.html.

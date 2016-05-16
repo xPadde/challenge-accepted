@@ -11,6 +11,15 @@
 
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>-->
 
+    <!-- You can use Open Graph tags to customize link previews.
+    Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
+    <meta property="og:url" content="http://localhost:63342/challengeaccepted/index.html"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="Challenge Accepted"/>
+    <meta property="og:description" content="En sida för alla!"/>
+    <meta property="og:image"
+          content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDenZomKunLMHxiCbm76SbVe_uZn2O0u1Fp45nvwplALaaZkldXY2FBg"/>
+
 
     <!--Module-->
     <script src="app/app.js"></script>
@@ -27,7 +36,8 @@
     <script src="app/directives/menu-directive.js"></script>
     <script src="app/directives/user-directive.js"></script>
 
-    <meta name="google-signin-client_id" content="483335808440-pn6cvg2jf3iseqmna3rj4883bhkg5lvo.apps.googleusercontent.com">
+    <meta name="google-signin-client_id"
+          content="483335808440-pn6cvg2jf3iseqmna3rj4883bhkg5lvo.apps.googleusercontent.com">
     <meta charset="UTF-8">
     <title>Challenge Accepted</title>
 </head>
@@ -44,7 +54,8 @@
 
     <section class="directive-list-challenges" ng-show="section == 'listOfChallengesSection'"></section>
 
-    <section class="directive-list-completed-challenges" ng-show="section == 'listOfCompletedChallengesSection'"></section>
+    <section class="directive-list-completed-challenges"
+             ng-show="section == 'listOfCompletedChallengesSection'"></section>
 
     <section class="directive-list-approve-videos" ng-show="section == 'listApproveVideosSection'"></section>
 
@@ -56,8 +67,30 @@
 
     <section class="directive-list-users" ng-show="section == 'listOfUsersSection'"></section>
 
-    <section class="directive-list-challenges-not-logged-in" ng-show="section == 'listOfChallengesNotLoggedInSection'"></section>
+    <section class="directive-list-challenges-not-logged-in"
+             ng-show="section == 'listOfChallengesNotLoggedInSection'"></section>
 
+</div>
+<div class="container" id="fbFooter">
+    <div class="form-group">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <a href="http://www.facebook.com/sharer/sharer.php?u={{ dynamicUrl }}"><img src="img/facebook-logo-light.png"
+                            onmouseover="src='img/facebook-logo-dark.png'"
+                            onmouseout="src='img/facebook-logo-light.png'"
+                            class="socialShare"></a>
+            <a href="http://www.facebook.com/sharer/sharer.php?u={{ dynamicUrl }}"><img src="img/mail-logo-light.png"
+                            onmouseover="src='img/mail-logo-dark.png'"
+                            onmouseout="src='img/mail-logo-light.png'"
+                            class="socialShare"></a>
+            <!--<a href="https://twitter.com/intent/tweet">-->
+            <a href="http://twitter.com/share?url={{ dynamicUrl }}"><img src="img/twitter-logo-light.png"
+                            onmouseover="src='img/twitter-logo-dark.png'"
+                            onmouseout="src='img/twitter-logo-light.png'"
+                            class="socialShare"></a>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
 </div>
 </body>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
