@@ -4,6 +4,8 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     $scope.orderByField = 'creationDate';
     $scope.reverseSort = true;
 
+    console.log("Vi är inne i controllern");
+
     // Message for prompting the user to login if trying to access features when logged out.
     var alertLoginPrompt = "Log in to use this feature.";
 
@@ -118,6 +120,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         $scope.activeChallenge = challenge;
         $scope.disableLikeButton = $scope.isChallengeUpvotedByUser(challenge); // scope variable for using with ng-show.
     };
+
+    $scope.viewUserProfilePage = function () {
+        $scope.section = "userProfilePageSection";
+    }
 
 
     /*

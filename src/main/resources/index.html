@@ -7,6 +7,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="https://code.angularjs.org/1.5.5/angular.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.js"></script>
+
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>-->
 
 
@@ -23,6 +25,7 @@
     <!--Directives-->
     <script src="app/directives/challenge-directive.js"></script>
     <script src="app/directives/menu-directive.js"></script>
+    <script src="app/directives/user-directive.js"></script>
 
     <meta name="google-signin-client_id" content="483335808440-pn6cvg2jf3iseqmna3rj4883bhkg5lvo.apps.googleusercontent.com">
     <meta charset="UTF-8">
@@ -48,6 +51,8 @@
     <section class="directive-list-your-challenges" ng-show="section =='secretListOfChallengesSection'"></section>
 
     <section class="directive-challenge-profile" ng-show="section =='challengeProfilePageSection'"></section>
+
+    <section class="directive-user-profile" ng-show="section == 'userProfilePageSection'"></section>
 
     <section class="directive-list-users" ng-show="section == 'listOfUsersSection'"></section>
 
