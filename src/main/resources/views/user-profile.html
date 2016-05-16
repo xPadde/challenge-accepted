@@ -4,8 +4,19 @@
             <h2>{{activeUser.firstName}} {{activeUser.lastName}}</h2>
         </div>
         <div class="panel-body">
-
-            <h1>Points: {{activeUser.points}}</h1>
+            <div>
+                <h3>Points: {{activeUser.points}}</h3>
+            </div>
+            <hr>
+            <h3>Challenges created by {{activeUser.firstName}}</h3>
+            <div ng-repeat="challenge in listOfChallenges">
+                <p ng-if="challenge.challengeCreator.id == activeUser.id">{{challenge.topic}}</p>
+            </div>
+            <hr>
+            <h3>Challenges completed by {{activeUser.firstName}}</h3>
+            <div ng-repeat="challenge in listOfChallenges">
+                <p ng-if="challenge.challengeClaimer.id == activeUser.id">{{challenge.topic}}</p>
+            </div>
             <!--<h2>Number of created challenges</h2>
             <h2>Number of done challenges</h2>
             <h2>Points for created challenges</h2>
