@@ -121,6 +121,8 @@ public class ChallengeController {
         challengeModel.setChallengeClaimer(null);
         challengeModel.setYoutubeVideoUploaded(false);
         challengeModel.setYoutubeUrlProvided(false);
+        challengeModel.setYoutubeVideoUploaded(true);
+        challengeModel.setChallengeDisapproved(true);
 
         challengeService.updateChallengeInDatabase(challengeModel);
         return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);

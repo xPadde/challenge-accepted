@@ -133,6 +133,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             'youtubeVideoUploaded': false,
             'youtubeVideoCorrect': false,
             'challengeCompleted': false,
+            'challengeDisapproved': false,
             'upvotes': 0
         });
     };
@@ -349,7 +350,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             .success(function (response) {
                 console.log("Challenge was disapproved! Returned to available challenges");
                 challenge = response;
-                alert("Challenge was disapproved!");
+                /*alert("Challenge was disapproved!");*/
                 $scope.getListOfUnapprovedChallenges();
             }).error(function (error) {
             console.log(error);
