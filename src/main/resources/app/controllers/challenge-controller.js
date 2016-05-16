@@ -4,8 +4,6 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     $scope.orderByField = 'creationDate';
     $scope.reverseSort = true;
 
-    console.log("Vi är inne i controllern");
-
     // Message for prompting the user to login if trying to access features when logged out.
     var alertLoginPrompt = "Log in to use this feature.";
 
@@ -121,8 +119,12 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         $scope.disableLikeButton = $scope.isChallengeUpvotedByUser(challenge); // scope variable for using with ng-show.
     };
 
-    $scope.viewUserProfilePage = function () {
+    $scope.viewUserProfilePage = function (user) {
+        console.log(user);
+        $scope.activeUser = user;
         $scope.section = "userProfilePageSection";
+
+
     }
 
 
@@ -144,7 +146,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.createNewChallenge = function () {
-        if (!isInputAndTextareaEmpty()) {
+        /*if (!isInputAndTextareaEmpty()) {*/
             $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
             challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), $scope.loggedInUser.id)
                 .success(function (response, status) {
@@ -165,10 +167,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                 this.reset();
             });
 
-        } else {
+        /*} else {
             console.log('challengeService.createNewChallenge() did ***NOT*** create a new challenge. Fields was empty!');
             alert('challengeService.createNewChallenge() did ***NOT*** create a new challenge. Fields was empty!');
-        }
+        }*/
     };
 
 

@@ -2,8 +2,8 @@
     <div class="panel panel-default list">
         <div class="panel-heading">
             <h2>{{activeChallenge.topic}}</h2>
-            <small>Created {{activeChallenge.creationDate | date }} by<!--<a href="#">--> {{
-                activeChallenge.challengeCreator.firstName }} <!--</a>--></small>
+            <small>Created {{activeChallenge.creationDate | date }} by<a ng-click="viewUserProfilePage(activeChallenge.challengeCreator)"> {{
+                activeChallenge.challengeCreator.firstName }}</a></small>
         </div>
         <div class="panel-body">
             <h4>{{activeChallenge.description}}</h4>
