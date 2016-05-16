@@ -145,31 +145,31 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.createNewChallenge = function () {
-        /*if (!isInputAndTextareaEmpty()) {*/
-        $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-        challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), $scope.loggedInUser.id)
-            .success(function (response, status) {
-                if (status == 201) {
-                    console.log('challengeService.createNewChallenge() called. New challenge created and saved to the database!');
-                    // Update the list of challenges after creation of the new challenge,
-                    $scope.getListOfChallenges();
-                    // then show the list.
-                    $scope.section = "listOfChallengesSection";
-                }
-            })
-            .error(function (response) {
-                console.log('challengeService.createNewChallenge() called. ***FAILED*** to create new challenge!');
-                console.log(response);
+        if (!isInputAndTextareaEmpty()) {
+            $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+            challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), $scope.loggedInUser.id)
+                .success(function (response, status) {
+                    if (status == 201) {
+                        console.log('challengeService.createNewChallenge() called. New challenge created and saved to the database!');
+                        // Update the list of challenges after creation of the new challenge,
+                        $scope.getListOfChallenges();
+                        // then show the list.
+                        $scope.section = "listOfChallengesSection";
+                    }
+                })
+                .error(function (response) {
+                    console.log('challengeService.createNewChallenge() called. ***FAILED*** to create new challenge!');
+                    console.log(response);
+                });
+
+            $('#createNewChallengeForm').each(function () {
+                this.reset();
             });
 
-        $('#createNewChallengeForm').each(function () {
-            this.reset();
-        });
-
-        /*} else {
-         console.log('challengeService.createNewChallenge() did ***NOT*** create a new challenge. Fields was empty!');
-         alert('challengeService.createNewChallenge() did ***NOT*** create a new challenge. Fields was empty!');
-         }*/
+        } else {
+            console.log('challengeService.createNewChallenge() did ***NOT*** create a new challenge. Fields was empty!');
+            alert('challengeService.createNewChallenge() did ***NOT*** create a new challenge. Fields was empty!');
+        }
     };
 
 
@@ -429,12 +429,13 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     // Form validation.
     function isInputAndTextareaEmpty() {
         var isInputAndTextareaEmpty = false;
-        $('input, textarea').each(function (index) {
-            if ($(this).val() === '' || $(this).val() === null) {
-                isInputAndTextareaEmpty = true;
-            }
-        });
-        console.log(isInputAndTextareaEmpty)
+
+        if ($('textarea').val() === "") {
+            isInputAndTextareaEmpty = true;
+        } else if ($('input').val() === "") {
+            isInputAndTextareaEmpty = true;
+        }
+
         return isInputAndTextareaEmpty;
     }
 
