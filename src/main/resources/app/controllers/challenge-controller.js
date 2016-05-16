@@ -119,6 +119,14 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         $scope.disableLikeButton = $scope.isChallengeUpvotedByUser(challenge); // scope variable for using with ng-show.
     };
 
+    $scope.viewUserProfilePage = function (user) {
+        console.log(user);
+        $scope.activeUser = user;
+        $scope.section = "userProfilePageSection";
+
+
+    }
+
 
     /*
      Below code handles the creation of the new challenges.
@@ -139,7 +147,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.createNewChallenge = function () {
-        if (!isInputAndTextareaEmpty()) {
+        /*if (!isInputAndTextareaEmpty()) {*/
             $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
             challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), $scope.loggedInUser.id)
                 .success(function (response, status) {
@@ -160,10 +168,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                 this.reset();
             });
 
-        } else {
+        /*} else {
             console.log('challengeService.createNewChallenge() did ***NOT*** create a new challenge. Fields was empty!');
             alert('challengeService.createNewChallenge() did ***NOT*** create a new challenge. Fields was empty!');
-        }
+        }*/
     };
 
 
@@ -418,9 +426,14 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     // Form validation.
     function isInputAndTextareaEmpty() {
-        return $('input, textarea').filter(function () {
-                return $.trim(this.value).length === 0;
-            }).length > 0;
+        var isInputAndTextareaEmpty = false;
+        $('input, textarea').each(function (index) {
+            if ($(this).val() === '' || $(this).val() === null) {
+                isInputAndTextareaEmpty = true;
+            }
+        });
+        console.log(isInputAndTextareaEmpty)
+        return isInputAndTextareaEmpty;
     }
 
 

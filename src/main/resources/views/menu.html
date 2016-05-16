@@ -35,7 +35,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <div ng-show="loggedInUser == null" class="g-signin2" data-onsuccess="onSignIn"></div>
                 <div ng-hide="loggedInUser == null">
-                    <p id="name-of-logged-in-user">{{loggedInUser.firstName}} {{loggedInUser.lastName}}</p>
+                    <p id="name-of-logged-in-user"><a href="#" ng-click="viewUserProfilePage(loggedInUser)">{{loggedInUser.firstName}} {{loggedInUser.lastName}}</a></p>
                     <a href="#" ng-click="signOut()">Sign out</a>
                 </div>
             </ul>
