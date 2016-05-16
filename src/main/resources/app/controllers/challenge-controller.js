@@ -311,22 +311,24 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     // The user confirm the YouTube url of the performance is correct.
     $scope.confirmYoutubeVideoToCurrentChallenge = function (challenge) {
-        // Reset form after confirmation of YouTube URL.
-        $('#uploadYoutubeVideoForm').each(function () {
-            this.reset();
-        });
-
-        challengeService.confirmUploadedYoutubeUrl(challenge.id)
-            .success(function (response) {
-                console.log("challengeService.confirmUploadedYoutubeUrl() was successfully executed!");
-                $scope.activeChallenge = response;
-                $scope.showListOfChallengesSection();
-            })
-            .error(function (error) {
-                console.log("challengeService.confirmUploadedYoutubeUrl() ***FAILED*** to execute!");
-                console.log(error);
+        if (confirm("This will confirm your video for review. Are you sure you want to upload this video?")) {
+            // Reset form after confirmation of YouTube URL.
+            $('#uploadYoutubeVideoForm').each(function () {
+                this.reset();
             });
-        alert("Thank you. The video was sent to the challenge requester and is now pending, waiting for confirmation.");
+
+            challengeService.confirmUploadedYoutubeUrl(challenge.id)
+                .success(function (response) {
+                    console.log("challengeService.confirmUploadedYoutubeUrl() was successfully executed!");
+                    $scope.activeChallenge = response;
+                    $scope.showListOfChallengesSection();
+                })
+                .error(function (error) {
+                    console.log("challengeService.confirmUploadedYoutubeUrl() ***FAILED*** to execute!");
+                    console.log(error);
+                });
+            alert("Thank you. The video was sent to the challenge requester and is now pending, waiting for confirmation.");
+        }
     };
 
     // The challenge requester confirm the challenge is performed satisfactory.

@@ -20,7 +20,7 @@
                 </div>
             </div>
 
-            <div ng-hide="activeChallenge.challengeCompleted">
+            <div ng-hide="activeChallenge.challengeCompleted || activeChallenge.youtubeVideoUploaded">
                 <form class="form-horizontal" role="form" ng-show="activeChallenge.challengeClaimed"
                       id="uploadYoutubeVideoForm">
                     <div class="form-group">
@@ -38,7 +38,8 @@
                         </div>
                         <div class="col-sm-1">
                             <button class="btn btn-default"
-                                    ng-click="confirmYoutubeVideoToCurrentChallenge(activeChallenge)">Confirm This Video
+                                    ng-click="confirmYoutubeVideoToCurrentChallenge(activeChallenge)"
+                                    ng-show="activeChallenge.youtubeUrlProvided">Confirm This Video
                             </button>
                         </div>
                     </div>
@@ -48,7 +49,7 @@
                 <iframe id="youtubeFrame" width="510" height="350"
                         allowfullscreen="true"
                         ng-src="{{ markUrlAsTrusted(activeChallenge.youtubeURL) }}"
-                        ng-show="activeChallenge.youtubeUrlProvided || activeChallenge.challengeCompleted">
+                        ng-show="activeChallenge.youtubeUrlProvided || activeChallenge.challengeCompleted || activeChallenge.youtubeVideoUploaded">
                 </iframe>
             <p>
         </div>
