@@ -132,10 +132,15 @@ public class ChallengeController {
     @RequestMapping(value = "/challenge/{id}/confirmuploadedyoutubeurl/", method = RequestMethod.PUT)
     public ResponseEntity<ChallengeModel> confirmUploadedYoutubeUrl(@PathVariable Long id) {
         ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(id);
-        challengeModel.setYoutubeVideoUploaded(true);
-        challengeModel.setYoutubeUrlProvided(false);
-        challengeService.updateChallengeInDatabase(challengeModel);
-        return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
+        if (challengeModel.getYoutubeVideoUploaded() == false) {
+            challengeModel.setYoutubeVideoUploaded(true);
+            challengeModel.setYoutubeUrlProvided(false);
+            challengeService.updateChallengeInDatabase(challengeModel);
+            return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
+        } else {
+            // TODO lägga logger här.
+            return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @CrossOrigin
