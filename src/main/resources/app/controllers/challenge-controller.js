@@ -318,10 +318,12 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             });
 
             challengeService.confirmUploadedYoutubeUrl(challenge.id)
-                .success(function (response) {
-                    console.log("challengeService.confirmUploadedYoutubeUrl() was successfully executed!");
-                    $scope.activeChallenge = response;
-                    $scope.showListOfChallengesSection();
+                .success(function (response, status) {
+                    if (status == 200) {
+                        console.log("challengeService.confirmUploadedYoutubeUrl() was successfully executed!");
+                        $scope.activeChallenge = response;
+                        $scope.showListOfChallengesSection();
+                    }
                 })
                 .error(function (error) {
                     console.log("challengeService.confirmUploadedYoutubeUrl() ***FAILED*** to execute!");

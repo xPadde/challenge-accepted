@@ -136,8 +136,7 @@ public class ChallengeController {
             challengeService.updateChallengeInDatabase(challengeModel);
             return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
         } else {
-            // TODO Log error handling, trying to upload to an already uploaded challenge (INTE BAD REQUEST?)
-            // lägga till logger?
+            // TODO lägga logger här.
             return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.BAD_REQUEST);
         }
     }
