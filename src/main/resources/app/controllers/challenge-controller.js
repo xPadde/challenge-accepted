@@ -4,8 +4,18 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     $scope.orderByField = 'creationDate';
     $scope.reverseSort = true;
 
-    // Message for prompting the user to login if trying to access features when logged out.
-    var alertLoginPrompt = "Log in to use this feature.";
+    // Messages for the alert-popup.
+
+    var alertPopupMsgLogin = 'Login to use this feature!';
+    var alertPopupMsgInvalidYoutubeUrl = 'Please provide a valid YouTube Url';
+    var alertPopupMsgVideoSent = 'The video is sent to the challenge requester and is now pending, waiting for confirmation.';
+
+    var showAlertPopup = function(msg) {
+        $.alert({
+            title: 'Alert',
+            content: msg
+        });
+    };
 
 
     /*
@@ -109,7 +119,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         if (sessionStorage.getItem("isLoggedIn") == 'true') {
             $scope.section = "createNewChallengeSection";
         } else {
-            alert(alertLoginPrompt);
+            showAlertPopup(alertPopupMsgLogin);
         }
     };
 
@@ -245,7 +255,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                     console.log(error);
                 });
         } else {
-            alert(alertLoginPrompt);
+            showAlertPopup(alertPopupMsgLogin);
         }
     };
 
@@ -296,7 +306,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                     console.log(error);
                 });
         } else {
-            alert(alertLoginPrompt);
+            showAlertPopup(alertPopupMsgLogin);
         }
     };
 
@@ -338,7 +348,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                     console.log("challengeService.confirmUploadedYoutubeUrl() ***FAILED*** to execute!");
                     console.log(error);
                 });
-            alert("Thank you. The video was sent to the challenge requester and is now pending, waiting for confirmation.");
+            showAlertPopup(alertPopupMsgVideoSent);
         }
     };
 
@@ -388,8 +398,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             var youTubeVideoId = url.substr(32);
             var finalUrl = baseUrl + youTubeVideoId;
         } else {
-            alert("Please provide a valid YouTube URL");
-            return "";
+            showAlertPopup(alertPopupMsgInvalidYoutubeUrl);
         }
         return finalUrl;
     };
