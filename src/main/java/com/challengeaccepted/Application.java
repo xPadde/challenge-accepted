@@ -1,11 +1,10 @@
 package com.challengeaccepted;
 
+import org.apache.juli.FileHandler;
+import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * Created by Stridsberg on 2016-04-27.
- */
 @SpringBootApplication
 public class Application {
 
