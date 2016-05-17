@@ -1,4 +1,4 @@
-app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeService', 'userService', 'angulike', function ($scope, $http, $sce, challengeService, userService) {
+app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeService', 'userService', function ($scope, $http, $sce, challengeService, userService) {
 
     // The variables for sorting the challenge list.
     $scope.orderByField = 'creationDate';
