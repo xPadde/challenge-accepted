@@ -1,18 +1,40 @@
-
-<div class="table-responsive list">
-    <h1>Top Challengers</h1>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Points</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="user in listOfUsers | orderBy:'-totalChallengePoints'" ng-if="user.totalChallengePoints != null">
-            <td><a ng-click="viewUserProfilePage(user)">{{user.firstName}} {{user.lastName}}</a></td>
-            <td>{{user.totalChallengePoints}}</td>
-        </tr>
-        </tbody>
-    </table>
+<div class="col-sm-6">
+    <div class="table-responsive list">
+        <h1>Top challenge creators</h1>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Points</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in listOfUsers | orderBy:'-createdChallengePoints'"
+                ng-if="user.createdChallengePoints != null">
+                <td><a ng-click="viewUserProfilePage(user)">{{user.firstName}} {{user.lastName}}</a></td>
+                <td>{{user.createdChallengePoints}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="col-sm-6">
+    <div class="table-responsive list">
+        <h1>Top challenge performers</h1>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Points</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in listOfUsers | orderBy:'-completedChallengePoints'"
+                ng-if="user.completedChallengePoints != null">
+                <td><a ng-click="viewUserProfilePage(user)">{{user.firstName}} {{user.lastName}}</a></td>
+                <td>{{user.completedChallengePoints}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

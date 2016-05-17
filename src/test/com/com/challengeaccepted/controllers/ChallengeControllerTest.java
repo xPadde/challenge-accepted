@@ -98,7 +98,7 @@ public class ChallengeControllerTest {
 
     @Test
     public void testAddUserToChallengeUpvoters_Should_Return_Status_Code_200() throws Exception {
-        assertEquals("addUserToChallengeUpvoters() did not throw NullPointerException", HttpStatus.OK, challengeController.addUserToChallengeUpvoters(1L, new UserModel()).getStatusCode());
+        assertEquals("addUserToChallengeUpvoters() did not throw NullPointerException", HttpStatus.OK, challengeController.addOrRemoveUserToChallengeUpvoters(1L, new UserModel()).getStatusCode());
     }
 
     @Test

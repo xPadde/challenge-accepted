@@ -1,4 +1,4 @@
-app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeService', 'userService', 'angulike', function ($scope, $http, $sce, challengeService, userService) {
+app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeService', 'userService', function ($scope, $http, $sce, challengeService, userService) {
 
     // The variables for sorting the challenge list.
     $scope.orderByField = 'creationDate';
@@ -157,7 +157,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.createNewChallenge = function () {
-        if (!isInputAndTextareaEmpty()) {
+        /*if (!isInputAndTextareaEmpty()) {*/
             $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
             challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), $scope.loggedInUser.id)
                 .success(function (response, status) {
@@ -178,10 +178,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                 this.reset();
             });
 
-        } else {
+        /*} else {
             console.log('challengeService.createNewChallenge() did ***NOT*** create a new challenge. Fields was empty!');
             alert('challengeService.createNewChallenge() did ***NOT*** create a new challenge. Fields was empty!');
-        }
+        }*/
     };
 
 
@@ -244,7 +244,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
      */
     $scope.upvoteChallenge = function (challenge) {
         if (sessionStorage.getItem("isLoggedIn") == 'true') {
-            challengeService.addUserToChallengeUpvoters(sessionStorage.getItem('loggedInUser'), challenge.id)
+            challengeService.addOrRemoveUserToChallengeUpvoters(sessionStorage.getItem('loggedInUser'), challenge.id)
                 .success(function () {
                     console.log("challengeService.addUserToChallengeUpvoters() was successfully executed!");
                     // Update the list of challenges after creation of the new challenge,
@@ -439,7 +439,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
 
     // Form validation.
-    function isInputAndTextareaEmpty() {
+    /*function isInputAndTextareaEmpty() {
         var isInputAndTextareaEmpty = false;
 
         if ($('textarea').val() === "") {
@@ -449,7 +449,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         }
 
         return isInputAndTextareaEmpty;
-    }
+    }*/
 
     // Fetch the list of challenges on application start.
     $scope.getListOfChallenges();

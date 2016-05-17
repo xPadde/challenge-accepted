@@ -66,3 +66,10 @@ app.directive("directiveListChallengesNotLoggedIn", function() {
         templateUrl: 'views/list-challenges-not-logged-in.html'
     }
 });
+
+app.directive("directiveSearchChallenges", function() {
+    return {
+        restrict: 'C',
+        templateUrl: 'views/search-challenge-directive.html'
+    }
+});

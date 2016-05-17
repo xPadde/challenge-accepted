@@ -53,6 +53,17 @@ h1 {
     padding: 1em;
 }
 
+.social-share {
+    width: 3em;
+    height: 3em;
+    padding: 5px;
+}
+
+.thumb {
+    width: 1.5em;
+    height: 1.5em;
+}
+
 /*ID*/
 
 #name-of-logged-in-user {
@@ -60,9 +71,9 @@ h1 {
     color: #003366;
 }
 
-/*social styling*/
-.socialShare {
-    width: 3em;
-    height: 3em;
-    padding: 5px;
+#button-reset {
+    background-color: #F0F0F0;
+    border: 0;
+    height: 34px;
+    padding: 0;
 }

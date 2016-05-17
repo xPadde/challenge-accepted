@@ -57,9 +57,9 @@ app.factory('challengeService', function ($http) {
             })
         },
 
-        addUserToChallengeUpvoters: function (data, id) {
+        addOrRemoveUserToChallengeUpvoters: function (data, id) {
             return $http({
-                url: 'http://localhost:8080/api/challenge/' + id + '/',
+                url: 'http://localhost:8080/api/challenge/' + id + '/addorremoveusertochallengeupvoters/',
                 method: 'PUT',
                 data: data,
                 header: {'Content-Type': 'application/json'}
