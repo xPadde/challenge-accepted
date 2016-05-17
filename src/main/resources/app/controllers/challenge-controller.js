@@ -17,7 +17,6 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         });
     };
 
-
     /*
      Handles the user login.
      */
@@ -328,9 +327,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             });
     };
 
-    // The user confirm the YouTube url of the performance is correct.
     $scope.confirmYoutubeVideoToCurrentChallenge = function (challenge) {
-        if (confirm("This will confirm your video for review. Are you sure you want to upload this video?")) {
             // Reset form after confirmation of YouTube URL.
             $('#uploadYoutubeVideoForm').each(function () {
                 this.reset();
@@ -349,7 +346,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                     console.log(error);
                 });
             showAlertPopup(alertPopupMsgVideoSent);
-        }
+
     };
 
     // The challenge requester confirm the challenge is performed satisfactory.
