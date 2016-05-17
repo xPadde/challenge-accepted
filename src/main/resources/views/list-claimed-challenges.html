@@ -1,3 +1,4 @@
+<div class="directive-search-challenges"></div>
 <div>
     <div class="table-responsive list">
         <h1>Your claimed challenges</h1>
@@ -40,7 +41,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="challenge in listOfChallenges | orderBy:orderByField:reverseSort"
+            <tr ng-repeat="challenge in listOfChallenges | filter:searchChallenges | orderBy:orderByField:reverseSort"
                 ng-if="challenge.challengeClaimer.id == loggedInUser.id && !challenge.challengeCompleted">
                 <td><a href="#" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
                 <td>{{challenge.description}}</td>

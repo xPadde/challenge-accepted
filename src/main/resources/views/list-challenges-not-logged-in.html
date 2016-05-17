@@ -1,3 +1,4 @@
+<div class="directive-search-challenges"></div>
 <div class="col-sm-6 ">
     <div class="table-responsive list">
         <h1>All available challenges</h1>
@@ -40,7 +41,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="challenge in listOfChallenges | orderBy:orderByField:reverseSort"
+            <tr ng-repeat="challenge in listOfChallenges | filter:searchChallenges | orderBy:orderByField:reverseSort"
                 ng-hide="challenge.challengeClaimed">
                 <td><a href="#" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
                 <td>{{challenge.description}}</td>
@@ -97,7 +98,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="challenge in listOfCompletedChallenges | orderBy:orderByField:reverseSort">
+            <tr ng-repeat="challenge in listOfCompletedChallenges | filter:searchChallenges | orderBy:orderByField:reverseSort">
                 <td><a href="#" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
                 <td>{{challenge.description}}</td>
                 <td>{{challenge.creationDate}}</td>

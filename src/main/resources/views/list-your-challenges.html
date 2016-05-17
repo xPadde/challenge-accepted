@@ -1,3 +1,4 @@
+<div class="directive-search-challenges"></div>
 <h1>Your current challenges</h1>
 
 <div>
@@ -10,7 +11,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="challenge in listOfChallenges">
+        <tr ng-repeat="challenge in listOfChallenges | filter:searchChallenges">
             <td>{{challenge.topic}}</td>
             <td>{{challenge.description}}</td>
             <td>{{challenge.creationDate}}</td>
