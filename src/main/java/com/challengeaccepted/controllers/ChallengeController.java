@@ -148,13 +148,20 @@ public class ChallengeController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/challenge/{id}/", method = RequestMethod.PUT)
-    public ResponseEntity addUserToChallengeUpvoters(@PathVariable Long id, @RequestBody UserModel loggedInUser) {
-
+    @RequestMapping(value = "/challenge/{id}/addorremoveusertochallengeupvoters/", method = RequestMethod.PUT)
+    public ResponseEntity addOrRemoveUserToChallengeUpvoters(@PathVariable Long id, @RequestBody UserModel loggedInUser) {
+        UserModel user = userService.getUserFromDatabase(loggedInUser.getId());
         ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
-        challenge.addUpvote(1l);
 
-        challenge.addUserModelToChallengeUpvoters(loggedInUser);
+        if (challenge.getChallengeUpvoters().contains(user.getId())) {
+            challenge.removeUserModelFromChallengeUpvoters(user);
+            challenge.removeUpvote();
+        } else {
+
+            challenge.addUpvote();
+            challenge.addUserModelToChallengeUpvoters(user);
+        }
+
         challengeService.updateChallengeInDatabase(challenge);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -173,5 +180,4 @@ public class ChallengeController {
 /*        challengeService.updateChallengeInDatabase(challengeModel);*/
         return new ResponseEntity(HttpStatus.CREATED);
     }
-
 }

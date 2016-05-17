@@ -244,7 +244,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
      */
     $scope.upvoteChallenge = function (challenge) {
         if (sessionStorage.getItem("isLoggedIn") == 'true') {
-            challengeService.addUserToChallengeUpvoters(sessionStorage.getItem('loggedInUser'), challenge.id)
+            challengeService.addOrRemoveUserToChallengeUpvoters(sessionStorage.getItem('loggedInUser'), challenge.id)
                 .success(function () {
                     console.log("challengeService.addUserToChallengeUpvoters() was successfully executed!");
                     // Update the list of challenges after creation of the new challenge,

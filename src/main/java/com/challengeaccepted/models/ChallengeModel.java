@@ -49,7 +49,9 @@ public class ChallengeModel implements Serializable {
         challengeUpvoters.add(userModel);
     }
 
-
+    public void removeUserModelFromChallengeUpvoters(UserModel userModel) {
+        challengeUpvoters.remove(userModel);
+    }
 
     public List<Long> getChallengeUpvoters() {
         List<Long> listOfChallengeUpvotersId = new ArrayList<Long>();
@@ -131,11 +133,15 @@ public class ChallengeModel implements Serializable {
         this.upvotes = upvotes;
     }
 
-    public void addUpvote(Long l) {
+    public void addUpvote() {
         if(this.upvotes == null){
             this.upvotes = 0L;
         }
         this.upvotes += 1L;
+    }
+
+    public void removeUpvote() {
+        this.upvotes -= 1L;
     }
 
     public Boolean getChallengeClaimed() {
