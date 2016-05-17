@@ -1,4 +1,4 @@
-
+<div class="directive-search-challenges"></div>
 <div class="table-responsive list">
     <h1>All completed challenges</h1>
     <table class="table table-hover">
@@ -40,7 +40,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="challenge in listOfCompletedChallenges | orderBy:orderByField:reverseSort">
+        <tr ng-repeat="challenge in listOfCompletedChallenges | filter:searchChallenges | orderBy:orderByField:reverseSort">
             <td><a href="#" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
             <td>{{challenge.description}}</td>
             <td>{{challenge.creationDate}}</td>
