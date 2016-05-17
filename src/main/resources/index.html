@@ -3,22 +3,25 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <!--jQuery and Angular-->
+
+    <!--jQuery, Angular and Bootstrap Basic Scripts-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="https://code.angularjs.org/1.5.5/angular.js"></script>
+    <!--Change to this script when deployed.-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <!--Angular Route-->
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.js"></script>
 
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>-->
-
-
-    <!-- jQuery-Confirm Plugin -->
+    <!--jQuery-Confirm Plugin-->
     <script src="js/jquery-confirm.min.js"></script>
     <link rel="stylesheet" href="js/jquery-confirm.min.css">
 
     <!--jQuery Validation Plugin-->
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/additional-methods.min.js"></script>
+    <script src="js/angular-validate.min.js"></script>
 
     <!--Module-->
     <script src="app/app.js"></script>
@@ -44,7 +47,6 @@
 
 <section class="directive-menu"></section>
 
-
 <div class="container">
 
     <section class="directive-list-claimed-challenges" ng-show="section == 'listOfClaimedChallengesSection'"></section>
@@ -53,8 +55,7 @@
 
     <section class="directive-list-challenges" ng-show="section == 'listOfChallengesSection'"></section>
 
-    <section class="directive-list-completed-challenges"
-             ng-show="section == 'listOfCompletedChallengesSection'"></section>
+    <section class="directive-list-completed-challenges" ng-show="section == 'listOfCompletedChallengesSection'"></section>
 
     <section class="directive-list-approve-videos" ng-show="section == 'listApproveVideosSection'"></section>
 
@@ -66,8 +67,7 @@
 
     <section class="directive-list-users" ng-show="section == 'listOfUsersSection'"></section>
 
-    <section class="directive-list-challenges-not-logged-in"
-             ng-show="section == 'listOfChallengesNotLoggedInSection'"></section>
+    <section class="directive-list-challenges-not-logged-in" ng-show="section == 'listOfChallengesNotLoggedInSection'"></section>
 
 </div>
 <div id="fb-footer">

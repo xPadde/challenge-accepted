@@ -1,5 +1,6 @@
-var app = angular.module('ChallengeAccepted', ['ngRoute']);
+var app = angular.module('ChallengeAccepted', ['ngValidate']);
 
+// Requires 'ngRoute' dependency.
 /*
 app.config(function ($routeProvider){
 
@@ -7,4 +8,5 @@ app.config(function ($routeProvider){
         templateUrl: 'index.html',
         controller: 'ChallengeController'
     })
-});*/
+});
+*/

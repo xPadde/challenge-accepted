@@ -6,12 +6,11 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     $scope.dynamicUrl = "www.youtube.com/watch?v=elN_CPsJ27M";
 
     // Messages for the alert-popup.
-
     var alertPopupMsgLogin = 'Login to use this feature!';
     var alertPopupMsgInvalidYoutubeUrl = 'Please provide a valid YouTube Url';
     var alertPopupMsgConfirmVideo = 'Once you click confirm in the next step, the video will be sent to the challenge-creator. Be sure it is the right one!';
 
-    var showAlertPopup = function(msg) {
+    var showAlertPopup = function (msg) {
         $.alert({
             title: 'Alert',
             content: msg
@@ -19,7 +18,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     /*
-     Handles the user login.
+     Below Code handles the user login.
      */
     $scope.getUserInfo = function (profile) {
         return JSON.stringify({
@@ -75,8 +74,6 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         });
     };
 
-    
-    
 
     /*
      Below code handles the toggling of the different sections in index.html.
@@ -156,8 +153,9 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         });
     };
 
-    $scope.createNewChallenge = function () {
-        /*if (!isInputAndTextareaEmpty()) {*/
+    $scope.createNewChallenge = function (form) {
+        console.log(form.validate());
+        if (form.validate()) {
             $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
             challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), $scope.loggedInUser.id)
                 .success(function (response, status) {
@@ -167,6 +165,8 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                         $scope.getListOfChallenges();
                         // then show the list.
                         $scope.section = "listOfChallengesSection";
+                    } else {
+                        console.log('challengeService.createNewChallenge() called. Challenge ***NOT*** created. Fields was empty!');
                     }
                 })
                 .error(function (response) {
@@ -177,11 +177,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             $('#form-create-new-challenge').each(function () {
                 this.reset();
             });
-
-        /*} else {
-            console.log('challengeService.createNewChallenge() did ***NOT*** create a new challenge. Fields was empty!');
-            alert('challengeService.createNewChallenge() did ***NOT*** create a new challenge. Fields was empty!');
-        }*/
+        }
     };
 
 
@@ -333,24 +329,24 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     $scope.confirmYoutubeVideoToCurrentChallenge = function (challenge) {
         // TODO should we have a confirmation-popup or not?
-            // Reset form after confirmation of YouTube URL.
-            $('#uploadYoutubeVideoForm').each(function () {
-                this.reset();
-            });
+        // Reset form after confirmation of YouTube URL.
+        $('#uploadYoutubeVideoForm').each(function () {
+            this.reset();
+        });
 
-            challengeService.confirmUploadedYoutubeUrl(challenge.id)
-                .success(function (response, status) {
-                    if (status == 200) {
-                        console.log("challengeService.confirmUploadedYoutubeUrl() was successfully executed!");
-                        $scope.activeChallenge = response;
-                        $scope.showListOfChallengesSection();
-                    }
-                })
-                .error(function (error) {
-                    console.log("challengeService.confirmUploadedYoutubeUrl() ***FAILED*** to execute!");
-                    console.log(error);
-                });
-            showAlertPopup('The video is sent to ' + challenge.challengeCreator.firstName + ' ' + challenge.challengeCreator.lastName + ' and is now pending, waiting for confirmation.');
+        challengeService.confirmUploadedYoutubeUrl(challenge.id)
+            .success(function (response, status) {
+                if (status == 200) {
+                    console.log("challengeService.confirmUploadedYoutubeUrl() was successfully executed!");
+                    $scope.activeChallenge = response;
+                    $scope.showListOfChallengesSection();
+                }
+            })
+            .error(function (error) {
+                console.log("challengeService.confirmUploadedYoutubeUrl() ***FAILED*** to execute!");
+                console.log(error);
+            });
+        showAlertPopup('The video is sent to ' + challenge.challengeCreator.firstName + ' ' + challenge.challengeCreator.lastName + ' and is now pending, waiting for confirmation.');
 
     };
 
@@ -439,18 +435,30 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
 
-    // Form validation.
-    /*function isInputAndTextareaEmpty() {
-        var isInputAndTextareaEmpty = false;
-
-        if ($('textarea').val() === "") {
-            isInputAndTextareaEmpty = true;
-        } else if ($('input').val() === "") {
-            isInputAndTextareaEmpty = true;
+    //Form Validation Options.
+    $scope.validationOptions = {
+        rules: {
+            inputTopic: {
+                required: true,
+                minlength: 5
+            },
+            inputDescription: {
+                required: true,
+                minlength: 15
+            }
+        },
+        messages: {
+            inputTopic: {
+                required: "You must enter a topic",
+                minlength: "Your topic must have a minimum length of 5 characters"
+            },
+            inputDescription: {
+                required: "You must enter a description",
+                minlength: "Your description must have a minimum length of 15 characters"
+            }
         }
+    };
 
-        return isInputAndTextareaEmpty;
-    }*/
 
     // Fetch the list of challenges on application start.
     $scope.getListOfChallenges();
