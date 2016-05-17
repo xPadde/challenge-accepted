@@ -8,7 +8,6 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
     var alertPopupMsgLogin = 'Login to use this feature!';
     var alertPopupMsgInvalidYoutubeUrl = 'Please provide a valid YouTube Url';
-    var alertPopupMsgVideoSent = 'The video is sent to the challenge requester and is now pending, waiting for confirmation.';
     var alertPopupMsgConfirmVideo = 'Once you click confirm in the next step, the video will be sent to the challenge-creator. Be sure it is the right one!';
 
     var showAlertPopup = function(msg) {
@@ -315,7 +314,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         var userProvidedUrl = $('#input-youtube-url').val();
         var convertedYoutubeUrl = convertToYouTubeEmbedUrl(userProvidedUrl);
 
-        showAlertPopup(alertPopupMsgConfirmVideo);
+        showAlertPopup('Once you click confirm in the next step, the video will be sent to ' + challenge.challengeCreator.firstName + ' ' + challenge.challengeCreator.lastName + '. Be sure it is the right one!');
 
         challengeService.addYoutubeUrlToChallenge(challenge.id, convertedYoutubeUrl)
             .success(function (response) {
@@ -347,7 +346,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                     console.log("challengeService.confirmUploadedYoutubeUrl() ***FAILED*** to execute!");
                     console.log(error);
                 });
-            showAlertPopup(alertPopupMsgVideoSent);
+            showAlertPopup('The video is sent to ' + challenge.challengeCreator.firstName + ' ' + challenge.challengeCreator.lastName + ' and is now pending, waiting for confirmation.');
 
     };
 
