@@ -133,7 +133,7 @@ public class ChallengeModel implements Serializable {
         this.upvotes = upvotes;
     }
 
-    public void addUpvote(Long l) {
+    public void addUpvote() {
         if(this.upvotes == null){
             this.upvotes = 0L;
         }

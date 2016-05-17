@@ -53,6 +53,11 @@ h1 {
     padding: 1em;
 }
 
+.thumb {
+    width: 1.5em;
+    height: 1.5em;
+}
+
 /*ID*/
 
 #name-of-logged-in-user {

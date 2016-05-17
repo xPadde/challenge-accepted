@@ -148,21 +148,19 @@ public class ChallengeController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/challenge/{id}/", method = RequestMethod.PUT)
-    public ResponseEntity addUserToChallengeUpvoters(@PathVariable Long id, @RequestBody UserModel loggedInUser) {
-        UserModel userModel = userService.getUserFromDatabase(loggedInUser.getId());
+    @RequestMapping(value = "/challenge/{id}/addorremoveusertochallengeupvoters/", method = RequestMethod.PUT)
+    public ResponseEntity addOrRemoveUserToChallengeUpvoters(@PathVariable Long id, @RequestBody UserModel loggedInUser) {
+        UserModel user = userService.getUserFromDatabase(loggedInUser.getId());
         ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
 
-        if (challenge.getChallengeUpvoters().contains(loggedInUser.getId())) {
-            challenge.removeUserModelFromChallengeUpvoters(userModel);
+        if (challenge.getChallengeUpvoters().contains(user.getId())) {
+            challenge.removeUserModelFromChallengeUpvoters(user);
             challenge.removeUpvote();
         } else {
 
-            challenge.addUpvote(1l);
-            challenge.addUserModelToChallengeUpvoters(loggedInUser);
+            challenge.addUpvote();
+            challenge.addUserModelToChallengeUpvoters(user);
         }
-
-        System.out.println("Ute ur loopen");
 
         challengeService.updateChallengeInDatabase(challenge);
         return new ResponseEntity(HttpStatus.OK);
@@ -182,5 +180,4 @@ public class ChallengeController {
 /*        challengeService.updateChallengeInDatabase(challengeModel);*/
         return new ResponseEntity(HttpStatus.CREATED);
     }
-
 }

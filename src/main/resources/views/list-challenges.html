@@ -28,9 +28,10 @@
                     </span>
                 </a>
             </th>
+            <th></th>
             <th>
                 <a href="" ng-click="orderByField = 'upvotes'; reverseSort = !reverseSort">
-                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                    <img src="img/like.png" class="thumb">
                         <span ng-show="orderByField == 'upvotes'">
                         <span ng-show="!reverseSort" class="glyphicon glyphicon-chevron-up"></span>
                         <span ng-show="reverseSort" class="glyphicon glyphicon-chevron-down"></span>
@@ -45,7 +46,8 @@
             <td>{{challenge.description}}</td>
             <td>{{challenge.creationDate}}</td>
             <td><a href="#" ng-click="upvoteChallenge(challenge)">
-                <span class="glyphicon glyphicon-thumbs-up"></span></a></td>
+                <img src="img/like.png" class="thumb" onmouseover="src='img/like2.png'" onmouseout="src='img/like.png'" ng-show="!isChallengeUpvotedByUser(challenge)">
+                <img src="img/like2.png" class="thumb" onmouseover="src='img/like.png'" onmouseout="src='img/like2.png'" ng-show="isChallengeUpvotedByUser(challenge)"></a></td>
             <td>{{challenge.upvotes}}</td>
         </tr>
         </tbody>
