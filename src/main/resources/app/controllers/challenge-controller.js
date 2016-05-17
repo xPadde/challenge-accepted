@@ -9,6 +9,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     var alertPopupMsgLogin = 'Login to use this feature!';
     var alertPopupMsgInvalidYoutubeUrl = 'Please provide a valid YouTube Url';
     var alertPopupMsgVideoSent = 'The video is sent to the challenge requester and is now pending, waiting for confirmation.';
+    var alertPopupMsgConfirmVideo = 'Once you click confirm in the next step, the video will be sent to the challenge-creator. Be sure it is the right one!';
 
     var showAlertPopup = function(msg) {
         $.alert({
@@ -316,6 +317,8 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         var userProvidedUrl = $('#input-youtube-url').val();
         var convertedYoutubeUrl = convertToYouTubeEmbedUrl(userProvidedUrl);
 
+        showAlertPopup(alertPopupMsgConfirmVideo);
+
         challengeService.addYoutubeUrlToChallenge(challenge.id, convertedYoutubeUrl)
             .success(function (response) {
                 console.log("challengeService.addYoutubeUrlToChallenge() was successfully executed and YouTube url was saved to the challenge!");
@@ -328,6 +331,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.confirmYoutubeVideoToCurrentChallenge = function (challenge) {
+        // TODO should we have a confirmation-popup or not?
             // Reset form after confirmation of YouTube URL.
             $('#uploadYoutubeVideoForm').each(function () {
                 this.reset();
