@@ -157,7 +157,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.createNewChallenge = function () {
-        if (!isInputAndTextareaEmpty()) {
+        /*if (!isInputAndTextareaEmpty()) {*/
             $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
             challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), $scope.loggedInUser.id)
                 .success(function (response, status) {
@@ -178,10 +178,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                 this.reset();
             });
 
-        } else {
+        /*} else {
             console.log('challengeService.createNewChallenge() did ***NOT*** create a new challenge. Fields was empty!');
             alert('challengeService.createNewChallenge() did ***NOT*** create a new challenge. Fields was empty!');
-        }
+        }*/
     };
 
 
@@ -439,7 +439,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
 
     // Form validation.
-    function isInputAndTextareaEmpty() {
+    /*function isInputAndTextareaEmpty() {
         var isInputAndTextareaEmpty = false;
 
         if ($('textarea').val() === "") {
@@ -449,7 +449,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         }
 
         return isInputAndTextareaEmpty;
-    }
+    }*/
 
     // Fetch the list of challenges on application start.
     $scope.getListOfChallenges();
