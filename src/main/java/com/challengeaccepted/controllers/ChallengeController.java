@@ -112,11 +112,6 @@ public class ChallengeController {
         userService.updateUserInDatabase(challengeCreator);
         challengeService.updateChallengeInDatabase(challengeToUpdateToDatabase);
 
-        System.out.println("LOGS BABY");
-        System.out.println(challengeCompleter);
-        System.out.println(challengeCreator);
-        System.out.println(challengeToUpdateToDatabase);
-
         return new ResponseEntity<ChallengeModel>(challengeToUpdateToDatabase, HttpStatus.OK);
     }
 
