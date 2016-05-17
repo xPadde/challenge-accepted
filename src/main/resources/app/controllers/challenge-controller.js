@@ -1,9 +1,9 @@
-app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeService', 'userService', function ($scope, $http, $sce, challengeService, userService) {
+app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeService', 'userService', 'angulike', function ($scope, $http, $sce, challengeService, userService) {
 
     // The variables for sorting the challenge list.
     $scope.orderByField = 'creationDate';
     $scope.reverseSort = true;
-    $scope.dynamicUrl = "www.gp.se";
+    $scope.dynamicUrl = "www.youtube.com/watch?v=elN_CPsJ27M";
 
     // Message for prompting the user to login if trying to access features when logged out.
     var alertLoginPrompt = "Log in to use this feature.";
@@ -442,7 +442,6 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         console.log(isInputAndTextareaEmpty)
         return isInputAndTextareaEmpty;
     }
-
 
     // Fetch the list of challenges on application start.
     $scope.getListOfChallenges();
