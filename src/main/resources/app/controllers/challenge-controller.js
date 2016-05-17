@@ -174,7 +174,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                     console.log(response);
                 });
 
-            $('#createNewChallengeForm').each(function () {
+            $('#form-create-new-challenge').each(function () {
                 this.reset();
             });
 
