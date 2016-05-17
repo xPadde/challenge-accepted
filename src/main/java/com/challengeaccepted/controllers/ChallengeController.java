@@ -4,6 +4,7 @@ import com.challengeaccepted.models.ChallengeModel;
 import com.challengeaccepted.models.CommentModel;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.ChallengeService;
+import com.challengeaccepted.services.NewsFeedService;
 import com.challengeaccepted.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,8 @@ public class ChallengeController {
     private ChallengeService challengeService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private NewsFeedService newsFeedService;
     @Autowired
     private CommentController commentController;
     private Long resetUpvotes = 0l;
@@ -157,7 +160,6 @@ public class ChallengeController {
             challenge.removeUserModelFromChallengeUpvoters(user);
             challenge.removeUpvote();
         } else {
-
             challenge.addUpvote();
             challenge.addUserModelToChallengeUpvoters(user);
         }

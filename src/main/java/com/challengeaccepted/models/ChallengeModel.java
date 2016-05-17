@@ -40,19 +40,17 @@ public class ChallengeModel implements Serializable {
     private List<CommentModel> challengeComments;
     @ManyToOne
     @JoinColumn(name = "feed_liked_challenge_id")
-    private NewsFeedModel feedLikedChallenge;
+    private ChallengeModel feedLikedChallenge;
     @ManyToOne
     @JoinColumn(name = "feed_claimed_challenge_id")
-    private NewsFeedModel feedClaimedChallenge;
+    private ChallengeModel feedClaimedChallenge;
     @ManyToOne
     @JoinColumn(name = "feed_created_challenge_id")
-    private NewsFeedModel feedCreatedChallenge;
+    private ChallengeModel feedCreatedChallenge;
     @ManyToOne
     @JoinColumn(name = "feed_performed_challenge_id")
-    private NewsFeedModel feedPerformedChallenge;
+    private ChallengeModel feedPerformedChallenge;
 
-
-    //Todo skapa alla fyra relationer
 
     public ChallengeModel() {
     }

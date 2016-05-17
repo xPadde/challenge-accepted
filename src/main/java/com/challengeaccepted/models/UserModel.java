@@ -24,24 +24,10 @@ public class UserModel implements Serializable {
     private List<ChallengeModel> claimedChallenges;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "challengeCreator")
     private List<ChallengeModel> createdChallenge;
-    @OneToOne
-    private NewsFeedModel newsFeed;
 
     public UserModel() {
     }
 
-    public NewsFeedModel getNewsFeed() {
-
-        if(newsFeed == null){
-           newsFeed = new NewsFeedModel();
-        }
-
-        return newsFeed;
-    }
-
-    public void setNewsFeed(NewsFeedModel newsFeed) {
-        this.newsFeed = newsFeed;
-    }
 
     public Long getTotalChallengePoints() {
         return totalChallengePoints;
