@@ -5,9 +5,18 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     $scope.reverseSort = true;
     $scope.dynamicUrl = "www.youtube.com/watch?v=elN_CPsJ27M";
 
-    // Message for prompting the user to login if trying to access features when logged out.
-    var alertLoginPrompt = "Log in to use this feature.";
+    // Messages for the alert-popup.
 
+    var alertPopupMsgLogin = 'Login to use this feature!';
+    var alertPopupMsgInvalidYoutubeUrl = 'Please provide a valid YouTube Url';
+    var alertPopupMsgConfirmVideo = 'Once you click confirm in the next step, the video will be sent to the challenge-creator. Be sure it is the right one!';
+
+    var showAlertPopup = function(msg) {
+        $.alert({
+            title: 'Alert',
+            content: msg
+        });
+    };
 
     /*
      Handles the user login.
@@ -112,7 +121,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         if (sessionStorage.getItem("isLoggedIn") == 'true') {
             $scope.section = "createNewChallengeSection";
         } else {
-            alert(alertLoginPrompt);
+            showAlertPopup(alertPopupMsgLogin);
         }
     };
 
@@ -123,12 +132,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.viewUserProfilePage = function (user) {
-        console.log(user);
+        $scope.getListOfCompletedChallenges();
         $scope.activeUser = user;
         $scope.section = "userProfilePageSection";
-
-
-    }
+    };
 
 
     /*
@@ -150,7 +157,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.createNewChallenge = function () {
-        /*if (!isInputAndTextareaEmpty()) {*/
+        if (!isInputAndTextareaEmpty()) {
             $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
             challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), $scope.loggedInUser.id)
                 .success(function (response, status) {
@@ -171,10 +178,10 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                 this.reset();
             });
 
-        /*} else {
+        } else {
             console.log('challengeService.createNewChallenge() did ***NOT*** create a new challenge. Fields was empty!');
             alert('challengeService.createNewChallenge() did ***NOT*** create a new challenge. Fields was empty!');
-        }*/
+        }
     };
 
 
@@ -248,7 +255,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                     console.log(error);
                 });
         } else {
-            alert(alertLoginPrompt);
+            showAlertPopup(alertPopupMsgLogin);
         }
     };
 
@@ -299,7 +306,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                     console.log(error);
                 });
         } else {
-            alert(alertLoginPrompt);
+            showAlertPopup(alertPopupMsgLogin);
         }
     };
 
@@ -309,6 +316,8 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
 
         var userProvidedUrl = $('#input-youtube-url').val();
         var convertedYoutubeUrl = convertToYouTubeEmbedUrl(userProvidedUrl);
+
+        showAlertPopup('Once you click confirm in the next step, the video will be sent to ' + challenge.challengeCreator.firstName + ' ' + challenge.challengeCreator.lastName + '. Be sure it is the right one!');
 
         challengeService.addYoutubeUrlToChallenge(challenge.id, convertedYoutubeUrl)
             .success(function (response) {
@@ -321,9 +330,8 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             });
     };
 
-    // The user confirm the YouTube url of the performance is correct.
     $scope.confirmYoutubeVideoToCurrentChallenge = function (challenge) {
-        if (confirm("This will confirm your video for review. Are you sure you want to upload this video?")) {
+        // TODO should we have a confirmation-popup or not?
             // Reset form after confirmation of YouTube URL.
             $('#uploadYoutubeVideoForm').each(function () {
                 this.reset();
@@ -341,8 +349,8 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                     console.log("challengeService.confirmUploadedYoutubeUrl() ***FAILED*** to execute!");
                     console.log(error);
                 });
-            alert("Thank you. The video was sent to the challenge requester and is now pending, waiting for confirmation.");
-        }
+            showAlertPopup('The video is sent to ' + challenge.challengeCreator.firstName + ' ' + challenge.challengeCreator.lastName + ' and is now pending, waiting for confirmation.');
+
     };
 
     // The challenge requester confirm the challenge is performed satisfactory.
@@ -391,8 +399,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             var youTubeVideoId = url.substr(32);
             var finalUrl = baseUrl + youTubeVideoId;
         } else {
-            alert("Please provide a valid YouTube URL");
-            return "";
+            showAlertPopup(alertPopupMsgInvalidYoutubeUrl);
         }
         return finalUrl;
     };
@@ -434,12 +441,13 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     // Form validation.
     function isInputAndTextareaEmpty() {
         var isInputAndTextareaEmpty = false;
-        $('input, textarea').each(function (index) {
-            if ($(this).val() === '' || $(this).val() === null) {
-                isInputAndTextareaEmpty = true;
-            }
-        });
-        console.log(isInputAndTextareaEmpty)
+
+        if ($('textarea').val() === "") {
+            isInputAndTextareaEmpty = true;
+        } else if ($('input').val() === "") {
+            isInputAndTextareaEmpty = true;
+        }
+
         return isInputAndTextareaEmpty;
     }
 

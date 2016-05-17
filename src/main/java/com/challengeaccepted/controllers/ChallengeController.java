@@ -94,20 +94,24 @@ public class ChallengeController {
     @RequestMapping(value = "/challenge/{id}/assignpointstouser/", method = RequestMethod.PUT)
     public ResponseEntity<ChallengeModel> assignPointsToUser(@PathVariable Long id) {
         ChallengeModel challengeToUpdateToDatabase = challengeService.getChallengeFromDatabase(id);
-        UserModel userToUpdateToDatabase = userService.getUserFromDatabase(challengeToUpdateToDatabase.getChallengeClaimer().getId());
 
-        userToUpdateToDatabase.addPoints((long) challengeToUpdateToDatabase.getChallengeUpvoters().size());
+        UserModel challengeCompleter = userService.getUserFromDatabase(challengeToUpdateToDatabase.getChallengeClaimer().getId());
+        UserModel challengeCreator = userService.getUserFromDatabase(challengeToUpdateToDatabase.getChallengeCreator().getId());
 
-        System.out.println(userToUpdateToDatabase.getPoints());
-        System.out.println(challengeToUpdateToDatabase.getUpvotes());
+        Long pointsToDistribute = (long) challengeToUpdateToDatabase.getChallengeUpvoters().size();
+
+        challengeCreator.addCreatedChallengePoints(pointsToDistribute / 2);
+        challengeCompleter.addCompletedChallengePoints(pointsToDistribute);
 
         challengeToUpdateToDatabase.setUpvotes(resetUpvotes);
         challengeToUpdateToDatabase.setChallengeCompleted(true);
         challengeToUpdateToDatabase.setYoutubeUrlProvided(false);
         challengeToUpdateToDatabase.setYoutubeVideoUploaded(false);
 
-        userService.updateUserInDatabase(userToUpdateToDatabase);
+        userService.updateUserInDatabase(challengeCompleter);
+        userService.updateUserInDatabase(challengeCreator);
         challengeService.updateChallengeInDatabase(challengeToUpdateToDatabase);
+
         return new ResponseEntity<ChallengeModel>(challengeToUpdateToDatabase, HttpStatus.OK);
     }
 
