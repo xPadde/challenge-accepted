@@ -38,6 +38,21 @@ public class ChallengeModel implements Serializable {
     private UserModel challengeCreator;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "commentedChallenge")
     private List<CommentModel> challengeComments;
+    @ManyToOne
+    @JoinColumn(name = "feed_liked_challenge_id")
+    private NewsFeedModel feedLikedChallenge;
+    @ManyToOne
+    @JoinColumn(name = "feed_claimed_challenge_id")
+    private NewsFeedModel feedClaimedChallenge;
+    @ManyToOne
+    @JoinColumn(name = "feed_created_challenge_id")
+    private NewsFeedModel feedCreatedChallenge;
+    @ManyToOne
+    @JoinColumn(name = "feed_performed_challenge_id")
+    private NewsFeedModel feedPerformedChallenge;
+
+
+    //Todo skapa alla fyra relationer
 
     public ChallengeModel() {
     }
