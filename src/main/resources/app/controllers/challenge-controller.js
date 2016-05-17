@@ -249,6 +249,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                     console.log("challengeService.addUserToChallengeUpvoters() was successfully executed!");
                     // Update the list of challenges after creation of the new challenge,
                     $scope.getListOfChallenges();
+                    $scope.getListOfCompletedChallenges();
                 })
                 .error(function (error) {
                     console.log("challengeService.addUserToChallengeUpvoters() ***FAILED*** to execute!");
