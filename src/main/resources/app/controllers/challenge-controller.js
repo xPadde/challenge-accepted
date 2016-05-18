@@ -1,4 +1,4 @@
-app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeService', 'userService', function ($scope, $http, $sce, challengeService, userService) {
+app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeService', 'userService', 'notificationService', function ($scope, $http, $sce, challengeService, userService, notificationService) {
 
     // The variables for sorting the challenge list.
     $scope.orderByField = 'creationDate';
@@ -134,6 +134,11 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         $scope.section = "userProfilePageSection";
     };
 
+    $scope.showListOfNotifications = function () {
+        $scope.updateListOfNotifications();
+        $scope.section = "notificationSection";
+    };
+
 
     /*
      Below code handles the creation of the new challenges.
@@ -246,6 +251,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                     // Update the list of challenges after creation of the new challenge,
                     $scope.getListOfChallenges();
                     $scope.getListOfCompletedChallenges();
+                    $scope.updateListOfNotifications();
                 })
                 .error(function (error) {
                     console.log("challengeService.addUserToChallengeUpvoters() ***FAILED*** to execute!");
@@ -399,6 +405,22 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             showAlertPopup(alertPopupMsgInvalidYoutubeUrl);
         }
         return finalUrl;
+    };
+
+    /*
+     Below code handles notifications.
+     */
+    $scope.updateListOfNotifications = function () {
+        notificationService.getAllNotifications()
+            .success(function (response) {
+                console.log('notificationService.getAllNotifications() was successfully executed!');
+                console.log(response);
+                $scope.listOfNotifications = response;
+            })
+            .error(function (error) {
+                console.log('$scope.listOfNotifications ***FAILED*** to execute!');
+                console.log(error);
+            })
     };
 
 
