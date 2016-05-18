@@ -66,6 +66,15 @@ app.factory('challengeService', function ($http) {
             })
         },
 
+        addOrRemovePointToCompletedChallenge: function (data, id) {
+            return $http({
+                url: 'http://localhost:8080/api/challenge/' + id + '/addorremovepointtocompletedchallenge/',
+                method: 'PUT',
+                data: data,
+                header: {'Content-Type': 'application/json'}
+            })
+        },
+
         assignPointsToUser: function (id) {
             return $http({
                 url: 'http://localhost:8080/api/challenge/' + id + '/assignpointstouser/',

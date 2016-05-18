@@ -60,6 +60,10 @@ public class UserModel implements Serializable {
         addTotalChallengePoints(points);
     }
 
+    public void removeCompletedChallengePoint() {
+        this.completedChallengePoints -= 1L;
+    }
+
     public Long getCreatedChallengePoints() {
         return createdChallengePoints;
     }
@@ -74,6 +78,10 @@ public class UserModel implements Serializable {
         }
         this.createdChallengePoints += points;
         addTotalChallengePoints(points);
+    }
+
+    public void removeCreatedChallengePoint() {
+        this.createdChallengePoints -= 1L;
     }
 
     public Long getId() {
@@ -103,5 +111,4 @@ public class UserModel implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
 }

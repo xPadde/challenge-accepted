@@ -233,7 +233,6 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             });
     };
 
-
     /*
      Below code handles the upvoting and the managing of the already upvoted challenges.
      The code does not execute if no user is logged in.
@@ -268,6 +267,25 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         }
         return false;
     };
+    
+    $scope.addPointToChallenge = function (challenge) {
+        if (sessionStorage.getItem('isLoggedIn') == 'true') {
+            challengeService.addOrRemovePointToCompletedChallenge(sessionStorage.getItem('loggedInUser'), challenge.id)
+                .success(function () {
+                    console.log("addPointToCompletedChallenge() was successfully executed!");
+                    $scope.getListOfCompletedChallenges();
+                    
+                })
+                .error(function (error) {
+                    console.log("addPointToCompletedChallenge() ***FAILED*** to execute");
+                    console.log(error);
+                    
+                });
+        } else {
+            showAlertPopup(alertPopupMsgLogin)
+        }
+        
+    }
 
 
     /*
