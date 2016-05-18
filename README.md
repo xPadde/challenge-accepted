@@ -1,2 +1,13 @@
-For testing AngularJS, install KARMA in \src\test\resources
-For instructions how-to: http://karma-runner.github.io/0.12/intro/installation.html
+# Challenge Accepted
+
+## Config/Installation
+
+Spring Boot Application using Maven.  
+Requires a mySql schema named *challengeaccepted*. Edit user name and password for mySql server in *application.yml*.
+
+## Developers
+- Joel
+- Lena
+- Patrik
+- Thomas Lansing  
+*thomas@lansing.nu*
