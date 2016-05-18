@@ -17,13 +17,13 @@ public class NewsFeedModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "feedLikedChallenge")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "likedChallengeInNewsFeed")
     private List<ChallengeModel> likedChallenges;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "feedClaimedChallenge")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "claimedChallengeInNewsFeed")
     private List<ChallengeModel> claimedChallenges;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "feedCreatedChallenge")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdChallengeInNewsFeed")
     private List<ChallengeModel> createdChallenges;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "feedPerformedChallenge")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "performedChallengeInNewsFeed")
     private List<ChallengeModel> performedChallenges;
 
     public NewsFeedModel() {
@@ -33,8 +33,8 @@ public class NewsFeedModel implements Serializable {
         return id;
     }
 
-    public List<ChallengeModel> getLikedChallenges() {
-        return likedChallenges;
+    public List<Long> getLikedChallenges() {
+        return new ArrayList<Long>();
     }
 
     public void setLikedChallenges(List<ChallengeModel> likedChallenges) {
@@ -52,24 +52,24 @@ public class NewsFeedModel implements Serializable {
         likedChallenges.remove(challenge);
     }
 
-    public List<ChallengeModel> getClaimedChallenges() {
-        return claimedChallenges;
+    public List<Long> getClaimedChallenges() {
+        return new ArrayList<Long>();
     }
 
     public void setClaimedChallenges(List<ChallengeModel> claimedChallenges) {
         this.claimedChallenges = claimedChallenges;
     }
 
-    public List<ChallengeModel> getCreatedChallenges() {
-        return createdChallenges;
+    public List<Long> getCreatedChallenges() {
+        return new ArrayList<Long>();
     }
 
     public void setCreatedChallenges(List<ChallengeModel> createdChallenges) {
         this.createdChallenges = createdChallenges;
     }
 
-    public List<ChallengeModel> getPerformedChallenges() {
-        return performedChallenges;
+    public List<Long> getPerformedChallenges() {
+        return new ArrayList<Long>();
     }
 
     public void setPerformedChallenges(List<ChallengeModel> performedChallenges) {

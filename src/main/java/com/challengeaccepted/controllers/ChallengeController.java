@@ -2,6 +2,7 @@ package com.challengeaccepted.controllers;
 
 import com.challengeaccepted.models.ChallengeModel;
 import com.challengeaccepted.models.CommentModel;
+import com.challengeaccepted.models.NewsFeedModel;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.ChallengeService;
 import com.challengeaccepted.services.NewsFeedService;
@@ -162,6 +163,10 @@ public class ChallengeController {
         } else {
             challenge.addUpvote();
             challenge.addUserModelToChallengeUpvoters(user);
+            NewsFeedModel newsFeedModelFromDatabase = newsFeedService.getNewsFeedFromDatabase(1L);
+            /*newsFeedModelFromDatabase.addLikedChallenge(challenge);
+            newsFeedService.updateNewsFeedToDatabase(newsFeedModelFromDatabase);*/
+            challenge.setLikedChallengeInNewsFeed(newsFeedModelFromDatabase);
         }
 
         challengeService.updateChallengeInDatabase(challenge);

@@ -39,17 +39,17 @@ public class ChallengeModel implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "commentedChallenge")
     private List<CommentModel> challengeComments;
     @ManyToOne
-    @JoinColumn(name = "feed_liked_challenge_id")
-    private ChallengeModel feedLikedChallenge;
+    @JoinColumn(name = "liked_challenge_newsfeed_id")
+    private NewsFeedModel likedChallengeInNewsFeed;
     @ManyToOne
-    @JoinColumn(name = "feed_claimed_challenge_id")
-    private ChallengeModel feedClaimedChallenge;
+    @JoinColumn(name = "claimed_challenge_newsfeed_id")
+    private NewsFeedModel claimedChallengeInNewsFeed;
     @ManyToOne
-    @JoinColumn(name = "feed_created_challenge_id")
-    private ChallengeModel feedCreatedChallenge;
+    @JoinColumn(name = "created_challenge_newsfeed_id")
+    private NewsFeedModel createdChallengeInNewsFeed;
     @ManyToOne
-    @JoinColumn(name = "feed_performed_challenge_id")
-    private ChallengeModel feedPerformedChallenge;
+    @JoinColumn(name = "performed_challenge_newsfeed_id")
+    private NewsFeedModel performedChallengeInNewsFeed;
 
 
     public ChallengeModel() {
@@ -211,5 +211,37 @@ public class ChallengeModel implements Serializable {
         }
 
         challengeComments.add(commentModel);
+    }
+
+    public NewsFeedModel getLikedChallengeInNewsFeed() {
+        return likedChallengeInNewsFeed;
+    }
+
+    public void setLikedChallengeInNewsFeed(NewsFeedModel likedChallengeInNewsFeed) {
+        this.likedChallengeInNewsFeed = likedChallengeInNewsFeed;
+    }
+
+    public NewsFeedModel getClaimedChallengeInNewsFeed() {
+        return claimedChallengeInNewsFeed;
+    }
+
+    public void setClaimedChallengeInNewsFeed(NewsFeedModel claimedChallengeInNewsFeed) {
+        this.claimedChallengeInNewsFeed = claimedChallengeInNewsFeed;
+    }
+
+    public NewsFeedModel getCreatedChallengeInNewsFeed() {
+        return createdChallengeInNewsFeed;
+    }
+
+    public void setCreatedChallengeInNewsFeed(NewsFeedModel createdChallengeInNewsFeed) {
+        this.createdChallengeInNewsFeed = createdChallengeInNewsFeed;
+    }
+
+    public NewsFeedModel getPerformedChallengeInNewsFeed() {
+        return performedChallengeInNewsFeed;
+    }
+
+    public void setPerformedChallengeInNewsFeed(NewsFeedModel performedChallengeInNewsFeed) {
+        this.performedChallengeInNewsFeed = performedChallengeInNewsFeed;
     }
 }

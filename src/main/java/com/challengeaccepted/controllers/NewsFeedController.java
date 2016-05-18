@@ -3,6 +3,7 @@ package com.challengeaccepted.controllers;
 
 import com.challengeaccepted.models.ChallengeModel;
 import com.challengeaccepted.models.NewsFeedModel;
+import com.challengeaccepted.services.ChallengeService;
 import com.challengeaccepted.services.NewsFeedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,8 @@ public class NewsFeedController {
 
     @Autowired
     private NewsFeedService newsFeedService;
+    @Autowired
+    private ChallengeService challengeService;
     private Long newsFeedId = 1L;
     public NewsFeedController() {
     }
@@ -24,40 +27,40 @@ public class NewsFeedController {
     @CrossOrigin
     @RequestMapping(value = "/newsfeed/", method = RequestMethod.POST)
     public ResponseEntity createNewsFeed(@RequestBody NewsFeedModel newsFeedModel){
+        newsFeedService.saveNewsFeedToDatabase(newsFeedModel);
+        return new ResponseEntity(HttpStatus.CREATED);
 
-        /*NewsFeedModel newsFeedModelToCheckWithDatabase = newsFeedService.getNewsFeedFromDatabase(1l);*/
-
-        NewsFeedModel newsFeedModelFromDatabase = newsFeedService.getNewsFeedFromDatabase(newsFeedId);
-        if(newsFeedModelFromDatabase == null){
-            newsFeedService.saveNewsFeedToDatabase(newsFeedModel);
-            return new ResponseEntity(HttpStatus.CREATED);
-        }else{
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
-        }
     }
 
     @CrossOrigin
     @RequestMapping(value = "/newsfeed/addLikedChallenge/", method = RequestMethod.POST)
     public ResponseEntity addLikedChallenge(@RequestBody ChallengeModel challengeModel){
-        NewsFeedModel newsFeedModelFromDatabase = newsFeedService.getNewsFeedFromDatabase(1L);
+
+        ChallengeModel challengeModelFromDatabase = challengeService.getChallengeFromDatabase(challengeModel.getId());
+        NewsFeedModel newsFeedModelFromDatabase = newsFeedService.getNewsFeedFromDatabase(newsFeedId);
+
+        challengeModelFromDatabase.setLikedChallengeInNewsFeed(newsFeedModelFromDatabase);
+        challengeService.updateChallengeInDatabase(challengeModelFromDatabase);
+        return new ResponseEntity(HttpStatus.OK);
+
+        /*NewsFeedModel newsFeedModelFromDatabase = newsFeedService.getNewsFeedFromDatabase(newsFeedId);
 
         if(newsFeedModelFromDatabase != null){
             newsFeedModelFromDatabase.addLikedChallenge(challengeModel);
             newsFeedService.updateNewsFeedToDatabase(newsFeedModelFromDatabase);
             return new ResponseEntity(HttpStatus.CREATED);
         }
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
+        return new ResponseEntity(HttpStatus.FORBIDDEN);*/
     }
 
-    @CrossOrigin
-    @RequestMapping(value = "/newsfeed/getlikedchallenges/", method = RequestMethod.GET)
+    /*@CrossOrigin
+    @RequestMapping(value = "/newsfeed/getLikedchallenges/", method = RequestMethod.GET)
     public ResponseEntity<List<ChallengeModel>> getLikedChallenges(){
-        NewsFeedModel newsFeedModelFromDatabase = newsFeedService.getNewsFeedFromDatabase(newsFeedId);
+        *//*NewsFeedModel newsFeedModelFromDatabase = newsFeedService.getNewsFeedFromDatabase(newsFeedId);
         List<ChallengeModel> likedChallenges = newsFeedModelFromDatabase.getLikedChallenges();
 
         System.out.println(likedChallenges);
 
-        return new ResponseEntity(likedChallenges, HttpStatus.ACCEPTED);
-    }
-    // Todo testa att få tillbaka en lista av likeade challenges
+        return new ResponseEntity<List<ChallengeModel>>(likedChallenges, HttpStatus.ACCEPTED);*//*
+    }*/
 }
