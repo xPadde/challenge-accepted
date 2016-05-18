@@ -1,5 +1,6 @@
 package com.challengeaccepted.controllers;
 
+import com.challengeaccepted.models.NotificationModel;
 import com.challengeaccepted.services.NotificationService;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,6 +27,12 @@ public class NotificationControllerTest {
     @Test
     public void testReadAllNotifications() throws Exception {
         assertEquals("readAllNotifications() did not return http status code 200 (ok)", HttpStatus.OK, notificationController.readAllNotifications().getStatusCode());
+    }
+
+    @Test
+    public void testCreateNotification() throws Exception {
+        assertEquals("createNotification() did not return http status code 201 (created)", HttpStatus.CREATED, notificationController.createNotification(new NotificationModel()).getStatusCode());
+        assertEquals("createNotification() did not return http status code 204 (no content)", HttpStatus.NO_CONTENT, notificationController.createNotification(null).getStatusCode());
     }
 
 }

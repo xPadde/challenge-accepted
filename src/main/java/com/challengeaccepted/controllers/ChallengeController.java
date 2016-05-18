@@ -4,6 +4,7 @@ import com.challengeaccepted.models.ChallengeModel;
 import com.challengeaccepted.models.CommentModel;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.ChallengeService;
+import com.challengeaccepted.services.NotificationService;
 import com.challengeaccepted.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,8 @@ public class ChallengeController {
     private UserService userService;
     @Autowired
     private CommentController commentController;
+    @Autowired
+    private NotificationController notificationController;
     private Long resetUpvotes = 0l;
 
     @CrossOrigin
@@ -159,6 +162,9 @@ public class ChallengeController {
         } else {
             challenge.addUpvote();
             challenge.addUserModelToChallengeUpvoters(user);
+
+
+
         }
 
         challengeService.updateChallengeInDatabase(challenge);
