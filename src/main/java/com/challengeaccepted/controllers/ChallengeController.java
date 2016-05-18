@@ -164,7 +164,7 @@ public class ChallengeController {
             challenge.addUpvote();
             challenge.addUserModelToChallengeUpvoters(user);
 
-            createAndSaveNotification(user, challenge);
+            createAndSaveNotification(user, challenge, Action.UPVOTE);
         }
 
         challengeService.updateChallengeInDatabase(challenge);
@@ -186,8 +186,8 @@ public class ChallengeController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    private void createAndSaveNotification(UserModel user, ChallengeModel challenge) {
-        NotificationModel notificationModel = new NotificationModel(user, challenge, Action.UPVOTE);
+    private void createAndSaveNotification(UserModel user, ChallengeModel challenge, Action action) {
+        NotificationModel notificationModel = new NotificationModel(user, challenge, action);
         notificationController.createNotification(notificationModel);
     }
 
