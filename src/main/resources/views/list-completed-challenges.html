@@ -28,12 +28,12 @@
             <td><a href="#" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
             <td>{{challenge.description}}</td>
             <td>{{challenge.creationDate}}</td>
-            <td><a href="#" ng-click="upvoteChallenge(challenge)">
+            <td><a href="#" ng-click="addPointToChallenge(challenge)">
                 <img src="img/like.png" class="thumb" onmouseover="src='img/like2.png'" onmouseout="src='img/like.png'"
                      ng-show="!isChallengeUpvotedByUser(challenge)">
                 <img src="img/like2.png" class="thumb" onmouseover="src='img/like.png'" onmouseout="src='img/like2.png'"
                      ng-show="isChallengeUpvotedByUser(challenge)"></a></td>
-            <td>{{challenge.upvotes}}</td>
+            <td>{{challenge.points}}</td>
         </tr>
         </tbody>
     </table>

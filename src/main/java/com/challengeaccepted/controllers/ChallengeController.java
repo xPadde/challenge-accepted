@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,7 +22,6 @@ public class ChallengeController {
     private UserService userService;
     @Autowired
     private CommentController commentController;
-    private Long resetUpvotes = 0l;
 
     @CrossOrigin
     @RequestMapping(value = "/challenge/create/challengecreator/{challengeCreatorId}", method = RequestMethod.POST)
@@ -102,11 +102,12 @@ public class ChallengeController {
 
         challengeCreator.addCreatedChallengePoints(pointsToDistribute / 2);
         challengeCompleter.addCompletedChallengePoints(pointsToDistribute);
+        challengeToUpdateToDatabase.addPoints(pointsToDistribute);
 
-        challengeToUpdateToDatabase.setUpvotes(resetUpvotes);
         challengeToUpdateToDatabase.setChallengeCompleted(true);
         challengeToUpdateToDatabase.setYoutubeUrlProvided(false);
         challengeToUpdateToDatabase.setYoutubeVideoUploaded(false);
+        challengeToUpdateToDatabase.setChallengeUpvoters(new ArrayList<UserModel>());
 
         userService.updateUserInDatabase(challengeCompleter);
         userService.updateUserInDatabase(challengeCreator);
@@ -162,6 +163,32 @@ public class ChallengeController {
             challenge.addUserModelToChallengeUpvoters(user);
         }
 
+        challengeService.updateChallengeInDatabase(challenge);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/challenge/{id}/addorremovepointtocompletedchallenge/", method = RequestMethod.PUT)
+    public ResponseEntity addOrRemovePointToCompletedChallenge(@PathVariable Long id, @RequestBody UserModel loggedInUser) {
+        ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
+        UserModel user = userService.getUserFromDatabase(loggedInUser.getId());
+        UserModel challengeCompleter = userService.getUserFromDatabase(challenge.getChallengeClaimer().getId());
+        UserModel challengeCreator = userService.getUserFromDatabase(challenge.getChallengeCreator().getId());
+
+
+        if (challenge.getChallengeUpvoters().contains(user.getId())) {
+            challenge.removeUserModelFromChallengeUpvoters(user);
+            challenge.removePoint();
+            challengeCompleter.removeCompletedChallengePoint();
+            challengeCreator.removeCreatedChallengePoint();
+        } else {
+            challenge.addPoints(1L);
+            challengeCompleter.addCompletedChallengePoints(1L);
+            challengeCreator.addCreatedChallengePoints(1L);
+            challenge.addUserModelToChallengeUpvoters(user);
+        }
+        userService.updateUserInDatabase(challengeCompleter);
+        userService.updateUserInDatabase(challengeCreator);
         challengeService.updateChallengeInDatabase(challenge);
         return new ResponseEntity(HttpStatus.OK);
     }
