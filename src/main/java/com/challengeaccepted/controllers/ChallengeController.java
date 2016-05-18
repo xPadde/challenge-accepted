@@ -2,7 +2,9 @@ package com.challengeaccepted.controllers;
 
 import com.challengeaccepted.models.ChallengeModel;
 import com.challengeaccepted.models.CommentModel;
+import com.challengeaccepted.models.NotificationModel;
 import com.challengeaccepted.models.UserModel;
+import com.challengeaccepted.models.enums.Action;
 import com.challengeaccepted.services.ChallengeService;
 import com.challengeaccepted.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,6 +24,8 @@ public class ChallengeController {
     private UserService userService;
     @Autowired
     private CommentController commentController;
+    @Autowired
+    private NotificationController notificationController;
     private Long resetUpvotes = 0l;
 
     @CrossOrigin
@@ -93,26 +98,24 @@ public class ChallengeController {
     @CrossOrigin
     @RequestMapping(value = "/challenge/{id}/assignpointstouser/", method = RequestMethod.PUT)
     public ResponseEntity<ChallengeModel> assignPointsToUser(@PathVariable Long id) {
-        ChallengeModel challengeToUpdateToDatabase = challengeService.getChallengeFromDatabase(id);
+        ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
+        UserModel challengeCompleter = userService.getUserFromDatabase(challenge.getChallengeClaimer().getId());
+        UserModel challengeCreator = userService.getUserFromDatabase(challenge.getChallengeCreator().getId());
 
-        UserModel challengeCompleter = userService.getUserFromDatabase(challengeToUpdateToDatabase.getChallengeClaimer().getId());
-        UserModel challengeCreator = userService.getUserFromDatabase(challengeToUpdateToDatabase.getChallengeCreator().getId());
+        Long pointsToDistribute = (long) challenge.getChallengeUpvoters().size();
 
-        Long pointsToDistribute = (long) challengeToUpdateToDatabase.getChallengeUpvoters().size();
-
-        challengeCreator.addCreatedChallengePoints(pointsToDistribute / 2);
+        challengeCreator.addCreatedChallengePoints(pointsToDistribute);
         challengeCompleter.addCompletedChallengePoints(pointsToDistribute);
+        challenge.addPoints(pointsToDistribute);
 
-        challengeToUpdateToDatabase.setUpvotes(resetUpvotes);
-        challengeToUpdateToDatabase.setChallengeCompleted(true);
-        challengeToUpdateToDatabase.setYoutubeUrlProvided(false);
-        challengeToUpdateToDatabase.setYoutubeVideoUploaded(false);
+        updateChallengeToCompleted(challenge);
+        challenge.setChallengeUpvoters(new ArrayList<UserModel>());
 
         userService.updateUserInDatabase(challengeCompleter);
         userService.updateUserInDatabase(challengeCreator);
-        challengeService.updateChallengeInDatabase(challengeToUpdateToDatabase);
+        challengeService.updateChallengeInDatabase(challenge);
 
-        return new ResponseEntity<ChallengeModel>(challengeToUpdateToDatabase, HttpStatus.OK);
+        return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -135,15 +138,16 @@ public class ChallengeController {
     @CrossOrigin
     @RequestMapping(value = "/challenge/{id}/confirmuploadedyoutubeurl/", method = RequestMethod.PUT)
     public ResponseEntity<ChallengeModel> confirmUploadedYoutubeUrl(@PathVariable Long id) {
-        ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(id);
-        if (challengeModel.getYoutubeVideoUploaded() == false) {
-            challengeModel.setYoutubeVideoUploaded(true);
-            challengeModel.setYoutubeUrlProvided(false);
-            challengeService.updateChallengeInDatabase(challengeModel);
-            return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
+        ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
+        if (challenge.getYoutubeVideoUploaded() == false) {
+            challenge.setYoutubeVideoUploaded(true);
+            challenge.setYoutubeUrlProvided(false);
+
+            challengeService.updateChallengeInDatabase(challenge);
+            return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
         } else {
             // TODO lägga logger här.
-            return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -157,9 +161,10 @@ public class ChallengeController {
             challenge.removeUserModelFromChallengeUpvoters(user);
             challenge.removeUpvote();
         } else {
-
             challenge.addUpvote();
             challenge.addUserModelToChallengeUpvoters(user);
+
+            createAndSaveNotification(user, challenge, Action.UPVOTE);
         }
 
         challengeService.updateChallengeInDatabase(challenge);
@@ -167,17 +172,71 @@ public class ChallengeController {
     }
 
     @CrossOrigin
+    @RequestMapping(value = "/challenge/{id}/addorremovepointtocompletedchallenge/", method = RequestMethod.PUT)
+    public ResponseEntity addOrRemovePointToCompletedChallenge(@PathVariable Long id, @RequestBody UserModel loggedInUser) {
+        ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
+        UserModel user = userService.getUserFromDatabase(loggedInUser.getId());
+
+        if (challenge.getChallengeUpvoters().contains(user.getId())) {
+            challenge.removeUserModelFromChallengeUpvoters(user);
+            removePointsFromUsers(challenge);
+        } else {
+            challenge.addUserModelToChallengeUpvoters(user);
+            addPointsToUsers(challenge);
+        }
+
+        challengeService.updateChallengeInDatabase(challenge);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+   /* @CrossOrigin
     @RequestMapping(value = "/challenge/{challengeId}/addcomment/", method = RequestMethod.PUT)
     public ResponseEntity addCommentToChallenge(@RequestBody CommentModel commentModel, @PathVariable Long challengeId) {
-        /*ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(challengeId);
+        *//*ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(challengeId);
         challengeModel.addCommentToChallenge(commentModel);
-        */
+        *//*
 
         commentController.addChallengeToComment(commentModel, challengeId);
 
         //todo HIT FÖRST och fixa controller för comments så vi kan göra som tidigare logik i andra controllers
 
-/*        challengeService.updateChallengeInDatabase(challengeModel);*/
+*//*        challengeService.updateChallengeInDatabase(challengeModel);*//*
         return new ResponseEntity(HttpStatus.CREATED);
+    }*/
+
+    private void updateChallengeToCompleted(ChallengeModel challenge) {
+        challenge.setChallengeCompleted(true);
+        challenge.setYoutubeUrlProvided(false);
+        challenge.setYoutubeVideoUploaded(false);
     }
+
+    private void removePointsFromUsers(ChallengeModel challenge) {
+        UserModel challengeCompleter = userService.getUserFromDatabase(challenge.getChallengeClaimer().getId());
+        UserModel challengeCreator = userService.getUserFromDatabase(challenge.getChallengeCreator().getId());
+
+        challenge.removePoint();
+        challengeCompleter.removeCompletedChallengePoint();
+        challengeCreator.removeCreatedChallengePoint();
+
+        userService.updateUserInDatabase(challengeCompleter);
+        userService.updateUserInDatabase(challengeCreator);
+    }
+
+    private void addPointsToUsers(ChallengeModel challenge) {
+        UserModel challengeCompleter = userService.getUserFromDatabase(challenge.getChallengeClaimer().getId());
+        UserModel challengeCreator = userService.getUserFromDatabase(challenge.getChallengeCreator().getId());
+
+        challenge.addPoints(1L);
+        challengeCompleter.addCompletedChallengePoints(1L);
+        challengeCreator.addCreatedChallengePoints(1L);
+
+        userService.updateUserInDatabase(challengeCompleter);
+        userService.updateUserInDatabase(challengeCreator);
+    }
+
+    private void createAndSaveNotification(UserModel user, ChallengeModel challenge, Action action) {
+        NotificationModel notificationModel = new NotificationModel(user, challenge, action);
+        notificationController.createNotification(notificationModel);
+    }
+
 }

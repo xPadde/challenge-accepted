@@ -11,7 +11,6 @@ public class UserModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String firstName;
     private String lastName;
     private String email;
@@ -24,23 +23,10 @@ public class UserModel implements Serializable {
     private List<ChallengeModel> claimedChallenges;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "challengeCreator")
     private List<ChallengeModel> createdChallenge;
-    @OneToOne
-    private NewsFeedModel newsFeed;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "interactor")
+    private List<NotificationModel> interactors;
 
     public UserModel() {
-    }
-
-    public NewsFeedModel getNewsFeed() {
-
-        if(newsFeed == null){
-           newsFeed = new NewsFeedModel();
-        }
-
-        return newsFeed;
-    }
-
-    public void setNewsFeed(NewsFeedModel newsFeed) {
-        this.newsFeed = newsFeed;
     }
 
     public Long getTotalChallengePoints() {
@@ -74,6 +60,10 @@ public class UserModel implements Serializable {
         addTotalChallengePoints(points);
     }
 
+    public void removeCompletedChallengePoint() {
+        this.completedChallengePoints -= 1L;
+    }
+
     public Long getCreatedChallengePoints() {
         return createdChallengePoints;
     }
@@ -88,6 +78,10 @@ public class UserModel implements Serializable {
         }
         this.createdChallengePoints += points;
         addTotalChallengePoints(points);
+    }
+
+    public void removeCreatedChallengePoint() {
+        this.createdChallengePoints -= 1L;
     }
 
     public Long getId() {
@@ -117,5 +111,4 @@ public class UserModel implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
 }

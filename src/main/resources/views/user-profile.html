@@ -2,14 +2,14 @@
     <div class="panel panel-default list">
         <div class="panel-heading">
             <h2>{{activeUser.firstName}} {{activeUser.lastName}}
-                <small>{{activeUser.totalChallengePoints}} points in total</small>
+                <small>{{(activeUser.createdChallengePoints/2) + activeUser.completedChallengePoints}} points in total</small>
 
             </h2>
 
 
         </div>
         <div class="panel-body">
-            <h4>Challenges created by {{activeUser.firstName}} <small> {{activeUser.createdChallengePoints}} points as
+            <h4>Challenges created by {{activeUser.firstName}} <small> {{activeUser.createdChallengePoints/2}} points as
                 creator</small></h4>
 
             <div ng-repeat="challenge in listOfChallenges">
