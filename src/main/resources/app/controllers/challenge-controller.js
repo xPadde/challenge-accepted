@@ -8,7 +8,6 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     // Messages for the alert-popup.
     var alertPopupMsgLogin = 'Login to use this feature!';
     var alertPopupMsgInvalidYoutubeUrl = 'Please provide a valid YouTube Url';
-    var alertPopupMsgConfirmVideo = 'Once you click confirm in the next step, the video will be sent to the challenge-creator. Be sure it is the right one!';
 
     var showAlertPopup = function (msg) {
         $.alert({
