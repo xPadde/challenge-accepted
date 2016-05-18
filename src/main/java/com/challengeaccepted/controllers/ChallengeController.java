@@ -2,7 +2,9 @@ package com.challengeaccepted.controllers;
 
 import com.challengeaccepted.models.ChallengeModel;
 import com.challengeaccepted.models.CommentModel;
+import com.challengeaccepted.models.NotificationModel;
 import com.challengeaccepted.models.UserModel;
+import com.challengeaccepted.models.enums.Action;
 import com.challengeaccepted.services.ChallengeService;
 import com.challengeaccepted.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class ChallengeController {
     private UserService userService;
     @Autowired
     private CommentController commentController;
+    @Autowired
+    private NotificationController notificationController;
     private Long resetUpvotes = 0l;
 
     @CrossOrigin
@@ -157,9 +161,10 @@ public class ChallengeController {
             challenge.removeUserModelFromChallengeUpvoters(user);
             challenge.removeUpvote();
         } else {
-
             challenge.addUpvote();
             challenge.addUserModelToChallengeUpvoters(user);
+
+            createAndSaveNotification(user, challenge, Action.UPVOTE);
         }
 
         challengeService.updateChallengeInDatabase(challenge);
@@ -180,4 +185,10 @@ public class ChallengeController {
 /*        challengeService.updateChallengeInDatabase(challengeModel);*/
         return new ResponseEntity(HttpStatus.CREATED);
     }
+
+    private void createAndSaveNotification(UserModel user, ChallengeModel challenge, Action action) {
+        NotificationModel notificationModel = new NotificationModel(user, challenge, action);
+        notificationController.createNotification(notificationModel);
+    }
+
 }

@@ -38,21 +38,8 @@ public class ChallengeModel implements Serializable {
     private UserModel challengeCreator;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "commentedChallenge")
     private List<CommentModel> challengeComments;
-    @ManyToOne
-    @JoinColumn(name = "feed_liked_challenge_id")
-    private NewsFeedModel feedLikedChallenge;
-    @ManyToOne
-    @JoinColumn(name = "feed_claimed_challenge_id")
-    private NewsFeedModel feedClaimedChallenge;
-    @ManyToOne
-    @JoinColumn(name = "feed_created_challenge_id")
-    private NewsFeedModel feedCreatedChallenge;
-    @ManyToOne
-    @JoinColumn(name = "feed_performed_challenge_id")
-    private NewsFeedModel feedPerformedChallenge;
-
-
-    //Todo skapa alla fyra relationer
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "interactedChallenge")
+    private List<NotificationModel> interactedChallenges;
 
     public ChallengeModel() {
     }
@@ -87,7 +74,6 @@ public class ChallengeModel implements Serializable {
         }
         return listOfChallengeCommentsId;
     }
-
 
 
     public void setChallengeComments(List<CommentModel> challengeComments) {
@@ -149,7 +135,7 @@ public class ChallengeModel implements Serializable {
     }
 
     public void addUpvote() {
-        if(this.upvotes == null){
+        if (this.upvotes == null) {
             this.upvotes = 0L;
         }
         this.upvotes += 1L;
@@ -211,7 +197,7 @@ public class ChallengeModel implements Serializable {
         if (challengeComments == null) {
             challengeComments = new ArrayList<CommentModel>();
         }
-
         challengeComments.add(commentModel);
     }
+
 }
