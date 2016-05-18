@@ -78,6 +78,11 @@ public class ChallengeController {
     @RequestMapping(value = "/challenge/{id}/update-challenge-claimer/", method = RequestMethod.PUT)
     public ResponseEntity<ChallengeModel> updateChallengeClaimer(@PathVariable Long id, @RequestBody UserModel userModel) {
         ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(id);
+
+        if (challengeModel.getChallengeCreator().getId().equals(userModel.getId())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         challengeModel.setChallengeClaimer(userModel);
         challengeModel.setChallengeClaimed(true);
         challengeService.updateChallengeInDatabase(challengeModel);

@@ -314,9 +314,13 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                     console.log("challengeService.updateChallenge() was successfully executed!");
                     $scope.activeChallenge = response;
                 })
-                .error(function (error) {
-                    console.log("challengeService.updateChallenge() ***FAILED*** to execute!");
-                    console.log(error);
+                .error(function (error, status) {
+                    if (status === 400) {
+                        console.log("challengeService.updateChallenge() ***FAILED*** to execute! Bad request! User cannot claim own challenge!");
+                    } else {
+                        console.log("challengeService.updateChallenge() ***FAILED*** to execute!");
+                        console.log(error);
+                    }
                 });
         } else {
             showAlertPopup(alertPopupMsgLogin);
