@@ -56,7 +56,6 @@ h1 {
 .social-share {
     width: 1.3em;
     height: 1.3em;
-    margin: 0.1em;
 }
 
 .thumb {
@@ -76,4 +75,8 @@ h1 {
     border: 0;
     height: 34px;
     padding: 0;
+}
+
+#login-logout {
+    padding-left: 4em;
 }

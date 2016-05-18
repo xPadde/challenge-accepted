@@ -55,7 +55,8 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Sort by <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdown-completed-home">
-                <li><a href="" ng-click="orderByField = 'creationDate'; reverseSort = !reverseSort">Date of creation</a></li>
+                <li><a href="" ng-click="orderByField = 'creationDate'; reverseSort = !reverseSort">Date of creation</a>
+                </li>
                 <li><a href="" ng-click="orderByField = 'upvotes'; reverseSort = !reverseSort">Upvotes</a></li>
             </ul>
 
@@ -70,7 +71,7 @@
                 </th>
                 <th></th>
                 <th> Upvotes
-                        <span ng-show="orderByField == 'upvotes'"></span>
+                    <span ng-show="orderByField == 'upvotes'"></span>
                 </th>
             </tr>
             </thead>
