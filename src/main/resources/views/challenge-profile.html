@@ -63,6 +63,7 @@
                 </iframe>
             <p>
         </div>
+
         <!--<div class="panel-footer">
             <form class="form-horizontal" role="form" id="commentChallengeForm">
                 <h4>Comments</h4>
@@ -107,5 +108,8 @@
                 </tbody>
             </table>
         </div>-->
+    </div>
+    <div class="panel panel-default" ng-if="isLoggedInUserTheChallengeCreator(activeChallenge)">
+        <div class="panel-body">You created this challenge. You cannot claim it.</div>
     </div>
 </div>
