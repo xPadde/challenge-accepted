@@ -23,10 +23,36 @@ public class UserModel implements Serializable {
     private List<ChallengeModel> claimedChallenges;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "challengeCreator")
     private List<ChallengeModel> createdChallenge;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "interactor")
-    private List<NotificationModel> interactors;
 
     public UserModel() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Long getTotalChallengePoints() {
@@ -37,7 +63,7 @@ public class UserModel implements Serializable {
         this.totalChallengePoints = totalChallengePoints;
     }
 
-    public void addTotalChallengePoints(Long points) {
+    private void addTotalChallengePoints(Long points) {
         if (this.totalChallengePoints == null) {
             this.totalChallengePoints = 0L;
         }
@@ -74,34 +100,6 @@ public class UserModel implements Serializable {
         }
         this.createdChallengePoints += points;
         addTotalChallengePoints(points);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
 }

@@ -17,10 +17,8 @@ public class NotificationModel implements Serializable {
     private Long id;
     private LocalDateTime dateTimeOfNotification;
     @ManyToOne
-    @JoinColumn(name = "interactor_id")
     private UserModel interactor;
     @ManyToOne
-    @JoinColumn(name = "interacted_challenge_id")
     private ChallengeModel interactedChallenge;
     @Enumerated(EnumType.STRING)
     private Action action;
