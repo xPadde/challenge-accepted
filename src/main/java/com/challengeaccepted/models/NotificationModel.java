@@ -1,6 +1,8 @@
 package com.challengeaccepted.models;
 
 import com.challengeaccepted.models.enums.Action;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -36,6 +38,8 @@ public class NotificationModel implements Serializable {
         return id;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     public LocalDateTime getDateTimeOfNotification() {
         return dateTimeOfNotification;
     }

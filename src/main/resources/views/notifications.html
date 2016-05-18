@@ -1,3 +1,10 @@
 <div ng-repeat="notification in listOfNotifications">
-    <p>{{ notification.interactor.firstName }} {{ notification.action }} {{ notification.interactedChallenge.topic }}</p>
+    <p>
+    <h4>
+        <small>{{ notification.dateTimeOfNotification | date }}</small>
+        {{ notification.interactor.firstName }}
+        <span ng-if="notification.action === 'UPVOTE'"> upvoted </span>
+        challenge with topic "{{ notification.interactedChallenge.topic }}"
+    </h4>
+    </p>
 </div>
