@@ -104,12 +104,4 @@ public class UserModel implements Serializable {
         this.email = email;
     }
 
-    public List<NotificationModel> getInteractors() {
-        return interactors;
-    }
-
-    public void setInteractors(List<NotificationModel> interactors) {
-        this.interactors = interactors;
-    }
-
 }

@@ -2,9 +2,10 @@ package com.challengeaccepted.controllers;
 
 import com.challengeaccepted.models.ChallengeModel;
 import com.challengeaccepted.models.CommentModel;
+import com.challengeaccepted.models.NotificationModel;
 import com.challengeaccepted.models.UserModel;
+import com.challengeaccepted.models.enums.Action;
 import com.challengeaccepted.services.ChallengeService;
-import com.challengeaccepted.services.NotificationService;
 import com.challengeaccepted.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -163,8 +164,7 @@ public class ChallengeController {
             challenge.addUpvote();
             challenge.addUserModelToChallengeUpvoters(user);
 
-
-
+            createAndSaveNotification(user, challenge);
         }
 
         challengeService.updateChallengeInDatabase(challenge);
@@ -185,4 +185,10 @@ public class ChallengeController {
 /*        challengeService.updateChallengeInDatabase(challengeModel);*/
         return new ResponseEntity(HttpStatus.CREATED);
     }
+
+    private void createAndSaveNotification(UserModel user, ChallengeModel challenge) {
+        NotificationModel notificationModel = new NotificationModel(user, challenge, Action.UPVOTE);
+        notificationController.createNotification(notificationModel);
+    }
+
 }

@@ -26,6 +26,12 @@ public class NotificationModel implements Serializable {
     public NotificationModel() {
     }
 
+    public NotificationModel(UserModel interactor, ChallengeModel interactedChallenge, Action action) {
+        this.interactor = interactor;
+        this.interactedChallenge = interactedChallenge;
+        this.action = action;
+    }
+
     public Long getId() {
         return id;
     }

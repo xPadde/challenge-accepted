@@ -200,12 +200,4 @@ public class ChallengeModel implements Serializable {
         challengeComments.add(commentModel);
     }
 
-    public List<NotificationModel> getInteractedChallenges() {
-        return interactedChallenges;
-    }
-
-    public void setInteractedChallenges(List<NotificationModel> interactedChallenges) {
-        this.interactedChallenges = interactedChallenges;
-    }
-
 }
