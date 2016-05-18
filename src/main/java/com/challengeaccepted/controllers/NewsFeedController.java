@@ -1,6 +1,7 @@
 package com.challengeaccepted.controllers;
 
 
+import com.challengeaccepted.models.ChallengeModel;
 import com.challengeaccepted.models.NewsFeedModel;
 import com.challengeaccepted.services.NewsFeedService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,22 @@ public class NewsFeedController {
 
         /*NewsFeedModel newsFeedModelToCheckWithDatabase = newsFeedService.getNewsFeedFromDatabase(1l);*/
 
-        newsFeedService.saveNewsFeedToDatabase(newsFeedModel);
-        return new ResponseEntity(HttpStatus.CREATED);
-        /*if(newsFeedModelToCheckWithDatabase == null){
+        NewsFeedModel newsFeedModelFromDatabase = newsFeedService.getNewsFeedFromDatabase(1L);
+        if(newsFeedModelFromDatabase == null){
             newsFeedService.saveNewsFeedToDatabase(newsFeedModel);
             return new ResponseEntity(HttpStatus.CREATED);
         }else{
             return new ResponseEntity(HttpStatus.FORBIDDEN);
-        }*/
+        }
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/newsfeed/addLikedChallenge/", method = RequestMethod.POST)
+    public ResponseEntity addLikedChallenge(@RequestBody ChallengeModel challengeModel){
+        NewsFeedModel newsFeedModelFromDatabase = newsFeedService.getNewsFeedFromDatabase(1L);
+
+        if(newsFeedModelFromDatabase != null){
+            newsFeedModelFromDatabase.addLikedChallenge(challengeModel);
+        }
     }
 }
