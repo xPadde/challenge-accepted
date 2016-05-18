@@ -16,7 +16,7 @@ app.factory('challengeService', function ($http) {
         },
         createNewChallenge: function (data, loggedInUserId) {
             return $http({
-                url: 'http://localhost:8080/api/challenge/create/challengecreator/' + loggedInUserId,
+                url: 'http://localhost:8080/api/challenge/create/challenge-creator/' + loggedInUserId,
                 method: 'POST',
                 data: data,
                 header: {'Content-Type': 'application/json'}
@@ -33,7 +33,7 @@ app.factory('challengeService', function ($http) {
 
         updateChallengeClaimer: function (loggedInUser, challengeId) {
             return $http({
-                url: 'http://localhost:8080/api/challenge/' + challengeId + '/updatechallengeclaimer/',
+                url: 'http://localhost:8080/api/challenge/' + challengeId + '/update-challenge-claimer/',
                 method: 'PUT',
                 data: loggedInUser,
                 header: {'Content-Type': 'application/json'}
@@ -42,7 +42,7 @@ app.factory('challengeService', function ($http) {
 
         addYoutubeUrlToChallenge: function (challengeId, youtubeUrl) {
             return $http({
-                url: 'http://localhost:8080/api/challenge/' + challengeId + '/addyoutubeurl/',
+                url: 'http://localhost:8080/api/challenge/' + challengeId + '/add-youtube-url/',
                 method: 'PUT',
                 data: youtubeUrl,
                 header: {'Content-Type': 'application/json'}
@@ -51,7 +51,7 @@ app.factory('challengeService', function ($http) {
 
         confirmUploadedYoutubeUrl: function (challengeId) {
             return $http({
-                url: 'http://localhost:8080/api/challenge/' + challengeId + '/confirmuploadedyoutubeurl/',
+                url: 'http://localhost:8080/api/challenge/' + challengeId + '/confirm-uploaded-youtube-url/',
                 method: 'PUT',
                 header: {'Content-Type': 'application/json'}
             })
@@ -59,7 +59,7 @@ app.factory('challengeService', function ($http) {
 
         addOrRemoveUserToChallengeUpvoters: function (data, id) {
             return $http({
-                url: 'http://localhost:8080/api/challenge/' + id + '/addorremoveusertochallengeupvoters/',
+                url: 'http://localhost:8080/api/challenge/' + id + '/add-or-remove-user-to-challenge-upvoters/',
                 method: 'PUT',
                 data: data,
                 header: {'Content-Type': 'application/json'}
@@ -68,7 +68,7 @@ app.factory('challengeService', function ($http) {
 
         addOrRemovePointToCompletedChallenge: function (data, id) {
             return $http({
-                url: 'http://localhost:8080/api/challenge/' + id + '/addorremovepointtocompletedchallenge/',
+                url: 'http://localhost:8080/api/challenge/' + id + '/add-or-remove-point-to-completed-challenge/',
                 method: 'PUT',
                 data: data,
                 header: {'Content-Type': 'application/json'}
@@ -77,7 +77,7 @@ app.factory('challengeService', function ($http) {
 
         assignPointsToUser: function (id) {
             return $http({
-                url: 'http://localhost:8080/api/challenge/' + id + '/assignpointstouser/',
+                url: 'http://localhost:8080/api/challenge/' + id + '/assign-points-to-user/',
                 method: 'PUT',
                 header: {'Content-Type': 'application/json'}
             })
@@ -85,20 +85,11 @@ app.factory('challengeService', function ($http) {
 
         disapproveCurrentChallenge: function (id) {
             return $http({
-                url: 'http://localhost:8080/api/challenge/' + id + '/disapprovechallenge/',
+                url: 'http://localhost:8080/api/challenge/' + id + '/disapprove-challenge/',
                 method: 'PUT',
                 header: {'Content-Type': 'application/json'}
             })
             
-        },
-
-        checkIfChallengeIsUpvotedByUser: function (loggedInUserId, challengeId) {
-            return $http({
-                url: 'http://localhost:8080/api/challenge/' + challengeId + '/checkifchallengeisupvotedbyuser/' + loggedInUserId + '/',
-                method: 'GET',
-                header: {'Content-Type': 'application/json'}
-            })
-
         },
 
         addCommentToChallenge: function (data, challengeId) {
