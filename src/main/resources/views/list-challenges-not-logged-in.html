@@ -1,18 +1,20 @@
 <div class="directive-search-challenges"></div>
-<div class="col-sm-6 ">
+<div class="col-sm-6">
     <div class="table-responsive list">
-        <h1>Available challenges</h1>
+        <h1>Completed challenges</h1>
 
         <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-available-home"
-                    data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="true">Sort by <span class="caret"></span></button>
-            <ul class="dropdown-menu" aria-labelledby="dropdown-available-home">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-completed-home"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Sort by <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdown-completed-home">
                 <li><a href="" ng-click="orderByField = 'creationDate'; reverseSort = !reverseSort">Date of creation</a>
                 </li>
                 <li><a href="" ng-click="orderByField = 'upvotes'; reverseSort = !reverseSort">Upvotes</a></li>
             </ul>
+
         </div>
+
         <table class="table table-hover">
             <thead>
             <tr>
@@ -45,22 +47,22 @@
         </table>
     </div>
 </div>
-
-<div class="col-sm-6">
+<div class="col-sm-6 ">
     <div class="table-responsive list">
-        <h1>Completed challenges</h1>
+        <h1>Available challenges</h1>
 
         <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-completed-home"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Sort by <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdown-completed-home">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-available-home"
+                    data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="true">Sort by <span class="caret"></span></button>
+            <ul class="dropdown-menu" aria-labelledby="dropdown-available-home">
                 <li><a href="" ng-click="orderByField = 'creationDate'; reverseSort = !reverseSort">Date of creation</a>
                 </li>
                 <li><a href="" ng-click="orderByField = 'upvotes'; reverseSort = !reverseSort">Upvotes</a></li>
             </ul>
-
         </div>
+
+
         <table class="table table-hover">
             <thead>
             <tr>
