@@ -12,7 +12,7 @@
             <tr ng-repeat="user in listOfUsers | orderBy:'-createdChallengePoints'"
                 ng-if="user.createdChallengePoints != null">
                 <td><a ng-click="viewUserProfilePage(user)">{{user.firstName}} {{user.lastName}}</a></td>
-                <td>{{user.createdChallengePoints}}</td>
+                <td>{{user.createdChallengePoints/2}}</td>
             </tr>
             </tbody>
         </table>

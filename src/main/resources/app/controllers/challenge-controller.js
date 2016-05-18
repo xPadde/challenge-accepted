@@ -233,7 +233,6 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
             });
     };
 
-
     /*
      Below code handles the upvoting and the managing of the already upvoted challenges.
      The code does not execute if no user is logged in.
