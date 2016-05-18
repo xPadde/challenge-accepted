@@ -40,6 +40,10 @@ public class NewsFeedController {
 
         if(newsFeedModelFromDatabase != null){
             newsFeedModelFromDatabase.addLikedChallenge(challengeModel);
+            return new ResponseEntity(HttpStatus.CREATED);
         }
+        return new ResponseEntity(HttpStatus.FORBIDDEN);
     }
+
+    // Todo testa att få tillbaka en lista av likeade challenges
 }
