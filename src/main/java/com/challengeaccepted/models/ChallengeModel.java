@@ -38,19 +38,8 @@ public class ChallengeModel implements Serializable {
     private UserModel challengeCreator;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "commentedChallenge")
     private List<CommentModel> challengeComments;
-    @ManyToOne
-    @JoinColumn(name = "liked_challenge_newsfeed_id")
-    private NewsFeedModel likedChallengeInNewsFeed;
-    @ManyToOne
-    @JoinColumn(name = "claimed_challenge_newsfeed_id")
-    private NewsFeedModel claimedChallengeInNewsFeed;
-    @ManyToOne
-    @JoinColumn(name = "created_challenge_newsfeed_id")
-    private NewsFeedModel createdChallengeInNewsFeed;
-    @ManyToOne
-    @JoinColumn(name = "performed_challenge_newsfeed_id")
-    private NewsFeedModel performedChallengeInNewsFeed;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "interactedChallenge")
+    private List<NotificationModel> interactedChallenges;
 
     public ChallengeModel() {
     }
@@ -85,7 +74,6 @@ public class ChallengeModel implements Serializable {
         }
         return listOfChallengeCommentsId;
     }
-
 
 
     public void setChallengeComments(List<CommentModel> challengeComments) {
@@ -147,7 +135,7 @@ public class ChallengeModel implements Serializable {
     }
 
     public void addUpvote() {
-        if(this.upvotes == null){
+        if (this.upvotes == null) {
             this.upvotes = 0L;
         }
         this.upvotes += 1L;
@@ -209,39 +197,15 @@ public class ChallengeModel implements Serializable {
         if (challengeComments == null) {
             challengeComments = new ArrayList<CommentModel>();
         }
-
         challengeComments.add(commentModel);
     }
 
-    public NewsFeedModel getLikedChallengeInNewsFeed() {
-        return likedChallengeInNewsFeed;
+    public List<NotificationModel> getInteractedChallenges() {
+        return interactedChallenges;
     }
 
-    public void setLikedChallengeInNewsFeed(NewsFeedModel likedChallengeInNewsFeed) {
-        this.likedChallengeInNewsFeed = likedChallengeInNewsFeed;
+    public void setInteractedChallenges(List<NotificationModel> interactedChallenges) {
+        this.interactedChallenges = interactedChallenges;
     }
 
-    public NewsFeedModel getClaimedChallengeInNewsFeed() {
-        return claimedChallengeInNewsFeed;
-    }
-
-    public void setClaimedChallengeInNewsFeed(NewsFeedModel claimedChallengeInNewsFeed) {
-        this.claimedChallengeInNewsFeed = claimedChallengeInNewsFeed;
-    }
-
-    public NewsFeedModel getCreatedChallengeInNewsFeed() {
-        return createdChallengeInNewsFeed;
-    }
-
-    public void setCreatedChallengeInNewsFeed(NewsFeedModel createdChallengeInNewsFeed) {
-        this.createdChallengeInNewsFeed = createdChallengeInNewsFeed;
-    }
-
-    public NewsFeedModel getPerformedChallengeInNewsFeed() {
-        return performedChallengeInNewsFeed;
-    }
-
-    public void setPerformedChallengeInNewsFeed(NewsFeedModel performedChallengeInNewsFeed) {
-        this.performedChallengeInNewsFeed = performedChallengeInNewsFeed;
-    }
 }

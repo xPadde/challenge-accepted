@@ -11,7 +11,6 @@ public class UserModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String firstName;
     private String lastName;
     private String email;
@@ -24,10 +23,11 @@ public class UserModel implements Serializable {
     private List<ChallengeModel> claimedChallenges;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "challengeCreator")
     private List<ChallengeModel> createdChallenge;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "interactor")
+    private List<NotificationModel> interactors;
 
     public UserModel() {
     }
-
 
     public Long getTotalChallengePoints() {
         return totalChallengePoints;
@@ -102,6 +102,14 @@ public class UserModel implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<NotificationModel> getInteractors() {
+        return interactors;
+    }
+
+    public void setInteractors(List<NotificationModel> interactors) {
+        this.interactors = interactors;
     }
 
 }
