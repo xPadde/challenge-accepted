@@ -15,6 +15,10 @@ public class NewsFeedService {
         newsFeedRepository.saveAndFlush(newsFeedModel);
     }
 
+    public void updateNewsFeedToDatabase(NewsFeedModel newsFeedModel){
+        newsFeedRepository.save(newsFeedModel);
+    }
+
     public NewsFeedModel getNewsFeedFromDatabase(Long id){
         return newsFeedRepository.getOne(id);
     }
