@@ -153,7 +153,6 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
     };
 
     $scope.createNewChallenge = function (form) {
-        console.log(form.validate());
         if (form.validate()) {
             $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
             challengeService.createNewChallenge($scope.getUserInputsFromCreateChallengeForm(), $scope.loggedInUser.id)
@@ -266,24 +265,24 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         }
         return false;
     };
-    
+
     $scope.addPointToChallenge = function (challenge) {
         if (sessionStorage.getItem('isLoggedIn') == 'true') {
             challengeService.addOrRemovePointToCompletedChallenge(sessionStorage.getItem('loggedInUser'), challenge.id)
                 .success(function () {
                     console.log("addPointToCompletedChallenge() was successfully executed!");
                     $scope.getListOfCompletedChallenges();
-                    
+
                 })
                 .error(function (error) {
                     console.log("addPointToCompletedChallenge() ***FAILED*** to execute");
                     console.log(error);
-                    
+
                 });
         } else {
             showAlertPopup(alertPopupMsgLogin)
         }
-        
+
     }
 
 
@@ -457,11 +456,13 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         rules: {
             inputTopic: {
                 required: true,
-                minlength: 5
+                minlength: 5,
+                maxlength: 21
             },
             inputDescription: {
                 required: true,
-                minlength: 15
+                minlength: 15,
+                maxlength: 144
             }
         },
         messages: {
