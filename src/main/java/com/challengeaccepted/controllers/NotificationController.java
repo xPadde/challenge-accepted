@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class NotificationController {
@@ -39,8 +41,21 @@ public class NotificationController {
     @RequestMapping(value = "/user/{id}/notifications/", method = RequestMethod.GET)
     public ResponseEntity<List<NotificationModel>> readPersonalNotifications(@PathVariable Long id){
         List<NotificationModel> notifications = new ArrayList<NotificationModel>();
+
         notifications = notificationService.getAllNotificationsFromChallengeCreator(id);
+        notifications.addAll(notificationService.getAllNotificationsFromChallengeClaimer(id));
+        notifications = removeDuplicateEntriesFromList(notifications);
 
         return new ResponseEntity<List<NotificationModel>>(notifications, HttpStatus.OK);
+    }
+
+    private List<NotificationModel> removeDuplicateEntriesFromList(List notifications){
+
+        Set<NotificationModel> notificationSet = new HashSet<>();
+        notificationSet.addAll(notifications);
+        notifications.clear();
+        notifications.addAll(notificationSet);
+
+        return notifications;
     }
 }
