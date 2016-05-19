@@ -27,7 +27,6 @@ public class ChallengeModel implements Serializable {
     private Boolean isYoutubeUrlProvided;
     private Boolean isChallengeCompleted;
     private Boolean isChallengeDisapproved;
-
     @ManyToMany
     @JoinColumn(name = "challenge_upvoters_id")
     private List<UserModel> challengeUpvoters;
@@ -39,58 +38,12 @@ public class ChallengeModel implements Serializable {
     private UserModel challengeCreator;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "commentedChallenge")
     private List<CommentModel> challengeComments;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "interactedChallenge")
-    private List<NotificationModel> interactedChallenges;
 
     public ChallengeModel() {
     }
 
-    public void addUserModelToChallengeUpvoters(UserModel userModel) {
-        if (challengeUpvoters == null) {
-            challengeUpvoters = new ArrayList<UserModel>();
-        }
-        challengeUpvoters.add(userModel);
-    }
-
-    public void removeUserModelFromChallengeUpvoters(UserModel userModel) {
-        challengeUpvoters.remove(userModel);
-    }
-
-    public List<Long> getChallengeUpvoters() {
-        List<Long> listOfChallengeUpvotersId = new ArrayList<Long>();
-        for (UserModel user : challengeUpvoters) {
-            listOfChallengeUpvotersId.add(user.getId());
-        }
-        return listOfChallengeUpvotersId;
-    }
-
-    public void setChallengeUpvoters(List<UserModel> challengeUpvoters) {
-        this.challengeUpvoters = challengeUpvoters;
-    }
-
-    public List<Long> getChallengeComments() {
-        List<Long> listOfChallengeCommentsId = new ArrayList<Long>();
-        for (UserModel user : challengeUpvoters) {
-            listOfChallengeCommentsId.add(user.getId());
-        }
-        return listOfChallengeCommentsId;
-    }
-
-
-    public void setChallengeComments(List<CommentModel> challengeComments) {
-        this.challengeComments = challengeComments;
-    }
-
     public Long getId() {
         return id;
-    }
-
-    public UserModel getChallengeClaimer() {
-        return challengeClaimer;
-    }
-
-    public void setChallengeClaimer(UserModel challengeClaimer) {
-        this.challengeClaimer = challengeClaimer;
     }
 
     public String getTopic() {
@@ -165,6 +118,29 @@ public class ChallengeModel implements Serializable {
         this.upvotes -= upvotes;
     }
 
+    public void addUserModelToChallengeUpvoters(UserModel userModel) {
+        if (challengeUpvoters == null) {
+            challengeUpvoters = new ArrayList<UserModel>();
+        }
+        challengeUpvoters.add(userModel);
+    }
+
+    public List<Long> getChallengeUpvoters() {
+        List<Long> listOfChallengeUpvotersId = new ArrayList<Long>();
+        for (UserModel user : challengeUpvoters) {
+            listOfChallengeUpvotersId.add(user.getId());
+        }
+        return listOfChallengeUpvotersId;
+    }
+
+    public void setChallengeUpvoters(List<UserModel> challengeUpvoters) {
+        this.challengeUpvoters = challengeUpvoters;
+    }
+
+    public void removeUserModelFromChallengeUpvoters(UserModel userModel) {
+        challengeUpvoters.remove(userModel);
+    }
+
     public Boolean getChallengeClaimed() {
         return isChallengeClaimed;
     }
@@ -205,6 +181,14 @@ public class ChallengeModel implements Serializable {
         isChallengeDisapproved = challengeDisapproved;
     }
 
+    public UserModel getChallengeClaimer() {
+        return challengeClaimer;
+    }
+
+    public void setChallengeClaimer(UserModel challengeClaimer) {
+        this.challengeClaimer = challengeClaimer;
+    }
+
     public UserModel getChallengeCreator() {
         return challengeCreator;
     }
@@ -218,6 +202,18 @@ public class ChallengeModel implements Serializable {
             challengeComments = new ArrayList<CommentModel>();
         }
         challengeComments.add(commentModel);
+    }
+
+    public List<Long> getChallengeComments() {
+        List<Long> listOfChallengeCommentsId = new ArrayList<Long>();
+        for (UserModel user : challengeUpvoters) {
+            listOfChallengeCommentsId.add(user.getId());
+        }
+        return listOfChallengeCommentsId;
+    }
+
+    public void setChallengeComments(List<CommentModel> challengeComments) {
+        this.challengeComments = challengeComments;
     }
 
 }

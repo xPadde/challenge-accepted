@@ -1,6 +1,8 @@
 package com.challengeaccepted.models;
 
-import com.challengeaccepted.models.enums.Action;
+import com.challengeaccepted.models.wrappers.NotificationInfo;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,27 +17,27 @@ public class NotificationModel implements Serializable {
     private Long id;
     private LocalDateTime dateTimeOfNotification;
     @ManyToOne
-    @JoinColumn(name = "interactor_id")
     private UserModel interactor;
     @ManyToOne
-    @JoinColumn(name = "interacted_challenge_id")
     private ChallengeModel interactedChallenge;
-    @Enumerated(EnumType.STRING)
-    private Action action;
+    @Embedded
+    private NotificationInfo notificationInfo;
 
     public NotificationModel() {
     }
 
-    public NotificationModel(UserModel interactor, ChallengeModel interactedChallenge, Action action) {
+    public NotificationModel(UserModel interactor, ChallengeModel interactedChallenge, NotificationInfo notificationInfo) {
         this.interactor = interactor;
         this.interactedChallenge = interactedChallenge;
-        this.action = action;
+        this.notificationInfo = notificationInfo;
     }
 
     public Long getId() {
         return id;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     public LocalDateTime getDateTimeOfNotification() {
         return dateTimeOfNotification;
     }
@@ -60,12 +62,11 @@ public class NotificationModel implements Serializable {
         this.interactedChallenge = interactedChallenge;
     }
 
-    public Action getAction() {
-        return action;
+    public NotificationInfo getNotificationInfo() {
+        return notificationInfo;
     }
 
-    public void setAction(Action action) {
-        this.action = action;
+    public void setNotificationInfo(NotificationInfo notificationInfo) {
+        this.notificationInfo = notificationInfo;
     }
-
 }

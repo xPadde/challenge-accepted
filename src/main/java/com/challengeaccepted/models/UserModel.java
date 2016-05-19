@@ -22,8 +22,6 @@ public class UserModel implements Serializable {
     private List<ChallengeModel> claimedChallenges;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "challengeCreator")
     private List<ChallengeModel> createdChallenge;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "interactor")
-    private List<NotificationModel> interactors;
 
     public UserModel() {
     }

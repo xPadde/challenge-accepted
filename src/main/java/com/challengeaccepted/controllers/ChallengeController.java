@@ -5,9 +5,11 @@ import com.challengeaccepted.models.CommentModel;
 import com.challengeaccepted.models.NotificationModel;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.models.enums.Action;
+import com.challengeaccepted.models.wrappers.NotificationInfo;
 import com.challengeaccepted.services.ChallengeService;
 import com.challengeaccepted.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +41,7 @@ public class ChallengeController {
         challengeModel.setChallengeCreator(challengeCreator);
 
         challengeService.saveChallengeToDatabase(challengeModel);
+        createAndSaveNotification(challengeCreator, challengeModel, new NotificationInfo(Action.CREATECHALLENGE));
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
@@ -86,6 +89,7 @@ public class ChallengeController {
         challengeModel.setChallengeClaimer(userModel);
         challengeModel.setChallengeClaimed(true);
         challengeService.updateChallengeInDatabase(challengeModel);
+        createAndSaveNotification(userModel, challengeModel, new NotificationInfo(Action.CLAIMCHALLENGE));
         return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
     }
 
@@ -120,6 +124,8 @@ public class ChallengeController {
         userService.updateUserInDatabase(challengeCreator);
         challengeService.updateChallengeInDatabase(challenge);
 
+        createAndSaveNotification(challengeCompleter, challenge, new NotificationInfo(Action.APPROVECHALLENGE));
+
         return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
     }
 
@@ -127,16 +133,20 @@ public class ChallengeController {
     @RequestMapping(value = "/challenge/{id}/disapprove-challenge/", method = RequestMethod.PUT)
     public ResponseEntity<ChallengeModel> disapproveChallenge(@PathVariable Long id) {
         ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(id);
+        UserModel userThatHasFailedPerformedChallenge = challengeModel.getChallengeClaimer();
 
         challengeModel.setYoutubeURL(null);
         challengeModel.setChallengeClaimed(false);
         challengeModel.setChallengeClaimer(null);
         challengeModel.setYoutubeVideoUploaded(false);
         challengeModel.setYoutubeUrlProvided(false);
-        challengeModel.setYoutubeVideoUploaded(true);
         challengeModel.setChallengeDisapproved(true);
 
         challengeService.updateChallengeInDatabase(challengeModel);
+
+        NotificationInfo notificationInfo = new NotificationInfo(Action.FAILEDTOPERFORMECHALLENGE, notificationMessage);
+        createAndSaveNotification(userThatHasFailedPerformedChallenge, challengeModel, notificationInfo);
+
         return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
     }
 
@@ -169,7 +179,7 @@ public class ChallengeController {
             challenge.addUpvotes(1.0);
             challenge.addUserModelToChallengeUpvoters(user);
 
-            createAndSaveNotification(user, challenge, Action.UPVOTE);
+            createAndSaveNotification(user, challenge, new NotificationInfo(Action.UPVOTECHALLENGE));
         }
 
         challengeService.updateChallengeInDatabase(challenge);
@@ -239,8 +249,8 @@ public class ChallengeController {
         userService.updateUserInDatabase(challengeCreator);
     }
 
-    private void createAndSaveNotification(UserModel user, ChallengeModel challenge, Action action) {
-        NotificationModel notificationModel = new NotificationModel(user, challenge, action);
+    private void createAndSaveNotification(UserModel user, ChallengeModel challenge, NotificationInfo notificationInfo) {
+        NotificationModel notificationModel = new NotificationModel(user, challenge, notificationInfo);
         notificationController.createNotification(notificationModel);
     }
 
