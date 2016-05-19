@@ -82,9 +82,7 @@ public class ChallengeController {
     public ResponseEntity<ChallengeModel> updateChallengeClaimer(@PathVariable Long id, @RequestBody UserModel userModel) {
         ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(id);
 
-        if (challengeModel.getChallengeCreator().getId().equals(userModel.getId())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        if (isChallengeCreatorSameAsChallengeClaimer(userModel, challengeModel)) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         challengeModel.setChallengeClaimer(userModel);
         challengeModel.setChallengeClaimed(true);
@@ -113,7 +111,7 @@ public class ChallengeController {
         Double pointsToDistribute = challenge.getUpvotes();
         System.out.println(pointsToDistribute);
 
-        challengeCreator.addCreatedChallengePoints(pointsToDistribute/2);
+        challengeCreator.addCreatedChallengePoints(pointsToDistribute / 2);
         challengeCompleter.addCompletedChallengePoints(pointsToDistribute);
         challenge.addPoints(pointsToDistribute);
 
@@ -218,6 +216,15 @@ public class ChallengeController {
 *//*        challengeService.updateChallengeInDatabase(challengeModel);*//*
         return new ResponseEntity(HttpStatus.CREATED);
     }*/
+
+    private boolean isChallengeCreatorSameAsChallengeClaimer(UserModel userModel, ChallengeModel challengeModel) {
+        if (challengeModel.getChallengeCreator() != null && userModel != null) {
+            if (challengeModel.getChallengeCreator().getId().equals(userModel.getId())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private void updateChallengeToCompleted(ChallengeModel challenge) {
         challenge.setChallengeCompleted(true);
