@@ -21,4 +21,8 @@ public class NotificationService {
         return notificationRepository.findAll();
     }
 
+    public List<NotificationModel> getAllNotificationsFromChallengeCreator(Long id) {
+        return notificationRepository.getByInteractedChallengeChallengeCreatorId(id);
+    }
+
 }

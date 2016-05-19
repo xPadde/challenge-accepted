@@ -1,12 +1,15 @@
 package com.challengeaccepted.controllers;
 
 import com.challengeaccepted.models.NotificationModel;
+import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,4 +35,12 @@ public class NotificationController {
         }
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "/user/{id}/notifications/", method = RequestMethod.GET)
+    public ResponseEntity<List<NotificationModel>> readPersonalNotifications(@PathVariable Long id){
+        List<NotificationModel> notifications = new ArrayList<NotificationModel>();
+        notifications = notificationService.getAllNotificationsFromChallengeCreator(id);
+
+        return new ResponseEntity<List<NotificationModel>>(notifications, HttpStatus.OK);
+    }
 }
