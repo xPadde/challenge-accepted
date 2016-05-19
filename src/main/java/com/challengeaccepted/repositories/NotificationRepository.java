@@ -13,4 +13,6 @@ public interface NotificationRepository extends JpaRepository<NotificationModel,
 
     ArrayList<NotificationModel> getByInteractedChallengeChallengeClaimerId(Long id);
 
+    ArrayList<NotificationModel> getByInteractedChallengeChallengeUpvotersId(Long id);
+
 }

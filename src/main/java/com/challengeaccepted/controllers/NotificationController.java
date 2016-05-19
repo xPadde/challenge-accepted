@@ -44,6 +44,7 @@ public class NotificationController {
 
         notifications = notificationService.getAllNotificationsFromChallengeCreator(id);
         notifications.addAll(notificationService.getAllNotificationsFromChallengeClaimer(id));
+        notifications.addAll(notificationService.getAllNotificationsFromChallengeUpvotersId(id));
         notifications = removeDuplicateEntriesFromList(notifications);
 
         return new ResponseEntity<List<NotificationModel>>(notifications, HttpStatus.OK);
