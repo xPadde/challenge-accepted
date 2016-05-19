@@ -2,9 +2,10 @@
     <p>
     <h4>
         <small>{{ notification.dateTimeOfNotification | date }}</small>
-        {{ notification.interactor.firstName }}
+        <a ng-click="viewUserProfilePage(notification.interactor)">{{ notification.interactor.firstName }}</a>
         <span ng-if="notification.action === 'UPVOTE'"> upvoted </span>
-        challenge with topic "{{ notification.interactedChallenge.topic }}"
+        challenge
+        <a ng-click="viewChallengeProfilePage(notification.interactedChallenge)">{{ notification.interactedChallenge.topic }}</a>
     </h4>
     </p>
 </div>
