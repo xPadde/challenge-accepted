@@ -88,7 +88,7 @@ public class ChallengeControllerTest {
 
     @Test
     public void testDisapproveChallenge_Should_Return_Status_Code_200() throws Exception {
-        assertEquals("disapproveChallenge() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.disapproveChallenge(1L).getStatusCode());
+        assertEquals("disapproveChallenge() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.disapproveChallenge(1L, null).getStatusCode());
     }
 
     @Test

@@ -5,9 +5,11 @@ import com.challengeaccepted.models.CommentModel;
 import com.challengeaccepted.models.NotificationModel;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.models.enums.Action;
+import com.challengeaccepted.models.wrappers.NotificationInfo;
 import com.challengeaccepted.services.ChallengeService;
 import com.challengeaccepted.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +41,7 @@ public class ChallengeController {
         challengeModel.setChallengeCreator(challengeCreator);
 
         challengeService.saveChallengeToDatabase(challengeModel);
-        createAndSaveNotification(challengeCreator, challengeModel, Action.CREATECHALLENGE);
+        createAndSaveNotification(challengeCreator, challengeModel, new NotificationInfo(Action.CREATECHALLENGE));
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
@@ -82,6 +84,7 @@ public class ChallengeController {
         challengeModel.setChallengeClaimer(userModel);
         challengeModel.setChallengeClaimed(true);
         challengeService.updateChallengeInDatabase(challengeModel);
+        createAndSaveNotification(userModel, challengeModel, new NotificationInfo(Action.CLAIMCHALLENGE));
         return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
     }
 
@@ -117,13 +120,19 @@ public class ChallengeController {
         userService.updateUserInDatabase(challengeCreator);
         challengeService.updateChallengeInDatabase(challengeToUpdateToDatabase);
 
+
+        createAndSaveNotification(challengeCompleter, challengeToUpdateToDatabase, new NotificationInfo(Action.APPROVECHALLENGE));
+
         return new ResponseEntity<ChallengeModel>(challengeToUpdateToDatabase, HttpStatus.OK);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/challenge/{id}/disapprovechallenge/", method = RequestMethod.PUT)
-    public ResponseEntity<ChallengeModel> disapproveChallenge(@PathVariable Long id) {
+    public ResponseEntity<ChallengeModel> disapproveChallenge(@PathVariable Long id, @RequestBody String notificationMessage) {
+
+        //TODO fixa message från frontend om disapprove
         ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(id);
+        UserModel userThatHasFailedPerformedChallenge = challengeModel.getChallengeClaimer();
 
         challengeModel.setYoutubeURL(null);
         challengeModel.setChallengeClaimed(false);
@@ -134,6 +143,10 @@ public class ChallengeController {
         challengeModel.setChallengeDisapproved(true);
 
         challengeService.updateChallengeInDatabase(challengeModel);
+
+        /*NotificationInfo notificationInfo = new NotificationInfo(Action.FAILEDTOPERFORMECHALLENGE, notificationMessage);
+        createAndSaveNotification(userThatHasFailedPerformedChallenge, challengeModel, notificationInfo);*/
+
         return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
     }
 
@@ -165,7 +178,7 @@ public class ChallengeController {
             challenge.addUpvote();
             challenge.addUserModelToChallengeUpvoters(user);
 
-            createAndSaveNotification(user, challenge, Action.UPVOTECHALLENGE);
+            createAndSaveNotification(user, challenge, new NotificationInfo(Action.UPVOTECHALLENGE));
         }
 
         challengeService.updateChallengeInDatabase(challenge);
@@ -187,8 +200,8 @@ public class ChallengeController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    private void createAndSaveNotification(UserModel user, ChallengeModel challenge, Action action) {
-        NotificationModel notificationModel = new NotificationModel(user, challenge, action);
+    private void createAndSaveNotification(UserModel user, ChallengeModel challenge, NotificationInfo notificationInfo) {
+        NotificationModel notificationModel = new NotificationModel(user, challenge, notificationInfo);
         notificationController.createNotification(notificationModel);
     }
 

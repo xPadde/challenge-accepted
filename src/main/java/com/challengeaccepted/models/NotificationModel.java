@@ -1,6 +1,7 @@
 package com.challengeaccepted.models;
 
 import com.challengeaccepted.models.enums.Action;
+import com.challengeaccepted.models.wrappers.NotificationInfo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,16 +21,16 @@ public class NotificationModel implements Serializable {
     private UserModel interactor;
     @ManyToOne
     private ChallengeModel interactedChallenge;
-    @Enumerated(EnumType.STRING)
-    private Action action;
+    @Embedded
+    private NotificationInfo notificiationInfo;
 
     public NotificationModel() {
     }
 
-    public NotificationModel(UserModel interactor, ChallengeModel interactedChallenge, Action action) {
+    public NotificationModel(UserModel interactor, ChallengeModel interactedChallenge, NotificationInfo notificiationInfo) {
         this.interactor = interactor;
         this.interactedChallenge = interactedChallenge;
-        this.action = action;
+        this.notificiationInfo = notificiationInfo;
     }
 
     public Long getId() {
@@ -62,12 +63,11 @@ public class NotificationModel implements Serializable {
         this.interactedChallenge = interactedChallenge;
     }
 
-    public Action getAction() {
-        return action;
+    public NotificationInfo getNotificiationInfo() {
+        return notificiationInfo;
     }
 
-    public void setAction(Action action) {
-        this.action = action;
+    public void setNotificiationInfo(NotificationInfo notificiationInfo) {
+        this.notificiationInfo = notificiationInfo;
     }
-
 }
