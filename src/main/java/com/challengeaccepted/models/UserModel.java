@@ -14,8 +14,8 @@ public class UserModel implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
-    private Long completedChallengePoints;
-    private Long createdChallengePoints;
+    private Double completedChallengePoints;
+    private Double createdChallengePoints;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "challengeUpvoters")
     private List<ChallengeModel> upvotedChallenges;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "challengeClaimer")
@@ -28,42 +28,42 @@ public class UserModel implements Serializable {
     public UserModel() {
     }
 
-    public Long getCompletedChallengePoints() {
+    public Double getCompletedChallengePoints() {
         return completedChallengePoints;
     }
 
-    public void setCompletedChallengePoints(Long completedChallengePoints) {
+    public void setCompletedChallengePoints(Double completedChallengePoints) {
         this.completedChallengePoints = completedChallengePoints;
     }
 
-    public void addCompletedChallengePoints(Long points) {
+    public void addCompletedChallengePoints(Double points) {
         if (this.completedChallengePoints == null) {
-            this.completedChallengePoints = 0L;
+            this.completedChallengePoints = 0.0;
         }
         this.completedChallengePoints += points;
     }
 
-    public void removeCompletedChallengePoint() {
-        this.completedChallengePoints -= 1L;
+    public void removeCompletedChallengePoint(Double points) {
+        this.completedChallengePoints -= points;
     }
 
-    public Long getCreatedChallengePoints() {
+    public Double getCreatedChallengePoints() {
         return createdChallengePoints;
     }
 
-    public void setCreatedChallengePoints(Long createdChallengePoints) {
+    public void setCreatedChallengePoints(Double createdChallengePoints) {
         this.createdChallengePoints = createdChallengePoints;
     }
 
-    public void addCreatedChallengePoints(Long points) {
+    public void addCreatedChallengePoints(Double points) {
         if (this.createdChallengePoints == null) {
-            this.createdChallengePoints = 0L;
+            this.createdChallengePoints = 0.0;
         }
         this.createdChallengePoints += points;
     }
 
-    public void removeCreatedChallengePoint() {
-        this.createdChallengePoints -= 1L;
+    public void removeCreatedChallengePoint(Double points) {
+        this.createdChallengePoints -= points;
     }
 
     public Long getId() {

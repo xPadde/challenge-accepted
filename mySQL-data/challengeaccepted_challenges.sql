@@ -31,8 +31,9 @@ CREATE TABLE `challenges` (
   `isChallengeDisapproved` bit(1) DEFAULT NULL,
   `isYoutubeUrlProvided` bit(1) DEFAULT NULL,
   `isYoutubeVideoUploaded` bit(1) DEFAULT NULL,
+  `points` double DEFAULT NULL,
   `topic` varchar(255) DEFAULT NULL,
-  `upvotes` bigint(20) DEFAULT NULL,
+  `upvotes` double DEFAULT NULL,
   `youtubeURL` varchar(255) DEFAULT NULL,
   `challenge_claimer_id` bigint(20) DEFAULT NULL,
   `challenge_creator_id` bigint(20) DEFAULT NULL,
@@ -41,7 +42,7 @@ CREATE TABLE `challenges` (
   KEY `FK_cqce2b189qgrgueef1k1c52j7` (`challenge_creator_id`),
   CONSTRAINT `FK_9ocnxn5eus1tie48jn5tptm3` FOREIGN KEY (`challenge_claimer_id`) REFERENCES `users` (`id`),
   CONSTRAINT `FK_cqce2b189qgrgueef1k1c52j7` FOREIGN KEY (`challenge_creator_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,7 +51,7 @@ CREATE TABLE `challenges` (
 
 LOCK TABLES `challenges` WRITE;
 /*!40000 ALTER TABLE `challenges` DISABLE KEYS */;
-INSERT INTO `challenges` VALUES (1,'2016-05-16 14:32:09','Utan salt','\0','\0','\0',NULL,'\0','Ät en myrstack',2,NULL,NULL,1),(2,'2016-05-16 14:32:21','Med peppar','\0','\0','\0',NULL,'\0','Ät apor',2,NULL,NULL,1),(3,'2016-05-16 14:32:38','Med lite fanta i','','\0','\0','\0','','Drick en cola zero',2,'https://www.youtube.com/embed/JxQzzxIageA',2,1),(4,'2016-05-16 14:34:16','Med handflatan utåt','','\0','\0',NULL,'\0','Svina till ett svin',0,NULL,1,2),(5,'2016-05-16 14:34:26','Alla ska tro på dig','\0','\0','\0',NULL,'\0','Apa dig på ett zoo',1,NULL,NULL,2);
+INSERT INTO `challenges` VALUES (1,'2016-05-19 11:00:48','lkjadgdkldkdhksöxkbf\n','','','\0','\0','\0',2,'sadlkhjashdnmalsdmkjb',1,'https://www.youtube.com/embed/Ax7tmaYObIQ',2,1),(2,'2016-05-19 11:05:35','PADDE! DET ÄR DAGS ATT SKAFFA RIGMOR NU!!!!!','\0','\0','\0',NULL,'\0',NULL,'Känn dig utmanad...',0,NULL,NULL,2),(3,'2016-05-19 11:05:54','I en isvak och sjung Bä, bä vita lamm.','','','\0','\0','\0',1,'Doppa huvudet',1,'https://www.youtube.com/embed/gsYHQb266qg',3,2),(4,'2016-05-19 11:06:16','I 40 minuter utan att andas och utan att dö','\0','\0','\0',NULL,'\0',NULL,'Vissla en sång',1,NULL,NULL,2),(5,'2016-05-19 11:06:31','Hela vägen till och från skolan','\0','\0','\0',NULL,'\0',NULL,'Hoppa jämfota',1,NULL,NULL,2),(6,'2016-05-19 11:06:46','Resten av livet','','','\0','\0','\0',2,'Drick kallt kaffe',3,'https://www.youtube.com/embed/NkhwuV9wAKE',3,2);
 /*!40000 ALTER TABLE `challenges` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -63,4 +64,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-16 14:36:32
+-- Dump completed on 2016-05-19 11:14:03

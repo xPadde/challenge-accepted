@@ -20,8 +20,8 @@ public class ChallengeModel implements Serializable {
     private String description;
     private String youtubeURL;
     private LocalDateTime creationDate;
-    private Long upvotes;
-    private Long points;
+    private Double upvotes;
+    private Double points;
     private Boolean isChallengeClaimed;
     private Boolean isYoutubeVideoUploaded;
     private Boolean isYoutubeUrlProvided;
@@ -127,42 +127,42 @@ public class ChallengeModel implements Serializable {
         this.creationDate = creationDate;
     }
 
-    public Long getUpvotes() {
+    public Double getUpvotes() {
         return upvotes;
     }
 
-    public void setUpvotes(Long upvotes) {
+    public void setUpvotes(Double upvotes) {
         this.upvotes = upvotes;
     }
 
-    public void addUpvote() {
+    public void addUpvotes(Double upvotes) {
         if (this.upvotes == null) {
-            this.upvotes = 0L;
+            this.upvotes = 0.0;
         }
-        this.upvotes += 1L;
+        this.upvotes += upvotes;
     }
 
-    public Long getPoints() {
+    public Double getPoints() {
         return points;
     }
 
-    public void setPoints(Long points) {
+    public void setPoints(Double points) {
         this.points = points;
     }
 
-    public void addPoints(Long points) {
+    public void addPoints(Double points) {
         if (this.points == null) {
-            this.points = 0L;
+            this.points = 0.0;
         }
         this.points += points;
     }
 
-    public void removePoint() {
-        this.points -= 1L;
+    public void removePoints(Double points) {
+        this.points -= points;
     }
 
-    public void removeUpvote() {
-        this.upvotes -= 1L;
+    public void removeUpvotes(Double upvotes) {
+        this.upvotes -= upvotes;
     }
 
     public Boolean getChallengeClaimed() {

@@ -106,9 +106,10 @@ public class ChallengeController {
         UserModel challengeCompleter = userService.getUserFromDatabase(challenge.getChallengeClaimer().getId());
         UserModel challengeCreator = userService.getUserFromDatabase(challenge.getChallengeCreator().getId());
 
-        Long pointsToDistribute = (long) challenge.getChallengeUpvoters().size();
+        Double pointsToDistribute = challenge.getUpvotes();
+        System.out.println(pointsToDistribute);
 
-        challengeCreator.addCreatedChallengePoints(pointsToDistribute);
+        challengeCreator.addCreatedChallengePoints(pointsToDistribute/2);
         challengeCompleter.addCompletedChallengePoints(pointsToDistribute);
         challenge.addPoints(pointsToDistribute);
 
@@ -163,9 +164,9 @@ public class ChallengeController {
 
         if (challenge.getChallengeUpvoters().contains(user.getId())) {
             challenge.removeUserModelFromChallengeUpvoters(user);
-            challenge.removeUpvote();
+            challenge.removeUpvotes(1.0);
         } else {
-            challenge.addUpvote();
+            challenge.addUpvotes(1.0);
             challenge.addUserModelToChallengeUpvoters(user);
 
             createAndSaveNotification(user, challenge, Action.UPVOTE);
@@ -218,9 +219,9 @@ public class ChallengeController {
         UserModel challengeCompleter = userService.getUserFromDatabase(challenge.getChallengeClaimer().getId());
         UserModel challengeCreator = userService.getUserFromDatabase(challenge.getChallengeCreator().getId());
 
-        challenge.removePoint();
-        challengeCompleter.removeCompletedChallengePoint();
-        challengeCreator.removeCreatedChallengePoint();
+        challenge.removePoints(1.0);
+        challengeCompleter.removeCompletedChallengePoint(1.0);
+        challengeCreator.removeCreatedChallengePoint(0.5);
 
         userService.updateUserInDatabase(challengeCompleter);
         userService.updateUserInDatabase(challengeCreator);
@@ -230,9 +231,9 @@ public class ChallengeController {
         UserModel challengeCompleter = userService.getUserFromDatabase(challenge.getChallengeClaimer().getId());
         UserModel challengeCreator = userService.getUserFromDatabase(challenge.getChallengeCreator().getId());
 
-        challenge.addPoints(1L);
-        challengeCompleter.addCompletedChallengePoints(1L);
-        challengeCreator.addCreatedChallengePoints(1L);
+        challenge.addPoints(1.0);
+        challengeCompleter.addCompletedChallengePoints(1.0);
+        challengeCreator.addCreatedChallengePoints(0.5);
 
         userService.updateUserInDatabase(challengeCompleter);
         userService.updateUserInDatabase(challengeCreator);
