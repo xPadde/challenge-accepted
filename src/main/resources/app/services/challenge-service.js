@@ -74,13 +74,13 @@ app.factory('challengeService', function ($http) {
             })
         },
 
-        disapproveCurrentChallenge: function (id) {
+        disapproveCurrentChallenge: function (id, data) {
             return $http({
                 url: 'http://localhost:8080/api/challenge/' + id + '/disapprovechallenge/',
+                data: data,
                 method: 'PUT',
                 header: {'Content-Type': 'application/json'}
             })
-            
         },
 
         checkIfChallengeIsUpvotedByUser: function (loggedInUserId, challengeId) {

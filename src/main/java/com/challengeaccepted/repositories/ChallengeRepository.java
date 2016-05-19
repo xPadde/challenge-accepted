@@ -10,4 +10,5 @@ public interface ChallengeRepository extends JpaRepository<ChallengeModel, Long>
     List<ChallengeModel> getByIsChallengeCompleted(boolean isChallengeCompleted);
 
     List<ChallengeModel> getByIsYoutubeVideoUploaded(boolean isYoutubeVideoUploaded);
+
 }

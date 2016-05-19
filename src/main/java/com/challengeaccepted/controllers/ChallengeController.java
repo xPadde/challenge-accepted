@@ -139,13 +139,12 @@ public class ChallengeController {
         challengeModel.setChallengeClaimer(null);
         challengeModel.setYoutubeVideoUploaded(false);
         challengeModel.setYoutubeUrlProvided(false);
-        challengeModel.setYoutubeVideoUploaded(true);
         challengeModel.setChallengeDisapproved(true);
 
         challengeService.updateChallengeInDatabase(challengeModel);
 
-        /*NotificationInfo notificationInfo = new NotificationInfo(Action.FAILEDTOPERFORMECHALLENGE, notificationMessage);
-        createAndSaveNotification(userThatHasFailedPerformedChallenge, challengeModel, notificationInfo);*/
+        NotificationInfo notificationInfo = new NotificationInfo(Action.FAILEDTOPERFORMECHALLENGE, notificationMessage);
+        createAndSaveNotification(userThatHasFailedPerformedChallenge, challengeModel, notificationInfo);
 
         return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
     }
