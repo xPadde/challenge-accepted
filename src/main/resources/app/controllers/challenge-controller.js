@@ -334,7 +334,7 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
         var userProvidedUrl = $('#input-youtube-url').val();
         var convertedYoutubeUrl = convertToYouTubeEmbedUrl(userProvidedUrl);
 
-        showAlertPopup('Once you click confirm in the next step, the video will be sent to ' + challenge.challengeCreator.firstName + ' ' + challenge.challengeCreator.lastName + '. Be sure it is the right one!');
+
 
         challengeService.addYoutubeUrlToChallenge(challenge.id, convertedYoutubeUrl)
             .success(function (response) {
@@ -345,6 +345,8 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
                 console.log("challengeService.addYoutubeUrlToChallenge() ***FAILED*** to execute!");
                 console.log(error);
             });
+
+        showAlertPopup('Once you click confirm in the next step, the video will be sent to ' + challenge.challengeCreator.firstName + ' ' + challenge.challengeCreator.lastName + '. Be sure it is the right one!');
     };
 
     $scope.confirmYoutubeVideoToCurrentChallenge = function (challenge) {

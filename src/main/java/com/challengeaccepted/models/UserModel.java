@@ -14,7 +14,6 @@ public class UserModel implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
-    private Long totalChallengePoints;
     private Long completedChallengePoints;
     private Long createdChallengePoints;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "challengeUpvoters")
@@ -27,21 +26,6 @@ public class UserModel implements Serializable {
     private List<NotificationModel> interactors;
 
     public UserModel() {
-    }
-
-    public Long getTotalChallengePoints() {
-        return totalChallengePoints;
-    }
-
-    public void setTotalChallengePoints(Long totalChallengePoints) {
-        this.totalChallengePoints = totalChallengePoints;
-    }
-
-    public void addTotalChallengePoints(Long points) {
-        if (this.totalChallengePoints == null) {
-            this.totalChallengePoints = 0L;
-        }
-        this.totalChallengePoints += points;
     }
 
     public Long getCompletedChallengePoints() {
@@ -57,7 +41,6 @@ public class UserModel implements Serializable {
             this.completedChallengePoints = 0L;
         }
         this.completedChallengePoints += points;
-        addTotalChallengePoints(points);
     }
 
     public void removeCompletedChallengePoint() {
@@ -77,7 +60,6 @@ public class UserModel implements Serializable {
             this.createdChallengePoints = 0L;
         }
         this.createdChallengePoints += points;
-        addTotalChallengePoints(points);
     }
 
     public void removeCreatedChallengePoint() {

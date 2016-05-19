@@ -5,18 +5,18 @@
         <thead>
         <tr>
             <th>Topic</th>
-            <th>Description</th>
             <th>Video</th>
+            <th>Performed by</th>
             <th>Approve / Disapprove</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="challenge in listOfUnapprovedChallenges | filter:searchChallenges | orderBy:orderByField:reverseSort" ng-if="isLoggedInUserTheChallengeCreator(challenge)" ng-hide="challenge.challengeCompleted">
             <td><a href="#" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
-            <td>{{challenge.description}}</td>
             <td>
                 <iframe width="200" height="200" allowfullscreen="true" ng-src="{{ markUrlAsTrusted(challenge.youtubeURL) }}"></iframe>
             </td>
+            <td><a ng-click="viewUserProfilePage(challenge.challengeClaimer)">{{challenge.challengeClaimer.firstName}} {{challenge.challengeClaimer.lastName}}</a></td>
             <td>
                 <a href="#">
                     <button ng-click="completeChallenge(challenge)" class="btn btn-success">APPROVE</button>
