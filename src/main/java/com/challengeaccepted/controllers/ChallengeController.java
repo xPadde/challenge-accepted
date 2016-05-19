@@ -124,14 +124,14 @@ public class ChallengeController {
         userService.updateUserInDatabase(challengeCreator);
         challengeService.updateChallengeInDatabase(challenge);
 
-        createAndSaveNotification(challengeCompleter, challenge, new NotificationInfo(Action.APPROVECHALLENGE));
+        createAndSaveNotification(challengeCompleter, challenge, new NotificationInfo(Action.PERFORMEDCHALLENGE));
 
         return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/challenge/{id}/disapprove-challenge/", method = RequestMethod.PUT)
-    public ResponseEntity<ChallengeModel> disapproveChallenge(@PathVariable Long id) {
+    public ResponseEntity<ChallengeModel> disapproveChallenge(@PathVariable Long id, @RequestBody String notificationMessage) {
         ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(id);
         UserModel userThatHasFailedPerformedChallenge = challengeModel.getChallengeClaimer();
 
