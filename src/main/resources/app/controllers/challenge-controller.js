@@ -436,7 +436,8 @@ app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeServ
      Below code handles notifications.
      */
     $scope.updateListOfNotifications = function () {
-        notificationService.getAllNotifications()
+        $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
+        notificationService.getAllNotifications($scope.loggedInUser.id)
             .success(function (response) {
                 console.log('notificationService.getAllNotifications() was successfully executed!');
                 console.log(response);
