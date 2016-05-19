@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
@@ -107,8 +108,10 @@ public class ChallengeControllerTest {
     }
 
     @Test
-    public void testConfirmUploadedYoutubeUrl_Should_Return_Status_Code_200() throws Exception {
+    public void testConfirmUploadedYoutubeUrl() throws Exception {
         assertEquals("confirmUploadedYoutubeUrl() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.confirmUploadedYoutubeUrl(1L).getStatusCode());
+        when(mockedChallenge.getYoutubeVideoUploaded()).thenReturn(true);
+        assertEquals("confirmUploadedYoutubeUrl() did not respond with http status 400 (bad request)", HttpStatus.BAD_REQUEST, challengeController.confirmUploadedYoutubeUrl(1L).getStatusCode());
     }
 
     @Test()
