@@ -39,6 +39,7 @@ public class ChallengeController {
         challengeModel.setChallengeCreator(challengeCreator);
 
         challengeService.saveChallengeToDatabase(challengeModel);
+        createAndSaveNotification(challengeCreator, challengeModel, Action.CREATECHALLENGE);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
@@ -164,7 +165,7 @@ public class ChallengeController {
             challenge.addUpvote();
             challenge.addUserModelToChallengeUpvoters(user);
 
-            createAndSaveNotification(user, challenge, Action.UPVOTE);
+            createAndSaveNotification(user, challenge, Action.UPVOTECHALLENGE);
         }
 
         challengeService.updateChallengeInDatabase(challenge);
