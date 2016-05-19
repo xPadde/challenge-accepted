@@ -9,9 +9,9 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Sort by <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdown-completed-home">
-                <li><a href="" ng-click="orderByField = 'creationDate'; reverseSort = !reverseSort">Date of creation</a>
+                <li><a href="" ng-click="orderByFieldAvailable = 'creationDate'; reverseSortAvailable = !reverseSortAvailable">Date of creation</a>
                 </li>
-                <li><a href="" ng-click="orderByField = 'upvotes'; reverseSort = !reverseSort">Upvotes</a></li>
+                <li><a href="" ng-click="orderByFieldAvailable = 'upvotes'; reverseSortAvailable = !reverseSortAvailable">Upvotes</a></li>
             </ul>
 
         </div>
@@ -21,18 +21,13 @@
             <tr>
                 <th>Topic</th>
                 <th>Description</th>
-                <th> Date of creation<span ng-show="orderByField == 'creationDate'"></span>
-
-                </th>
+                <th> Date of creation</th>
                 <th></th>
-                <th>Upvotes
-                        <span ng-show="orderByField == 'upvotes'">
-                    </span>
-                </th>
+                <th>Upvotes</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="challenge in listOfChallenges | filter:searchChallenges | orderBy:orderByField:reverseSort"
+            <tr ng-repeat="challenge in listOfChallenges | filter:searchChallenges | orderBy:orderByFieldAvailable:reverseSortAvailable"
                 ng-hide="challenge.challengeClaimed">
                 <td><a href="#" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
                 <td>{{challenge.description}}</td>
@@ -58,9 +53,9 @@
                     data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="true">Sort by <span class="caret"></span></button>
             <ul class="dropdown-menu" aria-labelledby="dropdown-available-home">
-                <li><a href="" ng-click="orderByField = 'creationDate'; reverseSort = !reverseSort">Date of creation</a>
+                <li><a href="" ng-click="orderByFieldCompleted = 'creationDate'; reverseSortCompleted = !reverseSortCompleted">Date of creation</a>
                 </li>
-                <li><a href="" ng-click="orderByField = 'upvotes'; reverseSort = !reverseSort">Upvotes</a></li>
+                <li><a href="" ng-click="orderByFieldCompleted = 'upvotes'; reverseSortCompleted = !reverseSortCompleted">Upvotes</a></li>
             </ul>
         </div>
         <table class="table table-hover">
@@ -68,17 +63,13 @@
             <tr>
                 <th>Topic</th>
                 <th>Description</th>
-                <th>Date of creation
-                    <span ng-show="orderByField == 'creationDate'"></span>
-                </th>
+                <th>Date of creation</th>
                 <th></th>
-                <th> Upvotes
-                    <span ng-show="orderByField == 'upvotes'"></span>
-                </th>
+                <th> Upvotes</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="challenge in listOfCompletedChallenges | filter:searchChallenges | orderBy:orderByField:reverseSort">
+            <tr ng-repeat="challenge in listOfCompletedChallenges | filter:searchChallenges | orderBy:orderByFieldCompleted:reverseSortCompleted">
                 <td><a href="#" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
                 <td>{{challenge.description}}</td>
                 <td>{{challenge.creationDate}}</td>

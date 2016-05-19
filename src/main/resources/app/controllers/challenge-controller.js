@@ -1,8 +1,13 @@
 app.controller('ChallengeController', ['$scope', '$http', '$sce', 'challengeService', 'userService', 'notificationService', function ($scope, $http, $sce, challengeService, userService, notificationService) {
 
-    // The variables for sorting the challenge list.
-    $scope.orderByField = 'creationDate';
-    $scope.reverseSort = true;
+    // The variables for sorting the challenge lists.
+    $scope.orderByFieldAvailable = 'creationDate';
+    $scope.orderByCompleted = 'creationDate';
+    $scope.orderByClaimed = 'creationDate';
+    $scope.reverseSortAvailable = true;
+    $scope.reverseSortCompleted = true;
+    $scope.reverseSortClaimed = true;
+
     $scope.dynamicUrl = "www.youtube.com/watch?v=elN_CPsJ27M";
 
     // Messages for the alert-popup.

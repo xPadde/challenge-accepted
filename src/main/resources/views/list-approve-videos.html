@@ -11,7 +11,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="challenge in listOfUnapprovedChallenges | filter:searchChallenges | orderBy:orderByField:reverseSort" ng-if="isLoggedInUserTheChallengeCreator(challenge)" ng-hide="challenge.challengeCompleted">
+        <tr ng-repeat="challenge in listOfUnapprovedChallenges | filter:searchChallenges" ng-if="isLoggedInUserTheChallengeCreator(challenge)" ng-hide="challenge.challengeCompleted">
             <td><a href="#" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
             <td>
                 <iframe width="200" height="200" allowfullscreen="true" ng-src="{{ markUrlAsTrusted(challenge.youtubeURL) }}"></iframe>
