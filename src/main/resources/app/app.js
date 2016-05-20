@@ -30,11 +30,6 @@ app.config(function ($routeProvider) {
             templateUrl: 'views/list-approve-videos.html',
             controller: 'ChallengeController'
         })
-        .when('/home', {
-            title: 'Challenge accepted',
-            templateUrl: '/index.html',
-            controller: 'ChallengeController'
-        })
         .when('/notifications', {
             title: 'Notifications',
             templateUrl: 'views/notifications.html',
@@ -55,5 +50,5 @@ app.config(function ($routeProvider) {
             templateUrl: 'views/list-users.html',
             controller: 'ChallengeController'
         })
-        .otherwise({redirectTo: "index.html"})
+        .otherwise({redirectTo: "/"})
 });

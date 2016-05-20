@@ -1,15 +1,7 @@
 app.controller('ChallengeController', ['$scope', '$location', '$route', '$http', '$sce', 'challengeService', 'userService', 'scopeService', 'notificationService',
     function ($scope, $location, $route, $http, $sce, challengeService, userService, scopeService, notificationService) {
-
-        // The variables for sorting the challenge lists.
-        $scope.orderByFieldAvailable = 'creationDate';
-        $scope.orderByCompleted = 'creationDate';
-        $scope.orderByClaimed = 'creationDate';
-        $scope.reverseSortAvailable = true;
-        $scope.reverseSortCompleted = true;
-        $scope.reverseSortClaimed = true;
-
-            $scope.dynamicUrl = "www.youtube.com/watch?v=elN_CPsJ27M";
+        
+        $scope.dynamicUrl = "www.youtube.com/watch?v=elN_CPsJ27M";
 
         // Messages for the alert-popup.
         var alertPopupMsgLogin = 'Login to use this feature!';
@@ -21,64 +13,6 @@ app.controller('ChallengeController', ['$scope', '$location', '$route', '$http',
                 content: msg
             });
         };
-
-        /*
-         Below Code handles the user login.
-         */
-        $scope.getUserInfo = function (profile) {
-            return JSON.stringify({
-                'firstName': profile.getGivenName(),
-                'lastName': profile.getFamilyName(),
-                'email': profile.getEmail()
-            });
-        };
-
-        $scope.setLoggedInUser = function (response) {
-            if (response == "") {
-                userService.createNewUser($scope.loggedInUser)
-                    .success(function (response) {
-                        console.log('Login success! The user NOT found in database and successfully saved to the database!');
-                        sessionStorage.setItem('loggedInUser', JSON.stringify(response));
-                        sessionStorage.setItem('isLoggedIn', true);
-                    })
-                    .error(function (error) {
-                        console.log('The user NOT found in database but ***FAILED*** to save to the database!');
-                        console.log(error);
-                    });
-            } else {
-                console.log("Login success! The user already found in database! Proceeding...");
-                sessionStorage.setItem('loggedInUser', JSON.stringify(response));
-                sessionStorage.setItem('isLoggedIn', true);
-            }
-        };
-
-        onSignIn = function (googleUser) {
-            var profile = googleUser.getBasicProfile();
-            var userFoundByEmail = "";
-            $scope.loggedInUser = JSON.parse($scope.getUserInfo(profile));
-
-            userService.getUserByEmail($scope.loggedInUser.email)
-                .success(function (response) {
-                    userFoundByEmail = response;
-                })
-                .error(function (error) {
-                    console.log("userService.getUserByEmail ERROR!");
-                    console.log(error);
-                }).then(function () {
-                $scope.setLoggedInUser(userFoundByEmail);
-            });
-        };
-
-        $scope.signOut = function () {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-                sessionStorage.setItem("loggedInUser", null);
-                sessionStorage.setItem("isLoggedIn", false);
-                console.log("Auth2 isSignedIn?: " + auth2.isSignedIn.get());
-                window.location.reload();
-            });
-        };
-
 
         /*
          Below code handles the toggling of the different sections in index.html.
@@ -134,13 +68,13 @@ app.controller('ChallengeController', ['$scope', '$location', '$route', '$http',
             $scope.disableLikeButton = $scope.isChallengeUpvotedByUser(challenge); // scope variable for using with ng-show.
         };
 
-        $scope.viewUserProfilePage = function (user) {
+        /*$scope.viewUserProfilePage = function (user) {
             userService.getUserByEmail(user.email).success(function (response) {
                 scopeService.setActiveUser(response);
                 $location.path('/user-profile/' + response.id);
             });
             $scope.getListOfCompletedChallenges();
-        };
+        };*/
 
         $scope.showListOfNotifications = function () {
             $scope.updateListOfNotifications();
@@ -197,6 +131,16 @@ app.controller('ChallengeController', ['$scope', '$location', '$route', '$http',
          Below code handles the fetching of the challenge and the user lists.
          The response in the success callbacks is assigned to the scope.
          */
+        function initializeSortVariables() {
+            // The variables for sorting the challenge lists.
+            $scope.orderByFieldAvailable = 'creationDate';
+            $scope.orderByCompleted = 'creationDate';
+            $scope.orderByClaimed = 'creationDate';
+            $scope.reverseSortAvailable = true;
+            $scope.reverseSortCompleted = true;
+            $scope.reverseSortClaimed = true;
+        }
+        
         $scope.getListOfChallenges = function () {
             challengeService.getListOfAllChallenges()
                 .success(function (response) {
@@ -517,5 +461,6 @@ app.controller('ChallengeController', ['$scope', '$location', '$route', '$http',
         // Fetch the list of challenges on application start.
         $scope.getListOfChallenges();
         $scope.getListOfCompletedChallenges();
+        initializeSortVariables();
 
     }]);

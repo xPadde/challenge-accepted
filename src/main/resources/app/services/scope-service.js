@@ -2,7 +2,7 @@ app.service('scopeService', function () {
 
     var activeChallenge;
     var activeUser;
-    
+
     return {
         setActiveUser: function (user) {
             activeUser = user;
@@ -18,6 +18,13 @@ app.service('scopeService', function () {
 
         getActiveChallenge: function () {
             return activeChallenge;
+        },
+
+        viewUserProfilePage: function (user, userService, $location) {
+            userService.getUserByEmail(user.email).success(function (response) {
+                activeUser = response;
+                $location.path('/user-profile/' + response.id);
+            });
         }
     }
 });
