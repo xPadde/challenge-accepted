@@ -1,4 +1,5 @@
 app.factory('challengeService', function ($http) {
+    var activeChallenge;
     return {
         getChallengeById: function (id) {
             return $http({
@@ -128,23 +129,4 @@ app.factory('challengeService', function ($http) {
             })
         }
     }
-});
-
-app.service('challengeService2', function () {
-    var servicescope;
-
-    var addScope = function (scope) {
-        servicescope = (scope);
-    };
-
-    var getScope = function () {
-        return servicescope;
-        
-    };
-
-    return {
-        addScope: addScope,
-        getScope: getScope
-    };
-    
 });

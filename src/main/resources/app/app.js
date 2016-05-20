@@ -43,7 +43,7 @@ app.config(function ($routeProvider) {
         .when('/challenge-profile/:id', {
             title: 'Challenge profile',
             templateUrl: 'views/challenge-profile.html',
-            controller: 'ChallengeController'
+            controller: 'ChallengeProfileController'
         })
         .when('/user-profile/:id', {
             title: 'User profile',

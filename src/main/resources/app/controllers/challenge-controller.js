@@ -1,5 +1,5 @@
-app.controller('ChallengeController', ['$scope', '$location', '$route', '$http', '$sce', 'challengeService', 'userService', 'notificationService',
-    function ($scope, $location, $route, $http, $sce, challengeService, userService, notificationService) {
+app.controller('ChallengeController', ['$scope', '$location', '$route', '$http', '$sce', 'challengeService', 'userService', 'scopeService', 'notificationService',
+    function ($scope, $location, $route, $http, $sce, challengeService, userService, scopeService, notificationService) {
 
         // The variables for sorting the challenge lists.
         $scope.orderByFieldAvailable = 'creationDate';
@@ -129,15 +129,17 @@ app.controller('ChallengeController', ['$scope', '$location', '$route', '$http',
 
         $scope.viewChallengeProfilePage = function (challenge) {
             $scope.activeChallenge = challenge;
-            $location.path('/challenge-profile/' + challenge.id);
+            scopeService.setActiveChallenge($scope.activeChallenge);
+            $location.path('/challenge-profile/' + $scope.activeChallenge.id);
             $scope.disableLikeButton = $scope.isChallengeUpvotedByUser(challenge); // scope variable for using with ng-show.
         };
 
         $scope.viewUserProfilePage = function (user) {
+            userService.getUserByEmail(user.email).success(function (response) {
+                scopeService.setActiveUser(response);
+                $location.path('/user-profile/' + response.id);
+            });
             $scope.getListOfCompletedChallenges();
-            $scope.activeUser = user;
-            userService.setActiveUser($scope.activeUser);
-            $location.path('/user-profile/' + $scope.activeUser.id);
         };
 
         $scope.showListOfNotifications = function () {

@@ -1,5 +1,5 @@
-app.controller('UserController', ['userService', '$scope', function (userService, $scope) {
+app.controller('UserController', ['scopeService', '$scope', function (scopeService, $scope) {
     console.log("UserController laddas");
-    $scope.activeUser = userService.getActiveUser();
+    $scope.activeUser = scopeService.getActiveUser();
     console.log("active User Scope: " + $scope.activeUser);
 }]);
