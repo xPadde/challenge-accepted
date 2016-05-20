@@ -49,6 +49,22 @@ app.service('scopeService', ['$location', 'userService', function ($location, us
                 }
             }
             return false;
+        },
+
+        // Messages for the alert-popup.
+        showAlertPopup: function (msg) {
+            $.alert({
+                title: 'Alert',
+                content: msg
+            });
+        },
+        
+        loginAlertMessage: function () {
+            return 'Login to use this feature!';
+        },
+
+        alertPopupMsgInvalidYoutubeUrl: function () {
+            return 'Please provide a valid YouTube Url';
         }
     }
 }]);

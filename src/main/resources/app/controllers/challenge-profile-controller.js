@@ -3,16 +3,6 @@ app.controller('ChallengeProfileController', ['scopeService', 'challengeService'
 
         $scope.activeChallenge = scopeService.getActiveChallenge();
 
-        var alertPopupMsgLogin = 'Login to use this feature!';
-        var alertPopupMsgInvalidYoutubeUrl = 'Please provide a valid YouTube Url';
-
-        var showAlertPopup = function (msg) {
-            $.alert({
-                title: 'Alert',
-                content: msg
-            });
-        };
-
         $scope.isLoggedInUserTheChallengeCreator = function (challenge) {
             return scopeService.isLoggedInUserTheChallengeCreator(challenge);
         };
@@ -41,7 +31,7 @@ app.controller('ChallengeProfileController', ['scopeService', 'challengeService'
                         }
                     });
             } else {
-                showAlertPopup(alertPopupMsgLogin);
+                scopeService.showAlertPopup(scopeService.loginAlertMessage());
             }
         };
 
@@ -63,7 +53,7 @@ app.controller('ChallengeProfileController', ['scopeService', 'challengeService'
                     console.log(error);
                 });
 
-            showAlertPopup('Once you click confirm in the next step, the video will be sent to ' + challenge.challengeCreator.firstName + ' ' + challenge.challengeCreator.lastName + '. Be sure it is the right one!');
+            scopeService.showAlertPopup('Once you click confirm in the next step, the video will be sent to ' + challenge.challengeCreator.firstName + ' ' + challenge.challengeCreator.lastName + '. Be sure it is the right one!');
         };
 
         /*
@@ -84,7 +74,7 @@ app.controller('ChallengeProfileController', ['scopeService', 'challengeService'
                 var youTubeVideoId = url.substr(32);
                 var finalUrl = baseUrl + youTubeVideoId;
             } else {
-                showAlertPopup(alertPopupMsgInvalidYoutubeUrl);
+                scopeService.showAlertPopup(scopeService.alertPopupMsgInvalidYoutubeUrl());
             }
             return finalUrl;
         };
@@ -107,7 +97,7 @@ app.controller('ChallengeProfileController', ['scopeService', 'challengeService'
                     console.log("challengeService.confirmUploadedYoutubeUrl() ***FAILED*** to execute!");
                     console.log(error);
                 });
-            showAlertPopup('The video is sent to ' + challenge.challengeCreator.firstName + ' ' + challenge.challengeCreator.lastName + ' and is now pending, waiting for confirmation.');
+            scopeService.showAlertPopup('The video is sent to ' + challenge.challengeCreator.firstName + ' ' + challenge.challengeCreator.lastName + ' and is now pending, waiting for confirmation.');
 
         };
 

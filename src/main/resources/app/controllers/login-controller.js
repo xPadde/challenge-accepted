@@ -60,28 +60,15 @@ app.controller('LoginController', ['$scope', '$route', '$location', 'userService
         scopeService.viewUserProfilePage(user);
     };
 
-    // Messages for the alert-popup.
-    var alertPopupMsgLogin = 'Login to use this feature!';
-    var alertPopupMsgInvalidYoutubeUrl = 'Please provide a valid YouTube Url';
-
-    var showAlertPopup = function (msg) {
-        $.alert({
-            title: 'Alert',
-            content: msg
-        });
-    };
-
-
     /*
      Below code handles the toggling of the different sections in index.html.
      The methods is assigned to the ng-clicks.
      */
     $scope.showCreateChallenge = function () {
-        console.log("Kör showCreateChallenge");
         if (sessionStorage.getItem("isLoggedIn") == 'true') {
             $location.path('/create-challenge');
         } else {
-            showAlertPopup(alertPopupMsgLogin);
+            scopeService.showAlertPopup(scopeService.loginAlertMessage());
         }
     };
 }]);

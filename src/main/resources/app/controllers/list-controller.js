@@ -74,7 +74,7 @@ app.controller('ListController', ['scopeService', 'challengeService', 'userServi
                         console.log(error);
                     });
             } else {
-                showAlertPopup(alertPopupMsgLogin);
+                scopeService.showAlertPopup(scopeService.loginAlertMessage());
             }
         };
 
