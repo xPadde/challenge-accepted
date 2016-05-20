@@ -70,7 +70,8 @@ app.controller('LoginController', ['$scope', '$route', '$location', 'userService
             content: msg
         });
     };
-    
+
+
     /*
      Below code handles the toggling of the different sections in index.html.
      The methods is assigned to the ng-clicks.

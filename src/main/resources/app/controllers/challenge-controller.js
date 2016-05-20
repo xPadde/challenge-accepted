@@ -13,10 +13,10 @@ app.controller('ChallengeController', ['$scope', '$location', '$route', '$http',
             });
         };
 
-        $scope.viewChallengeProfilePage = function(challenge) {
+        /*$scope.viewChallengeProfilePage = function(challenge) {
             scopeService.viewChallengeProfilePage(challenge);
             //$scope.disableLikeButton = $scope.isChallengeUpvotedByUser(challenge); // scope variable for using with ng-show.
-        };
+        };*/
 
         
 
@@ -34,54 +34,6 @@ app.controller('ChallengeController', ['$scope', '$location', '$route', '$http',
             $scope.reverseSortCompleted = true;
             $scope.reverseSortClaimed = true;
         }
-        
-        $scope.getListOfChallenges = function () {
-            challengeService.getListOfAllChallenges()
-                .success(function (response) {
-                    console.log('challengeService.getListOfChallenges() fetched the challenges from the database successfully!');
-                    $scope.listOfChallenges = response;
-                })
-                .error(function (error) {
-                    console.log('challengeService.getListOfChallenges() ***FAILED*** to fetch the challenges from the database!');
-                    console.log(error);
-                });
-        };
-
-        $scope.getListOfUsers = function () {
-            userService.getListOfAllUsers()
-                .success(function (response) {
-                    console.log('challengeService.getListOfUsers() fetched the users from the database!');
-                    $scope.listOfUsers = response;
-                })
-                .error(function (error) {
-                    console.log('challengeService.getListOfUsers() ***FAILED*** to fetch the users from the database!');
-                    console.log(error);
-                })
-        };
-
-        $scope.getListOfUnapprovedChallenges = function () {
-            challengeService.getListOfUnapprovedChallenges()
-                .success(function (response) {
-                    $scope.listOfUnapprovedChallenges = response;
-                    console.log("challengeService.getListOfUnapprovedChallenges fetched all the unapproved challenges successfully!");
-                })
-                .error(function (error) {
-                    console.log(error);
-                    console.log("challengeService.getListOfUnapprovedChallenges() ***FAILED*** to fetch all the challenges from the database!");
-                });
-        };
-
-        $scope.getListOfCompletedChallenges = function () {
-            challengeService.getListOfCompletedChallenges()
-                .success(function (response) {
-                    console.log("challengeService.getListOfCompletedChallenges() fetched all the completed challenges from the database successfully!");
-                    $scope.listOfCompletedChallenges = response;
-                })
-                .error(function (error) {
-                    console.log("challengeService.getListOfCompletedChallenges() ***FAILED*** to fetch the completed challenges from the database!");
-                    console.log(error);
-                });
-        };
 
         /*
          Below code handles the upvoting and the managing of the already upvoted challenges.
@@ -326,11 +278,11 @@ app.controller('ChallengeController', ['$scope', '$location', '$route', '$http',
 
 
         // Fetch the list of challenges on application start.
-        $scope.getListOfChallenges();
+        /*$scope.getListOfChallenges();
         $scope.getListOfCompletedChallenges();
         initializeSortVariables();
         $scope.getListOfUsers();
         $scope.getListOfUnapprovedChallenges();
         $scope.getListOfCompletedChallenges();
-        $scope.updateListOfNotifications();
+        $scope.updateListOfNotifications();*/
     }]);

@@ -32,7 +32,7 @@ app.factory('userService', function ($http) {
                 method: 'GET',
                 header: {'Content-Type': 'application/json'}
             })
-        },
+        }
     };
 
 });

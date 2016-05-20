@@ -32,6 +32,7 @@
     <script src="app/controllers/user-controller.js"></script>
     <script src="app/controllers/login-controller.js"></script>
     <script src="app/controllers/create-challenge-controller.js"></script>
+    <script src="app/controllers/list-controller.js"></script>
 
     <!--Services-->
     <script src="app/services/challenge-service.js"></script>
@@ -50,9 +51,9 @@
     <meta charset="UTF-8">
     <title>Challenge Accepted</title>
 </head>
-<body ng-controller="LoginController">
+<body>
 
-<section class="directive-menu"></section>
+<section class="directive-menu" ng-controller="LoginController"></section>
 
 <div class="container" ng-view>
 

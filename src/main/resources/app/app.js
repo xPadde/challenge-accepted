@@ -8,12 +8,12 @@ app.config(function ($routeProvider) {
         .when('/available-challenges', {
             title: 'List of available challenges',
             templateUrl: 'views/list-challenges.html',
-            controller: 'ChallengeController'
+            controller: 'ListController'
         })
         .when('/completed-challenges', {
             title: 'List of completed challenges',
             templateUrl: 'views/list-completed-challenges.html',
-            controller: 'ChallengeController'
+            controller: 'ListController'
         })
         .when('/create-challenge', {
             title: 'Create a new challenge',
@@ -23,7 +23,7 @@ app.config(function ($routeProvider) {
         .when('/claimed-challenges', {
             title: 'Your claimed challenges',
             templateUrl: 'views/list-claimed-challenges.html',
-            controller: 'ChallengeController'
+            controller: 'ListController'
         })
         .when('/approve-video', {
             title: 'Approve video',
@@ -48,12 +48,12 @@ app.config(function ($routeProvider) {
         .when('/toplist', {
             title: 'Toplist',
             templateUrl: 'views/list-users.html',
-            controller: 'ChallengeController'
+            controller: 'ListController'
         })
         .when('/home', {
             title: 'Home',
             templateUrl: 'views/list-challenges-not-logged-in.html',
-            controller: 'ChallengeController'
+            controller: 'ListController'
         })
         .otherwise({redirectTo: "/home"})
 });

@@ -27,10 +27,14 @@ app.service('scopeService', ['$location', 'userService', function ($location, us
             });
         },
 
+        getLoggedInUser: function () {
+            return sessionStorage.getItem('loggedInUser');
+        },
+
         viewChallengeProfilePage: function (challenge) {
-         activeChallenge = challenge;
-         $location.path('/challenge-profile/' + activeChallenge.id);
-         //$scope.disableLikeButton = $scope.isChallengeUpvotedByUser(challenge); // scope variable for using with ng-show.
-         }
+            activeChallenge = challenge;
+            $location.path('/challenge-profile/' + activeChallenge.id);
+            //$scope.disableLikeButton = $scope.isChallengeUpvotedByUser(challenge); // scope variable for using with ng-show.
+        }
     }
 }]);
