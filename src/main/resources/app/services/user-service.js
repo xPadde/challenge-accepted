@@ -1,4 +1,5 @@
 app.factory('userService', function ($http) {
+    var testuser;
     return {
         createNewUser: function (data) {
             return $http({
@@ -32,13 +33,13 @@ app.factory('userService', function ($http) {
                 header: {'Content-Type': 'application/json'}
             })
         },
-        
+
         setActiveUser: function (user) {
-            this.user = user;      
+            testuser = user;
         },
-        
+
         getActiveUser: function () {
-            return 'VadSomHelst';
+            return testuser;
         }
     };
 

@@ -136,6 +136,8 @@ app.controller('ChallengeController', ['$scope', '$location', '$route', '$http',
         $scope.viewUserProfilePage = function (user) {
             $scope.getListOfCompletedChallenges();
             $scope.activeUser = user;
+            userService.setActiveUser($scope.activeUser);
+            $location.path('/user-profile/' + $scope.activeUser.id);
         };
 
         $scope.showListOfNotifications = function () {
