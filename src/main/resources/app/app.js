@@ -18,7 +18,7 @@ app.config(function ($routeProvider) {
         .when('/create-challenge', {
             title: 'Create a new challenge',
             templateUrl: 'views/create-challenge.html',
-            controller: 'ChallengeController'
+            controller: 'CreateChallengeController'
         })
         .when('/claimed-challenges', {
             title: 'Your claimed challenges',
