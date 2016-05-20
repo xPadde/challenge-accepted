@@ -50,5 +50,10 @@ app.config(function ($routeProvider) {
             templateUrl: 'views/list-users.html',
             controller: 'ChallengeController'
         })
-        .otherwise({redirectTo: "/"})
+        .when('/home', {
+            title: 'Home',
+            templateUrl: 'views/list-challenges-not-logged-in.html',
+            controller: 'ChallengeController'
+        })
+        .otherwise({redirectTo: "/home"})
 });

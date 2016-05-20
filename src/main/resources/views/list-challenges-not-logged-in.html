@@ -29,7 +29,7 @@
             <tbody>
             <tr ng-repeat="challenge in listOfChallenges | filter:searchChallenges | orderBy:orderByFieldAvailable:reverseSortAvailable"
                 ng-hide="challenge.challengeClaimed">
-                <td><a href="#" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
+                <td><a ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
                 <td>{{challenge.description}}</td>
                 <td>{{challenge.creationDate}}</td>
                 <td><a href="#" ng-click="upvoteChallenge(challenge)">
@@ -70,7 +70,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="challenge in listOfCompletedChallenges | filter:searchChallenges | orderBy:orderByFieldCompleted:reverseSortCompleted">
-                <td><a href="#" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
+                <td><a href="" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
                 <td>{{challenge.description}}</td>
                 <td>{{challenge.creationDate}}</td>
                 <td><a href="#" ng-click="upvoteChallenge(challenge)">

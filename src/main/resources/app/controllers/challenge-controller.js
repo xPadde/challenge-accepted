@@ -3,7 +3,6 @@ app.controller('ChallengeController', ['$scope', '$location', '$route', '$http',
         
         $scope.dynamicUrl = "www.youtube.com/watch?v=elN_CPsJ27M";
 
-        // Messages for the alert-popup.
         var alertPopupMsgLogin = 'Login to use this feature!';
         var alertPopupMsgInvalidYoutubeUrl = 'Please provide a valid YouTube Url';
 
@@ -14,73 +13,10 @@ app.controller('ChallengeController', ['$scope', '$location', '$route', '$http',
             });
         };
 
-        /*
-         Below code handles the toggling of the different sections in index.html.
-         The methods is assigned to the ng-clicks.
-         */
-        $scope.section = "listOfChallengesNotLoggedInSection";
-
-        $scope.showStartPageLists = function () {
-            $scope.section = "listOfChallengesNotLoggedInSection";
+        $scope.viewChallengeProfilePage = function(challenge) {
+            scopeService.viewChallengeProfilePage(challenge);
+            //$scope.disableLikeButton = $scope.isChallengeUpvotedByUser(challenge); // scope variable for using with ng-show.
         };
-
-        $scope.showListOfChallengesSection = function () {
-            $scope.getListOfChallenges();
-            $scope.section = "listOfChallengesSection";
-        };
-
-        $scope.showListOfUsersSection = function () {
-            $scope.getListOfUsers();
-            $scope.section = "listOfUsersSection";
-        };
-
-        $scope.showApproveVideosSection = function () {
-            $scope.getListOfUnapprovedChallenges();
-            $scope.section = "listApproveVideosSection";
-        };
-
-        $scope.showListOfCompletedChallengesSection = function () {
-            $scope.getListOfCompletedChallenges();
-            $scope.section = "listOfCompletedChallengesSection";
-        };
-
-        $scope.showSecretListOfChallengesSection = function () {
-            $scope.getListOfClaimedChallenges();
-            $scope.section = "secretListOfChallengesSection";
-        };
-
-        $scope.showListOfClaimedChallenges = function () {
-            $scope.section = "listOfClaimedChallengesSection";
-        };
-
-        $scope.showCreateChallengeSection = function () {
-            if (sessionStorage.getItem("isLoggedIn") == 'true') {
-                $scope.section = "createNewChallengeSection";
-            } else {
-                showAlertPopup(alertPopupMsgLogin);
-            }
-        };
-
-        $scope.viewChallengeProfilePage = function (challenge) {
-            $scope.activeChallenge = challenge;
-            scopeService.setActiveChallenge($scope.activeChallenge);
-            $location.path('/challenge-profile/' + $scope.activeChallenge.id);
-            $scope.disableLikeButton = $scope.isChallengeUpvotedByUser(challenge); // scope variable for using with ng-show.
-        };
-
-        /*$scope.viewUserProfilePage = function (user) {
-            userService.getUserByEmail(user.email).success(function (response) {
-                scopeService.setActiveUser(response);
-                $location.path('/user-profile/' + response.id);
-            });
-            $scope.getListOfCompletedChallenges();
-        };*/
-
-        $scope.showListOfNotifications = function () {
-            $scope.updateListOfNotifications();
-            $scope.section = "notificationSection";
-        };
-
 
         /*
          Below code handles the creation of the new challenges.
@@ -462,5 +398,8 @@ app.controller('ChallengeController', ['$scope', '$location', '$route', '$http',
         $scope.getListOfChallenges();
         $scope.getListOfCompletedChallenges();
         initializeSortVariables();
-
+        $scope.getListOfUsers();
+        $scope.getListOfUnapprovedChallenges();
+        $scope.getListOfCompletedChallenges();
+        $scope.updateListOfNotifications();
     }]);
