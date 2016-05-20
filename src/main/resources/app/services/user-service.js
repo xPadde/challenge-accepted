@@ -31,6 +31,14 @@ app.factory('userService', function ($http) {
                 method: 'GET',
                 header: {'Content-Type': 'application/json'}
             })
+        },
+        
+        setActiveUser: function (user) {
+            this.user = user;      
+        },
+        
+        getActiveUser: function () {
+            return 'VadSomHelst';
         }
     };
 

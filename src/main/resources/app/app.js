@@ -30,14 +30,19 @@ app.config(function ($routeProvider) {
             templateUrl: 'views/list-approve-videos.html',
             controller: 'ChallengeController'
         })
-        .when('/home', {
+        .when('/', {
             title: 'Challenge accepted',
-            templateUrl: '/index.html',
-            controller: 'ChallengeController'
+            templateUrl: '',
+            controller: 'UserController'
         })
         .when('/notifications', {
             title: 'Notifications',
             templateUrl: 'views/notifications.html',
+            controller: 'ChallengeController'
+        })
+        .when('/challenge-profile/:id', {
+            title: 'Challenge profile',
+            templateUrl: 'views/challenge-profile.html',
             controller: 'ChallengeController'
         })
         .when('/toplist', {
@@ -45,5 +50,5 @@ app.config(function ($routeProvider) {
             templateUrl: 'views/list-users.html',
             controller: 'ChallengeController'
         })
-        .otherwise({redirectTo: "/home"})
+        .otherwise({redirectTo: "/"})
 });

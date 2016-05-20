@@ -27,7 +27,8 @@
     <script src="app/app.js"></script>
 
     <!--Controller-->
-    <script src="app/controllers/challenge-controller.js"></script>
+    <!--<script src="app/controllers/challenge-controller.js"></script>-->
+    <script src="app/controllers/user-controller.js"></script>
 
     <!--Services-->
     <script src="app/services/challenge-service.js"></script>
@@ -45,36 +46,11 @@
     <meta charset="UTF-8">
     <title>Challenge Accepted</title>
 </head>
-<body ng-controller="ChallengeController">
+<body>
 
-<section class="directive-menu"></section>
+<!--<section class="directive-menu"></section>-->
 
-<div class="container" ng-view>
-
-
-<!--
-    <section class="directive-list-claimed-challenges" ng-show="section == 'listOfClaimedChallengesSection'"></section>
-
-    <section class="directive-create-challenge" ng-show="section == 'createNewChallengeSection'"></section>
-
-    <section class="directive-list-challenges" ng-show="section == 'listOfChallengesSection'"></section>
-
-    <section class="directive-list-completed-challenges" ng-show="section == 'listOfCompletedChallengesSection'"></section>
-
-    <section class="directive-list-approve-videos" ng-show="section == 'listApproveVideosSection'"></section>
-
-    <section class="directive-challenge-profile" ng-show="section =='challengeProfilePageSection'"></section>
-
-    <section class="directive-user-profile" ng-show="section == 'userProfilePageSection'"></section>
-
-    <section class="directive-list-users" ng-show="section == 'listOfUsersSection'"></section>
-
-    <section class="directive-list-challenges-not-logged-in" ng-show="section == 'listOfChallengesNotLoggedInSection'"></section>
-
-    <section class="directive-notifications" ng-show="section == 'notificationSection'"></section>
--->
-
-</div>
+<ng-view></ng-view>
 
 </body>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
