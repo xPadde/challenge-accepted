@@ -28,7 +28,7 @@ app.config(function ($routeProvider) {
         .when('/approve-video', {
             title: 'Approve video',
             templateUrl: 'views/list-approve-videos.html',
-            controller: 'ChallengeController'
+            controller: 'ApproveVideoController'
         })
         .when('/notifications', {
             title: 'Notifications',

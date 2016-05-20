@@ -1,5 +1,4 @@
 app.factory('userService', function ($http) {
-    var activeUser;
     return {
         createNewUser: function (data) {
             return $http({

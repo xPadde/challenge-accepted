@@ -2,6 +2,7 @@ app.service('scopeService', ['$location', 'userService', function ($location, us
 
     var activeChallenge;
     var activeUser;
+    var loggedInUser;
 
     return {
         setActiveUser: function (user) {
@@ -20,6 +21,10 @@ app.service('scopeService', ['$location', 'userService', function ($location, us
             return activeChallenge;
         },
 
+        getLoggedInUser: function () {
+            return JSON.parse(sessionStorage.getItem('loggedInUser'));
+        },
+
         viewUserProfilePage: function (user) {
             userService.getUserByEmail(user.email).success(function (response) {
                 activeUser = response;
@@ -27,14 +32,23 @@ app.service('scopeService', ['$location', 'userService', function ($location, us
             });
         },
 
-        getLoggedInUser: function () {
-            return sessionStorage.getItem('loggedInUser');
-        },
-
         viewChallengeProfilePage: function (challenge) {
             activeChallenge = challenge;
             $location.path('/challenge-profile/' + activeChallenge.id);
             //$scope.disableLikeButton = $scope.isChallengeUpvotedByUser(challenge); // scope variable for using with ng-show.
+        },
+
+        // Return true if the logged in user is the creator of the challenge, else false.
+        isLoggedInUserTheChallengeCreator: function (challenge) {
+            if (challenge != null || challenge != undefined) {
+                if (sessionStorage.getItem('isLoggedIn') == 'true') {
+                    loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+                    if (challenge.challengeCreator.id == loggedInUser.id) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }]);
