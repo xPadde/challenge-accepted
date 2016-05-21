@@ -55,6 +55,11 @@ app.service('scopeService', ['$sce', '$location', 'userService', function ($sce,
         markUrlAsTrusted: function (src) {
             return $sce.trustAsResourceUrl(src);  
         },
+        
+        getYoutubeUrlId: function (youtubeUrl) {
+            console.log(youtubeUrl.substring(30));
+            return youtubeUrl.substring(30);
+        },
 
         // Messages for the alert-popup.
         showAlertPopup: function (msg) {

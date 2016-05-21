@@ -14,7 +14,7 @@
         <tr ng-repeat="challenge in listOfUnapprovedChallenges | filter:searchChallenges" ng-if="isLoggedInUserTheChallengeCreator(challenge)" ng-hide="challenge.challengeCompleted">
             <td><a href="" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
             <td>
-                <iframe width="200" height="200" allowfullscreen="true" ng-src="{{ markUrlAsTrusted(challenge.youtubeURL) }}"></iframe>
+                <a href="" ng-click="viewChallengeProfilePage(challenge)"><img  height="150" width="200" src="http://img.youtube.com/vi/{{getYoutubeUrlId(challenge.youtubeURL)}}/0.jpg"></a>
             </td>
             <td><a ng-click="viewUserProfilePage(challenge.challengeClaimer)">{{challenge.challengeClaimer.firstName}} {{challenge.challengeClaimer.lastName}}</a></td>
             <td>
