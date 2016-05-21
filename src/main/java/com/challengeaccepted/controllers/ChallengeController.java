@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,12 +49,20 @@ public class ChallengeController {
     @CrossOrigin
     @RequestMapping(value = "/challenge/{id}", method = RequestMethod.GET)
     public ResponseEntity<ChallengeModel> readChallenge(@PathVariable Long id) {
-        ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
+        ChallengeModel challenge;
+        try {
+             challenge = challengeService.getChallengeFromDatabase(id);
+        } catch (EntityNotFoundException e) {
+            e.printStackTrace();
+            challenge = null;
+        }
 
-        if (challenge == null) {
-            return new ResponseEntity<ChallengeModel>(HttpStatus.BAD_REQUEST);
-        } else {
+        System.out.println("CHALLENGE ID: " + challenge.getId());
+
+        if (challenge != null) {
             return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<ChallengeModel>(HttpStatus.BAD_REQUEST);
         }
     }
 

@@ -18,21 +18,6 @@ app.service('scopeService', ['$sce', '$location', 'userService', 'challengeServi
                 activeChallenge = challenge;
             },
 
-            getActiveChallenge: function () {
-                var absoluteUrl = $location.absUrl();
-                var absUrlId = absoluteUrl.substring(61);
-                console.log("SUBSTRINGAD: " + absUrlId);
-                challengeService.getChallengeById(absUrlId).success(function (response, status) {
-                    if (status == 200) {
-                        activeChallenge = response;
-                    }
-                }).error(function (error) {
-                    activeChallenge = null;
-                    console.log(error);
-                });
-                return activeChallenge;
-            },
-
             getLoggedInUser: function () {
                 return JSON.parse(sessionStorage.getItem('loggedInUser'));
             },

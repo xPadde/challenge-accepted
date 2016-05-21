@@ -1,5 +1,11 @@
-app.controller('ChallengeProfileController', ['$scope', '$log', 'scopeService', 'challengeService',
-    function ($scope, $log, scopeService, challengeService) {
+app.controller('ChallengeProfileController', ['$scope', '$log', '$routeParams', 'scopeService', 'challengeService',
+    function ($scope, $log, $routeParams, scopeService, challengeService) {
+
+        var challengeUrlId = $routeParams.id;
+        console.log(challengeUrlId);
+        challengeService.getChallengeById(challengeUrlId).success(function (response) {
+            $scope.activeChallenge = response;
+        });
 
         $scope.isLoggedInUserTheChallengeCreator = function (challenge) {
             return scopeService.isLoggedInUserTheChallengeCreator(challenge);
@@ -101,7 +107,5 @@ app.controller('ChallengeProfileController', ['$scope', '$log', 'scopeService', 
             scopeService.showAlertPopup('The video is sent to ' + challenge.challengeCreator.firstName + ' ' + challenge.challengeCreator.lastName + ' and is now pending, waiting for confirmation.');
 
         };
-
-        $scope.activeChallenge = scopeService.getActiveChallenge();
 
     }]);
