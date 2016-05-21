@@ -1,4 +1,9 @@
 app.controller('LoginController', ['$scope', '$route', '$location', 'userService', 'scopeService', function ($scope, $route, $location, userService, scopeService) {
+
+    $scope.absoluteUrl = $location.absUrl();
+    $scope.mailtoSubject = "You%20have%20been%20Challenged!";
+    $scope.mailtoBody = "A%20friend%20of%20yours%20challenge%20you.%20Do%20you%20accept?%0AGo%20to:%20" + $scope.absoluteUrl;
+
     /*
      Below Code handles the user login.
      */
