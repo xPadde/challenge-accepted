@@ -1,4 +1,4 @@
-app.service('scopeService', ['$location', 'userService', function ($location, userService) {
+app.service('scopeService', ['$sce', '$location', 'userService', function ($sce, $location, userService) {
 
     var activeChallenge;
     var activeUser;
@@ -49,6 +49,11 @@ app.service('scopeService', ['$location', 'userService', function ($location, us
                 }
             }
             return false;
+        },
+
+        // Function for marking a YouTube URL as trusted.
+        markUrlAsTrusted: function (src) {
+            return $sce.trustAsResourceUrl(src);  
         },
 
         // Messages for the alert-popup.

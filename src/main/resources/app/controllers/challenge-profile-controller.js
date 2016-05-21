@@ -7,6 +7,10 @@ app.controller('ChallengeProfileController', ['scopeService', 'challengeService'
             return scopeService.isLoggedInUserTheChallengeCreator(challenge);
         };
 
+        $scope.viewUserProfilePage = function (challenge) {
+            scopeService.viewUserProfilePage(challenge);
+        };
+
         /*
          Below code manage different scenarios for when a user tries to update and manage the challenge.
          The response is updating the challenge the user is currently viewing.
@@ -60,9 +64,8 @@ app.controller('ChallengeProfileController', ['scopeService', 'challengeService'
          Handles the YouTube URL.
          */
 
-        // Function for marking a YouTube URL as trusted.
         $scope.markUrlAsTrusted = function (src) {
-            return $sce.trustAsResourceUrl(src);
+            return scopeService.markUrlAsTrusted(src);
         };
 
         // Convert the user provided YouTube URL to a embedded URL for use in an iframe.

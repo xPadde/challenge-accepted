@@ -26,7 +26,10 @@ app.controller('ApproveVideoController', ['scopeService', '$scope', 'challengeSe
 
         $scope.viewChallengeProfilePage = function (challenge) {
             scopeService.viewChallengeProfilePage(challenge);
-            //$scope.disableLikeButton = $scope.isChallengeUpvotedByUser(challenge); // scope variable for using with ng-show.
+        };
+
+        $scope.markUrlAsTrusted = function (src) {
+            return scopeService.markUrlAsTrusted(src);
         };
 
         $scope.getListOfUnapprovedChallenges();

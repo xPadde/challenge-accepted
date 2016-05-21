@@ -94,10 +94,9 @@ app.controller('ListController', ['scopeService', 'challengeService', 'userServi
         $scope.isLoggedInUserTheChallengeCreator = function (challenge) {
             return scopeService.isLoggedInUserTheChallengeCreator(challenge);
         };
-
-        // Function for marking a YouTube URL as trusted.
+        
         $scope.markUrlAsTrusted = function (src) {
-            return $sce.trustAsResourceUrl(src);
+            return scopeService.markUrlAsTrusted(src);
         };
 
         // Fetch the list of challenges on application start.
