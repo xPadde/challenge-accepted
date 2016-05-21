@@ -1,8 +1,6 @@
 app.controller('ChallengeProfileController', ['$scope', '$log', 'scopeService', 'challengeService',
     function ($scope, $log, scopeService, challengeService) {
 
-        $scope.activeChallenge = scopeService.getActiveChallenge();
-
         $scope.isLoggedInUserTheChallengeCreator = function (challenge) {
             return scopeService.isLoggedInUserTheChallengeCreator(challenge);
         };
@@ -103,5 +101,7 @@ app.controller('ChallengeProfileController', ['$scope', '$log', 'scopeService', 
             scopeService.showAlertPopup('The video is sent to ' + challenge.challengeCreator.firstName + ' ' + challenge.challengeCreator.lastName + ' and is now pending, waiting for confirmation.');
 
         };
+
+        $scope.activeChallenge = scopeService.getActiveChallenge();
 
     }]);

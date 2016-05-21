@@ -48,7 +48,13 @@ public class ChallengeController {
     @CrossOrigin
     @RequestMapping(value = "/challenge/{id}", method = RequestMethod.GET)
     public ResponseEntity<ChallengeModel> readChallenge(@PathVariable Long id) {
-        return new ResponseEntity<ChallengeModel>(challengeService.getChallengeFromDatabase(id), HttpStatus.OK);
+        ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
+
+        if (challenge == null) {
+            return new ResponseEntity<ChallengeModel>(HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
+        }
     }
 
     @CrossOrigin
