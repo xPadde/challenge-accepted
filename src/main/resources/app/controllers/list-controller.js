@@ -99,12 +99,30 @@ app.controller('ListController', ['scopeService', 'challengeService', 'userServi
             return scopeService.markUrlAsTrusted(src);
         };
 
+        $scope.addPointToChallenge = function (challenge) {
+            if (sessionStorage.getItem('isLoggedIn') == 'true') {
+                challengeService.addOrRemovePointToCompletedChallenge(scopeService.getLoggedInUser(), challenge.id)
+                    .success(function () {
+                        console.log("addPointToCompletedChallenge() was successfully executed!");
+                        $scope.getListOfCompletedChallenges();
+
+                    })
+                    .error(function (error) {
+                        console.log("addPointToCompletedChallenge() ***FAILED*** to execute");
+                        console.log(error);
+
+                    });
+            } else {
+                scopeService.showAlertPopup(scopeService.loginAlertMessage());
+            }
+
+        };
+
         // Fetch the list of challenges on application start.
         $scope.getListOfChallenges();
         $scope.getListOfCompletedChallenges();
         $scope.getListOfUsers();
         $scope.getListOfCompletedChallenges();
-        //$scope.updateListOfNotifications();
 
 
     }]);

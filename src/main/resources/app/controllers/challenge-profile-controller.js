@@ -1,5 +1,5 @@
-app.controller('ChallengeProfileController', ['scopeService', 'challengeService', '$scope', '$sce',
-    function (scopeService, challengeService, $scope, $sce) {
+app.controller('ChallengeProfileController', ['scopeService', 'challengeService', '$scope',
+    function (scopeService, challengeService, $scope) {
 
         $scope.activeChallenge = scopeService.getActiveChallenge();
 

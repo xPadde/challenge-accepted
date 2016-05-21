@@ -33,7 +33,7 @@ app.config(function ($routeProvider) {
         .when('/notifications', {
             title: 'Notifications',
             templateUrl: 'views/notifications.html',
-            controller: 'ChallengeController'
+            controller: 'NotificationsController'
         })
         .when('/challenge-profile/:id', {
             title: 'Challenge profile',
