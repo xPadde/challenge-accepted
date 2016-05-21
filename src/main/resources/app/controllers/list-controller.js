@@ -1,5 +1,5 @@
-app.controller('ListController', ['scopeService', 'challengeService', 'userService', '$sce', '$scope',
-    function (scopeService, challengeService, userService, $sce, $scope) {
+app.controller('ListController', ['$scope', '$log', 'scopeService', 'challengeService', 'userService',
+    function ($scope, $log, scopeService, challengeService, userService) {
         
         $scope.loggedInUser = scopeService.getLoggedInUser();
 
@@ -14,24 +14,24 @@ app.controller('ListController', ['scopeService', 'challengeService', 'userServi
         $scope.getListOfChallenges = function () {
             challengeService.getListOfAllChallenges()
                 .success(function (response) {
-                    console.log('challengeService.getListOfChallenges() fetched the challenges from the database successfully!');
+                    $log.info('challengeService.getListOfChallenges() fetched the challenges from the database successfully!');
                     $scope.listOfChallenges = response;
                 })
                 .error(function (error) {
-                    console.log('challengeService.getListOfChallenges() ***FAILED*** to fetch the challenges from the database!');
-                    console.log(error);
+                    $log.error('challengeService.getListOfChallenges() ***FAILED*** to fetch the challenges from the database!');
+                    $log.error(error);
                 });
         };
 
         $scope.getListOfCompletedChallenges = function () {
             challengeService.getListOfCompletedChallenges()
                 .success(function (response) {
-                    console.log("challengeService.getListOfCompletedChallenges() fetched all the completed challenges from the database successfully!");
+                    $log.info("challengeService.getListOfCompletedChallenges() fetched all the completed challenges from the database successfully!");
                     $scope.listOfCompletedChallenges = response;
                 })
                 .error(function (error) {
-                    console.log("challengeService.getListOfCompletedChallenges() ***FAILED*** to fetch the completed challenges from the database!");
-                    console.log(error);
+                    $log.error("challengeService.getListOfCompletedChallenges() ***FAILED*** to fetch the completed challenges from the database!");
+                    $log.error(error);
                 });
         };
 
@@ -47,12 +47,12 @@ app.controller('ListController', ['scopeService', 'challengeService', 'userServi
         $scope.getListOfUsers = function () {
             userService.getListOfAllUsers()
                 .success(function (response) {
-                    console.log('challengeService.getListOfUsers() fetched the users from the database!');
+                    $log.info('challengeService.getListOfUsers() fetched the users from the database!');
                     $scope.listOfUsers = response;
                 })
                 .error(function (error) {
-                    console.log('challengeService.getListOfUsers() ***FAILED*** to fetch the users from the database!');
-                    console.log(error);
+                    $log.error('challengeService.getListOfUsers() ***FAILED*** to fetch the users from the database!');
+                    $log.error(error);
                 })
         };
 
@@ -65,13 +65,13 @@ app.controller('ListController', ['scopeService', 'challengeService', 'userServi
             if (sessionStorage.getItem("isLoggedIn") == 'true') {
                 challengeService.addOrRemoveUserToChallengeUpvoters(sessionStorage.getItem('loggedInUser'), challenge.id)
                     .success(function () {
-                        console.log("challengeService.addUserToChallengeUpvoters() was successfully executed!");
+                        $log.info("challengeService.addUserToChallengeUpvoters() was successfully executed!");
                         // Update the list of challenges after creation of the new challenge,
                         $scope.getListOfChallenges();
                     })
                     .error(function (error) {
-                        console.log("challengeService.addUserToChallengeUpvoters() ***FAILED*** to execute!");
-                        console.log(error);
+                        $log.error("challengeService.addUserToChallengeUpvoters() ***FAILED*** to execute!");
+                        $log.error(error);
                     });
             } else {
                 scopeService.showAlertPopup(scopeService.loginAlertMessage());
@@ -103,13 +103,13 @@ app.controller('ListController', ['scopeService', 'challengeService', 'userServi
             if (sessionStorage.getItem('isLoggedIn') == 'true') {
                 challengeService.addOrRemovePointToCompletedChallenge(scopeService.getLoggedInUser(), challenge.id)
                     .success(function () {
-                        console.log("addPointToCompletedChallenge() was successfully executed!");
+                        $log.info("addPointToCompletedChallenge() was successfully executed!");
                         $scope.getListOfCompletedChallenges();
 
                     })
                     .error(function (error) {
-                        console.log("addPointToCompletedChallenge() ***FAILED*** to execute");
-                        console.log(error);
+                        $log.error("addPointToCompletedChallenge() ***FAILED*** to execute");
+                        $log.error(error);
 
                     });
             } else {

@@ -1,5 +1,5 @@
-app.controller('ChallengeProfileController', ['scopeService', 'challengeService', '$scope',
-    function (scopeService, challengeService, $scope) {
+app.controller('ChallengeProfileController', ['$scope', '$log', 'scopeService', 'challengeService',
+    function ($scope, $log, scopeService, challengeService) {
 
         $scope.activeChallenge = scopeService.getActiveChallenge();
 
@@ -23,15 +23,15 @@ app.controller('ChallengeProfileController', ['scopeService', 'challengeService'
                 $scope.loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
                 challengeService.updateChallengeClaimer($scope.loggedInUser, challenge.id)
                     .success(function (response) {
-                        console.log("challengeService.updateChallenge() was successfully executed!");
+                        $log.info("challengeService.updateChallenge() was successfully executed!");
                         $scope.activeChallenge = response;
                     })
                     .error(function (error, status) {
                         if (status === 400) {
-                            console.log("challengeService.updateChallenge() ***FAILED*** to execute! Bad request! User cannot claim own challenge!");
+                            $log.error("challengeService.updateChallenge() ***FAILED*** to execute! Bad request! User cannot claim own challenge!");
                         } else {
-                            console.log("challengeService.updateChallenge() ***FAILED*** to execute!");
-                            console.log(error);
+                            $log.error("challengeService.updateChallenge() ***FAILED*** to execute!");
+                            $log.error(error);
                         }
                     });
             } else {
@@ -49,12 +49,12 @@ app.controller('ChallengeProfileController', ['scopeService', 'challengeService'
 
             challengeService.addYoutubeUrlToChallenge(challenge.id, convertedYoutubeUrl)
                 .success(function (response) {
-                    console.log("challengeService.addYoutubeUrlToChallenge() was successfully executed and YouTube url was saved to the challenge!");
+                    $log.info("challengeService.addYoutubeUrlToChallenge() was successfully executed and YouTube url was saved to the challenge!");
                     $scope.activeChallenge = response;
                 })
                 .error(function (error) {
-                    console.log("challengeService.addYoutubeUrlToChallenge() ***FAILED*** to execute!");
-                    console.log(error);
+                    $log.error("challengeService.addYoutubeUrlToChallenge() ***FAILED*** to execute!");
+                    $log.error(error);
                 });
 
             scopeService.showAlertPopup('Once you click confirm in the next step, the video will be sent to ' + challenge.challengeCreator.firstName + ' ' + challenge.challengeCreator.lastName + '. Be sure it is the right one!');
@@ -92,13 +92,13 @@ app.controller('ChallengeProfileController', ['scopeService', 'challengeService'
             challengeService.confirmUploadedYoutubeUrl(challenge.id)
                 .success(function (response, status) {
                     if (status == 200) {
-                        console.log("challengeService.confirmUploadedYoutubeUrl() was successfully executed!");
+                        $log.info("challengeService.confirmUploadedYoutubeUrl() was successfully executed!");
                         $scope.activeChallenge = response;
                     }
                 })
                 .error(function (error) {
-                    console.log("challengeService.confirmUploadedYoutubeUrl() ***FAILED*** to execute!");
-                    console.log(error);
+                    $log.error("challengeService.confirmUploadedYoutubeUrl() ***FAILED*** to execute!");
+                    $log.error(error);
                 });
             scopeService.showAlertPopup('The video is sent to ' + challenge.challengeCreator.firstName + ' ' + challenge.challengeCreator.lastName + ' and is now pending, waiting for confirmation.');
 

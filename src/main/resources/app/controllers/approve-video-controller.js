@@ -1,5 +1,5 @@
-app.controller('ApproveVideoController', ['scopeService', '$scope', 'challengeService',
-    function (scopeService, $scope, challengeService) {
+app.controller('ApproveVideoController', ['$scope', '$log', 'scopeService', 'challengeService',
+    function ($scope, $log, scopeService, challengeService) {
 
         $scope.activeChallenge = scopeService.getActiveChallenge();
 
@@ -7,11 +7,11 @@ app.controller('ApproveVideoController', ['scopeService', '$scope', 'challengeSe
             challengeService.getListOfUnapprovedChallenges()
                 .success(function (response) {
                     $scope.listOfUnapprovedChallenges = response;
-                    console.log("challengeService.getListOfUnapprovedChallenges fetched all the unapproved challenges successfully!");
+                    $log.info("challengeService.getListOfUnapprovedChallenges fetched all the unapproved challenges successfully!");
                 })
                 .error(function (error) {
-                    console.log(error);
-                    console.log("challengeService.getListOfUnapprovedChallenges() ***FAILED*** to fetch all the challenges from the database!");
+                    $log.error(error);
+                    $log.error("challengeService.getListOfUnapprovedChallenges() ***FAILED*** to fetch all the challenges from the database!");
                 });
         };
 
@@ -36,24 +36,24 @@ app.controller('ApproveVideoController', ['scopeService', '$scope', 'challengeSe
         $scope.completeChallenge = function (challenge) {
             challengeService.assignPointsToUser(challenge.id)
                 .success(function (response) {
-                    console.log("challengeService.assignPointsToUser() was successfully executed!");
+                    $log.info("challengeService.assignPointsToUser() was successfully executed!");
                     $scope.activeChallenge = response;
                     $scope.getListOfUnapprovedChallenges();
                 })
                 .error(function (error) {
-                    console.log("challengeService.assignPointsToUser() ***FAILED*** to execute!");
-                    console.log(error);
+                    $log.error(error);
+                    $log.error("challengeService.assignPointsToUser() ***FAILED*** to execute!");
                 });
         };
 
         $scope.disapproveChallenge = function (challenge) {
             challengeService.disapproveCurrentChallenge(challenge.id, $('#disapprove-commentfield').val())
                 .success(function (response) {
-                    console.log("Challenge was disapproved! Returned to available challenges");
+                    $log.info("Challenge was disapproved! Returned to available challenges");
                     challenge = response;
                     $scope.getListOfUnapprovedChallenges();
                 }).error(function (error) {
-                console.log(error);
+                $log.error(error);
             })
         };
 

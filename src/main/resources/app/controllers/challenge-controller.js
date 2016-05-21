@@ -1,7 +1,5 @@
 app.controller('ChallengeController', ['$scope', '$location', '$route', '$http', '$sce', 'challengeService', 'userService', 'scopeService', 'notificationService',
     function ($scope, $location, $route, $http, $sce, challengeService, userService, scopeService, notificationService) {
-        
-        $scope.dynamicUrl = "www.youtube.com/watch?v=elN_CPsJ27M";
 
         /*
          Below code handles the fetching of the challenge and the user lists.

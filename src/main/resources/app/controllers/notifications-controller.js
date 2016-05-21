@@ -1,5 +1,5 @@
-app.controller('NotificationsController', ['scopeService', 'notificationService', '$scope',
-    function (scopeService, notificationService, $scope) {
+app.controller('NotificationsController', ['$scope', '$log', 'scopeService', 'notificationService',
+    function ($scope, $log, scopeService, notificationService) {
 
         $scope.loggedInUser = scopeService.getLoggedInUser();
 
@@ -17,12 +17,12 @@ app.controller('NotificationsController', ['scopeService', 'notificationService'
         $scope.updateListOfNotifications = function () {
             notificationService.getAllNotifications($scope.loggedInUser.id)
                 .success(function (response) {
-                    console.log('notificationService.getAllNotifications() was successfully executed!');
+                    $log.info('notificationService.getAllNotifications() was successfully executed!');
                     $scope.listOfNotifications = response;
                 })
                 .error(function (error) {
-                    console.log('$scope.listOfNotifications ***FAILED*** to execute!');
-                    console.log(error);
+                    $log.error('$scope.listOfNotifications ***FAILED*** to execute!');
+                    $log.error(error);
                 })
         };
 
