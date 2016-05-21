@@ -1,7 +1,6 @@
 package com.challengeaccepted.controllers;
 
 import com.challengeaccepted.models.ChallengeModel;
-import com.challengeaccepted.models.CommentModel;
 import com.challengeaccepted.models.NotificationModel;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.models.enums.Action;
@@ -9,12 +8,10 @@ import com.challengeaccepted.models.wrappers.NotificationInfo;
 import com.challengeaccepted.services.ChallengeService;
 import com.challengeaccepted.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,13 +46,7 @@ public class ChallengeController {
     @CrossOrigin
     @RequestMapping(value = "/challenge/{id}", method = RequestMethod.GET)
     public ResponseEntity<ChallengeModel> readChallenge(@PathVariable Long id) {
-        ChallengeModel challenge;
-        try {
-             challenge = challengeService.getChallengeFromDatabase(id);
-        } catch (EntityNotFoundException e) {
-            e.printStackTrace();
-            challenge = null;
-        }
+        ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
 
         System.out.println("CHALLENGE ID: " + challenge.getId());
 

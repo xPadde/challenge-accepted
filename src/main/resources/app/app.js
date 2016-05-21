@@ -55,5 +55,13 @@ app.config(function ($routeProvider) {
             templateUrl: 'views/list-challenges-not-logged-in.html',
             controller: 'ListController'
         })
+        .when('/error-challenge', {
+            title: 'Error challenge',
+            templateUrl: 'views/errorpage-challenge.html'
+        })
+        .when('/error-user', {
+            title: 'Error User profile',
+            templateUrl: 'views/errorpage-user.html'
+        })
         .otherwise({redirectTo: "/home"})
 });

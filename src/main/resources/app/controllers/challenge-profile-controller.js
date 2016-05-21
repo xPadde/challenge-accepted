@@ -1,12 +1,19 @@
-app.controller('ChallengeProfileController', ['$scope', '$log', '$routeParams', 'scopeService', 'challengeService',
-    function ($scope, $log, $routeParams, scopeService, challengeService) {
+app.controller('ChallengeProfileController', ['$scope', '$log', '$location', '$routeParams', 'scopeService', 'challengeService',
+    function ($scope, $log, $location, $routeParams, scopeService, challengeService) {
 
+        
+        /*
+        Get challenge from database depending on the id in the url-path, and save it to the
+        activeChallenge scope.
+         */
         var challengeUrlId = $routeParams.id;
-        console.log(challengeUrlId);
         challengeService.getChallengeById(challengeUrlId).success(function (response) {
             $scope.activeChallenge = response;
+        }).error(function () {
+            $location.path('/error-challenge');
         });
-
+        
+        
         $scope.isLoggedInUserTheChallengeCreator = function (challenge) {
             return scopeService.isLoggedInUserTheChallengeCreator(challenge);
         };

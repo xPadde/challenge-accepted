@@ -29,7 +29,13 @@ public class UserController {
     @CrossOrigin
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public ResponseEntity<UserModel> readUser(@PathVariable Long id) {
-        return new ResponseEntity<UserModel>(userService.getUserFromDatabase(id), HttpStatus.OK);
+        UserModel user = userService.getUserFromDatabase(id);
+
+        if (user != null) {
+            return new ResponseEntity<UserModel>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<UserModel>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @CrossOrigin
