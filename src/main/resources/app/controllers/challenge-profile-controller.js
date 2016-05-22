@@ -8,8 +8,21 @@ app.controller('ChallengeProfileController', ['$scope', '$log', '$location', '$r
          */
         var challengeUrlId = $routeParams.id;
         challengeService.getChallengeById(challengeUrlId).success(function (response) {
-            $scope.activeChallenge = response;
+            $scope.loggedInUser = scopeService.getLoggedInUser();
+
+            if (response.challengeClaimed && !response.challengeCompleted) {
+                console.log("Challenge is claimed!");
+                if (($scope.loggedInUser != null) && (response.challengeClaimer.id == $scope.loggedInUser.id)) {
+                    $scope.activeChallenge = response;
+                } else {
+                    $location.path('/error-challenge');
+                }
+            } else {
+                console.log("Challenge is not claimed!");
+                $scope.activeChallenge = response;
+            }
         }).error(function () {
+            console.log("getChallengeById was sent to error!");
             $location.path('/error-challenge');
         });
         
