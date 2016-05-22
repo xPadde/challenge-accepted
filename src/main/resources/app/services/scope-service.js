@@ -18,6 +18,10 @@ app.service('scopeService', ['$sce', '$location', 'userService', 'challengeServi
                 activeChallenge = challenge;
             },
 
+            getActiveChallenge: function () {
+                return activeChallenge;
+            },
+
             getLoggedInUser: function () {
                 return JSON.parse(sessionStorage.getItem('loggedInUser'));
             },
