@@ -48,12 +48,12 @@ public class ChallengeController {
     public ResponseEntity<ChallengeModel> readChallenge(@PathVariable Long id) {
         ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
 
-        System.out.println("CHALLENGE ID: " + challenge.getId());
 
-        if (challenge != null) {
-            return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
+        if (challenge == null) {
+            return new ResponseEntity<ChallengeModel>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<ChallengeModel>(HttpStatus.BAD_REQUEST);
+            System.out.println("CHALLENGE ID: " + challenge.getId());
+            return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
         }
     }
 
