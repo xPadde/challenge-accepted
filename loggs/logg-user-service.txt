@@ -1,0 +1,10 @@
+maj 23, 2016 9:38:58 FM com.challengeaccepted.services.UserService getUserByEmailFromDatabase
+FIN: counting 2
+maj 23, 2016 9:40:54 FM com.challengeaccepted.services.UserService getUserByEmailFromDatabase
+FIN: counting 2
+maj 23, 2016 9:43:02 FM com.challengeaccepted.services.UserService getUserByEmailFromDatabase
+FIN: counting 2
+maj 23, 2016 9:43:46 FM com.challengeaccepted.services.UserService getUserByEmailFromDatabase
+FIN: counting 2
+maj 23, 2016 9:44:03 FM com.challengeaccepted.services.UserService getUserByEmailFromDatabase
+FIN: counting 2
