@@ -18,7 +18,7 @@ public class ChallengeService {
     }
 
     public ChallengeModel getChallengeFromDatabase(Long id) {
-        return challengeRepository.getOne(id);
+        return challengeRepository.findOne(id);
     }
 
     public List<ChallengeModel> getAllChallengesFromDatabase() {

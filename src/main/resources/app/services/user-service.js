@@ -9,6 +9,14 @@ app.factory('userService', function ($http) {
             })
         },
 
+        getUserById: function (id) {
+            return $http({
+                url: 'http://localhost:8080/api/user/' + id,
+                method: 'GET',
+                header: {'Content-Type': 'application/json'}
+            })
+        },
+
         getUserByEmail: function (email) {
             return $http({
                 url: 'http://localhost:8080/api/user/find-by-email?email=' + email + '',

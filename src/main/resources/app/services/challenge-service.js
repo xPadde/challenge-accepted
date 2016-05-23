@@ -1,4 +1,5 @@
 app.factory('challengeService', function ($http) {
+    
     return {
         getChallengeById: function (id) {
             return $http({

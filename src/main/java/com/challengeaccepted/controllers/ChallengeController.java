@@ -9,7 +9,6 @@ import com.challengeaccepted.models.wrappers.NotificationInfo;
 import com.challengeaccepted.services.ChallengeService;
 import com.challengeaccepted.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +52,15 @@ public class ChallengeController {
     @CrossOrigin
     @RequestMapping(value = "/challenge/{id}", method = RequestMethod.GET)
     public ResponseEntity<ChallengeModel> readChallenge(@PathVariable Long id) {
-        return new ResponseEntity<ChallengeModel>(challengeService.getChallengeFromDatabase(id), HttpStatus.OK);
+        ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
+
+
+        if (challenge == null) {
+            return new ResponseEntity<ChallengeModel>(HttpStatus.NOT_FOUND);
+        } else {
+            System.out.println("CHALLENGE ID: " + challenge.getId());
+            return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
+        }
     }
 
     @CrossOrigin

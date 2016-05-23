@@ -27,10 +27,10 @@
             <tbody>
             <tr ng-repeat="challenge in listOfChallenges | filter:searchChallenges | orderBy:orderByFieldClaimed:reverseSortClaimed"
                 ng-if="challenge.challengeClaimer.id == loggedInUser.id && !challenge.challengeCompleted">
-                <td><a href="#" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
+                <td><a href="" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
                 <td>{{challenge.description}}</td>
                 <td>{{challenge.creationDate}}</td>
-                <td><a href="#" ng-click="upvoteChallenge(challenge)">
+                <td><a href="" ng-click="upvoteChallenge(challenge)">
                     <img src="img/like.png" class="thumb" onmouseover="src='img/like2.png'"
                          onmouseout="src='img/like.png'" ng-show="!isChallengeUpvotedByUser(challenge)">
                     <img src="img/like2.png" class="thumb" onmouseover="src='img/like.png'"

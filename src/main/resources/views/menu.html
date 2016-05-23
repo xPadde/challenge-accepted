@@ -1,76 +1,76 @@
 <nav class="navbar navbar-default">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ca-navbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" ng-click="showStartPageLists()"><img src="img/calogo.png" alt="" id="logo"></a>
-    </div>
-    <div class="collapse navbar-collapse" id="ca-navbar">
-        <ul class="nav navbar-nav">
-            <li class="dropdown">
-                <a class="dropdown-toggle menu-item" data-toggle="dropdown" href="">Challenge
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a ng-click="showCreateChallengeSection()">Create</a></li>
-                    <li><a ng-click="showListOfChallengesSection()">Available</a></li>
-                    <li ng-show="loggedInUser != null"><a ng-click="showListOfClaimedChallenges()">Claimed</a></li>
-                    <li><a ng-click="showListOfCompletedChallengesSection()">Completed</a></li>
-                </ul>
-            </li>
-            <li ng-show="loggedInUser != null"><a href="#" ng-click="showApproveVideosSection()" class="menu-item">Approve
-                Videos</a></li>
-            <li ng-show="loggedInUser != null">
-                <a ng-click="showListOfNotifications()" class="menu-item">
-                    Notifications
-                </a>
-            </li>
-            <li class="dropdown">
-                <a class="dropdown-toggle menu-item" data-toggle="dropdown" href="">Hall of Fame
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a ng-click="showListOfUsersSection()">Top Challengers</a></li>
-                </ul>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a href="http://www.facebook.com/sharer/sharer.php?u={{ dynamicUrl }}"><img
-                        src="img/facebook-logo-light.png"
-                        onmouseover="src='img/facebook-logo-dark.png'"
-                        onmouseout="src='img/facebook-logo-light.png'"
-                        class="social-share"></a>
-            </li>
-            <li><a href="http://www.facebook.com/sharer/sharer.php?u={{ dynamicUrl }}"><img
-                    src="img/mail-logo-light.png"
-                    onmouseover="src='img/mail-logo-dark.png'"
-                    onmouseout="src='img/mail-logo-light.png'"
-                    class="social-share"></a></li>
-            <li><!--<a href="https://twitter.com/intent/tweet">-->
-                <a href="http://twitter.com/share?url={{ dynamicUrl }}"><img src="img/twitter-logo-light.png"
-                                                                             onmouseover="src='img/twitter-logo-dark.png'"
-                                                                             onmouseout="src='img/twitter-logo-light.png'"
-                                                                             class="social-share"></a></li>
-            <li id="login-logout">
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-login-logout"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
-                            ng-hide="loggedInUser == null">
-                        {{loggedInUser.firstName}}
-                        {{loggedInUser.lastName}}
-                    </button>
-                    <div ng-show="loggedInUser == null" class="g-signin2" data-onsuccess="onSignIn"></div>
-                    <ul class="dropdown-menu" aria-labelledby="dropdown-login-logout">
-                        <li ng-hide="loggedInUser == null"><a ng-click="viewUserProfilePage(loggedInUser)">View
-                            Profile</a></li>
-                        <li ng-hide="loggedInUser == null"><a href="#" ng-click="signOut()">Sign out</a></li>
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ca-navbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Challenge Accepted</a>
+        </div>
+        <div class="collapse navbar-collapse" id="ca-navbar">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a class="dropdown-toggle menu-item" data-toggle="dropdown" href="">Challenge
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a ng-click="showCreateChallenge()">Create</a></li>
+                        <li><a href="#/available-challenges">Available</a></li>
+                        <li ng-show="loggedInUser != null"><a href="#/claimed-challenges">Claimed</a></li>
+                        <li><a href="#/completed-challenges">Completed</a></li>
                     </ul>
-                </div>
-            </li>
-        </ul>
+                </li>
+                <li ng-show="loggedInUser != null"><a href="#/approve-video" class="menu-item">Approve
+                    Videos</a></li>
+                <li ng-show="loggedInUser != null">
+                    <a href="#/notifications" class="menu-item">Notifications</a>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle menu-item" data-toggle="dropdown" href="">Hall of Fame
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#/toplist">Top Challengers</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://www.facebook.com/sharer/sharer.php?u=https://www.youtube.com/watch?v=DfoVyWOUEBU"><img
+                            src="img/facebook-logo-light.png"
+                            onmouseover="src='img/facebook-logo-dark.png'"
+                            onmouseout="src='img/facebook-logo-light.png'"
+                            class="social-share"></a>
+                </li>
+                <li><a href="mailto:?subject={{mailtoSubject}}&body={{mailtoBody}}"><img
+                        src="img/mail-logo-light.png"
+                        onmouseover="src='img/mail-logo-dark.png'"
+                        onmouseout="src='img/mail-logo-light.png'"
+                        class="social-share"></a></li>
+                <li><!--<a href="https://twitter.com/intent/tweet">-->
+                    <a href="http://twitter.com/share?url={{ absoluteUrl }}"><img src="img/twitter-logo-light.png"
+                                                                                 onmouseover="src='img/twitter-logo-dark.png'"
+                                                                                 onmouseout="src='img/twitter-logo-light.png'"
+                                                                                 class="social-share"></a></li>
+                <li id="login-logout">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-login-logout"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ng-hide="loggedInUser == null">
+                            {{loggedInUser.firstName}}
+                            {{loggedInUser.lastName}}
+                        </button>
+                        <div ng-show="loggedInUser == null" class="g-signin2" data-onsuccess="onSignIn"></div>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown-login-logout">
+                            <li ng-hide="loggedInUser == null"><a ng-click="viewUserProfilePage(loggedInUser)">View Profile</a></li>
+                            <li ng-hide="loggedInUser == null"><a href="" ng-click="signOut()">Sign out</a></li>
+                        </ul>
+                    </div>
+            </ul>
+        </div>
+        </li>
+
+    </div>
     </div>
 </nav>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
