@@ -62,13 +62,14 @@ public class ChallengeController {
         }
 
         if(challenge.getChallengeClaimed()) {
+            if ((userModelFromDatabase.getId() == challenge.getChallengeCreator().getId()) && challenge.getYoutubeVideoUploaded()){
+                return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
+            }
             if (userModelFromDatabase.getId() != challenge.getChallengeClaimer().getId() && !challenge.getChallengeCompleted()) {
                 System.out.println("felhantering: usermodel finns och är inte claimer");
                 return new ResponseEntity<ChallengeModel>(HttpStatus.BAD_REQUEST);
             }
-            if (userModelFromDatabase.getId() == challenge.getChallengeCreator().getId()){
-                return new ResponseEntity<ChallengeModel>(HttpStatus.OK);
-            }
+
         }
 
         if (challenge == null) {
