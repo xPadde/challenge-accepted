@@ -20,7 +20,7 @@ app.controller('ChallengeController', ['$scope', '$location', '$route', '$http',
          Handles the comment sections.
          TODO this section is under development.
          */
-        $scope.addCommentToChallenge = function (challenge) {
+        /*$scope.addCommentToChallenge = function (challenge) {
             var commentFromUser = $('#textarea-comment-field').val();
             $('#commentChallengeForm').each(function () {
                 this.reset();
@@ -38,7 +38,7 @@ app.controller('ChallengeController', ['$scope', '$location', '$route', '$http',
                 .then(function () {
                     $scope.activeChallenge = challengeService.getChallengeById(challenge.id);
                 });
-        };
+        };*/
 
         $scope.getUserInputsFromCommentField = function () {
             return JSON.stringify({

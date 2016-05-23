@@ -56,7 +56,7 @@ public class ChallengeControllerTest {
 
     @Test
     public void testReadChallenge_Should_Return_Status_Code_200() throws Exception {
-        assertEquals("readChallenge() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.readChallenge(new Random().nextLong()).getStatusCode());
+        assertEquals("readChallenge() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.readChallenge(new Random().nextLong(), new UserModel().getId()).getStatusCode());
     }
 
     @Test

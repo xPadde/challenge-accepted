@@ -50,18 +50,39 @@ public class ChallengeController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/challenge/{id}", method = RequestMethod.GET)
-    public ResponseEntity<ChallengeModel> readChallenge(@PathVariable Long id) {
-        ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
+    @RequestMapping(value = "/challenge/{id}/user/{loggedInUserId}", method = RequestMethod.GET)
+    public ResponseEntity<ChallengeModel> readChallenge(@PathVariable Long id, @PathVariable Long loggedInUserId) {
 
+        ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
+        UserModel userModelFromDatabase = userService.getUserFromDatabase(loggedInUserId);
+
+        if(userModelFromDatabase == null && challenge.getChallengeClaimed() && !challenge.getChallengeCompleted()){
+            System.out.println("felhantering: usermodel null");
+            return new ResponseEntity<ChallengeModel>(HttpStatus.BAD_REQUEST);
+        }
+
+        if(challenge.getChallengeClaimed()) {
+            if (userModelFromDatabase.getId() != challenge.getChallengeClaimer().getId() && !challenge.getChallengeCompleted()) {
+                System.out.println("felhantering: usermodel finns och är inte claimer");
+                return new ResponseEntity<ChallengeModel>(HttpStatus.BAD_REQUEST);
+            }
+            if (userModelFromDatabase.getId() == challenge.getChallengeCreator().getId()){
+                return new ResponseEntity<ChallengeModel>(HttpStatus.OK);
+            }
+        }
 
         if (challenge == null) {
+            System.out.println("felhantering: challenge null");
             return new ResponseEntity<ChallengeModel>(HttpStatus.NOT_FOUND);
         } else {
+            System.out.println("felhantering: allt okej");
             System.out.println("CHALLENGE ID: " + challenge.getId());
             return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
         }
     }
+
+
+
 
     @CrossOrigin
     @RequestMapping(value = "/challenges/", method = RequestMethod.GET)
