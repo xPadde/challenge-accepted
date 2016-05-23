@@ -25,7 +25,7 @@ th {
 
 /*Classes*/
 
-.table-item-description, .table-item-topic {
+.table-item-description, .table-item-topic, .table-item-date {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
