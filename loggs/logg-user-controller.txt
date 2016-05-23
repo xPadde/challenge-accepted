@@ -1,2 +1,0 @@
-maj 22, 2016 2:47:48 EM com.challengeaccepted.controllers.UserController createUser
-INFO: A new user named Rigmor Osvaldsson has been saved to the database
