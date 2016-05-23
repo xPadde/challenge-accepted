@@ -1,5 +1,6 @@
 package com.challengeaccepted.controllers;
 
+import com.challengeaccepted.loggers.LoggerUserController;
 import com.challengeaccepted.models.ChallengeModel;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.UserService;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
@@ -18,11 +20,13 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    LoggerUserController logger = new LoggerUserController();
 
     @CrossOrigin
     @RequestMapping(value = "/user/", method = RequestMethod.POST)
     public ResponseEntity<UserModel> createUser(@RequestBody UserModel userModel) {
         userService.saveUserToDatabase(userModel);
+        logger.getLogger().log(Level.INFO, "A new user named " + userModel.getFirstName() + " " + userModel.getLastName() + " has been saved to the database");
         return new ResponseEntity<UserModel>(userModel, HttpStatus.CREATED);
     }
 

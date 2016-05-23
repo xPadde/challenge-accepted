@@ -1,7 +1,7 @@
 package com.challengeaccepted.controllers;
 
+import com.challengeaccepted.loggers.LoggerChallengeController;
 import com.challengeaccepted.models.ChallengeModel;
-import com.challengeaccepted.models.CommentModel;
 import com.challengeaccepted.models.NotificationModel;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.models.enums.Action;
@@ -9,13 +9,13 @@ import com.challengeaccepted.models.wrappers.NotificationInfo;
 import com.challengeaccepted.services.ChallengeService;
 import com.challengeaccepted.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.*;
 
 @RestController
 public class ChallengeController {
@@ -28,12 +28,14 @@ public class ChallengeController {
     private CommentController commentController;
     @Autowired
     private NotificationController notificationController;
+    private LoggerChallengeController logger = new LoggerChallengeController();
 
     @CrossOrigin
     @RequestMapping(value = "/challenge/create/challenge-creator/{challengeCreatorId}", method = RequestMethod.POST)
     public ResponseEntity createChallenge(@RequestBody ChallengeModel challengeModel, @PathVariable Long challengeCreatorId) {
 
         if (challengeModel.getTopic().equals("") || challengeModel.getDescription().equals("")) {
+            logger.getLOG().log(Level.SEVERE, "Frontend validation failed when creating a challenge with empty fields.");
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
 
@@ -42,6 +44,8 @@ public class ChallengeController {
 
         challengeService.saveChallengeToDatabase(challengeModel);
         createAndSaveNotification(challengeCreator, challengeModel, new NotificationInfo(Action.CREATECHALLENGE));
+
+        logger.getLOG().log(Level.FINE, "A challenge with id " + challengeModel.getId() + " has been created.");
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
@@ -83,6 +87,7 @@ public class ChallengeController {
         ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(id);
 
         if (challengeModel.getChallengeCreator().getId().equals(userModel.getId())) {
+            logger.getLOG().log(Level.SEVERE, "The challenge creator with id " + userModel.getId() + " is trying to claim his/her own challenge");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -90,6 +95,7 @@ public class ChallengeController {
         challengeModel.setChallengeClaimed(true);
         challengeService.updateChallengeInDatabase(challengeModel);
         createAndSaveNotification(userModel, challengeModel, new NotificationInfo(Action.CLAIMCHALLENGE));
+        logger.getLOG().log(Level.INFO, "The challenge with id " + challengeModel.getId() + " has successfully been claimed by the user with id " + userModel.getId());
         return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
     }
 
@@ -100,6 +106,7 @@ public class ChallengeController {
         challengeModel.setYoutubeURL(youtubeUrl);
         challengeModel.setYoutubeUrlProvided(true);
         challengeService.updateChallengeInDatabase(challengeModel);
+        logger.getLOG().log(Level.INFO, "A Youtube link has successfully been added to a claimed challenge");
         return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
     }
 
@@ -113,7 +120,7 @@ public class ChallengeController {
         Double pointsToDistribute = challenge.getUpvotes();
         System.out.println(pointsToDistribute);
 
-        challengeCreator.addCreatedChallengePoints(pointsToDistribute/2);
+        challengeCreator.addCreatedChallengePoints(pointsToDistribute / 2);
         challengeCompleter.addCompletedChallengePoints(pointsToDistribute);
         challenge.addPoints(pointsToDistribute);
 
@@ -123,6 +130,8 @@ public class ChallengeController {
         userService.updateUserInDatabase(challengeCompleter);
         userService.updateUserInDatabase(challengeCreator);
         challengeService.updateChallengeInDatabase(challenge);
+
+        logger.getLOG().log(Level.INFO, "Points have been distributed to the challengecompleter, challengecreator and the challenge successfully");
 
         createAndSaveNotification(challengeCompleter, challenge, new NotificationInfo(Action.PERFORMEDCHALLENGE));
 
@@ -147,6 +156,7 @@ public class ChallengeController {
         NotificationInfo notificationInfo = new NotificationInfo(Action.FAILEDTOPERFORMECHALLENGE, notificationMessage);
         createAndSaveNotification(userThatHasFailedPerformedChallenge, challengeModel, notificationInfo);
 
+        logger.getLOG().log(Level.INFO, "A challenge have been disapproved by the challengecreator successfully");
         return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
     }
 
@@ -161,7 +171,7 @@ public class ChallengeController {
             challengeService.updateChallengeInDatabase(challenge);
             return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
         } else {
-            // TODO lägga logger här.
+            logger.getLOG().log(Level.SEVERE, "A challenge claimer has confirmed the uploaded Youtube video");
             return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.BAD_REQUEST);
         }
     }
