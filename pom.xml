@@ -21,7 +21,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
+                <!--<groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>1.3.5.RELEASE</version>
                 <executions>
@@ -30,17 +30,17 @@
                             <goal>repackage</goal>
                         </goals>
                     </execution>
-                </executions>
+                </executions>-->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <archive>
+                    <!--<archive>
                         <manifest>
                             <mainClass>com.challengeaccepted.Application</mainClass>
                         </manifest>
-                    </archive>
+                    </archive>-->
                 </configuration>
             </plugin>
         </plugins>
