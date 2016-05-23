@@ -1,7 +1,6 @@
 package com.challengeaccepted.controllers;
 
 import com.challengeaccepted.models.ChallengeModel;
-import com.challengeaccepted.models.CommentModel;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.ChallengeService;
 import com.challengeaccepted.services.UserService;
@@ -12,6 +11,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
@@ -26,9 +27,13 @@ public class ChallengeControllerTest {
     @Mock
     private CommentController mockedCommentController;
     @Mock
+    private NotificationController mockedNotificationController;
+    @Mock
     private ChallengeModel mockedChallenge;
     @Mock
     private UserModel mockedUserModel;
+    @Mock
+    private UserModel mockedChallengeCreator;
 
     @InjectMocks
     private ChallengeController challengeController;
@@ -36,14 +41,17 @@ public class ChallengeControllerTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        when(mockedChallengeService.getChallengeFromDatabase(1L)).thenReturn(new ChallengeModel());
-        when(mockedUserService.getUserFromDatabase(1L)).thenReturn(new UserModel());
-        when(mockedChallenge.getChallengeClaimer()).thenReturn(new UserModel());
+        when(mockedChallengeService.getChallengeFromDatabase(1L)).thenReturn(mockedChallenge);
     }
 
     @Test
-    public void testCreateChallenge_Should_Return_Status_Code_201() throws Exception {
-        assertEquals("createChallenge() did not respond with http status 201 (created)", HttpStatus.CREATED, challengeController.createChallenge(new ChallengeModel(), new Random().nextLong()).getStatusCode());
+    public void testCreateChallenge() throws Exception {
+        when(mockedChallenge.getTopic()).thenReturn("");
+        when(mockedChallenge.getDescription()).thenReturn("");
+        assertEquals("createChallenge() did not respond with http status 204 (no content)", HttpStatus.NO_CONTENT, challengeController.createChallenge(mockedChallenge, new Random().nextLong()).getStatusCode());
+        when(mockedChallenge.getTopic()).thenReturn("Topic");
+        when(mockedChallenge.getDescription()).thenReturn("Description");
+        assertEquals("createChallenge() did not respond with http status 201 (created)", HttpStatus.CREATED, challengeController.createChallenge(mockedChallenge, new Random().nextLong()).getStatusCode());
     }
 
     @Test
@@ -72,8 +80,13 @@ public class ChallengeControllerTest {
     }
 
     @Test
-    public void testUpdateChallengeClaimer_Should_Return_Status_Code_200() throws Exception {
-        assertEquals("updateChallengeClaimer() did not respons with http status 200 (ok)", HttpStatus.OK, challengeController.updateChallengeClaimer(1L, new UserModel()).getStatusCode());
+    public void testUpdateChallengeClaimer() throws Exception {
+        when(mockedUserModel.getId()).thenReturn(1L);
+        when(mockedChallenge.getChallengeCreator()).thenReturn(mockedChallengeCreator);
+        assertEquals("updateChallengeClaimer() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.updateChallengeClaimer(1L, mockedUserModel).getStatusCode());
+        // Set the two mocked users to the same id, should return a bad request http status.
+        when(mockedChallenge.getChallengeCreator().getId()).thenReturn(1L);
+        assertEquals("updateChallengeClaimer() did not respond with http status 400 (bad request)", HttpStatus.BAD_REQUEST, challengeController.updateChallengeClaimer(1L, mockedUserModel).getStatusCode());
     }
 
     @Test
@@ -83,6 +96,9 @@ public class ChallengeControllerTest {
 
     @Test
     public void testAssignPointsToUser_Should_Return_Status_Code_200() throws Exception {
+        when(mockedChallenge.getChallengeClaimer()).thenReturn(new UserModel());
+        when(mockedChallenge.getChallengeCreator()).thenReturn(new UserModel());
+        when(mockedUserService.getUserFromDatabase(mockedChallenge.getChallengeCreator().getId())).thenReturn(new UserModel());
         assertEquals("assignPoinstToUser() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.assignPointsToUser(1L).getStatusCode());
     }
 
@@ -92,17 +108,22 @@ public class ChallengeControllerTest {
     }
 
     @Test
-    public void testConfirmUploadedYoutubeUrl_Should_Return_Status_Code_200() throws Exception {
+    public void testConfirmUploadedYoutubeUrl() throws Exception {
         assertEquals("confirmUploadedYoutubeUrl() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.confirmUploadedYoutubeUrl(1L).getStatusCode());
+        when(mockedChallenge.getYoutubeVideoUploaded()).thenReturn(true);
+        assertEquals("confirmUploadedYoutubeUrl() did not respond with http status 400 (bad request)", HttpStatus.BAD_REQUEST, challengeController.confirmUploadedYoutubeUrl(1L).getStatusCode());
+    }
+
+    @Test()
+    public void testAddOrRemoveUserToChallengeUpvoters_Should_Return_Status_Code_200() throws Exception {
+        when(mockedUserModel.getId()).thenReturn(1L);
+        when(mockedUserService.getUserFromDatabase(1L)).thenReturn(new UserModel());
+        assertEquals("addUserToChallengeUpvoters() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.addOrRemoveUserToChallengeUpvoters(1L, mockedUserModel).getStatusCode());
     }
 
     @Test
-    public void testAddUserToChallengeUpvoters_Should_Return_Status_Code_200() throws Exception {
-        assertEquals("addUserToChallengeUpvoters() did not throw NullPointerException", HttpStatus.OK, challengeController.addOrRemoveUserToChallengeUpvoters(1L, new UserModel()).getStatusCode());
+    public void addOrRemovePointToCompletedChallenge() throws Exception {
+        // TODO Write Test
     }
 
-    /*@Test
-    public void testAddCommentToChallenge_Should_Return_Status_Code_201() throws Exception {
-        assertEquals("addCommentToChallenge() did not respond with http status 201 (created)", HttpStatus.CREATED, challengeController.addCommentToChallenge(new CommentModel(), new Random().nextLong()).getStatusCode());
-    }*/
 }

@@ -21,4 +21,16 @@ public class NotificationService {
         return notificationRepository.findAll();
     }
 
+    public List<NotificationModel> getAllNotificationsFromChallengeCreator(Long id) {
+        return notificationRepository.getByInteractedChallengeChallengeCreatorId(id);
+    }
+
+    public List<NotificationModel> getAllNotificationsFromChallengeClaimer(Long id){
+        return notificationRepository.getByInteractedChallengeChallengeClaimerId(id);
+    }
+
+    public List<NotificationModel> getAllNotificationsFromChallengeUpvotersId(Long id) {
+        return notificationRepository.getByInteractedChallengeChallengeUpvotersId(id);
+    }
+
 }

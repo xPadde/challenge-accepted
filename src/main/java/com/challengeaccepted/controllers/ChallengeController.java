@@ -9,6 +9,7 @@ import com.challengeaccepted.models.wrappers.NotificationInfo;
 import com.challengeaccepted.services.ChallengeService;
 import com.challengeaccepted.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -86,10 +87,7 @@ public class ChallengeController {
     public ResponseEntity<ChallengeModel> updateChallengeClaimer(@PathVariable Long id, @RequestBody UserModel userModel) {
         ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(id);
 
-        if (challengeModel.getChallengeCreator().getId().equals(userModel.getId())) {
-            logger.getLOG().log(Level.SEVERE, "The challenge creator with id " + userModel.getId() + " is trying to claim his/her own challenge");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        if (isChallengeCreatorSameAsChallengeClaimer(userModel, challengeModel)) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         challengeModel.setChallengeClaimer(userModel);
         challengeModel.setChallengeClaimed(true);
@@ -228,6 +226,16 @@ public class ChallengeController {
 *//*        challengeService.updateChallengeInDatabase(challengeModel);*//*
         return new ResponseEntity(HttpStatus.CREATED);
     }*/
+
+    private boolean isChallengeCreatorSameAsChallengeClaimer(UserModel userModel, ChallengeModel challengeModel) {
+        if (challengeModel.getChallengeCreator() != null && userModel != null) {
+            if (challengeModel.getChallengeCreator().getId().equals(userModel.getId())) {
+                logger.getLOG().log(Level.SEVERE, "The challenge creator with id " + userModel.getId() + " is trying to claim his/her own challenge");
+                return true;
+            }
+        }
+        return false;
+    }
 
     private void updateChallengeToCompleted(ChallengeModel challenge) {
         challenge.setChallengeCompleted(true);
