@@ -8,3 +8,7 @@ maj 23, 2016 9:43:46 FM com.challengeaccepted.services.UserService getUserByEmai
 FIN: counting 2
 maj 23, 2016 9:44:03 FM com.challengeaccepted.services.UserService getUserByEmailFromDatabase
 FIN: counting 2
+maj 23, 2016 9:48:38 FM com.challengeaccepted.services.UserService getUserByEmailFromDatabase
+FIN: counting 2
+maj 23, 2016 9:50:33 FM com.challengeaccepted.services.UserService getUserByEmailFromDatabase
+FIN: counting 3

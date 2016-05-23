@@ -1,0 +1,2 @@
+maj 23, 2016 9:48:38 FM com.challengeaccepted.controllers.UserController createUser
+INFO: A new user named Lena Stridsberg has been saved to the database
