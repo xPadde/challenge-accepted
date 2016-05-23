@@ -1,2 +1,0 @@
-maj 23, 2016 9:48:49 FM com.challengeaccepted.controllers.ChallengeController createChallenge
-FIN: A challenge with id 14 has been created.
