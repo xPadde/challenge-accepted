@@ -56,17 +56,20 @@ public class ChallengeController {
         ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
         UserModel userModelFromDatabase = userService.getUserFromDatabase(loggedInUserId);
 
-        if(userModelFromDatabase == null && challenge.getChallengeClaimed() && !challenge.getChallengeCompleted()){
-            System.out.println("felhantering: usermodel null");
+        return validateUserRestrictions(challenge, userModelFromDatabase);
+    }
+
+    private ResponseEntity<ChallengeModel> validateUserRestrictions(ChallengeModel challenge, UserModel userModelFromDatabase){
+
+        if (isChallengeUnavailableForUserNotSignedIn(challenge, userModelFromDatabase)) {
             return new ResponseEntity<ChallengeModel>(HttpStatus.BAD_REQUEST);
         }
 
         if(challenge.getChallengeClaimed()) {
-            if ((userModelFromDatabase.getId() == challenge.getChallengeCreator().getId()) && challenge.getYoutubeVideoUploaded()){
+            if (isLoggedInUserTheCreatorAndIsVideoUploaded(challenge, userModelFromDatabase)) {
                 return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
             }
-            if (userModelFromDatabase.getId() != challenge.getChallengeClaimer().getId() && !challenge.getChallengeCompleted()) {
-                System.out.println("felhantering: usermodel finns och är inte claimer");
+            if (isLoggedInUserNotClaimerAndChallengeNotCompleted(challenge, userModelFromDatabase)) {
                 return new ResponseEntity<ChallengeModel>(HttpStatus.BAD_REQUEST);
             }
 
@@ -80,9 +83,31 @@ public class ChallengeController {
             System.out.println("CHALLENGE ID: " + challenge.getId());
             return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
         }
+
     }
 
+    private boolean isLoggedInUserNotClaimerAndChallengeNotCompleted(ChallengeModel challenge, UserModel userModelFromDatabase) {
+        if (userModelFromDatabase.getId() != challenge.getChallengeClaimer().getId() && !challenge.getChallengeCompleted()) {
+            System.out.println("felhantering: usermodel finns och är inte claimer");
+            return true;
+        }
+        return false;
+    }
 
+    private boolean isLoggedInUserTheCreatorAndIsVideoUploaded(ChallengeModel challenge, UserModel userModelFromDatabase) {
+        if ((userModelFromDatabase.getId() == challenge.getChallengeCreator().getId()) && challenge.getYoutubeVideoUploaded()){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isChallengeUnavailableForUserNotSignedIn(ChallengeModel challenge, UserModel userModelFromDatabase) {
+        if(userModelFromDatabase == null && challenge.getChallengeClaimed() && !challenge.getChallengeCompleted()){
+            System.out.println("felhantering: usermodel null");
+            return true;
+        }
+        return false;
+    }
 
 
     @CrossOrigin
