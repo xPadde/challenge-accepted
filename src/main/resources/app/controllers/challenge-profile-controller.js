@@ -1,13 +1,20 @@
 app.controller('ChallengeProfileController', ['$scope', '$log', '$location', '$routeParams', 'scopeService', 'challengeService',
     function ($scope, $log, $location, $routeParams, scopeService, challengeService) {
-
         
+
         /*
         Get challenge from database depending on the id in the url-path, and save it to the
         activeChallenge scope.
          */
         var challengeUrlId = $routeParams.id;
-        challengeService.getChallengeById(challengeUrlId).success(function (response) {
+        var loggedInUserId;
+        $scope.loggedInUser = scopeService.getLoggedInUser();
+        if(sessionStorage.getItem("isLoggedIn") == 'true'){
+            loggedInUserId = $scope.loggedInUser.id;
+        }else{
+            loggedInUserId = 0;
+        }
+        challengeService.getChallengeById(challengeUrlId, loggedInUserId).success(function (response) {
             $scope.activeChallenge = response;
 
             //TODO rethink this if-case
