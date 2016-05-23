@@ -45,7 +45,7 @@ th {
 
 .btn-default {
     color: #003366;
-    padding: 1em;
+    padding: 0.5em;
     display: inline-block;
 }
 
@@ -62,16 +62,16 @@ th {
     z-index: 1;
 }
 
-.navbar-default .navbar-nav .menu-item {
+.navbar-default .navbar-nav .menu-item, .navbar-default .navbar-nav .menu-item-right {
     font-size: 1.2em;
     color: #003366;
     font-weight: bold;
+    margin-top: 3em;
 }
 
 .navbar-default .navbar-nav .menu-item:hover {
     font-size: 1.2em;
-    color: #003366;
-    border-bottom: 4px solid #003366;
+    color: #337AB7;
     font-weight: bold;
 }
 
@@ -92,11 +92,15 @@ th {
     height: 1.5em;
 }
 
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+    background-color: #F8F8F8;
+}
+
 /*ID*/
 
 #logo {
-    height:3em;
-    margin-top: -0.8em;
+    width: 100%;
+    z-index: 0;
 }
 
 #name-of-logged-in-user {
