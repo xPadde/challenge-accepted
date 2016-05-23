@@ -74,7 +74,7 @@ app.controller('ChallengeProfileController', ['$scope', '$log', '$location', '$r
             // TODO review naming conventions for 'YouTube' and 'Url'.
 
             var userProvidedUrl = $('#input-youtube-url').val();
-            var convertedYoutubeUrl = convertToYouTubeEmbedUrl(userProvidedUrl);
+            var convertedYoutubeUrl = $scope.convertToYouTubeEmbedUrl(userProvidedUrl);
 
 
             challengeService.addYoutubeUrlToChallenge(challenge.id, convertedYoutubeUrl)
@@ -99,7 +99,7 @@ app.controller('ChallengeProfileController', ['$scope', '$log', '$location', '$r
         };
 
         // Convert the user provided YouTube URL to a embedded URL for use in an iframe.
-        var convertToYouTubeEmbedUrl = function (url) {
+        $scope.convertToYouTubeEmbedUrl = function (url) {
             var isYoutubeUrlCorrect = url.indexOf("watch?v=") > 1; // Is true if the string contains "watch?v="
             var baseUrl = "https://www.youtube.com/embed/";
 
