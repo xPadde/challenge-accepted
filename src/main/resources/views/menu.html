@@ -1,13 +1,12 @@
 <nav class="navbar navbar-default">
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ca-navbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="#/home" class="navbar-brand"><img src="img/calogo.png" alt="" id="logo"></a>
-        </div>
+        <a href="#/home" class="navbar-brand"><img src="img/calogo.png" alt="" id="logo"></a>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ca-navbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
         <div class="collapse navbar-collapse" id="ca-navbar">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
@@ -37,40 +36,41 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="http://www.facebook.com/sharer/sharer.php?u=https://www.youtube.com/watch?v=DfoVyWOUEBU"><img
+                    <a href="http://www.facebook.com/sharer/sharer.php?u=https://www.youtube.com/watch?v=DfoVyWOUEBU"
+                       class="menu-item-right"><img
                             src="img/facebook-logo-light.png"
                             onmouseover="src='img/facebook-logo-dark.png'"
                             onmouseout="src='img/facebook-logo-light.png'"
                             class="social-share"></a>
                 </li>
-                <li><a href="mailto:?subject={{mailtoSubject}}&body={{mailtoBody}}"><img
+                <li><a href="mailto:?subject={{mailtoSubject}}&body={{mailtoBody}}" class="menu-item-right"><img
                         src="img/mail-logo-light.png"
                         onmouseover="src='img/mail-logo-dark.png'"
                         onmouseout="src='img/mail-logo-light.png'"
                         class="social-share"></a></li>
                 <li><!--<a href="https://twitter.com/intent/tweet">-->
-                    <a href="http://twitter.com/share?url={{ absoluteUrl }}"><img src="img/twitter-logo-light.png"
-                                                                                 onmouseover="src='img/twitter-logo-dark.png'"
-                                                                                 onmouseout="src='img/twitter-logo-light.png'"
-                                                                                 class="social-share"></a></li>
+                    <a href="http://twitter.com/share?url={{ absoluteUrl }}" class="menu-item-right"><img
+                            src="img/twitter-logo-light.png"
+                            onmouseover="src='img/twitter-logo-dark.png'"
+                            onmouseout="src='img/twitter-logo-light.png'"
+                            class="social-share"></a></li>
                 <li id="login-logout">
-                    <div class="dropdown">
+                    <div class="dropdown menu-item-right">
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-login-logout"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ng-hide="loggedInUser == null">
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
+                                ng-hide="loggedInUser == null">
                             {{loggedInUser.firstName}}
                             {{loggedInUser.lastName}}
                         </button>
                         <div ng-show="loggedInUser == null" class="g-signin2" data-onsuccess="onSignIn"></div>
                         <ul class="dropdown-menu" aria-labelledby="dropdown-login-logout">
-                            <li ng-hide="loggedInUser == null"><a ng-click="viewUserProfilePage(loggedInUser)">View Profile</a></li>
+                            <li ng-hide="loggedInUser == null"><a ng-click="viewUserProfilePage(loggedInUser)">View
+                                Profile</a></li>
                             <li ng-hide="loggedInUser == null"><a href="" ng-click="signOut()">Sign out</a></li>
                         </ul>
                     </div>
             </ul>
         </div>
-        </li>
-
-    </div>
     </div>
 </nav>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
