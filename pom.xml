@@ -36,11 +36,14 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <!--<archive>
+                    <archive>
                         <manifest>
                             <mainClass>com.challengeaccepted.Application</mainClass>
                         </manifest>
-                    </archive>-->
+                    </archive>
+                    <descriptorRefs>
+                        <decriptorRef>challengeaccepted-1.0-SNAPSHOT.jar</decriptorRef>
+                    </descriptorRefs>
                 </configuration>
             </plugin>
         </plugins>
