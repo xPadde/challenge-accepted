@@ -10,6 +10,6 @@ app.controller('UserController', ['$scope', '$location', '$routeParams', 'userSe
                 $location.path('/error-user');
             });
 
-        $scope.getListOfCompletedChallenges = scopeService.getListOfCompletedChallenges();
+        $scope.listOfCompletedChallenges = scopeService.getListOfCompletedChallenges();
 
     }]);
