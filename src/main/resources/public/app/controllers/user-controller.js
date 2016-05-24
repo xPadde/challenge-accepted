@@ -1,5 +1,5 @@
-app.controller('UserController', ['$scope', '$location', '$log', '$routeParams', 'userService', 'challengeService',
-    function ($scope, $location, $log, $routeParams, userService, challengeService) {
+app.controller('UserController', ['$scope', '$location', '$log', '$routeParams', 'userService', 'challengeService', 'scopeService',
+    function ($scope, $location, $log, $routeParams, userService, challengeService, scopeService) {
 
         var userUrlId = $routeParams.id;
         userService.getUserById(userUrlId)
