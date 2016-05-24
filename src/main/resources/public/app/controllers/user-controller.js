@@ -1,5 +1,5 @@
-app.controller('UserController', ['$scope', '$location', '$log', '$routeParams', 'userService',
-    function ($scope, $location, $log, $routeParams, userService) {
+app.controller('UserController', ['$scope', '$location', '$log', '$routeParams', 'userService', 'challengeService',
+    function ($scope, $location, $log, $routeParams, userService, challengeService) {
 
         var userUrlId = $routeParams.id;
         userService.getUserById(userUrlId)
@@ -9,6 +9,10 @@ app.controller('UserController', ['$scope', '$location', '$log', '$routeParams',
             .error(function () {
                 $location.path('/error-user');
             });
+
+        $scope.viewChallengeProfilePage = function (challenge) {
+            scopeService.viewChallengeProfilePage(challenge);
+        };
 
         $scope.getListOfCompletedChallenges = function () {
             challengeService.getListOfCompletedChallenges()
@@ -21,5 +25,7 @@ app.controller('UserController', ['$scope', '$location', '$log', '$routeParams',
                     $log.error(error);
                 });
         };
+
+        $scope.getListOfCompletedChallenges()
 
     }]);
