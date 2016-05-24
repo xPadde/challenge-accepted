@@ -2,8 +2,9 @@ spring:
   application:
     name: challengeaccepted
   jpa:
-    hibernate:
+    properties:
       dialect: org.hibernate.dialect.MySQLInnoDBDialect
+    hibernate:
       naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
       ddl-auto: update
   datasource:
