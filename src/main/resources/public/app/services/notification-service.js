@@ -1,6 +1,6 @@
 app.factory('notificationService', function ($http) {
 
-    var baseUrl = 'http://localhost:8080/api/';
+    var baseUrl = "https://afternoon-atoll-64085.herokuapp.com/api/";
 
     return {
         getAllNotifications: function (id) {

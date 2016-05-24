@@ -1,8 +1,11 @@
 app.factory('userService', function ($http) {
+
+    var baseUrl = "https://afternoon-atoll-64085.herokuapp.com/api/";
+
     return {
         createNewUser: function (data) {
             return $http({
-                url: 'http://localhost:8080/api/user/',
+                url: baseUrl + 'user/',
                 method: 'POST',
                 data: data,
                 header: {'Content-Type': 'application/json'}
@@ -11,7 +14,7 @@ app.factory('userService', function ($http) {
 
         getUserById: function (id) {
             return $http({
-                url: 'http://localhost:8080/api/user/' + id,
+                url: baseUrl + 'user/' + id,
                 method: 'GET',
                 header: {'Content-Type': 'application/json'}
             })
@@ -19,7 +22,7 @@ app.factory('userService', function ($http) {
 
         getUserByEmail: function (email) {
             return $http({
-                url: 'http://localhost:8080/api/user/find-by-email?email=' + email + '',
+                url: baseUrl + 'user/find-by-email?email=' + email + '',
                 method: 'GET',
                 header: {'Content-Type': 'application/json'}
             })
@@ -27,7 +30,7 @@ app.factory('userService', function ($http) {
 
         updateUser: function (data, id) {
             return $http({
-                url: 'http://localhost:8080/api/user/' + id,
+                url: baseUrl + 'user/' + id,
                 method: 'PUT',
                 header: {'Content-Type': 'application/json'}
             })
@@ -35,7 +38,7 @@ app.factory('userService', function ($http) {
 
         getListOfAllUsers: function () {
             return $http({
-                url: 'http://localhost:8080/api/users/',
+                url: baseUrl + 'users/',
                 method: 'GET',
                 header: {'Content-Type': 'application/json'}
             })
