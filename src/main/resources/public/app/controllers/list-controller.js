@@ -23,19 +23,17 @@ app.controller('ListController', ['$scope', '$log', 'scopeService', 'challengeSe
                 });
         };
 
-        //$scope.getListOfCompletedChallenges = function () {
-            //challengeService.getListOfCompletedChallenges()
-            //    .success(function (response) {
-            //        $log.info("challengeService.getListOfCompletedChallenges() fetched all the completed challenges from the database successfully!");
-            //        $scope.listOfCompletedChallenges = response;
-            //    })
-            //    .error(function (error) {
-            //        $log.error("challengeService.getListOfCompletedChallenges() ***FAILED*** to fetch the completed challenges from the database!");
-            //        $log.error(error);
-            //    });
-        //};
-
-        $scope.getListOfCompletedChallenges = scopeService.getListOfCompletedChallenges();
+        $scope.getListOfCompletedChallenges = function () {
+            challengeService.getListOfCompletedChallenges()
+               .success(function (response) {
+                   $log.info("challengeService.getListOfCompletedChallenges() fetched all the completed challenges from the database successfully!");
+                   $scope.listOfCompletedChallenges = response;
+               })
+               .error(function (error) {
+                   $log.error("challengeService.getListOfCompletedChallenges() ***FAILED*** to fetch the completed challenges from the database!");
+                   $log.error(error);
+               });
+        };
 
         /*
          * Functions for users in lists
