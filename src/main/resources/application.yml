@@ -2,15 +2,16 @@ spring:
   application:
     name: challengeaccepted
   jpa:
-    hibernate:
+    properties:
       dialect: org.hibernate.dialect.MySQLInnoDBDialect
+    hibernate:
       naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
       ddl-auto: update
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: postgres://mtrcrypsugkfwc:GB0v3XmQZbonhgF8ESJ8y5E0bY@ec2-23-23-76-90.compute-1.amazonaws.com:5432/damp20v2s7fqfk
-    username: root
-    password: root
+    url: jdbc:mysql://sql7.freemysqlhosting.net/sql7120716
+    username: sql7120716
+    password: 7kppfzz3pc
   jackson:
     serialization:
       fail-on-empty-beans: false
