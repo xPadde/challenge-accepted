@@ -121,7 +121,7 @@ app.controller('ListController', ['$scope', '$log', 'scopeService', 'challengeSe
         // Fetch the list of challenges on application start.
         $scope.getListOfChallenges();
         $scope.getListOfUsers();
-        $scope.listOfCompletedChallenges = scopeService.getListOfCompletedChallenges();
+        $scope.getListOfCompletedChallenges();
 
 
     }]);
