@@ -76,6 +76,18 @@ app.service('scopeService', ['$sce', '$location', 'userService', 'challengeServi
 
             alertPopupMsgInvalidYoutubeUrl: function () {
                 return 'Please provide a valid YouTube Url';
+            },
+
+            getListOfCompletedChallenges: function () {
+                challengeService.getListOfCompletedChallenges()
+                    .success(function (response) {
+                        $log.info("challengeService.getListOfCompletedChallenges() fetched all the completed challenges from the database successfully!");
+                        return response;
+                    })
+                    .error(function (error) {
+                        $log.error("challengeService.getListOfCompletedChallenges() ***FAILED*** to fetch the completed challenges from the database!");
+                        $log.error(error);
+                    });
             }
         }
     }]);

@@ -23,18 +23,19 @@ app.controller('ListController', ['$scope', '$log', 'scopeService', 'challengeSe
                 });
         };
 
-        $scope.getListOfCompletedChallenges = function () {
-            challengeService.getListOfCompletedChallenges()
-                .success(function (response) {
-                    $log.info("challengeService.getListOfCompletedChallenges() fetched all the completed challenges from the database successfully!");
-                    $scope.listOfCompletedChallenges = response;
-                })
-                .error(function (error) {
-                    $log.error("challengeService.getListOfCompletedChallenges() ***FAILED*** to fetch the completed challenges from the database!");
-                    $log.error(error);
-                });
-        };
+        //$scope.getListOfCompletedChallenges = function () {
+            //challengeService.getListOfCompletedChallenges()
+            //    .success(function (response) {
+            //        $log.info("challengeService.getListOfCompletedChallenges() fetched all the completed challenges from the database successfully!");
+            //        $scope.listOfCompletedChallenges = response;
+            //    })
+            //    .error(function (error) {
+            //        $log.error("challengeService.getListOfCompletedChallenges() ***FAILED*** to fetch the completed challenges from the database!");
+            //        $log.error(error);
+            //    });
+        //};
 
+        $scope.getListOfCompletedChallenges = scopeService.getListOfCompletedChallenges();
 
         /*
          * Functions for users in lists
@@ -120,7 +121,6 @@ app.controller('ListController', ['$scope', '$log', 'scopeService', 'challengeSe
 
         // Fetch the list of challenges on application start.
         $scope.getListOfChallenges();
-        $scope.getListOfCompletedChallenges();
         $scope.getListOfUsers();
         $scope.getListOfCompletedChallenges();
 
