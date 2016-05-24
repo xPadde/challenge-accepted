@@ -1,6 +1,6 @@
 app.controller('ListController', ['$scope', '$log', 'scopeService', 'challengeService', 'userService',
     function ($scope, $log, scopeService, challengeService, userService) {
-        
+
         $scope.loggedInUser = scopeService.getLoggedInUser();
 
         /*
@@ -24,17 +24,17 @@ app.controller('ListController', ['$scope', '$log', 'scopeService', 'challengeSe
         };
 
         $scope.getListOfCompletedChallenges = function () {
-            challengeService.getListOfCompletedChallenges()
-               .success(function (response) {
-                   $log.info("challengeService.getListOfCompletedChallenges() fetched all the completed challenges from the database successfully!");
-                   $scope.listOfCompletedChallenges = response;
-               })
-               .error(function (error) {
-                   $log.error("challengeService.getListOfCompletedChallenges() ***FAILED*** to fetch the completed challenges from the database!");
-                   $log.error(error);
-               });
+        challengeService.getListOfCompletedChallenges()
+           .success(function (response) {
+               $log.info("challengeService.getListOfCompletedChallenges() fetched all the completed challenges from the database successfully!");
+               $scope.listOfCompletedChallenges = response;
+           })
+           .error(function (error) {
+               $log.error("challengeService.getListOfCompletedChallenges() ***FAILED*** to fetch the completed challenges from the database!");
+               $log.error(error);
+           });
         };
-
+        
         /*
          * Functions for users in lists
          * */
@@ -93,7 +93,7 @@ app.controller('ListController', ['$scope', '$log', 'scopeService', 'challengeSe
         $scope.isLoggedInUserTheChallengeCreator = function (challenge) {
             return scopeService.isLoggedInUserTheChallengeCreator(challenge);
         };
-        
+
         $scope.markUrlAsTrusted = function (src) {
             return scopeService.markUrlAsTrusted(src);
         };
@@ -117,10 +117,11 @@ app.controller('ListController', ['$scope', '$log', 'scopeService', 'challengeSe
 
         };
 
+
         // Fetch the list of challenges on application start.
         $scope.getListOfChallenges();
         $scope.getListOfUsers();
-        $scope.getListOfCompletedChallenges();
+        $scope.listOfCompletedChallenges = scopeService.getListOfCompletedChallenges();
 
 
     }]);

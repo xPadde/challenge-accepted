@@ -1,5 +1,5 @@
-app.service('scopeService', ['$sce', '$location', 'userService', 'challengeService',
-    function ($sce, $location, userService, challengeService) {
+app.service('scopeService', ['$sce', '$location', 'userService', 'challengeService', '$log',
+    function ($sce, $location, userService, challengeService, $log) {
 
         var activeChallenge;
         var activeUser;
