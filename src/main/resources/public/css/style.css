@@ -87,6 +87,10 @@ th {
     height: 1.3em;
 }
 
+.fb-share {
+    float: right;
+}
+
 .thumb {
     width: 1.5em;
     height: 1.5em;

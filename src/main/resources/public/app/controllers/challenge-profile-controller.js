@@ -1,7 +1,10 @@
-app.controller('ChallengeProfileController', ['$scope', '$log', '$location', '$routeParams', 'scopeService', 'challengeService',
-    function ($scope, $log, $location, $routeParams, scopeService, challengeService) {
-        
+app.controller('ChallengeProfileController', ['$scope', '$log', '$location', '$routeParams', 'scopeService', 'challengeService', '$window',
+    function ($scope, $log, $location, $routeParams, scopeService, challengeService, $window) {
 
+
+        var urlString = $window.location.href;
+        var formattedHttps = urlString.replace("https://", "https%3A//");
+        $scope.websiteUrl = formattedHttps.replace("#", "%23");
         /*
         Get challenge from database depending on the id in the url-path, and save it to the
         activeChallenge scope.

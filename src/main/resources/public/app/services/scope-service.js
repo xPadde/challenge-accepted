@@ -4,6 +4,7 @@ app.service('scopeService', ['$sce', '$location', 'userService', 'challengeServi
         var activeChallenge;
         var activeUser;
         var loggedInUser;
+        
 
         return {
             setActiveUser: function (user) {

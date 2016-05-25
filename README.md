@@ -17,6 +17,4 @@ Requires a mySql schema named *challengeaccepted*. Edit user name and password f
 
 ## Known Issues
 
-## Changelog
-
 Appearance of Google login button is delayed for a couple of seconds in some versions of Safari web browser.

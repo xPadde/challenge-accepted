@@ -1,6 +1,10 @@
-app.controller('UserController', ['$scope', '$location', '$log', '$routeParams', 'userService', 'challengeService', 'scopeService',
-    function ($scope, $location, $log, $routeParams, userService, challengeService, scopeService) {
+app.controller('UserController', ['$scope', '$location', '$log', '$routeParams', 'userService', 'challengeService', 'scopeService', '$window',
+    function ($scope, $location, $log, $routeParams, userService, challengeService, scopeService, $window) {
 
+        var urlString = $window.location.href;
+        var formattedHttps = urlString.replace("https://", "https%3A//");
+        $scope.websiteUrl = formattedHttps.replace("#", "%23");
+        
         var userUrlId = $routeParams.id;
         userService.getUserById(userUrlId)
             .success(function (response) {
