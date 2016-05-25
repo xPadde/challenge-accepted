@@ -67,6 +67,7 @@ app.controller('ListController', ['$scope', '$log', 'scopeService', 'challengeSe
                         $log.info("challengeService.addUserToChallengeUpvoters() was successfully executed!");
                         // Update the list of challenges after creation of the new challenge,
                         $scope.getListOfChallenges();
+                        $scope.getListOfCompletedChallenges();
                     })
                     .error(function (error) {
                         $log.error("challengeService.addUserToChallengeUpvoters() ***FAILED*** to execute!");
