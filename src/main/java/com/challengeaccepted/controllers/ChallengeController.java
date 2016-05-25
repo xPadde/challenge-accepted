@@ -59,7 +59,7 @@ public class ChallengeController {
         return validateUserRestrictions(challenge, userModelFromDatabase);
     }
 
-    public ResponseEntity<ChallengeModel> validateUserRestrictions(ChallengeModel challenge, UserModel userModelFromDatabase){
+    private ResponseEntity<ChallengeModel> validateUserRestrictions(ChallengeModel challenge, UserModel userModelFromDatabase){
 
         if (isChallengeUnavailableForUserNotSignedIn(challenge, userModelFromDatabase)) {
             return new ResponseEntity<ChallengeModel>(HttpStatus.BAD_REQUEST);
@@ -94,14 +94,14 @@ public class ChallengeController {
         return false;
     }
 
-    public boolean isLoggedInUserTheCreatorAndIsVideoUploaded(ChallengeModel challenge, UserModel userModelFromDatabase) {
+    private boolean isLoggedInUserTheCreatorAndIsVideoUploaded(ChallengeModel challenge, UserModel userModelFromDatabase) {
         if ((userModelFromDatabase.getId() == challenge.getChallengeCreator().getId()) && challenge.getYoutubeVideoUploaded()){
             return true;
         }
         return false;
     }
 
-    public boolean isChallengeUnavailableForUserNotSignedIn(ChallengeModel challenge, UserModel userModelFromDatabase) {
+    private boolean isChallengeUnavailableForUserNotSignedIn(ChallengeModel challenge, UserModel userModelFromDatabase) {
         if(userModelFromDatabase == null && challenge.getChallengeClaimed() && !challenge.getChallengeCompleted()){
             System.out.println("felhantering: usermodel null");
             return true;
