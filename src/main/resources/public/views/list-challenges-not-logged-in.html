@@ -73,7 +73,7 @@
                 <td class="table-item-topic"><a href="" ng-click="viewChallengeProfilePage(challenge)">{{challenge.topic}}</a></td>
                 <td class="table-item-description">{{challenge.description}}</td>
                 <td class="table-item-date">{{challenge.creationDate}}</td>
-                <td class="table-item-thumb"><a href="" ng-click="upvoteChallenge(challenge)">
+                <td class="table-item-thumb"><a href="" ng-click="addPointToChallenge(challenge)">
                     <img src="img/like.png" class="thumb" onmouseover="src='img/like2.png'"
                          onmouseout="src='img/like.png'" ng-show="!isChallengeUpvotedByUser(challenge)">
                     <img src="img/like2.png" class="thumb" onmouseover="src='img/like.png'"
