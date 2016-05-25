@@ -1,7 +1,6 @@
 package com.challengeaccepted.controllers;
 
 import com.challengeaccepted.loggers.LoggerUserController;
-import com.challengeaccepted.models.ChallengeModel;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @RestController
 public class UserController {

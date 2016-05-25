@@ -9,14 +9,16 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 
-import java.util.Random;
-
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 public class UserControllerTest {
 
     @Mock
-    private UserService userService;
+    private UserService mockedUserService;
+
+    @Mock
+    private UserModel mockedUserModel;
 
     @InjectMocks
     private UserController userController;
@@ -38,7 +40,9 @@ public class UserControllerTest {
 
     @Test
     public void testReadUser_Should_Return_Status_Code_200() throws Exception {
-        assertEquals("readUser() did not respond with http status 200 (ok)", HttpStatus.OK, userController.readUser(new Random().nextLong()).getStatusCode());
+        when(mockedUserService.getUserFromDatabase(1L)).thenReturn(mockedUserModel);
+        assertEquals("readUser() did not respond with http status 200 (ok)", HttpStatus.OK, userController.readUser(1L).getStatusCode());
+        assertEquals("readUser() did not respond with http status 400 (bad request)", HttpStatus.BAD_REQUEST, userController.readUser(null).getStatusCode());
     }
 
     @Test
