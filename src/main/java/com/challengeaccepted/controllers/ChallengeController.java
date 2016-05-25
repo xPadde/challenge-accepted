@@ -65,6 +65,10 @@ public class ChallengeController {
             return new ResponseEntity<ChallengeModel>(HttpStatus.BAD_REQUEST);
         }
 
+        if (userModelFromDatabase.getId() == 0 && challenge.getChallengeCompleted()) {
+            return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
+        }
+
         if(challenge.getChallengeClaimed()) {
             if (isLoggedInUserTheCreatorAndIsVideoUploaded(challenge, userModelFromDatabase)) {
                 return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
@@ -102,7 +106,7 @@ public class ChallengeController {
     }
 
     private boolean isChallengeUnavailableForUserNotSignedIn(ChallengeModel challenge, UserModel userModelFromDatabase) {
-        if((userModelFromDatabase.getId() == 0) || (userModelFromDatabase == null) && challenge.getChallengeClaimed() && !challenge.getChallengeCompleted()){
+        if(userModelFromDatabase.getId() == 0 && challenge.getChallengeClaimed() && !challenge.getChallengeCompleted()){
             System.out.println("felhantering: usermodel null");
             return true;
         }
