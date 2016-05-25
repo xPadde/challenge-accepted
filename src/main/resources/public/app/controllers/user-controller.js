@@ -1,6 +1,7 @@
 app.controller('UserController', ['$scope', '$location', '$log', '$routeParams', 'userService', 'challengeService', 'scopeService',
     function ($scope, $location, $log, $routeParams, userService, challengeService, scopeService) {
 
+        $scope.websiteUrl = scopeService.getFormattedWebsiteUrl();
         var userUrlId = $routeParams.id;
         userService.getUserById(userUrlId)
             .success(function (response) {

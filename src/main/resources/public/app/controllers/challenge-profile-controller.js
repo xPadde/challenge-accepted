@@ -1,7 +1,8 @@
 app.controller('ChallengeProfileController', ['$scope', '$log', '$location', '$routeParams', 'scopeService', 'challengeService',
     function ($scope, $log, $location, $routeParams, scopeService, challengeService) {
-        
 
+
+        $scope.websiteUrl = scopeService.getFormattedWebsiteUrl();
         /*
         Get challenge from database depending on the id in the url-path, and save it to the
         activeChallenge scope.

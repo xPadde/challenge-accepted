@@ -4,9 +4,6 @@ app.controller('LoginController', ['$scope', '$route', '$log', '$location', 'use
         $scope.absoluteUrl = $location.absUrl();
         $scope.mailtoSubject = "You%20have%20been%20Challenged!";
         $scope.mailtoBody = "A%20friend%20of%20yours%20challenge%20you.%20Do%20you%20accept?%0AGo%20to:%20" + $scope.absoluteUrl;
-        var urlString = window.location.href;
-        var formattedHttps = urlString.replace("https://", "https%3A//");
-        $scope.websiteUrl = formattedHttps.replace("#", "%23");
 
         /*
          Below Code handles the user login.
