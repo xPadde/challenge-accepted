@@ -18,17 +18,8 @@ app.controller('UserController', ['$scope', '$location', '$log', '$routeParams',
             scopeService.viewChallengeProfilePage(challenge);
         };
 
-        $scope.getListOfChallenges = function () {
-            challengeService.getListOfAllChallenges()
-                .success(function (response) {
-                    $log.info('challengeService.getListOfChallenges() fetched the challenges from the database successfully!');
-                    $scope.listOfChallenges = response;
-                })
-                .error(function (error) {
-                    $log.error('challengeService.getListOfChallenges() ***FAILED*** to fetch the challenges from the database!');
-                    $log.error(error);
-                });
-        };
+        $scope.listOfChallenges = scopeService.getListOfChallenges();
+        
 
         $scope.getListOfCompletedChallenges = function () {
             challengeService.getListOfCompletedChallenges()

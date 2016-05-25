@@ -4,7 +4,7 @@ app.service('scopeService', ['$sce', '$location', 'userService', 'challengeServi
         var activeChallenge;
         var activeUser;
         var loggedInUser;
-        
+
 
         return {
             setActiveUser: function (user) {
@@ -51,6 +51,18 @@ app.service('scopeService', ['$sce', '$location', 'userService', 'challengeServi
                     }
                 }
                 return false;
+            },
+
+            getListOfChallenges: function () {
+                challengeService.getListOfAllChallenges()
+                    .success(function (response) {
+                        $log.info('challengeService.getListOfChallenges() fetched the challenges from the database successfully!');
+                        $scope.listOfChallenges = response;
+                    })
+                    .error(function (error) {
+                        $log.error('challengeService.getListOfChallenges() ***FAILED*** to fetch the challenges from the database!');
+                        $log.error(error);
+                    });
             },
 
             // Function for marking a YouTube URL as trusted.
