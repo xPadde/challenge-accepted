@@ -25,8 +25,6 @@ public class ChallengeControllerTest {
     @Mock
     private UserService mockedUserService;
     @Mock
-    private CommentController mockedCommentController;
-    @Mock
     private NotificationController mockedNotificationController;
     @Mock
     private ChallengeModel mockedChallenge;
