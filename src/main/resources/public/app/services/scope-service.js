@@ -57,7 +57,7 @@ app.service('scopeService', ['$sce', '$location', 'userService', 'challengeServi
                 challengeService.getListOfAllChallenges()
                     .success(function (response) {
                         $log.info('challengeService.getListOfChallenges() fetched the challenges from the database successfully!');
-                        $scope.listOfChallenges = response;
+                        return response;
                     })
                     .error(function (error) {
                         $log.error('challengeService.getListOfChallenges() ***FAILED*** to fetch the challenges from the database!');
