@@ -1,12 +1,10 @@
-app.service('scopeService', ['$sce', '$location', 'userService', 'challengeService', '$log', '$window',
-    function ($sce, $location, userService, challengeService, $log, $window) {
+app.service('scopeService', ['$sce', '$location', 'userService', 'challengeService', '$log',
+    function ($sce, $location, userService, challengeService, $log) {
 
         var activeChallenge;
         var activeUser;
         var loggedInUser;
-        var urlString = $window.location.href;
-        var formattedHttps = urlString.replace("https://", "https%3A//");
-        var websiteUrl = formattedHttps.replace("#", "%23");
+        
 
         return {
             setActiveUser: function (user) {
@@ -19,10 +17,6 @@ app.service('scopeService', ['$sce', '$location', 'userService', 'challengeServi
 
             setActiveChallenge: function (challenge) {
                 activeChallenge = challenge;
-            },
-            
-            getFormattedWebsiteUrl: function () {
-                return websiteUrl;
             },
 
             getActiveChallenge: function () {
