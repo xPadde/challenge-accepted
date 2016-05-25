@@ -1,10 +1,10 @@
-app.service('scopeService', ['$sce', '$location', 'userService', 'challengeService', '$log',
-    function ($sce, $location, userService, challengeService, $log) {
+app.service('scopeService', ['$sce', '$location', 'userService', 'challengeService', '$log', '$window',
+    function ($sce, $location, userService, challengeService, $log, $window) {
 
         var activeChallenge;
         var activeUser;
         var loggedInUser;
-        var urlString = $location.absUrl();
+        var urlString = $window.location.href;
         var formattedHttps = urlString.replace("https://", "https%3A//");
         var websiteUrl = formattedHttps.replace("#", "%23");
 
