@@ -266,21 +266,6 @@ public class ChallengeController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-   /* @CrossOrigin
-    @RequestMapping(value = "/challenge/{challengeId}/add-comment/", method = RequestMethod.PUT)
-    public ResponseEntity addCommentToChallenge(@RequestBody CommentModel commentModel, @PathVariable Long challengeId) {
-        *//*ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(challengeId);
-        challengeModel.addCommentToChallenge(commentModel);
-        *//*
-
-        commentController.addChallengeToComment(commentModel, challengeId);
-
-        //todo HIT FÖRST och fixa controller för comments så vi kan göra som tidigare logik i andra controllers
-
-*//*        challengeService.updateChallengeInDatabase(challengeModel);*//*
-        return new ResponseEntity(HttpStatus.CREATED);
-    }*/
-
     private boolean isChallengeCreatorSameAsChallengeClaimer(UserModel userModel, ChallengeModel challengeModel) {
         if (challengeModel.getChallengeCreator() != null && userModel != null) {
             if (challengeModel.getChallengeCreator().getId().equals(userModel.getId())) {

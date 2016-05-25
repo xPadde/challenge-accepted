@@ -69,13 +69,6 @@ public class ChallengeControllerTest {
         when(mockedChallenge.getChallengeClaimed()).thenReturn(true);
     }
 
-    /*@Test
-    public void testReadChallenge_Should_Return_Status_Code_400() throws Exception {
-
-        when(mockedChallenge.getChallengeCompleted()).thenReturn(false);
-        assertEquals("readChallenge() did not respond with http status 400 (bad request)", HttpStatus.BAD_REQUEST, challengeController.readChallenge(1L, mockedUserModel.getId()).getStatusCode());
-    }*/
-
     @Test
     public void testReadChallenge_Should_Return_Status_Code_400() throws Exception {
 
@@ -92,11 +85,6 @@ public class ChallengeControllerTest {
     public void testReadAllChallenges_Should_Return_Status_Code_200() throws Exception {
         assertEquals("readAllChallenges() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.readAllChallenges().getStatusCode());
     }
-
-    /*@Test
-    public void testAddOrRemoveUserToChallengeUpvoters_Should_Return_Status_Code_200() throws Exception {
-        assertEquals("readAllChallenges() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.addOrRemoveUserToChallengeUpvoters(1L, mockedUserModel).getStatusCode());
-    }*/
 
     @Test
     public void testReadAllCompletedChallenges_Should_Return_Status_Code_200() throws Exception {
