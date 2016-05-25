@@ -3,7 +3,7 @@ spring:
     name: challengeaccepted
   jpa:
     properties:
-      dialect: org.hibernate.dialect.MySQLInnoDBDialect
+      dialect: org.hibernate.dialect.SQLServerDialect
     hibernate:
       naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
       ddl-auto: update
