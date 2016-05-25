@@ -42,6 +42,7 @@ app.controller('UserController', ['$scope', '$location', '$log', '$routeParams',
                 });
         };
 
-        $scope.getListOfCompletedChallenges()
+        $scope.getListOfCompletedChallenges();
+        $scope.getListOfChallenges();
 
     }]);
