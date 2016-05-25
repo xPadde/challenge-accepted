@@ -9,9 +9,9 @@ spring:
       ddl-auto: update
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://sql7.freemysqlhosting.net/sql7120716
-    username: sql7120716
-    password: 7kppfzz3pc
+    url: jdbc:sqlserver://challengeaccepted.database.windows.net:1433;database=challengeaccepted;user=himymb@challengeaccepted;password={your_password_here};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    username: himymb
+    password: Bananbanan666
   jackson:
     serialization:
       fail-on-empty-beans: false
