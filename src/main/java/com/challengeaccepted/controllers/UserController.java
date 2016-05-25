@@ -1,7 +1,7 @@
 package com.challengeaccepted.controllers;
 
-import com.challengeaccepted.loggers.LoggerUserController;
-import com.challengeaccepted.models.ChallengeModel;
+import com.challengeaccepted.loggers.HerokuLogger;
+import com.challengeaccepted.loggers.HerokuLoggerException;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,23 +10,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @RestController
 public class UserController {
 
     @Autowired
-    UserService userService;
-    LoggerUserController logger = new LoggerUserController();
+    private UserService userService;
 
     @CrossOrigin
     @RequestMapping(value = "/user/", method = RequestMethod.POST)
-    public ResponseEntity<UserModel> createUser(@RequestBody UserModel userModel) {
+    public ResponseEntity<UserModel> createUser(@RequestBody UserModel userModel) throws HerokuLoggerException {
         userService.saveUserToDatabase(userModel);
-        logger.getLogger().log(Level.INFO, "A new user named " + userModel.getFirstName() + " " + userModel.getLastName() + " has been saved to the database");
+        new HerokuLogger().writeToInfoLog("A new user named " + userModel.getFirstName() + " " + userModel.getLastName() + " has been saved to the database");
         return new ResponseEntity<UserModel>(userModel, HttpStatus.CREATED);
     }
 
@@ -57,7 +52,7 @@ public class UserController {
 
     @CrossOrigin
     @RequestMapping(value = "/user/find-by-email", method = RequestMethod.GET)
-    public ResponseEntity<UserModel> readUserByEmail(String email) {
+    public ResponseEntity<UserModel> readUserByEmail(String email) throws HerokuLoggerException {
         return new ResponseEntity<UserModel>(userService.getUserByEmailFromDatabase(email), HttpStatus.OK);
     }
 

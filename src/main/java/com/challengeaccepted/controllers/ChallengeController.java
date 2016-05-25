@@ -1,6 +1,7 @@
 package com.challengeaccepted.controllers;
 
-import com.challengeaccepted.loggers.LoggerChallengeController;
+import com.challengeaccepted.loggers.HerokuLogger;
+import com.challengeaccepted.loggers.HerokuLoggerException;
 import com.challengeaccepted.models.ChallengeModel;
 import com.challengeaccepted.models.NotificationModel;
 import com.challengeaccepted.models.UserModel;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.*;
 
 @RestController
 public class ChallengeController {
@@ -25,17 +25,14 @@ public class ChallengeController {
     @Autowired
     private UserService userService;
     @Autowired
-    private CommentController commentController;
-    @Autowired
     private NotificationController notificationController;
-    private LoggerChallengeController logger = new LoggerChallengeController();
 
     @CrossOrigin
     @RequestMapping(value = "/challenge/create/challenge-creator/{challengeCreatorId}", method = RequestMethod.POST)
-    public ResponseEntity createChallenge(@RequestBody ChallengeModel challengeModel, @PathVariable Long challengeCreatorId) {
+    public ResponseEntity createChallenge(@RequestBody ChallengeModel challengeModel, @PathVariable Long challengeCreatorId) throws HerokuLoggerException {
 
         if (challengeModel.getTopic().equals("") || challengeModel.getDescription().equals("")) {
-            logger.getLOG().log(Level.SEVERE, "Frontend validation failed when creating a challenge with empty fields.");
+            new HerokuLogger().writeToErrorLog("Frontend validation failed when creating a challenge with empty fields.");
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
 
@@ -45,7 +42,7 @@ public class ChallengeController {
         challengeService.saveChallengeToDatabase(challengeModel);
         createAndSaveNotification(challengeCreator, challengeModel, new NotificationInfo(Action.CREATECHALLENGE));
 
-        logger.getLOG().log(Level.FINE, "A challenge with id " + challengeModel.getId() + " has been created.");
+        new HerokuLogger().writeToInfoLog("A challenge with id " + challengeModel.getId() + " has been created.");
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
@@ -59,7 +56,7 @@ public class ChallengeController {
         return validateUserRestrictions(challenge, userModelFromDatabase);
     }
 
-    private ResponseEntity<ChallengeModel> validateUserRestrictions(ChallengeModel challenge, UserModel userModelFromDatabase){
+    private ResponseEntity<ChallengeModel> validateUserRestrictions(ChallengeModel challenge, UserModel userModelFromDatabase) {
 
         if (isChallengeUnavailableForUserNotSignedIn(challenge, userModelFromDatabase)) {
             return new ResponseEntity<ChallengeModel>(HttpStatus.BAD_REQUEST);
@@ -99,14 +96,14 @@ public class ChallengeController {
     }
 
     private boolean isLoggedInUserTheCreatorAndIsVideoUploaded(ChallengeModel challenge, UserModel userModelFromDatabase) {
-        if ((userModelFromDatabase.getId() == challenge.getChallengeCreator().getId()) && challenge.getYoutubeVideoUploaded()){
+        if ((userModelFromDatabase.getId() == challenge.getChallengeCreator().getId()) && challenge.getYoutubeVideoUploaded()) {
             return true;
         }
         return false;
     }
 
     private boolean isChallengeUnavailableForUserNotSignedIn(ChallengeModel challenge, UserModel userModelFromDatabase) {
-        if(userModelFromDatabase == null && challenge.getChallengeClaimed() && !challenge.getChallengeCompleted()){
+        if (userModelFromDatabase == null && challenge.getChallengeClaimed() && !challenge.getChallengeCompleted()) {
             System.out.println("felhantering: usermodel null");
             return true;
         }
@@ -142,7 +139,7 @@ public class ChallengeController {
 
     @CrossOrigin
     @RequestMapping(value = "/challenge/{id}/update-challenge-claimer/", method = RequestMethod.PUT)
-    public ResponseEntity<ChallengeModel> updateChallengeClaimer(@PathVariable Long id, @RequestBody UserModel userModel) {
+    public ResponseEntity<ChallengeModel> updateChallengeClaimer(@PathVariable Long id, @RequestBody UserModel userModel) throws HerokuLoggerException {
         ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(id);
 
         if (isChallengeCreatorSameAsChallengeClaimer(userModel, challengeModel)) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -151,24 +148,24 @@ public class ChallengeController {
         challengeModel.setChallengeClaimed(true);
         challengeService.updateChallengeInDatabase(challengeModel);
         createAndSaveNotification(userModel, challengeModel, new NotificationInfo(Action.CLAIMCHALLENGE));
-        logger.getLOG().log(Level.INFO, "The challenge with id " + challengeModel.getId() + " has successfully been claimed by the user with id " + userModel.getId());
+        new HerokuLogger().writeToInfoLog("The challenge with id " + challengeModel.getId() + " has successfully been claimed by the user with id " + userModel.getId());
         return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/challenge/{id}/add-youtube-url/", method = RequestMethod.PUT)
-    public ResponseEntity<ChallengeModel> addYoutubeUrlToChallenge(@PathVariable Long id, @RequestBody String youtubeUrl) {
+    public ResponseEntity<ChallengeModel> addYoutubeUrlToChallenge(@PathVariable Long id, @RequestBody String youtubeUrl) throws HerokuLoggerException {
         ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(id);
         challengeModel.setYoutubeURL(youtubeUrl);
         challengeModel.setYoutubeUrlProvided(true);
         challengeService.updateChallengeInDatabase(challengeModel);
-        logger.getLOG().log(Level.INFO, "A Youtube link has successfully been added to a claimed challenge");
+        new HerokuLogger().writeToInfoLog("A Youtube link has successfully been added to a claimed challenge");
         return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/challenge/{id}/assign-points-to-user/", method = RequestMethod.PUT)
-    public ResponseEntity<ChallengeModel> assignPointsToUser(@PathVariable Long id) {
+    public ResponseEntity<ChallengeModel> assignPointsToUser(@PathVariable Long id) throws HerokuLoggerException {
         ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
         UserModel challengeCompleter = userService.getUserFromDatabase(challenge.getChallengeClaimer().getId());
         UserModel challengeCreator = userService.getUserFromDatabase(challenge.getChallengeCreator().getId());
@@ -187,7 +184,7 @@ public class ChallengeController {
         userService.updateUserInDatabase(challengeCreator);
         challengeService.updateChallengeInDatabase(challenge);
 
-        logger.getLOG().log(Level.INFO, "Points have been distributed to the challengecompleter, challengecreator and the challenge successfully");
+        new HerokuLogger().writeToInfoLog("Points have been distributed to the challengecompleter, challengecreator and the challenge successfully");
 
         createAndSaveNotification(challengeCompleter, challenge, new NotificationInfo(Action.PERFORMEDCHALLENGE));
 
@@ -196,7 +193,7 @@ public class ChallengeController {
 
     @CrossOrigin
     @RequestMapping(value = "/challenge/{id}/disapprove-challenge/", method = RequestMethod.PUT)
-    public ResponseEntity<ChallengeModel> disapproveChallenge(@PathVariable Long id, @RequestBody String notificationMessage) {
+    public ResponseEntity<ChallengeModel> disapproveChallenge(@PathVariable Long id, @RequestBody String notificationMessage) throws HerokuLoggerException {
         ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(id);
         UserModel userThatHasFailedPerformedChallenge = challengeModel.getChallengeClaimer();
 
@@ -212,13 +209,13 @@ public class ChallengeController {
         NotificationInfo notificationInfo = new NotificationInfo(Action.FAILEDTOPERFORMECHALLENGE, notificationMessage);
         createAndSaveNotification(userThatHasFailedPerformedChallenge, challengeModel, notificationInfo);
 
-        logger.getLOG().log(Level.INFO, "A challenge have been disapproved by the challengecreator successfully");
+        new HerokuLogger().writeToInfoLog("A challenge have been disapproved by the challengecreator successfully");
         return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/challenge/{id}/confirm-uploaded-youtube-url/", method = RequestMethod.PUT)
-    public ResponseEntity<ChallengeModel> confirmUploadedYoutubeUrl(@PathVariable Long id) {
+    public ResponseEntity<ChallengeModel> confirmUploadedYoutubeUrl(@PathVariable Long id) throws HerokuLoggerException {
         ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
         if (challenge.getYoutubeVideoUploaded() == false) {
             challenge.setYoutubeVideoUploaded(true);
@@ -227,7 +224,7 @@ public class ChallengeController {
             challengeService.updateChallengeInDatabase(challenge);
             return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
         } else {
-            logger.getLOG().log(Level.SEVERE, "A challenge claimer has confirmed the uploaded Youtube video");
+            new HerokuLogger().writeToInfoLog("A challenge claimer has confirmed the uploaded Youtube video");
             return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.BAD_REQUEST);
         }
     }
@@ -270,25 +267,10 @@ public class ChallengeController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-   /* @CrossOrigin
-    @RequestMapping(value = "/challenge/{challengeId}/add-comment/", method = RequestMethod.PUT)
-    public ResponseEntity addCommentToChallenge(@RequestBody CommentModel commentModel, @PathVariable Long challengeId) {
-        *//*ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(challengeId);
-        challengeModel.addCommentToChallenge(commentModel);
-        *//*
-
-        commentController.addChallengeToComment(commentModel, challengeId);
-
-        //todo HIT FÖRST och fixa controller för comments så vi kan göra som tidigare logik i andra controllers
-
-*//*        challengeService.updateChallengeInDatabase(challengeModel);*//*
-        return new ResponseEntity(HttpStatus.CREATED);
-    }*/
-
-    private boolean isChallengeCreatorSameAsChallengeClaimer(UserModel userModel, ChallengeModel challengeModel) {
+    private boolean isChallengeCreatorSameAsChallengeClaimer(UserModel userModel, ChallengeModel challengeModel) throws HerokuLoggerException {
         if (challengeModel.getChallengeCreator() != null && userModel != null) {
             if (challengeModel.getChallengeCreator().getId().equals(userModel.getId())) {
-                logger.getLOG().log(Level.SEVERE, "The challenge creator with id " + userModel.getId() + " is trying to claim his/her own challenge");
+                new HerokuLogger().writeToErrorLog("The challenge creator with id " + userModel.getId() + " is trying to claim his/her own challenge");
                 return true;
             }
         }
