@@ -25,6 +25,10 @@ th {
 
 /*Classes*/
 
+.th-list-users {
+    text-align: left;
+}
+
 .table-item-description, .table-item-topic, .table-item-date {
     overflow: hidden;
     text-overflow: ellipsis;
