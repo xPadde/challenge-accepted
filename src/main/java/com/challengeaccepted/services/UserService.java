@@ -32,7 +32,7 @@ public class UserService {
     }
 
     public UserModel getUserByEmailFromDatabase(String email) throws HerokuLoggerException {
-        new HerokuLogger().writeToInfoLog("counting " + userRepository.findAll().size());
+        new HerokuLogger().writeToInfoLog("Total number of users: " + userRepository.findAll().size());
         return userRepository.findByEmail(email);
     }
 
