@@ -53,18 +53,6 @@ app.service('scopeService', ['$sce', '$location', 'userService', 'challengeServi
                 return false;
             },
 
-            getListOfChallenges: function () {
-                challengeService.getListOfAllChallenges()
-                    .success(function (response) {
-                        $log.info('challengeService.getListOfChallenges() fetched the challenges from the database successfully!');
-                        return response;
-                    })
-                    .error(function (error) {
-                        $log.error('challengeService.getListOfChallenges() ***FAILED*** to fetch the challenges from the database!');
-                        $log.error(error);
-                    });
-            },
-
             // Function for marking a YouTube URL as trusted.
             markUrlAsTrusted: function (src) {
                 return $sce.trustAsResourceUrl(src);
