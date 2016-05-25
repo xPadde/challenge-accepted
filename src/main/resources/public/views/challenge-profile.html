@@ -2,14 +2,13 @@
     <div class="panel panel-default list">
         <div class="panel-heading">
             <div>
-                <h2>{{activeChallenge.topic}}</h2>
-
                 <a href="http://www.facebook.com/sharer/sharer.php?u={{websiteUrl}}/"
-                   class="fb-share"><img
+                class="fb-share"><img
                         src="img/facebook-logo-light.png"
                         onmouseover="src='img/facebook-logo-dark.png'"
                         onmouseout="src='img/facebook-logo-light.png'"
                         class="social-share"></a>
+                <h2>{{activeChallenge.topic}}</h2>
             </div>
             <p>
                 <small>Created {{activeChallenge.creationDate | date }} by <a

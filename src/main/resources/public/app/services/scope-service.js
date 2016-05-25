@@ -4,7 +4,7 @@ app.service('scopeService', ['$sce', '$location', 'userService', 'challengeServi
         var activeChallenge;
         var activeUser;
         var loggedInUser;
-        var urlString = window.location.href;
+        var urlString = $location.absUrl();
         var formattedHttps = urlString.replace("https://", "https%3A//");
         var websiteUrl = formattedHttps.replace("#", "%23");
 
