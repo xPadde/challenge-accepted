@@ -3,15 +3,15 @@ spring:
     name: challengeaccepted
   jpa:
     properties:
-      dialect: org.hibernate.dialect.SQLServerDialect
+      dialect: org.hibernate.dialect.MySQLInnoDBDialect
     hibernate:
       naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
       ddl-auto: update
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:sqlserver://challengeaccepted.database.windows.net:1433/challengeaccepted
-    username: himymb@challengeaccepted
-    password: Bananbanan666
+    url: jdbc:mysql://sql7.freemysqlhosting.net/sql7120716
+    username: sql7120716
+    password: 7kppfzz3pc
   jackson:
     serialization:
       fail-on-empty-beans: false
