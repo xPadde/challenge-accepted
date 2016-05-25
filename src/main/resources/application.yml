@@ -6,7 +6,7 @@ spring:
       dialect: org.hibernate.dialect.MySQLInnoDBDialect
     hibernate:
       naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
-      ddl-auto: create-drop
+      ddl-auto: update
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://sql7.freemysqlhosting.net/sql7120716

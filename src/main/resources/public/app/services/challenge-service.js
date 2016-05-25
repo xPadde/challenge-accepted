@@ -104,17 +104,6 @@ app.factory('challengeService', function ($http) {
 
         },
 
-        addCommentToChallenge: function (data, challengeId) {
-            return $http({
-                url: baseUrl + 'challenge/' + challengeId + '/comment/',
-                method: 'POST',
-                data: data,
-                header: {'Content-Type': 'application/json'}
-                // TODO move this to comment-service!
-            })
-
-        },
-
         getListOfUnapprovedChallenges: function () {
             return $http({
                 url: baseUrl + 'challenges/unapproved/',
