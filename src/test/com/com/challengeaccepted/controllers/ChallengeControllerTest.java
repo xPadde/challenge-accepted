@@ -153,7 +153,6 @@ public class ChallengeControllerTest {
         when(mockedChallenge.getChallengeCreator()).thenReturn(mockedUserModel);
         when(mockedUserService.getUserFromDatabase(mockedUserModel.getId())).thenReturn(mockedUserModel);
         when(mockedChallengeService.getChallengeFromDatabase(1L)).thenReturn(mockedChallenge);
-        when(mockedChallenge.removeUserModelFromChallengeUpvoters(mockedUserModel)).
         assertEquals("addOrRemovePointToCompletedChallenge() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.addOrRemoveUserToChallengeUpvoters(1L, mockedUserModel).getStatusCode());
     }
 
