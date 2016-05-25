@@ -83,6 +83,8 @@ public class ChallengeControllerTest {
         when(mockedChallenge.getChallengeClaimer()).thenReturn(mockedUserModel);
         when(mockedUserModel.getId()).thenReturn(2L);
         when(mockedChallenge.getChallengeCompleted()).thenReturn(false);
+        when(mockedChallenge.getYoutubeVideoUploaded()).thenReturn(false);
+        when(mockedChallenge.getChallengeClaimed()).thenReturn(true);
         assertEquals("readChallenge() did not respond with http status 400 (bad request)", HttpStatus.BAD_REQUEST, challengeController.readChallenge(1L, mockedUserModel.getId()).getStatusCode());
     }
 
@@ -90,6 +92,11 @@ public class ChallengeControllerTest {
     public void testReadAllChallenges_Should_Return_Status_Code_200() throws Exception {
         assertEquals("readAllChallenges() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.readAllChallenges().getStatusCode());
     }
+
+    /*@Test
+    public void testAddOrRemoveUserToChallengeUpvoters_Should_Return_Status_Code_200() throws Exception {
+        assertEquals("readAllChallenges() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.addOrRemoveUserToChallengeUpvoters(1L, mockedUserModel).getStatusCode());
+    }*/
 
     @Test
     public void testReadAllCompletedChallenges_Should_Return_Status_Code_200() throws Exception {
@@ -142,9 +149,12 @@ public class ChallengeControllerTest {
     }
 
     @Test
-    public void testAddOrRemovePointToCompletedChallenge() throws Exception {
+    public void testAddOrRemovePointToCompletedChallenge_Should_Return_Status_Code_200() throws Exception {
         when(mockedChallenge.getChallengeCreator()).thenReturn(mockedUserModel);
-        assertEquals("addOrRemovePointToCompletedChallenge() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.addOrRemovePointToCompletedChallenge(1L, mockedUserModel).getStatusCode());
+        when(mockedUserService.getUserFromDatabase(mockedUserModel.getId())).thenReturn(mockedUserModel);
+        when(mockedChallengeService.getChallengeFromDatabase(1L)).thenReturn(mockedChallenge);
+        when(mockedChallenge.removeUserModelFromChallengeUpvoters(mockedUserModel)).
+        assertEquals("addOrRemovePointToCompletedChallenge() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.addOrRemoveUserToChallengeUpvoters(1L, mockedUserModel).getStatusCode());
     }
 
     @Test()
