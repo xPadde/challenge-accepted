@@ -42,6 +42,8 @@ public class ChallengeControllerTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         when(mockedChallengeService.getChallengeFromDatabase(1L)).thenReturn(mockedChallenge);
+        when(mockedUserService.getUserFromDatabase(1L)).thenReturn(mockedUserModel);
+        when(mockedChallenge.getChallengeCreator()).thenReturn(mockedUserModel);
     }
 
     @Test
@@ -56,7 +58,30 @@ public class ChallengeControllerTest {
 
     @Test
     public void testReadChallenge_Should_Return_Status_Code_200() throws Exception {
-        assertEquals("readChallenge() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.readChallenge(new Random().nextLong(), new UserModel().getId()).getStatusCode());
+        assertEquals("readChallenge() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.readChallenge(1L, mockedUserModel.getId()).getStatusCode());
+    }
+
+    /*@Test
+    public void testValidateUserRestrictions_Should_Return_Status_Code_200() throws Exception {
+        assertEquals("validateUserRestrictions() did not respond with http status 200 (ok)", HttpStatus.OK, challengeController.validateUserRestrictions(mockedChallenge, mockedUserModel));
+    }*/
+
+    @Test
+    public void testIsLoggedInUserTheCreatorAndIsVideoUploaded_Should_Return_True_Or_False() throws Exception {
+        when(mockedUserModel.getId()).thenReturn(1L);
+        when(mockedChallenge.getChallengeCreator().getId()).thenReturn(1L);
+        when(mockedChallenge.getYoutubeVideoUploaded()).thenReturn(true);
+        assertEquals("isChallengeUnavailableForUserNotSignedIn() did not respond with true or false", true, challengeController.isLoggedInUserTheCreatorAndIsVideoUploaded(mockedChallenge, mockedUserModel));
+        when(mockedChallenge.getYoutubeVideoUploaded()).thenReturn(false);
+        assertEquals("isChallengeUnavailableForUserNotSignedIn() did not respond with true or false", false, challengeController.isLoggedInUserTheCreatorAndIsVideoUploaded(mockedChallenge, mockedUserModel));
+    }
+
+    @Test
+    public void testIsChallengeUnavailableForUserNotSignedIn_Should_Return_True_Or_False() throws Exception {
+        when(mockedChallenge.getChallengeClaimed()).thenReturn(true);
+        when(mockedChallenge.getChallengeCompleted()).thenReturn(false);
+        assertEquals("isChallengeUnavailableForUserNotSignedIn() did not respond with true or false", true, challengeController.isChallengeUnavailableForUserNotSignedIn(mockedChallenge, null));
+        assertEquals("isChallengeUnavailableForUserNotSignedIn() did not respond with true or false", false, challengeController.isChallengeUnavailableForUserNotSignedIn(mockedChallenge, mockedUserModel));
     }
 
     @Test
