@@ -102,7 +102,7 @@ public class ChallengeController {
     }
 
     private boolean isChallengeUnavailableForUserNotSignedIn(ChallengeModel challenge, UserModel userModelFromDatabase) {
-        if(userModelFromDatabase.getId() == 0 && challenge.getChallengeClaimed() && !challenge.getChallengeCompleted()){
+        if((userModelFromDatabase.getId() == 0) || (userModelFromDatabase == null) && challenge.getChallengeClaimed() && !challenge.getChallengeCompleted()){
             System.out.println("felhantering: usermodel null");
             return true;
         }
