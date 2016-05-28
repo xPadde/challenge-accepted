@@ -26,16 +26,19 @@ public class UserControllerTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+        when(mockedUserModel.getId()).thenReturn(1L);
+        when(mockedUserModel.getFirstName()).thenReturn("mockedFirstName");
+        when(mockedUserModel.getLastName()).thenReturn("mockedLastName");
     }
 
     @Test
     public void testCreateUser_Should_Return_Status_Code_201() throws Exception {
-        assertEquals("createUser() did not respond with http status 201 (created)", HttpStatus.CREATED, userController.createUser(new UserModel()).getStatusCode());
+        assertEquals("createUser() did not respond with http status 201 (created)", HttpStatus.CREATED, userController.createUser(mockedUserModel).getStatusCode());
     }
 
     @Test
     public void testUpdateUser_Should_Return_Status_Code_200() throws Exception {
-        assertEquals("updateUser() did not respond with http status 200 (ok)", HttpStatus.OK, userController.updateUser(new UserModel()).getStatusCode());
+        assertEquals("updateUser() did not respond with http status 200 (ok)", HttpStatus.OK, userController.updateUser(mockedUserModel).getStatusCode());
     }
 
     @Test

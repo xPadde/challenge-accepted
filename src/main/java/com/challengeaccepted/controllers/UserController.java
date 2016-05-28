@@ -22,19 +22,14 @@ public class UserController {
     public ResponseEntity<UserModel> createUser(@RequestBody UserModel userModel) throws HerokuLoggerException {
         userService.saveUserToDatabase(userModel);
         new HerokuLogger().writeToInfoLog("A new user named " + userModel.getFirstName() + " " + userModel.getLastName() + " has been saved to the database");
-        return new ResponseEntity<UserModel>(userModel, HttpStatus.CREATED);
+        return new ResponseEntity<>(userModel, HttpStatus.CREATED);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public ResponseEntity<UserModel> readUser(@PathVariable Long id) {
         UserModel user = userService.getUserFromDatabase(id);
-
-        if (user != null) {
-            return new ResponseEntity<UserModel>(user, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<UserModel>(HttpStatus.BAD_REQUEST);
-        }
+        return getUserModelResponseEntity(user);
     }
 
     @CrossOrigin
@@ -47,13 +42,21 @@ public class UserController {
     @CrossOrigin
     @RequestMapping(value = "/users/", method = RequestMethod.GET)
     public ResponseEntity<ArrayList<UserModel>> readAllUsers() {
-        return new ResponseEntity<ArrayList<UserModel>>(userService.getAllUsersFromDatabase(), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getAllUsersFromDatabase(), HttpStatus.OK);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/user/find-by-email", method = RequestMethod.GET)
     public ResponseEntity<UserModel> readUserByEmail(String email) throws HerokuLoggerException {
-        return new ResponseEntity<UserModel>(userService.getUserByEmailFromDatabase(email), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserByEmailFromDatabase(email), HttpStatus.OK);
+    }
+
+    private ResponseEntity<UserModel> getUserModelResponseEntity(UserModel user) {
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
