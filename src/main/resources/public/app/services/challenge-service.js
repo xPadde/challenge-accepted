@@ -5,7 +5,7 @@ app.factory('challengeService', function ($http) {
     return {
         getChallengeById: function (id, loggedInUserId) {
             return $http({
-                url: baseUrl + 'challenge/' + id + '/user/' + loggedInUserId,
+                url: baseUrl + 'challenge/' + id + '/users/' + loggedInUserId,
                 method: 'GET',
                 header: {'Content-Type': 'application/json'}
             })
@@ -19,7 +19,7 @@ app.factory('challengeService', function ($http) {
         },
         createNewChallenge: function (data, loggedInUserId) {
             return $http({
-                url: baseUrl + 'challenge/create/challenge-creator/' + loggedInUserId,
+                url: baseUrl + 'challenges/create/challenge-creator/' + loggedInUserId,
                 method: 'POST',
                 data: data,
                 header: {'Content-Type': 'application/json'}
@@ -27,7 +27,7 @@ app.factory('challengeService', function ($http) {
         },
         updateChallenge: function (data) {
             return $http({
-                url: baseUrl + 'challenge/',
+                url: baseUrl + 'challenges/',
                 method: 'PUT',
                 data: data,
                 header: {'Content-Type': 'application/json'}
@@ -36,7 +36,7 @@ app.factory('challengeService', function ($http) {
 
         updateChallengeClaimer: function (loggedInUser, challengeId) {
             return $http({
-                url: baseUrl + 'challenge/' + challengeId + '/update-challenge-claimer/',
+                url: baseUrl + 'challenges/' + challengeId + '/update-challenge-claimer/',
                 method: 'PUT',
                 data: loggedInUser,
                 header: {'Content-Type': 'application/json'}
@@ -45,7 +45,7 @@ app.factory('challengeService', function ($http) {
 
         addYoutubeUrlToChallenge: function (challengeId, youtubeUrl) {
             return $http({
-                url: baseUrl + 'challenge/' + challengeId + '/add-youtube-url/',
+                url: baseUrl + 'challenges/' + challengeId + '/add-youtube-url/',
                 method: 'PUT',
                 data: youtubeUrl,
                 header: {'Content-Type': 'application/json'}
@@ -54,7 +54,7 @@ app.factory('challengeService', function ($http) {
 
         confirmUploadedYoutubeUrl: function (challengeId) {
             return $http({
-                url: baseUrl + 'challenge/' + challengeId + '/confirm-uploaded-youtube-url/',
+                url: baseUrl + 'challenges/' + challengeId + '/confirm-uploaded-youtube-url/',
                 method: 'PUT',
                 header: {'Content-Type': 'application/json'}
             })
@@ -62,7 +62,7 @@ app.factory('challengeService', function ($http) {
 
         addOrRemoveUserToChallengeUpvoters: function (data, id) {
             return $http({
-                url: baseUrl + 'challenge/' + id + '/add-or-remove-user-to-challenge-upvoters/',
+                url: baseUrl + 'challenges/' + id + '/add-or-remove-user-to-challenge-upvoters/',
                 method: 'PUT',
                 data: data,
                 header: {'Content-Type': 'application/json'}
@@ -71,7 +71,7 @@ app.factory('challengeService', function ($http) {
 
         addOrRemovePointToCompletedChallenge: function (data, id) {
             return $http({
-                url: baseUrl + 'challenge/' + id + '/add-or-remove-point-to-completed-challenge/',
+                url: baseUrl + 'challenges/' + id + '/add-or-remove-point-to-completed-challenge/',
                 method: 'PUT',
                 data: data,
                 header: {'Content-Type': 'application/json'}
@@ -80,7 +80,7 @@ app.factory('challengeService', function ($http) {
 
         assignPointsToUser: function (id) {
             return $http({
-                url: baseUrl + 'challenge/' + id + '/assign-points-to-user/',
+                url: baseUrl + 'challenges/' + id + '/assign-points-to-user/',
                 method: 'PUT',
                 header: {'Content-Type': 'application/json'}
             })
@@ -88,7 +88,7 @@ app.factory('challengeService', function ($http) {
 
         disapproveCurrentChallenge: function (id, data) {
             return $http({
-                url: baseUrl + 'challenge/' + id + '/disapprove-challenge/',
+                url: baseUrl + 'challenges/' + id + '/disapprove-challenge/',
                 data: data,
                 method: 'PUT',
                 header: {'Content-Type': 'application/json'}
@@ -97,7 +97,7 @@ app.factory('challengeService', function ($http) {
 
         checkIfChallengeIsUpvotedByUser: function (loggedInUserId, challengeId) {
             return $http({
-                url: baseUrl + 'challenge/' + challengeId + '/checkifchallengeisupvotedbyuser/' + loggedInUserId + '/',
+                url: baseUrl + 'challenges/' + challengeId + '/checkifchallengeisupvotedbyuser/' + loggedInUserId + '/',
                 method: 'GET',
                 header: {'Content-Type': 'application/json'}
             })

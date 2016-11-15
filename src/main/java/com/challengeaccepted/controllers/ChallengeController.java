@@ -28,7 +28,7 @@ public class ChallengeController {
     private NotificationController notificationController;
 
     @CrossOrigin
-    @RequestMapping(value = "/challenge/create/challenge-creator/{challengeCreatorId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/challenges/create/challenge-creator/{challengeCreatorId}", method = RequestMethod.POST)
     public ResponseEntity createChallenge(@RequestBody ChallengeModel challengeModel, @PathVariable Long challengeCreatorId) throws HerokuLoggerException {
 
         if (challengeModel.getTopic().equals("") || challengeModel.getDescription().equals("")) {
@@ -47,7 +47,7 @@ public class ChallengeController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/challenge/{id}/user/{loggedInUserId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/challenges/{id}/user/{loggedInUserId}", method = RequestMethod.GET)
     public ResponseEntity<ChallengeModel> readChallenge(@PathVariable Long id, @PathVariable Long loggedInUserId) {
 
         ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
@@ -131,14 +131,14 @@ public class ChallengeController {
 
 
     @CrossOrigin
-    @RequestMapping(value = "/challenge/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/challenges/", method = RequestMethod.PUT)
     public ResponseEntity<ChallengeModel> updateChallenge(@RequestBody ChallengeModel challengeModel) {
         challengeService.updateChallengeInDatabase(challengeModel);
         return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/challenge/{id}/update-challenge-claimer/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/challenges/{id}/update-challenge-claimer/", method = RequestMethod.PUT)
     public ResponseEntity<ChallengeModel> updateChallengeClaimer(@PathVariable Long id, @RequestBody UserModel userModel) throws HerokuLoggerException {
         ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(id);
 
@@ -153,7 +153,7 @@ public class ChallengeController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/challenge/{id}/add-youtube-url/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/challenges/{id}/add-youtube-url/", method = RequestMethod.PUT)
     public ResponseEntity<ChallengeModel> addYoutubeUrlToChallenge(@PathVariable Long id, @RequestBody String youtubeUrl) throws HerokuLoggerException {
         ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(id);
         challengeModel.setYoutubeURL(youtubeUrl);
@@ -164,7 +164,7 @@ public class ChallengeController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/challenge/{id}/assign-points-to-user/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/challenges/{id}/assign-points-to-user/", method = RequestMethod.PUT)
     public ResponseEntity<ChallengeModel> assignPointsToUser(@PathVariable Long id) throws HerokuLoggerException {
         ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
         UserModel challengeCompleter = userService.getUserFromDatabase(challenge.getChallengeClaimer().getId());
@@ -192,7 +192,7 @@ public class ChallengeController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/challenge/{id}/disapprove-challenge/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/challenges/{id}/disapprove-challenge/", method = RequestMethod.PUT)
     public ResponseEntity<ChallengeModel> disapproveChallenge(@PathVariable Long id, @RequestBody String notificationMessage) throws HerokuLoggerException {
         ChallengeModel challengeModel = challengeService.getChallengeFromDatabase(id);
         UserModel userThatHasFailedPerformedChallenge = challengeModel.getChallengeClaimer();
@@ -214,7 +214,7 @@ public class ChallengeController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/challenge/{id}/confirm-uploaded-youtube-url/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/challenges/{id}/confirm-uploaded-youtube-url/", method = RequestMethod.PUT)
     public ResponseEntity<ChallengeModel> confirmUploadedYoutubeUrl(@PathVariable Long id) throws HerokuLoggerException {
         ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
         if (challenge.getYoutubeVideoUploaded() == false) {
@@ -230,7 +230,7 @@ public class ChallengeController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/challenge/{id}/add-or-remove-user-to-challenge-upvoters/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/challenges/{id}/add-or-remove-user-to-challenge-upvoters/", method = RequestMethod.PUT)
     public ResponseEntity addOrRemoveUserToChallengeUpvoters(@PathVariable Long id, @RequestBody UserModel loggedInUser) {
         UserModel user = userService.getUserFromDatabase(loggedInUser.getId());
         ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
@@ -250,7 +250,7 @@ public class ChallengeController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/challenge/{id}/add-or-remove-point-to-completed-challenge/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/challenges/{id}/add-or-remove-point-to-completed-challenge/", method = RequestMethod.PUT)
     public ResponseEntity addOrRemovePointToCompletedChallenge(@PathVariable Long id, @RequestBody UserModel loggedInUser) {
         ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
         UserModel user = userService.getUserFromDatabase(loggedInUser.getId());

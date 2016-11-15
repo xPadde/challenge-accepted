@@ -18,7 +18,7 @@ public class UserController {
     private UserService userService;
 
     @CrossOrigin
-    @RequestMapping(value = "/user/", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/", method = RequestMethod.POST)
     public ResponseEntity<UserModel> createUser(@RequestBody UserModel userModel) throws HerokuLoggerException {
         userService.saveUserToDatabase(userModel);
         new HerokuLogger().writeToInfoLog("A new user named " + userModel.getFirstName() + " " + userModel.getLastName() + " has been saved to the database");
@@ -26,14 +26,14 @@ public class UserController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
     public ResponseEntity<UserModel> readUser(@PathVariable Long id) {
         UserModel user = userService.getUserFromDatabase(id);
         return getUserModelResponseEntity(user);
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/user/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/users/", method = RequestMethod.PUT)
     public ResponseEntity updateUser(@RequestBody UserModel userModel) {
         userService.updateUserInDatabase(userModel);
         return new ResponseEntity(HttpStatus.OK);
@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/user/find-by-email", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/find-by-email", method = RequestMethod.GET)
     public ResponseEntity<UserModel> readUserByEmail(String email) throws HerokuLoggerException {
         return new ResponseEntity<>(userService.getUserByEmailFromDatabase(email), HttpStatus.OK);
     }

@@ -5,7 +5,7 @@ app.factory('userService', function ($http) {
     return {
         createNewUser: function (data) {
             return $http({
-                url: baseUrl + 'user/',
+                url: baseUrl + 'users/',
                 method: 'POST',
                 data: data,
                 header: {'Content-Type': 'application/json'}
@@ -14,7 +14,7 @@ app.factory('userService', function ($http) {
 
         getUserById: function (id) {
             return $http({
-                url: baseUrl + 'user/' + id,
+                url: baseUrl + 'users/' + id,
                 method: 'GET',
                 header: {'Content-Type': 'application/json'}
             })
@@ -22,7 +22,7 @@ app.factory('userService', function ($http) {
 
         getUserByEmail: function (email) {
             return $http({
-                url: baseUrl + 'user/find-by-email?email=' + email + '',
+                url: baseUrl + 'users/find-by-email?email=' + email + '',
                 method: 'GET',
                 header: {'Content-Type': 'application/json'}
             })
@@ -30,7 +30,7 @@ app.factory('userService', function ($http) {
 
         updateUser: function (data, id) {
             return $http({
-                url: baseUrl + 'user/' + id,
+                url: baseUrl + 'users/' + id,
                 method: 'PUT',
                 header: {'Content-Type': 'application/json'}
             })

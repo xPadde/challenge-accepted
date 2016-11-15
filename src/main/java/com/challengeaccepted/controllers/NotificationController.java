@@ -25,7 +25,7 @@ public class NotificationController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/notification/", method = RequestMethod.POST)
+    @RequestMapping(value = "/notifications/", method = RequestMethod.POST)
     public ResponseEntity createNotification(@RequestBody NotificationModel notificationModel) {
         return getCreateNotificationResponseEntity(notificationModel);
     }

@@ -5,7 +5,7 @@ app.factory('notificationService', function ($http) {
     return {
         getAllNotifications: function (id) {
             return $http({
-                url: baseUrl + 'user/'+ id +'/notifications/',
+                url: baseUrl + 'users/'+ id +'/notifications/',
                 method: 'GET',
                 header: {'Content-Type': 'application/json'}
             })
