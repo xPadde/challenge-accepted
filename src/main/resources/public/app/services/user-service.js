@@ -1,6 +1,6 @@
 app.factory('userService', function ($http) {
 
-    var baseUrl = "https://afternoon-atoll-64085.herokuapp.com/api/";
+    var baseUrl = "http://localhost:8080/api/";
 
     return {
         createNewUser: function (data) {
