@@ -5,7 +5,7 @@ app.factory('challengeService', function ($http) {
     return {
         getChallengeById: function (id, loggedInUserId) {
             return $http({
-                url: baseUrl + 'challenge/' + id + '/users/' + loggedInUserId,
+                url: baseUrl + 'challenges/' + id + '/users/' + loggedInUserId,
                 method: 'GET',
                 header: {'Content-Type': 'application/json'}
             })

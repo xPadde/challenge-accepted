@@ -47,7 +47,7 @@ public class ChallengeController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/challenges/{id}/user/{loggedInUserId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/challenges/{id}/users/{loggedInUserId}", method = RequestMethod.GET)
     public ResponseEntity<ChallengeModel> readChallenge(@PathVariable Long id, @PathVariable Long loggedInUserId) {
 
         ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
