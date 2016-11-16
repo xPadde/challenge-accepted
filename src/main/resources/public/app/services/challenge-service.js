@@ -1,11 +1,11 @@
 app.factory('challengeService', function ($http) {
 
-    var baseUrl = "http://localhost:8080/api/";
+    var baseUrl = "http://localhost:8080/challengeaccepted/api";
     
     return {
         getChallengeById: function (id, loggedInUserId) {
             return $http({
-                url: baseUrl + 'challenges/' + id + '/users/' + loggedInUserId,
+                url: baseUrl + '/challenges/' + id + '/users/' + loggedInUserId,
                 method: 'GET',
                 header: {'Content-Type': 'application/json'}
             })
