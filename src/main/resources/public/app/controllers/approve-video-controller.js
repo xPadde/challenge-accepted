@@ -34,7 +34,7 @@ app.controller('ApproveVideoController', ['$scope', '$log', 'scopeService', 'cha
         
         $scope.getYoutubeUrlId = function (youtubeUrl) {
             return scopeService.getYoutubeUrlId(youtubeUrl);
-        }
+        };
 
         // The challenge requester confirm the challenge is performed satisfactory.
         $scope.completeChallenge = function (challenge) {

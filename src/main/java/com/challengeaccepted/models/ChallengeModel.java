@@ -82,10 +82,6 @@ public class ChallengeModel implements Serializable {
         return upvotes;
     }
 
-    public void setUpvotes(Double upvotes) {
-        this.upvotes = upvotes;
-    }
-
     public void addUpvotes(Double upvotes) {
         if (this.upvotes == null) {
             this.upvotes = 0.0;
@@ -118,13 +114,13 @@ public class ChallengeModel implements Serializable {
 
     public void addUserModelToChallengeUpvoters(UserModel userModel) {
         if (challengeUpvoters == null) {
-            challengeUpvoters = new ArrayList<UserModel>();
+            challengeUpvoters = new ArrayList<>();
         }
         challengeUpvoters.add(userModel);
     }
 
     public List<Long> getChallengeUpvoters() {
-        List<Long> listOfChallengeUpvotersId = new ArrayList<Long>();
+        List<Long> listOfChallengeUpvotersId = new ArrayList<>();
         for (UserModel user : challengeUpvoters) {
             listOfChallengeUpvotersId.add(user.getId());
         }
