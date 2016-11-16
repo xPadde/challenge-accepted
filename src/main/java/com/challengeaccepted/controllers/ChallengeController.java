@@ -19,14 +19,18 @@ import java.util.List;
 @RestController
 public class ChallengeController {
 
-    @Autowired
-    private ChallengeService challengeService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private NotificationController notificationController;
+    private final ChallengeService challengeService;
+    private final UserService userService;
+    private final NotificationController notificationController;
 
     final static Logger logger = Logger.getLogger(ChallengeController.class);
+
+    @Autowired
+    public ChallengeController(ChallengeService challengeService, UserService userService, NotificationController notificationController) {
+        this.challengeService = challengeService;
+        this.userService = userService;
+        this.notificationController = notificationController;
+    }
 
     @CrossOrigin
     @RequestMapping(value = "/challenges/create/challenge-creator/{challengeCreatorId}", method = RequestMethod.POST)
@@ -59,30 +63,30 @@ public class ChallengeController {
     private ResponseEntity<ChallengeModel> validateUserRestrictions(ChallengeModel challenge, UserModel userModelFromDatabase) {
 
         if (isChallengeUnavailableForUserNotSignedIn(challenge, userModelFromDatabase)) {
-            return new ResponseEntity<ChallengeModel>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         if (userModelFromDatabase == null && challenge.getChallengeCompleted()) {
-            return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
+            return new ResponseEntity<>(challenge, HttpStatus.OK);
         }
 
         if(challenge.getChallengeClaimed()) {
             if (isLoggedInUserTheCreatorAndIsVideoUploaded(challenge, userModelFromDatabase)) {
-                return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
+                return new ResponseEntity<>(challenge, HttpStatus.OK);
             }
             if (isLoggedInUserNotClaimerAndChallengeNotCompleted(challenge, userModelFromDatabase)) {
-                return new ResponseEntity<ChallengeModel>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
         }
 
         if (challenge == null) {
             logger.error("challenge null");
-            return new ResponseEntity<ChallengeModel>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             logger.info("everything okay");
             logger.info("CHALLENGE ID: " + challenge.getId());
-            return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
+            return new ResponseEntity<>(challenge, HttpStatus.OK);
         }
 
     }
@@ -114,19 +118,19 @@ public class ChallengeController {
     @CrossOrigin
     @RequestMapping(value = "/challenges/", method = RequestMethod.GET)
     public ResponseEntity<List<ChallengeModel>> readAllChallenges() {
-        return new ResponseEntity<List<ChallengeModel>>(challengeService.getAllChallengesFromDatabase(), HttpStatus.OK);
+        return new ResponseEntity<>(challengeService.getAllChallengesFromDatabase(), HttpStatus.OK);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/challenges/completed/", method = RequestMethod.GET)
     public ResponseEntity<List<ChallengeModel>> readAllCompletedChallenges() {
-        return new ResponseEntity<List<ChallengeModel>>(challengeService.getAllCompletedChallengesFromDatabase(), HttpStatus.OK);
+        return new ResponseEntity<>(challengeService.getAllCompletedChallengesFromDatabase(), HttpStatus.OK);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/challenges/unapproved/", method = RequestMethod.GET)
     public ResponseEntity<List<ChallengeModel>> readAllUnapprovedChallenges() {
-        return new ResponseEntity<List<ChallengeModel>>(challengeService.getAllUnapprovedChallengesFromDatabase(), HttpStatus.OK);
+        return new ResponseEntity<>(challengeService.getAllUnapprovedChallengesFromDatabase(), HttpStatus.OK);
     }
 
 
@@ -134,7 +138,7 @@ public class ChallengeController {
     @RequestMapping(value = "/challenges/", method = RequestMethod.PUT)
     public ResponseEntity<ChallengeModel> updateChallenge(@RequestBody ChallengeModel challengeModel) {
         challengeService.updateChallengeInDatabase(challengeModel);
-        return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
+        return new ResponseEntity<>(challengeModel, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -149,7 +153,7 @@ public class ChallengeController {
         challengeService.updateChallengeInDatabase(challengeModel);
         createAndSaveNotification(userModel, challengeModel, new NotificationInfo(Action.CLAIMCHALLENGE));
         logger.info("The challenge with id " + challengeModel.getId() + " has successfully been claimed by the user with id " + userModel.getId());
-        return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
+        return new ResponseEntity<>(challengeModel, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -160,7 +164,7 @@ public class ChallengeController {
         challengeModel.setYoutubeUrlProvided(true);
         challengeService.updateChallengeInDatabase(challengeModel);
         logger.info("A Youtube link has successfully been added to a claimed challenge");
-        return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
+        return new ResponseEntity<>(challengeModel, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -178,7 +182,7 @@ public class ChallengeController {
         challenge.addPoints(pointsToDistribute);
 
         updateChallengeToCompleted(challenge);
-        challenge.setChallengeUpvoters(new ArrayList<UserModel>());
+        challenge.setChallengeUpvoters(new ArrayList<>());
 
         userService.updateUserInDatabase(challengeCompleter);
         userService.updateUserInDatabase(challengeCreator);
@@ -186,7 +190,7 @@ public class ChallengeController {
         logger.info("Points have been distributed to the challengecompleter, challengecreator and the challenge successfully");
         createAndSaveNotification(challengeCompleter, challenge, new NotificationInfo(Action.PERFORMEDCHALLENGE));
 
-        return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
+        return new ResponseEntity<>(challenge, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -207,22 +211,22 @@ public class ChallengeController {
         NotificationInfo notificationInfo = new NotificationInfo(Action.FAILEDTOPERFORMECHALLENGE, notificationMessage);
         createAndSaveNotification(userThatHasFailedPerformedChallenge, challengeModel, notificationInfo);
         logger.info("A challenge have been disapproved by the challengecreator successfully");
-        return new ResponseEntity<ChallengeModel>(challengeModel, HttpStatus.OK);
+        return new ResponseEntity<>(challengeModel, HttpStatus.OK);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/challenges/{id}/confirm-uploaded-youtube-url/", method = RequestMethod.PUT)
     public ResponseEntity<ChallengeModel> confirmUploadedYoutubeUrl(@PathVariable Long id) {
         ChallengeModel challenge = challengeService.getChallengeFromDatabase(id);
-        if (challenge.getYoutubeVideoUploaded() == false) {
+        if (!challenge.getYoutubeVideoUploaded()) {
             challenge.setYoutubeVideoUploaded(true);
             challenge.setYoutubeUrlProvided(false);
 
             challengeService.updateChallengeInDatabase(challenge);
-            return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.OK);
+            return new ResponseEntity<>(challenge, HttpStatus.OK);
         } else {
             logger.info("A challenge claimer has confirmed the uploaded Youtube video");
-            return new ResponseEntity<ChallengeModel>(challenge, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(challenge, HttpStatus.BAD_REQUEST);
         }
     }
 
