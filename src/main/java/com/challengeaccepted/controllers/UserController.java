@@ -13,13 +13,17 @@ import java.util.ArrayList;
 @RestController
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    final static Logger logger = Logger.getLogger(ChallengeController.class);
+    private final static Logger logger = Logger.getLogger(ChallengeController.class);
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @CrossOrigin
-    @RequestMapping(value = "/users/", method = RequestMethod.POST)
+    @RequestMapping(value = "/users", method = RequestMethod.POST)
     public ResponseEntity<UserModel> createUser(@RequestBody UserModel userModel) {
         userService.saveUserToDatabase(userModel);
         logger.info("A new user named " + userModel.getFirstName() + " " + userModel.getLastName() + " has been saved to the database");
@@ -34,14 +38,14 @@ public class UserController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/users/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/users", method = RequestMethod.PUT)
     public ResponseEntity updateUser(@RequestBody UserModel userModel) {
         userService.updateUserInDatabase(userModel);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/users/", method = RequestMethod.GET)
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResponseEntity<ArrayList<UserModel>> readAllUsers() {
         return new ResponseEntity<>(userService.getAllUsersFromDatabase(), HttpStatus.OK);
     }
