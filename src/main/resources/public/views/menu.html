@@ -55,6 +55,7 @@
                             {{loggedInUser.lastName}}
                         </button>
                         <div ng-show="loggedInUser == null" class="g-signin2" data-onsuccess="onSignIn"></div>
+                        <a href="#/register">Register on this website</a>
                         <ul class="dropdown-menu" aria-labelledby="dropdown-login-logout">
                             <li ng-hide="loggedInUser == null"><a ng-click="viewUserProfilePage(loggedInUser)">View
                                 Profile</a></li>
