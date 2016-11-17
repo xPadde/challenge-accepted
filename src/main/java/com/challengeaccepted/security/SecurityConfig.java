@@ -21,6 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
     private EntryPointUnathorizedHandler unathorizedHandler;
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configAuthBuilder(AuthenticationManagerBuilder builder) throws Exception {
