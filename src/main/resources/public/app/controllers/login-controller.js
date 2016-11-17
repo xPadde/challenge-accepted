@@ -77,4 +77,8 @@ app.controller('LoginController', ['$scope', '$route', '$log', '$location', 'use
                 scopeService.showAlertPopup(scopeService.loginAlertMessage());
             }
         };
+
+        $scope.login = function() {
+            // TODO this function will be used when client logs in. @See USerController login method
+        }
     }]);
