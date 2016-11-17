@@ -1,6 +1,6 @@
 app.factory('userService', function ($http) {
 
-    var baseUrl = "http://localhost:8080/api/challengeaccepted";
+    var baseUrl = "http://localhost:8080/challengeaccepted/api";
 
     return {
         createNewUser: function (data) {
