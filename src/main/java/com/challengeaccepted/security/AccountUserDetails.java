@@ -7,8 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 
-// 27:37 on https://youtu.be/jH8-5QVMInE
-
 public class AccountUserDetails implements UserDetails {
 
     private final UserModel userModel;

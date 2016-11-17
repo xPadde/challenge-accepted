@@ -24,14 +24,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private EntryPointUnathorizedHandler unathorizedHandler;
 
     @Autowired
-    private UserService userRepository;
+    private UserDetailServiceImpl userDetailService;
 
     @Autowired
     public void configAuthBuilder(AuthenticationManagerBuilder builder) throws Exception {
-        builder.inMemoryAuthentication()
-                .withUser("user")
-                .password("password")
-                .roles("USER");
+        builder.userDetailsService(userDetailService);
     }
 
     @Override
