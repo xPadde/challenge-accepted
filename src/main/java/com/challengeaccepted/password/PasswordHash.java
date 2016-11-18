@@ -1,4 +1,4 @@
-package com.challengeaccepted.security;
+package com.challengeaccepted.password;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;

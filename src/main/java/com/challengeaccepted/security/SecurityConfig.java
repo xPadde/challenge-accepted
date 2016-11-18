@@ -44,7 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .failureHandler(authFailure)
                 .and()
                     .authorizeRequests()
-                    .antMatchers("/index")
+                    .antMatchers("/index").permitAll()
+                    .antMatchers("/create-challenge").hasRole("USER").anyRequest()
                     .authenticated();
     }
 

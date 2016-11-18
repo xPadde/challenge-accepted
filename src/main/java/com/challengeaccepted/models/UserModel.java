@@ -101,4 +101,12 @@ public class UserModel implements Serializable {
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "id=" + id +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
