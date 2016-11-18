@@ -1,6 +1,5 @@
 app.controller('RegisterNewUserController', ['$scope', '$log', 'userService', '$location',
     function ($scope, $log, userService, $location) {
-        console.log("Inne i reg user controller");
 
         $scope.getUserInputsFromRegisterNewUserForm = function () {
             console.log("get user inputs");
@@ -13,7 +12,6 @@ app.controller('RegisterNewUserController', ['$scope', '$log', 'userService', '$
         };
 
         $scope.registerNewUser = function (form) {
-            console.log("inne i regnewuser");
             if (form.validate()) {
                 $scope.loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
                 userService.createNewUser($scope.getUserInputsFromRegisterNewUserForm())
