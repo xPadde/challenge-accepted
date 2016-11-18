@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 @SpringBootApplication
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan("com.challengeaccepted.security")
 public class Application {
 
     public static void main(String[] args) {
