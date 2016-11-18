@@ -8,6 +8,19 @@ app.controller('LoginController', ['$scope', '$route', '$log', '$location', 'use
         /*
          Below Code handles the user login.
          */
+
+        $scope.login = function() {
+            console.log("inne i login");
+
+           userService.validateLocalLogin($('#input-email-login').val(), $('#input-password-login').val())
+               .success(function(response) {
+                   console.log("vi är inne i successen");
+               })
+               .error(function(response) {
+                   console.log("vi är inne i error");
+               })
+        };
+
         $scope.getUserInfo = function (profile) {
             return JSON.stringify({
                 'firstName': profile.getGivenName(),

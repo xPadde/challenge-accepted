@@ -57,6 +57,17 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserByEmailFromDatabase(email), HttpStatus.OK);
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "/users/login", method = RequestMethod.GET)
+    public ResponseEntity<UserModel> validateLocalLogin(String email, String password) {
+        UserModel userModel = userService.getUserByEmailFromDatabase(email);
+        if(userModel.getPassword().equals(password)) {
+            return new ResponseEntity<>(userModel, HttpStatus.FOUND);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     private ResponseEntity<UserModel> getUserModelResponseEntity(UserModel user) {
         if (user != null) {
             return new ResponseEntity<>(user, HttpStatus.OK);

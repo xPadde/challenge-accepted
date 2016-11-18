@@ -28,6 +28,15 @@ app.factory('userService', function ($http) {
             })
         },
 
+        validateLocalLogin: function (email, password) {
+            console.log("i servicen");
+            return $http({
+                url: baseUrl + '/users/login?email=' + email + '&password=' + password,
+                method: 'GET',
+                header: {'Content-Type': 'application/json'}
+            })
+        },
+
         updateUser: function (data, id) {
             return $http({
                 url: baseUrl + '/users' + id,
