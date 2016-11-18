@@ -65,7 +65,8 @@ app.config(function ($routeProvider) {
         })
         .when('/register', {
             title: "Register new user",
-            templateUrl: 'views/register-new-user.html'
+            templateUrl: 'views/register-new-user.html',
+            controller: 'RegisterNewUserController'
         })
         .otherwise({redirectTo: "/home"})
 });
