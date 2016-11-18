@@ -1,5 +1,5 @@
-app.controller('RegisterNewUserController', ['$scope', '$log', 'userService',
-    function ($scope, $log, userService) {
+app.controller('RegisterNewUserController', ['$scope', '$log', 'userService', '$location',
+    function ($scope, $log, userService, $location) {
         console.log("Inne i reg user controller");
 
         $scope.getUserInputsFromRegisterNewUserForm = function () {
@@ -20,6 +20,7 @@ app.controller('RegisterNewUserController', ['$scope', '$log', 'userService',
                     .success(function (response, status) {
                         if (status == 201) {
                             $log.info('userService.createNewUser() called. New user created and saved to the database!');
+                            $location.path('/home');
                         } else {
                             $log.info('userService.registerNewUser() called. User ***NOT*** created. Fields was empty!');
                         }
