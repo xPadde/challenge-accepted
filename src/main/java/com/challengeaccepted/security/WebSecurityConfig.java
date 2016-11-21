@@ -21,6 +21,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .disable()
                 .authorizeRequests()
                     .antMatchers("/api/challenges/create/challenge-creator/**").authenticated()
+                //TODO refactor with restricted folders/directories
+                    .antMatchers("/views/create-challenge.html").authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/views/login.html")
