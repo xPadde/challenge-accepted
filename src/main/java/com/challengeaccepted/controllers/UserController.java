@@ -3,6 +3,7 @@ package com.challengeaccepted.controllers;
 import com.challengeaccepted.models.LoginModel;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.UserService;
+import com.challengeaccepted.services.YubicoService;
 import com.yubico.client.v2.VerificationResponse;
 import com.yubico.client.v2.YubicoClient;
 import com.yubico.client.v2.exceptions.YubicoValidationFailure;
@@ -65,19 +66,23 @@ public class UserController {
     @CrossOrigin
     @RequestMapping(value = "/users/login", method = RequestMethod.POST)
     public ResponseEntity<UserModel> validateLocalLogin(@RequestBody LoginModel loginModel) throws YubicoVerificationException, YubicoValidationFailure {
-        YubicoClient client = YubicoClient.getClient(30796, "QXjIQVpZ0CYk21GxaLpZmdoVsxc=");
         UserModel userModel = userService.getUserByEmailFromDatabase(loginModel.getEmail());
-        if(userModel.getPassword().equals(loginModel.getPassword())) {
-            VerificationResponse response = client.verify(loginModel.getOtp());
-            if (response.isOk()) {
+
+        if(userService.validatePassword(userModel.getPassword(), loginModel.getPassword())) {
+
+            if (YubicoService.getResponse(loginModel.getOtp()).isOk()) {
+
                 if (YubicoClient.getPublicId(loginModel.getOtp()).equals(userModel.getYubiKeyID())) {
                     return new ResponseEntity<>(userModel, HttpStatus.OK);
+
                 } else {
                     return new ResponseEntity<>(HttpStatus.FORBIDDEN);
                 }
+
             } else {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
+
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

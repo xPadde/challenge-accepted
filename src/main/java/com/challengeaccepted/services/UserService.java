@@ -37,4 +37,7 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    public boolean validatePassword(String userModelPassword, String loginModelPassword) {
+        return userModelPassword.equals(loginModelPassword);
+    }
 }
