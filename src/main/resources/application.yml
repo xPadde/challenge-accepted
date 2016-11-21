@@ -17,7 +17,7 @@ spring:
       fail-on-empty-beans: false
 
 server:
-  context-path: /api
+  context-path: /challengeaccepted
 
 logging:
   level:

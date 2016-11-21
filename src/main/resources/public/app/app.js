@@ -63,5 +63,17 @@ app.config(function ($routeProvider) {
             title: 'Error User profile',
             templateUrl: 'views/errorpage-user.html'
         })
+        .when('/register', {
+            title: "Register new user",
+            templateUrl: 'views/register-new-user.html',
+            controller: 'RegisterNewUserController'
+        })
+        .when('/login', {
+            title: "Login",
+            templateUrl: 'views/login.html',
+            controller: 'LoginController'
+        })
+
+
         .otherwise({redirectTo: "/home"})
 });

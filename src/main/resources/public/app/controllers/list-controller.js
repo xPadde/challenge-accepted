@@ -46,11 +46,11 @@ app.controller('ListController', ['$scope', '$log', 'scopeService', 'challengeSe
         $scope.getListOfUsers = function () {
             userService.getListOfAllUsers()
                 .success(function (response) {
-                    $log.info('challengeService.getListOfUsers() fetched the users from the database!');
+                    $log.info('userService.getListOfUsers() fetched the users from the database!');
                     $scope.listOfUsers = response;
                 })
                 .error(function (error) {
-                    $log.error('challengeService.getListOfUsers() ***FAILED*** to fetch the users from the database!');
+                    $log.error('userService.getListOfUsers() ***FAILED*** to fetch the users from the database!');
                     $log.error(error);
                 })
         };

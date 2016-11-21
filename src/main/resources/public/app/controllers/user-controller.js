@@ -29,7 +29,6 @@ app.controller('UserController', ['$scope', '$location', '$log', '$routeParams',
                     $log.error(error);
                 });
         };
-        
 
         $scope.getListOfCompletedChallenges = function () {
             challengeService.getListOfCompletedChallenges()

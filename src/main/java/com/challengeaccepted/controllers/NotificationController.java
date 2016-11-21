@@ -12,26 +12,31 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
+@RequestMapping("/api")
 public class NotificationController {
 
-    @Autowired
-    private NotificationService notificationService;
+    private final NotificationService notificationService;
     private List<NotificationModel> notifications;
 
+    @Autowired
+    public NotificationController(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
+
     @CrossOrigin
-    @RequestMapping(value = "/notifications/", method = RequestMethod.GET)
+    @RequestMapping(value = "/notifications", method = RequestMethod.GET)
     public ResponseEntity<List<NotificationModel>> readAllNotifications() {
         return new ResponseEntity<>(notificationService.getAllNotificationsFromDatabase(), HttpStatus.OK);
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/notification/", method = RequestMethod.POST)
+    @RequestMapping(value = "/notifications", method = RequestMethod.POST)
     public ResponseEntity createNotification(@RequestBody NotificationModel notificationModel) {
         return getCreateNotificationResponseEntity(notificationModel);
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/user/{id}/notifications/", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/{id}/notifications", method = RequestMethod.GET)
     public ResponseEntity<List<NotificationModel>> readPersonalNotifications(@PathVariable Long id) {
         notifications = getAllNotifications(id);
         notifications = removeDuplicateEntries(notifications);
