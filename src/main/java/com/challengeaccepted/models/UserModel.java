@@ -101,6 +101,7 @@ public class UserModel implements Serializable {
         this.email = email;
     }
 
+    // TODO remove this.
     @Override
     public String toString() {
         return "UserModel{" +
