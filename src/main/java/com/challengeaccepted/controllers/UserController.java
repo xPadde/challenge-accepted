@@ -1,7 +1,12 @@
 package com.challengeaccepted.controllers;
 
+import com.challengeaccepted.models.LoginModel;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.UserService;
+import com.yubico.client.v2.VerificationResponse;
+import com.yubico.client.v2.YubicoClient;
+import com.yubico.client.v2.exceptions.YubicoValidationFailure;
+import com.yubico.client.v2.exceptions.YubicoVerificationException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,11 +63,21 @@ public class UserController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/users/login", method = RequestMethod.GET)
-    public ResponseEntity<UserModel> validateLocalLogin(String email, String password) {
-        UserModel userModel = userService.getUserByEmailFromDatabase(email);
-        if(userModel.getPassword().equals(password)) {
-            return new ResponseEntity<>(userModel, HttpStatus.OK);
+    @RequestMapping(value = "/users/login", method = RequestMethod.POST)
+    public ResponseEntity<UserModel> validateLocalLogin(@RequestBody LoginModel loginModel) throws YubicoVerificationException, YubicoValidationFailure {
+        YubicoClient client = YubicoClient.getClient(30796, "QXjIQVpZ0CYk21GxaLpZmdoVsxc=");
+        UserModel userModel = userService.getUserByEmailFromDatabase(loginModel.getEmail());
+        if(userModel.getPassword().equals(loginModel.getPassword())) {
+            VerificationResponse response = client.verify(loginModel.getOtp());
+            if (response.isOk()) {
+                if (YubicoClient.getPublicId(loginModel.getOtp()).equals(userModel.getYubiKeyID())) {
+                    return new ResponseEntity<>(userModel, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+                }
+            } else {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

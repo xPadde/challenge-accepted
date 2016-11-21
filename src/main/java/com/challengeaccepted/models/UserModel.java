@@ -13,8 +13,9 @@ public class UserModel implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
-    private String password;
     private String email;
+    private String password;
+    private String yubiKeyID;
     private Double completedChallengePoints;
     private Double createdChallengePoints;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "challengeUpvoters")
@@ -85,14 +86,6 @@ public class UserModel implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -101,13 +94,19 @@ public class UserModel implements Serializable {
         this.email = email;
     }
 
-    // TODO remove this.
-    @Override
-    public String toString() {
-        return "UserModel{" +
-                "id=" + id +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getYubiKeyID() {
+        return yubiKeyID;
+    }
+
+    public void setYubiKeyID(String yubiKeyID) {
+        this.yubiKeyID = yubiKeyID;
     }
 }

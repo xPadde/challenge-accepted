@@ -70,6 +70,14 @@
         </dependency>
 
         <dependency>
+            <groupId>com.yubico</groupId>
+            <artifactId>yubico-validation-client2</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+
+
+        <!--Spring security-->
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
@@ -85,6 +93,7 @@
             <!--<version>4.0.4.RELEASE</version>-->
         <!--</dependency>-->
 
+        <!-- further for configurations spring security-->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
