@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 
 @RestController
@@ -30,7 +32,7 @@ public class UserController {
 
     @CrossOrigin
     @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public ResponseEntity<UserModel> createUser(@RequestBody UserModel userModel) {
+    public ResponseEntity<UserModel> createUser(@RequestBody UserModel userModel) throws InvalidKeySpecException, NoSuchAlgorithmException {
         userService.saveUserToDatabase(userModel);
         logger.info("A new user named " + userModel.getFirstName() + " " + userModel.getLastName() + " has been saved to the database");
         return new ResponseEntity<>(userModel, HttpStatus.CREATED);

@@ -1,11 +1,14 @@
 package com.challengeaccepted.services;
 
 import com.challengeaccepted.models.UserModel;
+import com.challengeaccepted.password.PasswordHash;
 import com.challengeaccepted.repositories.UserRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 
 @Service
@@ -16,7 +19,10 @@ public class UserService {
 
     final static Logger logger = Logger.getLogger(UserService.class);
 
-    public void saveUserToDatabase(UserModel userModel) {
+    public void saveUserToDatabase(UserModel userModel) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        if (userModel.getPassword() != null) // Only if local account.
+            userModel.setPassword(PasswordHash.generateHashedPassword(userModel.getPassword()));
+
         userRepository.saveAndFlush(userModel);
     }
 
