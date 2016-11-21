@@ -43,7 +43,7 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public boolean validatePassword(String userModelPassword, String loginModelPassword) {
-        return userModelPassword.equals(loginModelPassword);
+    public boolean validatePassword(String userModelPassword, String loginModelPassword) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        return PasswordHash.validateHashedPassword(loginModelPassword, userModelPassword);
     }
 }

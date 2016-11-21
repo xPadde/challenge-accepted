@@ -67,14 +67,14 @@ public class UserController {
 
     @CrossOrigin
     @RequestMapping(value = "/users/login", method = RequestMethod.POST)
-    public ResponseEntity<UserModel> validateLocalLogin(@RequestBody LoginModel loginModel) throws YubicoVerificationException, YubicoValidationFailure {
-        UserModel userModel = userService.getUserByEmailFromDatabase(loginModel.getEmail());
+    public ResponseEntity<UserModel> validateLocalLogin(@RequestBody LoginModel loginModel) throws YubicoVerificationException, YubicoValidationFailure, InvalidKeySpecException, NoSuchAlgorithmException {
+        UserModel userModelFromDatabase = userService.getUserByEmailFromDatabase(loginModel.getEmail());
         YubicoService yubicoService = new YubicoService();
 
-        if (userService.validatePassword(userModel.getPassword(), loginModel.getPassword()) &&
+        if (userService.validatePassword(userModelFromDatabase.getPassword(), loginModel.getPassword()) &&
                 yubicoService.getResponse(loginModel.getOtp()).isOk() &&
-                yubicoService.validateYubiKeyID(loginModel.getOtp(), userModel.getYubiKeyID())) {
-            return new ResponseEntity<>(userModel, HttpStatus.OK);
+                yubicoService.validateYubiKeyID(loginModel.getOtp(), userModelFromDatabase.getYubiKeyID())) {
+            return new ResponseEntity<>(userModelFromDatabase, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
