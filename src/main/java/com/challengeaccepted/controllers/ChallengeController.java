@@ -111,7 +111,7 @@ public class ChallengeController {
     @CrossOrigin
     @RequestMapping(value = "/challenges", method = RequestMethod.GET)
     public ResponseEntity<List<ChallengeModel>> readAllChallenges() {
-        return new ResponseEntity<>(challengeService.getAllChallengesFromDatabase(), HttpStatus.OK);
+        return new ResponseEntity<>(challengeService.getAllChallengesFromDatabase(), HttpStatus.ACCEPTED);
     }
 
     @CrossOrigin

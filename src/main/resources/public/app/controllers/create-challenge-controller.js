@@ -1,5 +1,5 @@
-app.controller('CreateChallengeController', ['$scope', '$location', '$log', 'scopeService', 'challengeService',
-    function ($scope, $location, $log, scopeService, challengeService) {
+app.controller('CreateChallengeController', ['$scope', '$location', '$log', '$window', 'scopeService', 'challengeService',
+    function ($scope, $location, $log, $window, scopeService, challengeService) {
 
         /*
          Below code handles the creation of the new challenges.
@@ -28,6 +28,9 @@ app.controller('CreateChallengeController', ['$scope', '$location', '$log', 'sco
                             $log.info('challengeService.createNewChallenge() called. New challenge created and saved to the database!');
                             // Update the list of challenges after creation of the new challenge,
                             $location.path('/available-challenges');
+                        } else if(status == 200) {
+                            $location.path('/login');
+                            //$window.location.href = '/challengeaccepted/#/login';
                         } else {
                             $log.info('challengeService.createNewChallenge() called. Challenge ***NOT*** created. Fields was empty!');
                         }
