@@ -62,7 +62,7 @@ public class UserController {
     public ResponseEntity<UserModel> validateLocalLogin(String email, String password) {
         UserModel userModel = userService.getUserByEmailFromDatabase(email);
         if(userModel.getPassword().equals(password)) {
-            return new ResponseEntity<>(userModel, HttpStatus.FOUND);
+            return new ResponseEntity<>(userModel, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

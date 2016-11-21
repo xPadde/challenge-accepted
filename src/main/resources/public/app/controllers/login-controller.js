@@ -14,11 +14,22 @@ app.controller('LoginController', ['$scope', '$route', '$log', '$location', 'use
 
            userService.validateLocalLogin($('#input-email-login').val(), $('#input-password-login').val())
                .success(function(response) {
+                   $scope.loggedInUser = response;
+                   console.log($scope.loggedInUser);
                    console.log("vi är inne i successen");
+
+                   $scope.setLoggedInUser($scope.loggedInUser);
+
                })
                .error(function(response) {
                    console.log("vi är inne i error");
-               })
+               }).then(function () {
+               $scope.setLoggedInUser($scope.loggedInUser);
+               console.log($scope.loggedInUser);
+               console.log('---------');
+               sessionStorage.setItem('loggedInUser', JSON.stringify($scope.loggedInUser));
+               console.log(scopeService.getLoggedInUser());
+           })
         };
 
         $scope.getUserInfo = function (profile) {
