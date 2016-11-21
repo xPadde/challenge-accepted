@@ -16,9 +16,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                    .csrf()
+                    .disable()
                 .authorizeRequests()
-                    .antMatchers("/**index").authenticated()
-                    .antMatchers("/challenges/").authenticated()
+                    .antMatchers("/challenge/create/challenge-creator/**").authenticated()
                     .and()
                 .formLogin()
                     .permitAll()
