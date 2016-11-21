@@ -7,7 +7,8 @@ app.controller('RegisterNewUserController', ['$scope', '$log', 'userService', '$
                 'firstName': $('#input-first-name').val(),
                 'lastName': $('#input-last-name').val(),
                 'password': $('#input-password').val(),
-                'email': $('#input-email').val()
+                'email': $('#input-email').val(),
+                'yubiKeyID': $('#input-otp').val().substring(0,12)
             })
         };
 

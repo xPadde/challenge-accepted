@@ -9,10 +9,19 @@ app.controller('LoginController', ['$scope', '$route', '$log', '$location', 'use
          Below Code handles the user login.
          */
 
+        $scope.getLoginInfo = function () {
+            return JSON.stringify({
+                'email': $('#input-email-login').val(),
+                'password': $('#input-password-login').val(),
+                'otp': $('#input-otp-login').val()
+            });
+        };
+
         $scope.login = function() {
             console.log("inne i login");
+            var user = JSON.parse($scope.getLoginInfo());
 
-           userService.validateLocalLogin($('#input-email-login').val(), $('#input-password-login').val())
+           userService.validateLocalLogin(user)
                .success(function(response) {
                    $scope.loggedInUser = response;
                    console.log($scope.loggedInUser);
