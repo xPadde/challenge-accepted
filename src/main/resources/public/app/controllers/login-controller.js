@@ -18,8 +18,10 @@ app.controller('LoginController', ['$scope', '$route', '$log', '$location', 'use
         };
 
         $scope.login = function() {
-            console.log("inne i login");
             var user = JSON.parse($scope.getLoginInfo());
+
+
+            console.log("inne i controllern");
 
            userService.validateLocalLogin(user)
                .success(function(response) {
@@ -110,10 +112,4 @@ app.controller('LoginController', ['$scope', '$route', '$log', '$location', 'use
                 scopeService.showAlertPopup(scopeService.loginAlertMessage());
             }
         };
-
-        $scope.login = function() {
-
-
-            // TODO this function will be used when client logs in. @See USerController login method
-        }
     }]);

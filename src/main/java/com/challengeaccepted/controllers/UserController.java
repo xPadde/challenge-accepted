@@ -88,13 +88,4 @@ public class UserController {
         }
     }
 
-    @CrossOrigin
-    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
-    public ResponseEntity<UserModel> login(UserModel userModel) {
-        //
-        // TODO This method will be used when client log in
-        // TODO validate user
-        return null;
-    }
-
 }
