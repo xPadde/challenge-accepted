@@ -17,28 +17,18 @@ app.controller('LoginController', ['$scope', '$route', '$log', '$location', 'use
             });
         };
 
-        $scope.login = function() {
-            console.log("inne i login");
+        $scope.login = function() {;
             var user = JSON.parse($scope.getLoginInfo());
 
            userService.validateLocalLogin(user)
                .success(function(response) {
                    $scope.loggedInUser = response;
-                   console.log($scope.loggedInUser);
-                   console.log("vi är inne i successen");
-
                    $scope.setLoggedInUser($scope.loggedInUser);
 
                })
                .error(function(response) {
-                   console.log("vi är inne i error");
-               }).then(function () {
-               $scope.setLoggedInUser($scope.loggedInUser);
-               console.log($scope.loggedInUser);
-               console.log('---------');
-               sessionStorage.setItem('loggedInUser', JSON.stringify($scope.loggedInUser));
-               console.log(scopeService.getLoggedInUser());
-           })
+                   $log.error('***FAILED*** to login!');
+               })
         };
 
         $scope.getUserInfo = function (profile) {

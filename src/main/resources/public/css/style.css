@@ -127,6 +127,25 @@ th {
     padding-left: 4em;
 }
 
+/* Login window */
+
+#login-dp{
+    min-width: 250px;
+    padding: 14px 14px 0;
+    overflow:hidden;
+}
+#login-dp .help-block{
+    font-size:12px
+}
+#login-dp .bottom{
+    border-top:1px solid #ddd;
+    clear:both;
+    padding:14px;
+}
+#login-dp .form-group {
+    margin-bottom: 10px;
+}
+
 /* Overriding default values of Bootstraps Navbar */
 
 @media (max-width: 1080px) {
