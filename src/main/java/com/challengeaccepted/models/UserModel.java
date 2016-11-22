@@ -15,7 +15,6 @@ public class UserModel implements Serializable {
     private String lastName;
     private String email;
     private String password;
-    private String yubiKeyID;
     private Double completedChallengePoints;
     private Double createdChallengePoints;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "challengeUpvoters")
@@ -24,6 +23,10 @@ public class UserModel implements Serializable {
     private List<ChallengeModel> claimedChallenges;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "challengeCreator")
     private List<ChallengeModel> createdChallenge;
+    @Transient
+    private String yubiKeyID;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "userModel")
+    private YubiKeyModel yubiKeyModel;
 
     public UserModel() {
     }
@@ -108,5 +111,13 @@ public class UserModel implements Serializable {
 
     public void setYubiKeyID(String yubiKeyID) {
         this.yubiKeyID = yubiKeyID;
+    }
+
+    public YubiKeyModel getYubiKeyModel() {
+        return yubiKeyModel;
+    }
+
+    public void setYubiKeyModel(YubiKeyModel yubiKeyModel) {
+        this.yubiKeyModel = yubiKeyModel;
     }
 }

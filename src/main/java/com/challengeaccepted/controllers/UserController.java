@@ -4,8 +4,6 @@ import com.challengeaccepted.models.LoginModel;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.UserService;
 import com.challengeaccepted.services.YubicoService;
-import com.yubico.client.v2.VerificationResponse;
-import com.yubico.client.v2.YubicoClient;
 import com.yubico.client.v2.exceptions.YubicoValidationFailure;
 import com.yubico.client.v2.exceptions.YubicoVerificationException;
 import org.apache.log4j.Logger;
@@ -71,7 +69,7 @@ public class UserController {
 
         if (userService.validatePassword(userModel.getPassword(), loginModel.getPassword()) &&
                 yubicoService.getResponse(loginModel.getOtp()).isOk() &&
-                yubicoService.validateYubiKeyID(loginModel.getOtp(), userModel.getYubiKeyID())) {
+                yubicoService.validateYubiKeyID(loginModel.getOtp(), userModel.getYubiKeyModel().getYubiKeyId())) {
             return new ResponseEntity<>(userModel, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);

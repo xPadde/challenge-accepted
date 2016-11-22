@@ -1,6 +1,7 @@
 package com.challengeaccepted.services;
 
 import com.challengeaccepted.models.UserModel;
+import com.challengeaccepted.models.YubiKeyModel;
 import com.challengeaccepted.repositories.UserRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,10 @@ public class UserService {
     final static Logger logger = Logger.getLogger(UserService.class);
 
     public void saveUserToDatabase(UserModel userModel) {
+        if (userModel.getYubiKeyID() != null) {
+            logger.info("User created with Yubico. Store YubiKey in database.");
+            userModel.setYubiKeyModel(new YubiKeyModel(userModel, userModel.getYubiKeyID()));
+        }
         userRepository.saveAndFlush(userModel);
     }
 
