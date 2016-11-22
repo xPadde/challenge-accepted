@@ -37,6 +37,7 @@ public class UserController {
         return new ResponseEntity<>(userModel, HttpStatus.CREATED);
     }
 
+    // Documented
     @CrossOrigin
     @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
     public ResponseEntity<UserModel> readUser(@PathVariable Long id) {
@@ -51,6 +52,7 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    // Documented
     @CrossOrigin
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResponseEntity<ArrayList<UserModel>> readAllUsers() {
@@ -60,7 +62,8 @@ public class UserController {
     @CrossOrigin
     @RequestMapping(value = "/users/find-by-email", method = RequestMethod.GET)
     public ResponseEntity<UserModel> readUserByEmail(String email) throws Exception {
-        return new ResponseEntity<>(userService.getUserByEmailFromDatabase(email), HttpStatus.OK);
+        UserModel userModel = userService.getUserByEmailFromDatabase(email);
+        return new ResponseEntity<>(userModel, HttpStatus.OK);
     }
 
     @CrossOrigin
