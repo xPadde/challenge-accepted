@@ -29,7 +29,6 @@ app.factory('userService', function ($http) {
         },
 
         validateLocalLogin: function (data) {
-            console.log("i servicen");
             return $http({
                 url: '/challengeaccepted/login?username=' + data.email + "&password=" + data.password,
                 method: 'POST',

@@ -34,7 +34,73 @@
                     </ul>
                 </li>
             </ul>
+
+
             <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown" id="login-logout">
+
+                    <!-- Login button and dropdown if NOT logged in -->
+                    <div class="dropdown menu-item-right" ng-hide="loggedInUser != null">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="true">Login
+                        </button>
+                        <ul id="login-dp" class="dropdown-menu">
+                            <li>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        Login via
+                                        <div class="social-buttons">
+                                            <div class="g-signin2"
+                                                 data-onsuccess="onSignIn"></div>
+                                        </div>
+                                        or
+                                        <form class="form" role="form" id="form-login" name="formLogin"
+                                              ng-submit="login()">
+                                            <div class="form-group">
+                                                <input class="form-control" id="input-email-login"
+                                                       name="inputEmailLogin" type="email" placeholder="Enter email"
+                                                       required>
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="form-control" id="input-password-login"
+                                                       name="inputPasswordLogin" type="password"
+                                                       placeholder="Enter password" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="form-control" id="input-otp-login" name="inputOtpLogin"
+                                                       type="password" placeholder="OTP" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" id="btn-login-locally" class="btn btn-default">
+                                                    Login
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="bottom text-center">
+                                        New user ? <a href="#/register"><b>Register Here</b></a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Button and dropdown IF logged in -->
+                    <div class="dropdown menu-item-right" ng-hide="loggedInUser == null">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-login-logout"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            {{loggedInUser.firstName}}
+                            {{loggedInUser.lastName}}
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown-login-logout">
+                            <li><a ng-click="viewUserProfilePage(loggedInUser)">View
+                                Profile</a></li>
+                            <li><a href="" ng-click="signOut()">Sign out</a></li>
+                        </ul>
+                    </div>
+
+                </li>
+
                 <!--<li><a href="mailto:?subject={{mailtoSubject}}&body={{mailtoBody}}" class="menu-item-right"><img
                         src="img/mail-logo-light.png"
                         onmouseover="src='img/mail-logo-dark.png'"
@@ -46,26 +112,6 @@
                             onmouseover="src='img/twitter-logo-dark.png'"
                             onmouseout="src='img/twitter-logo-light.png'"
                             class="social-share"></a></li>-->
-                <li id="login-logout">
-                    <div class="dropdown menu-item-right">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-login-logout"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
-                                ng-hide="loggedInUser == null">
-                            {{loggedInUser.firstName}}
-                            {{loggedInUser.lastName}}
-                        </button>
-                        <div ng-show="loggedInUser == null" class="g-signin2" data-onsuccess="onSignIn"></div>
-                        <div ng-show="loggedInUser == null" class="login-locally">
-                            <a href="#/login">Log in</a>
-                        </div>
-                        <a href="#/register">Register on this website</a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdown-login-logout">
-                            <li ng-hide="loggedInUser == null"><a ng-click="viewUserProfilePage(loggedInUser)">View
-                                Profile</a></li>
-                            <li ng-hide="loggedInUser == null"><a href="" ng-click="signOut()">Sign out</a></li>
-                        </ul>
-                    </div>
-                </li>
             </ul>
         </div>
     </div>

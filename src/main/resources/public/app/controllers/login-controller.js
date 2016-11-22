@@ -20,15 +20,11 @@ app.controller('LoginController', ['$scope', '$route', '$log', '$location', 'use
         $scope.login = function() {
             var user = JSON.parse($scope.getLoginInfo());
 
-
             console.log("inne i controllern");
 
            userService.validateLocalLogin(user)
                .success(function(response) {
                    $scope.loggedInUser = response;
-                   console.log($scope.loggedInUser);
-                   console.log("vi är inne i successen");
-
                    $scope.setLoggedInUser($scope.loggedInUser);
 
                })
