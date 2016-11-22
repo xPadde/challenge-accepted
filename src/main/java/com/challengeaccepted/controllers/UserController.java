@@ -71,9 +71,11 @@ public class UserController {
         UserModel userModelFromDatabase = userService.getUserByEmailFromDatabase(loginModel.getEmail());
         YubicoService yubicoService = new YubicoService();
 
-        if (userService.validatePassword(userModelFromDatabase.getPassword(), loginModel.getPassword()) &&
-                yubicoService.getResponse(loginModel.getOtp()).isOk() &&
-                yubicoService.validateYubiKeyID(loginModel.getOtp(), userModelFromDatabase.getYubiKeyID())) {
+        boolean isPasswordValid = userService.validatePassword(userModelFromDatabase.getPassword(), loginModel.getPassword());
+        boolean isYubicoResponseValid = yubicoService.getResponse(loginModel.getOtp()).isOk();
+        boolean isYubicoKeyValid =  yubicoService.validateYubiKeyID(loginModel.getOtp(), userModelFromDatabase.getYubiKeyID());
+
+        if (isPasswordValid && isYubicoResponseValid && isYubicoKeyValid) {
             return new ResponseEntity<>(userModelFromDatabase, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
