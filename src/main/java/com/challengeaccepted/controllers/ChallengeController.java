@@ -106,7 +106,7 @@ public class ChallengeController {
         return false;
     }
 
-
+    // Documented
     @CrossOrigin
     @RequestMapping(value = "/challenges", method = RequestMethod.GET)
     public ResponseEntity<List<ChallengeModel>> readAllChallenges() {

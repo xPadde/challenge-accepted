@@ -122,3 +122,43 @@
     "youtubeUrlProvided": null,  
     "challengeDisapproved": false  
 }  
+### Get all completed challenges
+**Url:** /challenges/completed  
+**Method:** ´GET´  
+**Success Response:** [200 OK]  
+**Example response content:**  
+{  
+    "id": 1,  
+    "topic": "Hej hej",  
+    "description": "Att skapa ny användare för att se om loggen fungerar som den ska",  
+    "youtubeURL": "https://www.youtube.com/embed/0syrKzXfKuI",  
+    "creationDate": "2016-05-22 11:58:56",  
+    "upvotes": 2,  
+    "points": 2,  
+    "challengeUpvoters": [],  
+    "challengeClaimer": {  
+      "id": 3,  
+      "firstName": "Lena",  
+      "lastName": "Stridsberg",  
+      "email": "lena.stridsberg@gmail.com",  
+      "password": null,  
+      "yubiKeyID": null,  
+      "completedChallengePoints": 2,  
+      "createdChallengePoints": null  
+    },  
+    "challengeCreator": {  
+      "id": 1,  
+      "firstName": "Kalle",  
+      "lastName": "Brallsson",  
+      "email": "kallebrallsson1@gmail.com",  
+      "password": null,  
+      "yubiKeyID": null,  
+      "completedChallengePoints": 13,  
+      "createdChallengePoints": 1  
+    },  
+    "challengeCompleted": true,  
+    "challengeClaimed": true,  
+    "youtubeVideoUploaded": false,  
+    "youtubeUrlProvided": false,  
+    "challengeDisapproved": false  
+  }  
