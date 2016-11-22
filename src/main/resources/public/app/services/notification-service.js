@@ -1,6 +1,6 @@
 app.factory('notificationService', function ($http) {
 
-    var baseUrl = "http://localhost:8080/api/challengeaccepted";
+    var baseUrl = "http://localhost:8080/challengeaccepted/api";
 
     return {
         getAllNotifications: function (id) {

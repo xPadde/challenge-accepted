@@ -36,7 +36,7 @@ public class NotificationController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/user/{id}/notifications", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/{id}/notifications", method = RequestMethod.GET)
     public ResponseEntity<List<NotificationModel>> readPersonalNotifications(@PathVariable Long id) {
         notifications = getAllNotifications(id);
         notifications = removeDuplicateEntries(notifications);
