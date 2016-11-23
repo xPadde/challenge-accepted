@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class UserController {
 
     @CrossOrigin
     @RequestMapping(value = "/users/login", method = RequestMethod.POST)
-    public ResponseEntity<UserModel> validateLocalLogin(@RequestBody LoginModel loginModel) throws YubicoVerificationException, YubicoValidationFailure, InvalidKeySpecException, NoSuchAlgorithmException {
+    public ResponseEntity<UserModel> validateLocalLogin(@RequestBody LoginModel loginModel) throws YubicoVerificationException, YubicoValidationFailure, InvalidKeySpecException, NoSuchAlgorithmException, IOException {
         UserModel userModelFromDatabase = userService.getUserByEmailFromDatabase(loginModel.getEmail());
         YubicoService yubicoService = new YubicoService();
 
@@ -75,7 +76,10 @@ public class UserController {
         boolean isYubicoResponseValid = yubicoService.getResponse(loginModel.getOtp()).isOk();
         boolean isYubicoKeyValid =  yubicoService.validateYubiKeyID(loginModel.getOtp(), userModelFromDatabase.getYubiKeyID());
 
+        logger.info("Validating user inputs");
         if (isPasswordValid && isYubicoResponseValid && isYubicoKeyValid) {
+            logger.info("Password and Yubico successfully validated");
+            userService.validateSpringAccount(userModelFromDatabase); // Send user to Spring Security for validation
             return new ResponseEntity<>(userModelFromDatabase, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);

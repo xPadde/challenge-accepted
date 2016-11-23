@@ -30,9 +30,10 @@ app.factory('userService', function ($http) {
 
         validateLocalLogin: function (data) {
             return $http({
-                url: '/challengeaccepted/login?username=' + data.email + "&password=" + data.password,
+                url: baseUrl + "/users/login",
+                data: data,
                 method: 'POST',
-                header: {'Content-Type': 'application/x-www-form-urlencoded'}
+                header: {'Content-Type': 'application/json'}
             })
         },
 
