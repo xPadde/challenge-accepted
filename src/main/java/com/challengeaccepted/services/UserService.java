@@ -64,11 +64,10 @@ public class UserService {
         // Create HTTP request
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
-//        connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
         // Handle params
-        // TODO wtf this does not work :-(
-        String urlParams = "?username=" + userModel.getEmail() + "&password=" + userModel.getPassword();
+        String urlParams = "username=" + userModel.getEmail() + "&password=" + userModel.getPassword();
         logger.info("Post request url: " + url + urlParams);
         connection.setDoOutput(true);
         DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());

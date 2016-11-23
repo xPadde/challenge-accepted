@@ -37,4 +37,5 @@ public class SpringSecurityUserDetailsService implements UserDetailsService {
         // return new AccountUserDetails(userService.getUserByEmailFromDatabase(email));
         return userDetails;
     }
+
 }

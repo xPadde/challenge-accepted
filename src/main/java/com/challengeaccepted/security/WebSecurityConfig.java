@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 
 
 @Configuration
@@ -23,12 +24,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                    .csrf()
-                    .disable()
+                // TODO authentication works on Postman - not the browser
+                    .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/api/challenges/create/challenge-creator/**").authenticated()
-                //TODO refactor with restricted folders/directories
+                    // .antMatchers("/api/challenges/create/challenge-creator/**").authenticated()
+                    // TODO refactor with restricted folders/directories
                     .antMatchers("/views/create-challenge.html").authenticated()
+                    .antMatchers("/api/challenges").authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/views/login.html")
@@ -41,10 +43,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                    .withUser("kalle").password("password").roles("USER");
-    }
 }
