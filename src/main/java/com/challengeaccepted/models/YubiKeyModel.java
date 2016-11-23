@@ -8,6 +8,9 @@ public class YubiKeyModel {
     @Id
     private Long id;
 
+    @Transient
+    private String otp;
+
     @JoinColumn(name = "key_owner")
     @OneToOne
     @MapsId
@@ -29,6 +32,14 @@ public class YubiKeyModel {
     }
 
     public void setYubiKeyId(String yubiKeyId) {
-        this.yubiKeyId = yubiKeyId;
+        this.yubiKeyId = otp.substring(0,12);
+    }
+
+    public String getOtp() {
+        return otp;
+    }
+
+    public void setOtp(String otp) {
+        this.otp = otp;
     }
 }

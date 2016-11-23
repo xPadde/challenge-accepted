@@ -9,7 +9,7 @@ app.controller('RegisterNewUserController', ['$scope', '$log', 'userService', '$
                 'password': $('#input-password').val(),
                 'email': $('#input-email').val(),
                 'yubiKeyModel': {
-                    'yubiKeyId': $('#input-otp').val().substring(0, 12)
+                    'otp': $('#input-otp').val()
                 }
             })
         };

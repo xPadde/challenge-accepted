@@ -19,21 +19,27 @@ import java.util.ArrayList;
 public class UserController {
 
     private final UserService userService;
+    private final YubicoService yubicoService;
 
     private final static Logger logger = Logger.getLogger(ChallengeController.class);
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, YubicoService yubicoService) {
         this.userService = userService;
+        this.yubicoService = yubicoService;
     }
 
     @CrossOrigin
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public ResponseEntity<UserModel> createUser(@RequestBody UserModel userModel) throws Exception {
-        if(userService.getUserByEmailFromDatabase(userModel.getEmail()) == null) {
-            userService.saveUserToDatabase(userModel);
-            logger.info("A new user named " + userModel.getFirstName() + " " + userModel.getLastName() + " has been saved to the database");
-            return new ResponseEntity<>(userModel, HttpStatus.CREATED);
+        String otp = userModel.getYubiKeyModel().getOtp();
+        if (userService.getUserByEmailFromDatabase(userModel.getEmail()) == null) {
+            if (yubicoService.validateOtp(otp)) {
+                userModel = yubicoService.setPublicKey(userModel, otp);
+                userService.saveUserToDatabase(userModel);
+                logger.info("A new user named " + userModel.getFirstName() + " " + userModel.getLastName() + " has been saved to the database");
+                return new ResponseEntity<>(userModel, HttpStatus.CREATED);
+            }
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
@@ -68,7 +74,6 @@ public class UserController {
     @RequestMapping(value = "/users/login", method = RequestMethod.POST)
     public ResponseEntity<UserModel> validateLocalLogin(@RequestBody LoginModel loginModel) throws YubicoVerificationException, YubicoValidationFailure {
         UserModel userModel = userService.getUserByEmailFromDatabase(loginModel.getEmail());
-        YubicoService yubicoService = new YubicoService();
 
         if (userService.validatePassword(userModel.getPassword(), loginModel.getPassword()) &&
                 yubicoService.getResponse(loginModel.getOtp()).isOk() &&
