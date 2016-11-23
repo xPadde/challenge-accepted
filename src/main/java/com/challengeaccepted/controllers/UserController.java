@@ -32,13 +32,19 @@ public class UserController {
     @CrossOrigin
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public ResponseEntity<UserModel> createUser(@RequestBody UserModel userModel) throws Exception {
-        String otp = userModel.getYubiKeyModel().getOtp();
         if (userService.getUserByEmailFromDatabase(userModel.getEmail()) == null) {
-            if (yubicoService.validateOtp(otp)) {
-                userModel = yubicoService.setPublicKey(userModel, otp);
+            if (userModel.getYubiKeyModel() == null) {
                 userService.saveUserToDatabase(userModel);
                 logger.info("A new user named " + userModel.getFirstName() + " " + userModel.getLastName() + " has been saved to the database");
                 return new ResponseEntity<>(userModel, HttpStatus.CREATED);
+            } else {
+                String otp = userModel.getYubiKeyModel().getOtp();
+                if (yubicoService.validateOtp(otp)) {
+                    userModel = yubicoService.setPublicKey(userModel, otp);
+                    userService.saveUserToDatabase(userModel);
+                    logger.info("A new user named " + userModel.getFirstName() + " " + userModel.getLastName() + " has been saved to the database");
+                    return new ResponseEntity<>(userModel, HttpStatus.CREATED);
+                }
             }
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
