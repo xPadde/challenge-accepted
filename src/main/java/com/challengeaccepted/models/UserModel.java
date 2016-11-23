@@ -23,8 +23,8 @@ public class UserModel implements Serializable {
     private List<ChallengeModel> claimedChallenges;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "challengeCreator")
     private List<ChallengeModel> createdChallenge;
-    @Transient
-    private String yubiKeyID;
+//    @Transient
+//    private String yubiKeyID;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "userModel")
     private YubiKeyModel yubiKeyModel;
 
@@ -105,13 +105,13 @@ public class UserModel implements Serializable {
         this.password = password;
     }
 
-    public String getYubiKeyID() {
-        return yubiKeyID;
-    }
+//    public String getYubiKeyID() {
+//        return yubiKeyID;
+//    }
 
-    public void setYubiKeyID(String yubiKeyID) {
-        this.yubiKeyID = yubiKeyID;
-    }
+//    public void setYubiKeyID(String yubiKeyID) {
+//        this.yubiKeyID = yubiKeyID;
+//    }
 
     public YubiKeyModel getYubiKeyModel() {
         return yubiKeyModel;

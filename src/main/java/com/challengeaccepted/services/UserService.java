@@ -18,9 +18,10 @@ public class UserService {
     final static Logger logger = Logger.getLogger(UserService.class);
 
     public void saveUserToDatabase(UserModel userModel) {
-        if (userModel.getYubiKeyID() != null) {
+        if (userModel.getYubiKeyModel() != null) {
             logger.info("User created with Yubico. Store YubiKey in database.");
-            userModel.setYubiKeyModel(new YubiKeyModel(userModel, userModel.getYubiKeyID()));
+            userModel.setYubiKeyModel(new YubiKeyModel(userModel, userModel.getYubiKeyModel().getYubiKeyId()));
+            System.out.println(userModel.getYubiKeyModel().getYubiKeyId());
         }
         userRepository.saveAndFlush(userModel);
     }
