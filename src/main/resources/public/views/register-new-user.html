@@ -4,19 +4,22 @@
         <div class="container-fluid">
             <form class="form-horizontal" role="form" id="form-register-new-user" name="formRegisterNewUser" ng-validate="validationOptions" ng-submit="registerNewUser(formRegisterNewUser)">
                 <div class="form-group">
-                    <input class="form-control" id="input-first-name" name="inputFirstName" type="text" placeholder="Enter first name">
+                    <input required class="form-control" id="input-first-name" name="inputFirstName" type="text" placeholder="Enter first name">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" id="input-last-name" name="inputLastName" type="text" placeholder="Enter last name">
+                    <input required class="form-control" id="input-last-name" name="inputLastName" type="text" placeholder="Enter last name">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" id="input-email" name="inputEmail" type="text" placeholder="Enter email">
+                    <input required class="form-control" id="input-email" name="inputEmail" type="email" placeholder="Enter email">
+                </div>
+                <div ng-show="invalid != ''">
+                    <p>{{invalid}}</p>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" id="input-password" name="inputPassword" type="password" placeholder="Enter password">
+                    <input required class="form-control" id="input-password" name="inputPassword" type="password" placeholder="Enter password">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" id="input-otp" name="inputOtp" type="password" placeholder="OTP">
+                    <input required class="form-control" id="input-otp" name="inputOtp" type="password" placeholder="OTP">
                 </div>
                 <div class="form-group">
                     <button type="submit" id="btn-register-user" class="btn btn-default">

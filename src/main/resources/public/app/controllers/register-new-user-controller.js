@@ -25,15 +25,21 @@ app.controller('RegisterNewUserController', ['$scope', '$log', 'userService', '$
                         } else {
                             $log.info('userService.registerNewUser() called. User ***NOT*** created. Fields was empty!');
                         }
+                        $('#form-register-new-user').each(function () {
+                            this.reset();
+                        });
                     })
-                    .error(function (response) {
+                    .error(function (response, status) {
+                        if(status == 403) {
+                            $log.error('userService.createNewUser() called. New user **NOT** created. Email already exists.');
+                            $scope.invalid = "Email is already in use, try again!";
+
+                        }
                         $log.error('userService.registerNewUser() called. ***FAILED*** to create new user!');
                         $log.error(response);
+                        $('#input-password').val("");
+                        $('#input-otp').val("");
                     });
-
-                $('#form-register-new-user').each(function () {
-                    this.reset();
-                });
             }
         };
 

@@ -29,10 +29,13 @@ public class UserController {
 
     @CrossOrigin
     @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public ResponseEntity<UserModel> createUser(@RequestBody UserModel userModel) {
-        userService.saveUserToDatabase(userModel);
-        logger.info("A new user named " + userModel.getFirstName() + " " + userModel.getLastName() + " has been saved to the database");
-        return new ResponseEntity<>(userModel, HttpStatus.CREATED);
+    public ResponseEntity<UserModel> createUser(@RequestBody UserModel userModel) throws Exception {
+        if(readUserByEmail(userModel.getEmail()) == null) {
+            userService.saveUserToDatabase(userModel);
+            logger.info("A new user named " + userModel.getFirstName() + " " + userModel.getLastName() + " has been saved to the database");
+            return new ResponseEntity<>(userModel, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     @CrossOrigin
