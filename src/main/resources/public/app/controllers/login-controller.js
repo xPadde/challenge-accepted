@@ -9,6 +9,9 @@ app.controller('LoginController', ['$scope', '$route', '$log', '$location', 'use
          Below Code handles the user login.
          */
 
+        /**
+         * This method collects information from the login method that demands a YubiKey-password.
+         */
         $scope.getLoginInfo = function () {
             return JSON.stringify({
                 'email': $('#input-email-login').val(),
@@ -24,7 +27,6 @@ app.controller('LoginController', ['$scope', '$route', '$log', '$location', 'use
                .success(function(response) {
                    $scope.loggedInUser = response;
                    $scope.setLoggedInUser($scope.loggedInUser);
-
                })
                .error(function(response) {
                    $log.error('***FAILED*** to login!');
