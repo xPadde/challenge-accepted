@@ -20,22 +20,32 @@ public class SpringSecurityUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        logger.info("loadUserByUsername() executed");
-        logger.info("email param is: " + email);
-        AccountUserDetails userDetails = new AccountUserDetails(userService.getUserByEmailFromDatabase(email));
-        logger.info("userDetails username: " + userDetails.getUsername());
-        logger.info("userDetails password: " + userDetails.getPassword());
+          logger.info("---------------------------------------------rövsmet  " + email + "------------------------------------");
 
-        for (GrantedAuthority authority : userDetails.getAuthorities()) {
-            logger.info("userDetails authorities: " + authority.getAuthority());
-        }
 
-        logger.info("userDetails enabled? " + userDetails.isEnabled());
+          String[] split = email.split(":");
+          String emailCred = split[0];
+          String yubicoKey = split[1];
 
-        //TODO check is user is null
+          logger.info("---------------------------------------------rövsmet  " + emailCred + "------------------------------------");
+          logger.info("---------------------------------------------rövsmet  " + yubicoKey + "------------------------------------");
 
-        // return new AccountUserDetails(userService.getUserByEmailFromDatabase(email));
-        return userDetails;
+//        logger.info("loadUserByUsername() executed");
+//        logger.info("email param is: " + email);
+//        AccountUserDetails userDetails = new AccountUserDetails(userService.getUserByEmailFromDatabase(email));
+//        logger.info("userDetails username: " + userDetails.getUsername());
+//        logger.info("userDetails password: " + userDetails.getPassword());
+//
+//        for (GrantedAuthority authority : userDetails.getAuthorities()) {
+//            logger.info("userDetails authorities: " + authority.getAuthority());
+//        }
+//
+//        logger.info("userDetails enabled? " + userDetails.isEnabled());
+//
+//        //TODO check is user is null
+//
+          return new AccountUserDetails(userService.getUserByEmailFromDatabase(emailCred));
+
     }
 
 }

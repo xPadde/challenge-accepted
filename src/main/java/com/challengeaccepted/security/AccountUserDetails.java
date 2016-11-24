@@ -9,7 +9,7 @@ import java.util.Collection;
 
 public class AccountUserDetails implements UserDetails {
 
-    private UserModel userModel;
+    private final UserModel userModel;
 
     public AccountUserDetails(UserModel userModel) {
         this.userModel = userModel;
@@ -37,6 +37,7 @@ public class AccountUserDetails implements UserDetails {
     public String getUsername() {
         return userModel.getEmail();
     }
+
 
     @Override
     public boolean isAccountNonExpired() {

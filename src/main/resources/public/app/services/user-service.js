@@ -29,8 +29,9 @@ app.factory('userService', function ($http) {
         },
 
         validateLocalLogin: function (data) {
+            // TODO use the spring endpoint here!!!
             return $http({
-                url: baseUrl + "/users/login",
+                url: baseUrl + "/challengeaccepted/login",
                 data: data,
                 method: 'POST',
                 header: {'Content-Type': 'application/json'}
