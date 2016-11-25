@@ -31,14 +31,6 @@ app.controller('LoginController', ['$scope', '$route', '$log', '$location', 'use
                })
         };
 
-        $scope.getUserInfo = function (profile) {
-            return JSON.stringify({
-                'firstName': profile.getGivenName(),
-                'lastName': profile.getFamilyName(),
-                'email': profile.getEmail()
-            });
-        };
-
         $scope.setLoggedInUser = function (response) {
             if (response == "") {
                 userService.createNewUser($scope.loggedInUser)
@@ -59,20 +51,18 @@ app.controller('LoginController', ['$scope', '$route', '$log', '$location', 'use
         };
 
         onSignIn = function (googleUser) {
-            var profile = googleUser.getBasicProfile();
-            var userFoundByEmail = "";
-            $scope.loggedInUser = JSON.parse($scope.getUserInfo(profile));
+            var idToken = googleUser.getAuthResponse().id_token;
 
-            userService.getUserByEmail($scope.loggedInUser.email)
+            userService.createGoogleUser(idToken)
                 .success(function (response) {
-                    userFoundByEmail = response;
+                    $scope.loggedInUser = response;
+                    sessionStorage.setItem('loggedInUser', JSON.stringify(response));
+                    sessionStorage.setItem('isLoggedIn', true);
                 })
                 .error(function (error) {
                     $log.error("userService.getUserByEmail ERROR!");
                     $log.error(error);
-                }).then(function () {
-                $scope.setLoggedInUser(userFoundByEmail);
-            });
+                });
         };
 
         $scope.signOut = function () {

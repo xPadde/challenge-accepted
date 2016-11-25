@@ -3,6 +3,15 @@ app.factory('userService', function ($http) {
     var baseUrl = "http://localhost:8080/challengeaccepted/api";
 
     return {
+        createGoogleUser: function (data) {
+            return $http({
+                url: baseUrl + '/google-users',
+                method: 'POST',
+                data: data,
+                header: {'Content-Type': 'application/json'}
+            })
+        },
+        
         createNewUser: function (data) {
             return $http({
                 url: baseUrl + '/users',

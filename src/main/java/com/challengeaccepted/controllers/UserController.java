@@ -4,6 +4,7 @@ import com.challengeaccepted.models.LoginModel;
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.UserService;
 import com.challengeaccepted.services.YubicoService;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.yubico.client.v2.exceptions.YubicoValidationFailure;
 import com.yubico.client.v2.exceptions.YubicoVerificationException;
 import org.apache.log4j.Logger;
@@ -12,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 
 @RestController
@@ -28,6 +31,24 @@ public class UserController {
         this.userService = userService;
         this.yubicoService = yubicoService;
     }
+
+    @CrossOrigin
+    @RequestMapping(value = "/google-users", method = RequestMethod.POST)
+    public ResponseEntity<UserModel> createGoogleUser(@RequestBody String googleIdToken) throws GeneralSecurityException, IOException {
+        GoogleIdToken idToken = userService.validateGoogleIdToken(googleIdToken);
+        if (idToken != null) {
+            UserModel googleUser = userService.createGoogleUser(idToken);
+            if (userService.getUserByEmailFromDatabase(googleUser.getEmail()) == null) {
+                userService.saveUserToDatabase(googleUser);
+                return new ResponseEntity<>(googleUser, HttpStatus.CREATED);
+            } else {
+             return new ResponseEntity<>(googleUser, HttpStatus.OK);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
 
     @CrossOrigin
     @RequestMapping(value = "/users", method = RequestMethod.POST)
