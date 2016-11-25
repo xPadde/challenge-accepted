@@ -25,7 +25,7 @@ public class PasswordHash {
         char[] charPassword = password.toCharArray();
         byte[] salt = getSalt();
 
-        PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), salt, iterations, 64 * 8);
+        PBEKeySpec spec = new PBEKeySpec(charPassword, salt, iterations, 64 * 8);
         SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         byte[] hashedPassword = secretKeyFactory.generateSecret(spec).getEncoded();
 
@@ -33,9 +33,31 @@ public class PasswordHash {
     }
 
     /**
+     * Method used for validating user provided password through Spring Security layer.
+     *
+     * @param password is the password the user provided.
+     * @param salt is the salt connected to the user.
+     * @return the generated password for later validation.
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
+    public static String generatePasswordForSpringSecValidation(String password, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        int iterations = 1000;
+        char[] charPassword = password.toCharArray();
+        byte[] saltAsByte = fromHex(salt);
+
+        PBEKeySpec spec = new PBEKeySpec(charPassword, saltAsByte, iterations, 64 * 8);
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        byte[] hashedPassword = secretKeyFactory.generateSecret(spec).getEncoded();
+
+        return iterations + ":" + toHex(saltAsByte) + ":" + toHex(hashedPassword);
+    }
+
+
+    /**
      * Compare the user provided password with the password in the database.
      *
-     * @param inputPassword is the user provided password.
+     * @param inputPassword  is the user provided password.
      * @param storedPassword is the password stored in the database.
      * @return 0 (true) if the password provided is correct, else false.
      * @throws NoSuchAlgorithmException
