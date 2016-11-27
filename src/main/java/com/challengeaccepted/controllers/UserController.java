@@ -79,7 +79,6 @@ public class UserController {
         logger.info("Validating user inputs");
         if (isPasswordValid && isYubicoResponseValid && isYubicoKeyValid) {
             logger.info("Password and Yubico successfully validated");
-            userService.validateSpringAccount(userModelFromDatabase); // Send user to Spring Security for validation
             return new ResponseEntity<>(userModelFromDatabase, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);

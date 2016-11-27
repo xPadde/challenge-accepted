@@ -53,32 +53,4 @@ public class UserService {
         return PasswordHash.validateHashedPassword(loginModelPassword, userModelPassword);
     }
 
-    public void validateSpringAccount(UserModel userModel) throws IOException {
-        logger.info("userModel getEmail: " + userModel.getEmail());
-
-        // Create Spring login endpoint
-        // TODO create a dynamic root URL. Do not hardcore localhost.
-        String springLoginEndpoint = "http://localhost:8080/challengeaccepted/login";
-        URL url = new URL(springLoginEndpoint);
-
-        // Create HTTP request
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-
-        // Handle params
-        String urlParams = "username=" + userModel.getEmail() + "&password=" + userModel.getPassword();
-        logger.info("Post request url: " + url + urlParams);
-        connection.setDoOutput(true);
-        DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
-        outputStream.writeBytes(urlParams);
-        outputStream.flush();
-        outputStream.close();
-
-        // Log response code
-        logger.info("Sending POST request to URL: " + url);
-        int responseCode = connection.getResponseCode();
-        logger.info("Got response code from validateSpringAccount(): " + responseCode);
-    }
-
 }

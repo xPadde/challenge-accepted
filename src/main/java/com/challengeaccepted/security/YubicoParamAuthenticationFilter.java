@@ -32,10 +32,6 @@ public class YubicoParamAuthenticationFilter  extends UsernamePasswordAuthentica
         String[] passwordSplitted = passwordFromDatabase.split(":");
         String salt = passwordSplitted[1];
 
-        logger.info("User password as HASH: " + passwordFromDatabase);
-        logger.info("password parameter: " + password);
-        logger.info("username parameter: " + username);
-
         String passwordToValidate = "";
         try {
             passwordToValidate = PasswordHash.generatePasswordForSpringSecValidation(password, salt);
