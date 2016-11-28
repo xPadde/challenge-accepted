@@ -73,6 +73,11 @@ public class PasswordHash {
         PBEKeySpec pbeKeySpec = new PBEKeySpec(charPassword, salt, iterations, storedPasswordHashed.length * 8);
         SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         byte[] typedPasswordHashed = secretKeyFactory.generateSecret(pbeKeySpec).getEncoded();
+
+        return isHashedPasswordsEqual(storedPasswordHashed, typedPasswordHashed);
+    }
+
+    public static boolean isHashedPasswordsEqual(byte[] storedPasswordHashed, byte[] typedPasswordHashed) {
         int diff = storedPasswordHashed.length ^ typedPasswordHashed.length;
 
         for (int i = 0; i < storedPasswordHashed.length && typedPasswordHashed.length < i; i++) {
@@ -88,7 +93,7 @@ public class PasswordHash {
      * @param hex is the String to translate.
      * @return the String in hexadecimal.
      */
-    private static byte[] fromHex(String hex) {
+    public static byte[] fromHex(String hex) {
         byte[] bytes = new byte[hex.length() / 2];
         for (int i = 0; i < bytes.length; i++) {
             bytes[i] = (byte) Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
