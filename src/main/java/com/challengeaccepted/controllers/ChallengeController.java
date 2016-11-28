@@ -29,6 +29,7 @@ public class ChallengeController {
 
     @Autowired
     public ChallengeController(ChallengeService challengeService, UserService userService, NotificationController notificationController) {
+        //TODO why are we doing it like this?
         this.challengeService = challengeService;
         this.userService = userService;
         this.notificationController = notificationController;
