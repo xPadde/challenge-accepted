@@ -17,8 +17,10 @@ app.controller('LoginController', ['$scope', '$route', '$log', '$location', 'use
             });
         };
 
-        $scope.login = function() {;
+        $scope.login = function() {
             var user = JSON.parse($scope.getLoginInfo());
+
+            console.log("inne i controllern");
 
            userService.validateLocalLogin(user)
                .success(function(response) {
@@ -27,8 +29,14 @@ app.controller('LoginController', ['$scope', '$route', '$log', '$location', 'use
 
                })
                .error(function(response) {
-                   $log.error('***FAILED*** to login!');
-               })
+                   console.log("vi är inne i error");
+               }).then(function () {
+               $scope.setLoggedInUser($scope.loggedInUser);
+               console.log($scope.loggedInUser);
+               console.log('---------');
+               sessionStorage.setItem('loggedInUser', JSON.stringify($scope.loggedInUser));
+               console.log(scopeService.getLoggedInUser());
+           })
         };
 
         $scope.setLoggedInUser = function (response) {

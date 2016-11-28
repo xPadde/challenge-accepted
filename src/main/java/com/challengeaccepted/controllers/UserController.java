@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 
 @RestController
@@ -99,7 +101,7 @@ public class UserController {
 
     @CrossOrigin
     @RequestMapping(value = "/users/login", method = RequestMethod.POST)
-    public ResponseEntity<UserModel> validateLocalLogin(@RequestBody LoginModel loginModel) throws YubicoVerificationException, YubicoValidationFailure {
+    public ResponseEntity<UserModel> validateLocalLogin(@RequestBody LoginModel loginModel) throws YubicoVerificationException, YubicoValidationFailure, InvalidKeySpecException, NoSuchAlgorithmException {
         UserModel userModel = userService.getUserByEmailFromDatabase(loginModel.getEmail());
 
         if (userService.validatePassword(userModel.getPassword(), loginModel.getPassword()) &&

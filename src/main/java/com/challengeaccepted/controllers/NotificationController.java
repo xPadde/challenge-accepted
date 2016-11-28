@@ -47,9 +47,8 @@ public class NotificationController {
         if (notificationModel != null) {
             notificationService.saveNotificationToDatabase(notificationModel);
             return new ResponseEntity(HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     private List<NotificationModel> getAllNotifications(@PathVariable Long id) {

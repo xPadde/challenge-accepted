@@ -2,19 +2,22 @@ package com.challengeaccepted.services;
 
 import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.models.YubiKeyModel;
+import com.challengeaccepted.password.PasswordHash;
 import com.challengeaccepted.repositories.UserRepository;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -28,10 +31,11 @@ public class UserService {
     final static JacksonFactory jsonFactory = new JacksonFactory();
     final static HttpTransport transport = new NetHttpTransport();
 
-    public void saveUserToDatabase(UserModel userModel) {
+    public void saveUserToDatabase(UserModel userModel) throws InvalidKeySpecException, NoSuchAlgorithmException {
         if (userModel.getYubiKeyModel() != null) {
             logger.info("User created with Yubico. Store YubiKey in database.");
             userModel.setYubiKeyModel(new YubiKeyModel(userModel, userModel.getYubiKeyModel().getYubiKeyId()));
+            userModel.setPassword(PasswordHash.generateHashedPassword(userModel.getPassword()));
             System.out.println(userModel.getYubiKeyModel().getYubiKeyId());
         }
         userRepository.saveAndFlush(userModel);
@@ -54,8 +58,8 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public boolean validatePassword(String userModelPassword, String loginModelPassword) {
-        return userModelPassword.equals(loginModelPassword);
+    public boolean validatePassword(String userModelPassword, String loginModelPassword) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        return PasswordHash.validateHashedPassword(loginModelPassword, userModelPassword);
     }
 
     public GoogleIdToken validateGoogleIdToken(String googleIdToken) throws GeneralSecurityException, IOException {
