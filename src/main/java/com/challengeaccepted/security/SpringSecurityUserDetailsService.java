@@ -1,6 +1,7 @@
 package com.challengeaccepted.security;
 
 
+import com.challengeaccepted.models.UserModel;
 import com.challengeaccepted.services.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,16 @@ public class SpringSecurityUserDetailsService implements UserDetailsService {
         String emailCred = split[0];
         String yubicoKey = split[1];
 
-        logger.info("NU VAR ALLT OKEJ ENLiGT SS");
+        UserModel userModelFromDataBase = userService.getUserByEmailFromDatabase(emailCred);
 
-        AccountUserDetails userDetails = new AccountUserDetails(userService.getUserByEmailFromDatabase(emailCred));
+        if(userModelFromDataBase == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
 
+        //TODO write a function that compares the already salthashed password with the password from the
+        // database, right now it is in plain text versus the password in database.
 
-
-        //TODO check is user is null
+        AccountUserDetails userDetails = new AccountUserDetails(userModelFromDataBase);
 
         //TODO validate login by own services
         return userDetails;
